@@ -2,13 +2,14 @@ entity Property {
 	title String required
     price Double required,
     created ZonedDateTime required,
-    updated ZonedDateTime required,
+    updated ZonedDateTime,
     description TextBlob,
+    reference String,
     // PONGO DOS CAMPOS POR QUE PUEDE QUE SE PUEDA VENDER Y ALQUILAR A LA VEZ
     priceSell Double,
     priceRent Double,
     yearConstruction Integer min(500),
-    new Boolean,
+    newCreation Boolean,
     visible Boolean,
     surface Integer,
     // CATEGORY
@@ -105,7 +106,7 @@ entity Bussiness {
 /* PHOTO */
 
 entity Gallery {
-
+    description String
 }
 
 entity Photo {
@@ -117,13 +118,13 @@ entity Photo {
 
 relationship OneToMany {
 	// One Gallery can own many photos
-    Gallery to Photo
+    Gallery{photo(name)} to Photo{gallery},
     // ONE PROPERTY CAN BE MANAGED BY VARIOUS AGENTS
-    Property{managed} to Agent
+    Property{managed} to Agent{property(title)}
 }
 
 relationship OneToOne {
-	Property to Gallery
+	Property{gallery} to Gallery{property(title)}
 }
 
 dto * with mapstruct

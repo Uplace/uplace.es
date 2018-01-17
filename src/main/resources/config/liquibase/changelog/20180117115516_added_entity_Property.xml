@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity Property.
+    -->
+    <changeSet id="20180117115516-1" author="jhipster">
+        <createTable tableName="property">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="price" type="double">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="updated" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="description" type="clob">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="reference" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="price_sell" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="price_rent" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="year_construction" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="new_creation" type="bit">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="visible" type="bit">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="surface" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="gallery_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        <dropDefaultValue tableName="property" columnName="created" columnDataType="datetime"/>
+        <dropDefaultValue tableName="property" columnName="updated" columnDataType="datetime"/>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

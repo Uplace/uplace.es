@@ -1,0 +1,23 @@
+{
+    "uplaceApp": {
+        "parking" : {
+            "home": {
+                "title": "Parkings",
+                "createLabel": "Crear nuevo Parking",
+                "createOrEditLabel": "Crear o editar Parking"
+            },
+            "created": "Un nuevo Parking ha sido creado con el identificador {{ param }}",
+            "updated": "Un Parking ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Parking ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Parking {{ id }}?"
+            },
+            "detail": {
+                "title": "Parking"
+            },
+            "parkingType": "Parking Type",
+            "nearTransport": "Near Transport",
+            "surveillance": "Surveillance"
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "parkingType",
+            "fieldType": "ParkingType",
+            "fieldValues": "CAR,MOTO,OTHER"
+        },
+        {
+            "fieldName": "nearTransport",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "surveillance",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        }
+    ],
+    "changelogDate": "20180117115520",
+    "entityTableName": "parking",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

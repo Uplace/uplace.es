@@ -1,0 +1,66 @@
+
+<div *ngIf="bussiness">
+    <h2><span jhiTranslate="uplaceApp.bussiness.detail.title">Bussiness</span> {{bussiness.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.bussiness.bussinessType">Bussiness Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.BussinessType.' + bussiness.bussinessType}}">{{bussiness.bussinessType}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.numberBathrooms">Number Bathrooms</span></dt>
+        <dd>
+            <span>{{bussiness.numberBathrooms}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.elevator">Elevator</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + bussiness.elevator}}">{{bussiness.elevator}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.ac">Ac</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + bussiness.ac}}">{{bussiness.ac}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.heat">Heat</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + bussiness.heat}}">{{bussiness.heat}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.surfaceTerrace">Surface Terrace</span></dt>
+        <dd>
+            <span>{{bussiness.surfaceTerrace}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.surfaceGarden">Surface Garden</span></dt>
+        <dd>
+            <span>{{bussiness.surfaceGarden}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.numberOffice">Number Office</span></dt>
+        <dd>
+            <span>{{bussiness.numberOffice}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.surfaceSaloon">Surface Saloon</span></dt>
+        <dd>
+            <span>{{bussiness.surfaceSaloon}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.height">Height</span></dt>
+        <dd>
+            <span>{{bussiness.height}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.bussiness.pool">Pool</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + bussiness.pool}}">{{bussiness.pool}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'bussiness/'+ bussiness.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

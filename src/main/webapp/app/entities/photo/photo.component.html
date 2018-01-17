@@ -1,0 +1,73 @@
+<div>
+    <h2>
+        <span jhiTranslate="uplaceApp.photo.home.title">Photos</span>
+        <button class="btn btn-primary float-right jh-create-entity create-photo" [routerLink]="['/', { outlets: { popup: ['photo-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="uplaceApp.photo.home.createLabel">
+            Create new Photo
+            </span>
+        </button>
+    </h2>
+    <up-alert></up-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="photos">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="uplaceApp.photo.name">Name</span></th>
+            <th><span jhiTranslate="uplaceApp.photo.description">Description</span></th>
+            <th><span jhiTranslate="uplaceApp.photo.photo">Photo</span></th>
+            <th><span jhiTranslate="uplaceApp.photo.gallery">Gallery</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let photo of photos ;trackBy: trackId">
+                <td><a [routerLink]="['../photo', photo.id ]">{{photo.id}}</a></td>
+                <td>{{photo.name}}</td>
+                <td>{{photo.description}}</td>
+                <td>
+                    <a *ngIf="photo.photo" (click)="openFile(photo.photoContentType, photo.photo)">
+                        <img [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo" style="max-height: 30px;" alt="photo image"/>
+                    </a>
+                    <span *ngIf="photo.photo">{{photo.photoContentType}}, {{byteSize(photo.photo)}}</span>
+                </td>
+                <td>
+                    <div *ngIf="photo.galleryId">
+                        <a [routerLink]="['../gallery', photo.galleryId  ]" >{{photo.galleryId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../photo', photo.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'photo/'+ photo.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'photo/'+ photo.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

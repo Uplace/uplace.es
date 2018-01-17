@@ -1,0 +1,22 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "terrainType",
+            "fieldType": "TerrainType",
+            "fieldValues": "RESIDENTIAL,URBAN,RUSTIC"
+        },
+        {
+            "fieldName": "nearTransport",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        }
+    ],
+    "changelogDate": "20180117115521",
+    "entityTableName": "terrain",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

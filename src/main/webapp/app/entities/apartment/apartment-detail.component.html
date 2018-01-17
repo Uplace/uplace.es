@@ -1,0 +1,74 @@
+
+<div *ngIf="apartment">
+    <h2><span jhiTranslate="uplaceApp.apartment.detail.title">Apartment</span> {{apartment.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.apartment.numberBedrooms">Number Bedrooms</span></dt>
+        <dd>
+            <span>{{apartment.numberBedrooms}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.numberBathrooms">Number Bathrooms</span></dt>
+        <dd>
+            <span>{{apartment.numberBathrooms}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.elevator">Elevator</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + apartment.elevator}}">{{apartment.elevator}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.ac">Ac</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + apartment.ac}}">{{apartment.ac}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.heat">Heat</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + apartment.heat}}">{{apartment.heat}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.surfaceTerrace">Surface Terrace</span></dt>
+        <dd>
+            <span>{{apartment.surfaceTerrace}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.surfaceSaloon">Surface Saloon</span></dt>
+        <dd>
+            <span>{{apartment.surfaceSaloon}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.propertyType">Property Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.ApartmentType.' + apartment.propertyType}}">{{apartment.propertyType}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.office">Office</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + apartment.office}}">{{apartment.office}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.kitchenOffice">Kitchen Office</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + apartment.kitchenOffice}}">{{apartment.kitchenOffice}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.storage">Storage</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + apartment.storage}}">{{apartment.storage}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.sharedPool">Shared Pool</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + apartment.sharedPool}}">{{apartment.sharedPool}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.apartment.nearTransport">Near Transport</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + apartment.nearTransport}}">{{apartment.nearTransport}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'apartment/'+ apartment.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

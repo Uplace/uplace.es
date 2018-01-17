@@ -1,0 +1,34 @@
+
+<div *ngIf="parking">
+    <h2><span jhiTranslate="uplaceApp.parking.detail.title">Parking</span> {{parking.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.parking.parkingType">Parking Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.ParkingType.' + parking.parkingType}}">{{parking.parkingType}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.parking.nearTransport">Near Transport</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + parking.nearTransport}}">{{parking.nearTransport}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.parking.surveillance">Surveillance</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + parking.surveillance}}">{{parking.surveillance}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'parking/'+ parking.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,76 @@
+
+<div *ngIf="property">
+    <h2><span jhiTranslate="uplaceApp.property.detail.title">Property</span> {{property.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.property.title">Title</span></dt>
+        <dd>
+            <span>{{property.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.price">Price</span></dt>
+        <dd>
+            <span>{{property.price}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.created">Created</span></dt>
+        <dd>
+            <span>{{property.created | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.updated">Updated</span></dt>
+        <dd>
+            <span>{{property.updated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.description">Description</span></dt>
+        <dd>
+            <span>{{property.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.reference">Reference</span></dt>
+        <dd>
+            <span>{{property.reference}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.priceSell">Price Sell</span></dt>
+        <dd>
+            <span>{{property.priceSell}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.priceRent">Price Rent</span></dt>
+        <dd>
+            <span>{{property.priceRent}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.yearConstruction">Year Construction</span></dt>
+        <dd>
+            <span>{{property.yearConstruction}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.newCreation">New Creation</span></dt>
+        <dd>
+            <span>{{property.newCreation}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.visible">Visible</span></dt>
+        <dd>
+            <span>{{property.visible}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.surface">Surface</span></dt>
+        <dd>
+            <span>{{property.surface}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.property.gallery">Gallery</span></dt>
+        <dd>
+            <div *ngIf="property.galleryId">
+                <a [routerLink]="['/gallery', property.galleryId]">{{property.galleryId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'property/'+ property.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
