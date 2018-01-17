@@ -7,16 +7,6 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
-                "property": "Property",
-                "apartment": "Apartment",
-                "office": "Office",
-                "agent": "Agent",
-                "parking": "Parking",
-                "terrain": "Terrain",
-                "location": "Location",
-                "bussiness": "Bussiness",
-                "gallery": "Gallery",
-                "photo": "Photo",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

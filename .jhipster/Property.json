@@ -85,5 +85,5 @@
     "dto": "mapstruct",
     "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": true
 }
