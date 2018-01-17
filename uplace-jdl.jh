@@ -1,0 +1,129 @@
+entity Property {
+	title String required
+    price Double required,
+    created ZonedDateTime required,
+    updated ZonedDateTime required,
+    description TextBlob,
+    // PONGO DOS CAMPOS POR QUE PUEDE QUE SE PUEDA VENDER Y ALQUILAR A LA VEZ
+    priceSell Double,
+    priceRent Double,
+    yearConstruction Integer min(500),
+    new Boolean,
+    visible Boolean,
+    surface Integer,
+    // CATEGORY
+
+}
+
+enum TerrainType {
+	RESIDENTIAL, URBAN, RUSTIC
+}
+
+enum ApartmentType {
+	HOUSE, RURAL, FLAT, APARTMENT, TOWER, LOFT
+}
+
+enum Select {
+	YES, NO, UNDEFINED
+}
+
+enum ParkingType {
+	CAR, MOTO, OTHER
+}
+
+enum BussinessType {
+	PUB, HOTEL, OTHERS
+}
+entity Apartment {
+    numberBedrooms Integer,
+    numberBathrooms Integer,
+    elevator Select,
+    ac Select,
+    heat Select,
+    surfaceTerrace Integer,
+    surfaceSaloon Integer,
+	propertyType ApartmentType,
+    office Select,
+    kitchenOffice Select,
+    storage Select,
+    sharedPool Select,
+    nearTransport Select
+}
+
+entity Office {
+    bathrooms String,
+    floors Integer,
+    terrace Integer,
+    office Select,
+    storage Select,
+    storageSurface Integer,
+    officesSurface Integer,
+  	ac Select,
+    heat Select
+}
+
+entity Agent {
+	firstName String,
+    lastName String
+}
+
+entity Parking {
+    parkingType ParkingType,
+    nearTransport Select
+    surveillance Select
+
+}
+
+entity Terrain {
+    terrainType TerrainType
+    nearTransport Select
+}
+
+entity Location {
+	latitude String,
+    cp String,
+    longitude String,
+    urlGmaps String
+
+}
+
+entity Bussiness {
+    bussinessType BussinessType,
+    numberBathrooms Integer,
+    elevator Select,
+    ac Select,
+    heat Select,
+    surfaceTerrace Integer,
+    surfaceGarden Integer,
+    numberOffice Integer,
+    surfaceSaloon Integer,
+    height Integer,
+    pool Select,
+
+}
+
+/* PHOTO */
+
+entity Gallery {
+
+}
+
+entity Photo {
+	name String,
+    description String,
+    photo ImageBlob
+    //BELONGS TO A ONE GALLERY
+}
+
+relationship OneToMany {
+	// One Gallery can own many photos
+    Gallery to Photo
+    // ONE PROPERTY CAN BE MANAGED BY VARIOUS AGENTS
+    Property{managed} to Agent
+}
+
+relationship OneToOne {
+	Property to Gallery
+}
+
+dto * with mapstruct
