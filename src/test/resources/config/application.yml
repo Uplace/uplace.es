@@ -17,19 +17,19 @@ eureka:
     client:
         enabled: true
     instance:
-        appname: jhipster
-        instanceId: jhipster:${spring.application.instance-id:${random.value}}
+        appname: uplace
+        instanceId: uplace:${spring.application.instance-id:${random.value}}
 
 spring:
     application:
-        name: jhipster
+        name: uplace
     jackson:
         serialization.write_dates_as_timestamps: false
     cache:
         type: simple
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:mem:jhipster;DB_CLOSE_DELAY=-1
+        url: jdbc:h2:mem:uplace;DB_CLOSE_DELAY=-1
         name:
         username:
         password:

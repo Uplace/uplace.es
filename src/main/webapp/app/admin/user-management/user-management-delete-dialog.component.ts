@@ -7,7 +7,7 @@ import { User, UserService } from '../../shared';
 import { UserModalService } from './user-modal.service';
 
 @Component({
-    selector: 'jhi-user-mgmt-delete-dialog',
+    selector: 'up-user-mgmt-delete-dialog',
     templateUrl: './user-management-delete-dialog.component.html'
 })
 export class UserMgmtDeleteDialogComponent {
@@ -35,7 +35,7 @@ export class UserMgmtDeleteDialogComponent {
 }
 
 @Component({
-    selector: 'jhi-user-delete-dialog',
+    selector: 'up-user-delete-dialog',
     template: ''
 })
 export class UserDeleteDialogComponent implements OnInit, OnDestroy {

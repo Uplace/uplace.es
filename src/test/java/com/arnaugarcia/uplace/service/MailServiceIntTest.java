@@ -1,7 +1,7 @@
 package com.arnaugarcia.uplace.service;
 import com.arnaugarcia.uplace.config.Constants;
 
-import com.arnaugarcia.uplace.JhipsterApp;
+import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.User;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.Before;
@@ -30,7 +30,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = UplaceApp.class)
 public class MailServiceIntTest {
 
     @Autowired

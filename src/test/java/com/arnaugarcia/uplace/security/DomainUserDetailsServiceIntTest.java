@@ -1,6 +1,6 @@
 package com.arnaugarcia.uplace.security;
 
-import com.arnaugarcia.uplace.JhipsterApp;
+import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.repository.UserRepository;
 
@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see DomainUserDetailsService
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = UplaceApp.class)
 @Transactional
 public class DomainUserDetailsServiceIntTest {
 

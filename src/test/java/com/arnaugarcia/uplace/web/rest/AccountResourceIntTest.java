@@ -1,7 +1,7 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.config.Constants;
-import com.arnaugarcia.uplace.JhipsterApp;
+import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Authority;
 import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.repository.AuthorityRepository;
@@ -49,7 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see AccountResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = UplaceApp.class)
 public class AccountResourceIntTest {
 
     @Autowired

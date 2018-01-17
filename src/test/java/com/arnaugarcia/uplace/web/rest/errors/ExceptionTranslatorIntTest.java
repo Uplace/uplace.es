@@ -1,6 +1,6 @@
 package com.arnaugarcia.uplace.web.rest.errors;
 
-import com.arnaugarcia.uplace.JhipsterApp;
+import com.arnaugarcia.uplace.UplaceApp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see ExceptionTranslator
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = UplaceApp.class)
 public class ExceptionTranslatorIntTest {
 
     @Autowired

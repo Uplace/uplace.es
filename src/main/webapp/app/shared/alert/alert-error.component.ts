@@ -4,7 +4,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-    selector: 'jhi-alert-error',
+    selector: 'up-alert-error',
     template: `
         <div class="alerts" role="alert">
             <div *ngFor="let alert of alerts"  [ngClass]="{\'alert.position\': true, \'toast\': alert.toast}">
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
             </div>
         </div>`
 })
-export class JhiAlertErrorComponent implements OnDestroy {
+export class UpAlertErrorComponent implements OnDestroy {
 
     alerts: any[];
     cleanHttpErrorListener: Subscription;
@@ -22,7 +22,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
     constructor(private alertService: JhiAlertService, private eventManager: JhiEventManager, private translateService: TranslateService) {
         this.alerts = [];
 
-        this.cleanHttpErrorListener = eventManager.subscribe('jhipsterApp.httpError', (response) => {
+        this.cleanHttpErrorListener = eventManager.subscribe('uplaceApp.httpError', (response) => {
             let i;
             const httpResponse = response.content;
             switch (httpResponse.status) {
@@ -55,7 +55,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                             const fieldError = fieldErrors[i];
                             // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
                             const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
-                            const fieldName = translateService.instant('jhipsterApp.' +
+                            const fieldName = translateService.instant('uplaceApp.' +
                                 fieldError.objectName + '.' + convertedField);
                             this.addErrorAlert(
                                 'Error on field "' + fieldName + '"', 'error.' + fieldError.message, { fieldName });

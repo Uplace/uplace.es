@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { User, UserService } from '../../shared';
 
 @Component({
-    selector: 'jhi-user-mgmt-detail',
+    selector: 'up-user-mgmt-detail',
     templateUrl: './user-management-detail.component.html'
 })
 export class UserMgmtDetailComponent implements OnInit, OnDestroy {

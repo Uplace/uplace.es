@@ -6,7 +6,7 @@ import { PasswordResetFinishService } from './password-reset-finish.service';
 import { LoginModalService } from '../../../shared';
 
 @Component({
-    selector: 'jhi-password-reset-finish',
+    selector: 'up-password-reset-finish',
     templateUrl: './password-reset-finish.component.html'
 })
 export class PasswordResetFinishComponent implements OnInit, AfterViewInit {

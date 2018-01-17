@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
 
 @Injectable()
-export class JhiHealthService {
+export class UpHealthService {
 
     separator: string;
 

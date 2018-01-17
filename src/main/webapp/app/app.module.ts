@@ -4,19 +4,19 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2Webstorage } from 'ngx-webstorage';
 
-import { JhipsterSharedModule, UserRouteAccessService } from './shared';
-import { JhipsterAppRoutingModule} from './app-routing.module';
-import { JhipsterHomeModule } from './home/home.module';
-import { JhipsterAdminModule } from './admin/admin.module';
-import { JhipsterAccountModule } from './account/account.module';
-import { JhipsterEntityModule } from './entities/entity.module';
+import { UplaceSharedModule, UserRouteAccessService } from './shared';
+import { UplaceAppRoutingModule} from './app-routing.module';
+import { UplaceHomeModule } from './home/home.module';
+import { UplaceAdminModule } from './admin/admin.module';
+import { UplaceAccountModule } from './account/account.module';
+import { UplaceEntityModule } from './entities/entity.module';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
 import {
-    JhiMainComponent,
+    UpMainComponent,
     NavbarComponent,
     FooterComponent,
     ProfileService,
@@ -28,17 +28,17 @@ import {
 @NgModule({
     imports: [
         BrowserModule,
-        JhipsterAppRoutingModule,
+        UplaceAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
-        JhipsterSharedModule,
-        JhipsterHomeModule,
-        JhipsterAdminModule,
-        JhipsterAccountModule,
-        JhipsterEntityModule,
+        UplaceSharedModule,
+        UplaceHomeModule,
+        UplaceAdminModule,
+        UplaceAccountModule,
+        UplaceEntityModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
-        JhiMainComponent,
+        UpMainComponent,
         NavbarComponent,
         ErrorComponent,
         PageRibbonComponent,
@@ -51,6 +51,6 @@ import {
         PaginationConfig,
         UserRouteAccessService
     ],
-    bootstrap: [ JhiMainComponent ]
+    bootstrap: [ UpMainComponent ]
 })
-export class JhipsterAppModule {}
+export class UplaceAppModule {}

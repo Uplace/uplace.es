@@ -4,7 +4,7 @@ import { PasswordResetInitService } from './password-reset-init.service';
 import { EMAIL_NOT_FOUND_TYPE } from '../../../shared';
 
 @Component({
-    selector: 'jhi-password-reset-init',
+    selector: 'up-password-reset-init',
     templateUrl: './password-reset-init.component.html'
 })
 export class PasswordResetInitComponent implements OnInit, AfterViewInit {

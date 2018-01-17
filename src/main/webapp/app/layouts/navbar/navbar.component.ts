@@ -9,7 +9,7 @@ import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '.
 import { VERSION } from '../../app.constants';
 
 @Component({
-    selector: 'jhi-navbar',
+    selector: 'up-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: [
         'navbar.css'

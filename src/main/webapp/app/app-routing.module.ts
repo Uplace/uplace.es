@@ -15,4 +15,4 @@ const LAYOUT_ROUTES = [
         RouterModule
     ]
 })
-export class JhipsterAppRoutingModule {}
+export class UplaceAppRoutingModule {}

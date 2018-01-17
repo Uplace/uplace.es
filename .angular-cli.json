@@ -1,7 +1,7 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
     "project": {
-        "name": "jhipster"
+        "name": "uplace"
     },
     "apps": [{
         "root": "src/main/webapp",
@@ -16,7 +16,7 @@
         "polyfills": "app/polyfills.ts",
         "test": "src/test/javascript/spec/entry.ts",
         "tsconfig": "../../../tsconfig.json",
-        "prefix": "jhi",
+        "prefix": "up",
         "mobile": false,
         "styles": [
             "content/css/vendor.css",

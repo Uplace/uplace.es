@@ -11,15 +11,15 @@ public final class HeaderUtil {
 
     private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
 
-    private static final String APPLICATION_NAME = "jhipsterApp";
+    private static final String APPLICATION_NAME = "uplaceApp";
 
     private HeaderUtil() {
     }
 
     public static HttpHeaders createAlert(String message, String param) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-jhipsterApp-alert", message);
-        headers.add("X-jhipsterApp-params", param);
+        headers.add("X-uplaceApp-alert", message);
+        headers.add("X-uplaceApp-params", param);
         return headers;
     }
 
@@ -38,8 +38,8 @@ public final class HeaderUtil {
     public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
         log.error("Entity processing failed, {}", defaultMessage);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-jhipsterApp-error", "error." + errorKey);
-        headers.add("X-jhipsterApp-params", entityName);
+        headers.add("X-uplaceApp-error", "error." + errorKey);
+        headers.add("X-uplaceApp-params", entityName);
         return headers;
     }
 }

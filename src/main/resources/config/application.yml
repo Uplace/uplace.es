@@ -24,8 +24,8 @@ eureka:
         instance-info-replication-interval-seconds: 10
         registry-fetch-interval-seconds: 10
     instance:
-        appname: jhipster
-        instanceId: jhipster:${spring.application.instance-id:${random.value}}
+        appname: uplace
+        instanceId: uplace:${spring.application.instance-id:${random.value}}
         lease-renewal-interval-in-seconds: 5
         lease-expiration-duration-in-seconds: 10
         status-page-url-path: ${management.context-path}/info
@@ -49,7 +49,7 @@ management:
             enabled: false # When using the MailService, configure an SMTP server and set this to true
 spring:
     application:
-        name: jhipster
+        name: uplace
     profiles:
         # The commented value for `active` can be replaced with valid Spring profiles to load.
         # Otherwise, it will be filled in by maven when building the WAR file
@@ -104,11 +104,11 @@ jhipster:
         #allow-credentials: true
         #max-age: 1800
     mail:
-        from: jhipster@localhost
+        from: uplace@localhost
     swagger:
         default-include-pattern: /api/.*
-        title: jhipster API
-        description: jhipster API documentation
+        title: uplace API
+        description: uplace API documentation
         version: 0.0.1
         terms-of-service-url:
         contact-name:

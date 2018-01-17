@@ -2,8 +2,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import {
-    JhipsterSharedLibsModule,
-    JhipsterSharedCommonModule,
+    UplaceSharedLibsModule,
+    UplaceSharedCommonModule,
     CSRFService,
     AuthServerProvider,
     AccountService,
@@ -11,18 +11,18 @@ import {
     StateStorageService,
     LoginService,
     LoginModalService,
-    JhiLoginModalComponent,
+    UpLoginModalComponent,
     Principal,
     HasAnyAuthorityDirective,
 } from './';
 
 @NgModule({
     imports: [
-        JhipsterSharedLibsModule,
-        JhipsterSharedCommonModule
+        UplaceSharedLibsModule,
+        UplaceSharedCommonModule
     ],
     declarations: [
-        JhiLoginModalComponent,
+        UpLoginModalComponent,
         HasAnyAuthorityDirective
     ],
     providers: [
@@ -36,14 +36,14 @@ import {
         UserService,
         DatePipe
     ],
-    entryComponents: [JhiLoginModalComponent],
+    entryComponents: [UpLoginModalComponent],
     exports: [
-        JhipsterSharedCommonModule,
-        JhiLoginModalComponent,
+        UplaceSharedCommonModule,
+        UpLoginModalComponent,
         HasAnyAuthorityDirective,
         DatePipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class JhipsterSharedModule {}
+export class UplaceSharedModule {}

@@ -4,21 +4,21 @@ import { registerLocaleData } from '@angular/common';
 import locale from '@angular/common/locales/en';
 
 import {
-    JhipsterSharedLibsModule,
+    UplaceSharedLibsModule,
     JhiLanguageHelper,
     FindLanguageFromKeyPipe,
-    JhiAlertComponent,
-    JhiAlertErrorComponent
+    UpAlertComponent,
+    UpAlertErrorComponent
 } from './';
 
 @NgModule({
     imports: [
-        JhipsterSharedLibsModule
+        UplaceSharedLibsModule
     ],
     declarations: [
         FindLanguageFromKeyPipe,
-        JhiAlertComponent,
-        JhiAlertErrorComponent
+        UpAlertComponent,
+        UpAlertErrorComponent
     ],
     providers: [
         JhiLanguageHelper,
@@ -29,13 +29,13 @@ import {
         },
     ],
     exports: [
-        JhipsterSharedLibsModule,
+        UplaceSharedLibsModule,
         FindLanguageFromKeyPipe,
-        JhiAlertComponent,
-        JhiAlertErrorComponent
+        UpAlertComponent,
+        UpAlertErrorComponent
     ]
 })
-export class JhipsterSharedCommonModule {
+export class UplaceSharedCommonModule {
     constructor() {
         registerLocaleData(locale);
     }

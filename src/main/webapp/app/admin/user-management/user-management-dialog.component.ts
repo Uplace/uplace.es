@@ -8,7 +8,7 @@ import { UserModalService } from './user-modal.service';
 import { JhiLanguageHelper, User, UserService } from '../../shared';
 
 @Component({
-    selector: 'jhi-user-mgmt-dialog',
+    selector: 'up-user-mgmt-dialog',
     templateUrl: './user-management-dialog.component.html'
 })
 export class UserMgmtDialogComponent implements OnInit {
@@ -61,7 +61,7 @@ export class UserMgmtDialogComponent implements OnInit {
 }
 
 @Component({
-    selector: 'jhi-user-dialog',
+    selector: 'up-user-dialog',
     template: ''
 })
 export class UserDialogComponent implements OnInit, OnDestroy {

@@ -1,6 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.JhipsterApp;
+import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.repository.UserRepository;
 import com.arnaugarcia.uplace.security.jwt.TokenProvider;
@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.not;
  * @see UserJWTController
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = UplaceApp.class)
 public class UserJWTControllerIntTest {
 
     @Autowired

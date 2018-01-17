@@ -1,6 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.JhipsterApp;
+import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.config.audit.AuditEventConverter;
 import com.arnaugarcia.uplace.domain.PersistentAuditEvent;
 import com.arnaugarcia.uplace.repository.PersistenceAuditEventRepository;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see AuditResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = UplaceApp.class)
 @Transactional
 public class AuditResourceIntTest {
 

@@ -5,7 +5,7 @@
       "nativeLanguage": "en"
     },
     "jhipsterVersion": "4.13.2",
-    "baseName": "jhipster",
+    "baseName": "uplace",
     "packageName": "com.arnaugarcia.uplace",
     "packageFolder": "com/arnaugarcia/uplace",
     "serverPort": "8080",
@@ -29,7 +29,7 @@
     "clientPackageManager": "yarn",
     "applicationType": "monolith",
     "testFrameworks": [],
-    "jhiPrefix": "jhi",
+    "jhiPrefix": "up",
     "enableTranslation": true,
     "nativeLanguage": "en",
     "languages": [

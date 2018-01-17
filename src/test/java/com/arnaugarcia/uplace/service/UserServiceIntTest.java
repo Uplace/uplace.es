@@ -1,6 +1,6 @@
 package com.arnaugarcia.uplace.service;
 
-import com.arnaugarcia.uplace.JhipsterApp;
+import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.config.Constants;
 import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.repository.UserRepository;
@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see UserService
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = UplaceApp.class)
 @Transactional
 public class UserServiceIntTest {
 

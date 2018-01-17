@@ -1,6 +1,6 @@
 package com.arnaugarcia.uplace.repository;
 
-import com.arnaugarcia.uplace.JhipsterApp;
+import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.config.Constants;
 import com.arnaugarcia.uplace.config.audit.AuditEventConverter;
 import com.arnaugarcia.uplace.domain.PersistentAuditEvent;
@@ -32,7 +32,7 @@ import static com.arnaugarcia.uplace.repository.CustomAuditEventRepository.EVENT
  * @see CustomAuditEventRepository
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = UplaceApp.class)
 @Transactional
 public class CustomAuditEventRepositoryIntTest {
 

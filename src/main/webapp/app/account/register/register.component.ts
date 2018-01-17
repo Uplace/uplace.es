@@ -6,7 +6,7 @@ import { Register } from './register.service';
 import { LoginModalService, EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from '../../shared';
 
 @Component({
-    selector: 'jhi-register',
+    selector: 'up-register',
     templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
