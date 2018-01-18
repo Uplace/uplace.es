@@ -6,8 +6,6 @@ import com.arnaugarcia.uplace.domain.Parking;
 import com.arnaugarcia.uplace.repository.ParkingRepository;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import com.arnaugarcia.uplace.service.dto.ParkingDTO;
-import com.arnaugarcia.uplace.service.mapper.ParkingMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,30 +31,25 @@ public class ParkingResource {
 
     private final ParkingRepository parkingRepository;
 
-    private final ParkingMapper parkingMapper;
-
-    public ParkingResource(ParkingRepository parkingRepository, ParkingMapper parkingMapper) {
+    public ParkingResource(ParkingRepository parkingRepository) {
         this.parkingRepository = parkingRepository;
-        this.parkingMapper = parkingMapper;
     }
 
     /**
      * POST  /parkings : Create a new parking.
      *
-     * @param parkingDTO the parkingDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new parkingDTO, or with status 400 (Bad Request) if the parking has already an ID
+     * @param parking the parking to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new parking, or with status 400 (Bad Request) if the parking has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/parkings")
     @Timed
-    public ResponseEntity<ParkingDTO> createParking(@RequestBody ParkingDTO parkingDTO) throws URISyntaxException {
-        log.debug("REST request to save Parking : {}", parkingDTO);
-        if (parkingDTO.getId() != null) {
+    public ResponseEntity<Parking> createParking(@RequestBody Parking parking) throws URISyntaxException {
+        log.debug("REST request to save Parking : {}", parking);
+        if (parking.getId() != null) {
             throw new BadRequestAlertException("A new parking cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Parking parking = parkingMapper.toEntity(parkingDTO);
-        parking = parkingRepository.save(parking);
-        ParkingDTO result = parkingMapper.toDto(parking);
+        Parking result = parkingRepository.save(parking);
         return ResponseEntity.created(new URI("/api/parkings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -65,24 +58,22 @@ public class ParkingResource {
     /**
      * PUT  /parkings : Updates an existing parking.
      *
-     * @param parkingDTO the parkingDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated parkingDTO,
-     * or with status 400 (Bad Request) if the parkingDTO is not valid,
-     * or with status 500 (Internal Server Error) if the parkingDTO couldn't be updated
+     * @param parking the parking to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated parking,
+     * or with status 400 (Bad Request) if the parking is not valid,
+     * or with status 500 (Internal Server Error) if the parking couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/parkings")
     @Timed
-    public ResponseEntity<ParkingDTO> updateParking(@RequestBody ParkingDTO parkingDTO) throws URISyntaxException {
-        log.debug("REST request to update Parking : {}", parkingDTO);
-        if (parkingDTO.getId() == null) {
-            return createParking(parkingDTO);
+    public ResponseEntity<Parking> updateParking(@RequestBody Parking parking) throws URISyntaxException {
+        log.debug("REST request to update Parking : {}", parking);
+        if (parking.getId() == null) {
+            return createParking(parking);
         }
-        Parking parking = parkingMapper.toEntity(parkingDTO);
-        parking = parkingRepository.save(parking);
-        ParkingDTO result = parkingMapper.toDto(parking);
+        Parking result = parkingRepository.save(parking);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, parkingDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, parking.getId().toString()))
             .body(result);
     }
 
@@ -93,31 +84,29 @@ public class ParkingResource {
      */
     @GetMapping("/parkings")
     @Timed
-    public List<ParkingDTO> getAllParkings() {
+    public List<Parking> getAllParkings() {
         log.debug("REST request to get all Parkings");
-        List<Parking> parkings = parkingRepository.findAll();
-        return parkingMapper.toDto(parkings);
+        return parkingRepository.findAll();
         }
 
     /**
      * GET  /parkings/:id : get the "id" parking.
      *
-     * @param id the id of the parkingDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the parkingDTO, or with status 404 (Not Found)
+     * @param id the id of the parking to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the parking, or with status 404 (Not Found)
      */
     @GetMapping("/parkings/{id}")
     @Timed
-    public ResponseEntity<ParkingDTO> getParking(@PathVariable Long id) {
+    public ResponseEntity<Parking> getParking(@PathVariable Long id) {
         log.debug("REST request to get Parking : {}", id);
         Parking parking = parkingRepository.findOne(id);
-        ParkingDTO parkingDTO = parkingMapper.toDto(parking);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(parkingDTO));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(parking));
     }
 
     /**
      * DELETE  /parkings/:id : delete the "id" parking.
      *
-     * @param id the id of the parkingDTO to delete
+     * @param id the id of the parking to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/parkings/{id}")

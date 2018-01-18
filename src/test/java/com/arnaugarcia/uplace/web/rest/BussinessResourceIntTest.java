@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Bussiness;
 import com.arnaugarcia.uplace.repository.BussinessRepository;
-import com.arnaugarcia.uplace.service.dto.BussinessDTO;
-import com.arnaugarcia.uplace.service.mapper.BussinessMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -82,9 +80,6 @@ public class BussinessResourceIntTest {
     private BussinessRepository bussinessRepository;
 
     @Autowired
-    private BussinessMapper bussinessMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -103,7 +98,7 @@ public class BussinessResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BussinessResource bussinessResource = new BussinessResource(bussinessRepository, bussinessMapper);
+        final BussinessResource bussinessResource = new BussinessResource(bussinessRepository);
         this.restBussinessMockMvc = MockMvcBuilders.standaloneSetup(bussinessResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -144,10 +139,9 @@ public class BussinessResourceIntTest {
         int databaseSizeBeforeCreate = bussinessRepository.findAll().size();
 
         // Create the Bussiness
-        BussinessDTO bussinessDTO = bussinessMapper.toDto(bussiness);
         restBussinessMockMvc.perform(post("/api/bussinesses")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bussinessDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(bussiness)))
             .andExpect(status().isCreated());
 
         // Validate the Bussiness in the database
@@ -174,12 +168,11 @@ public class BussinessResourceIntTest {
 
         // Create the Bussiness with an existing ID
         bussiness.setId(1L);
-        BussinessDTO bussinessDTO = bussinessMapper.toDto(bussiness);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restBussinessMockMvc.perform(post("/api/bussinesses")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bussinessDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(bussiness)))
             .andExpect(status().isBadRequest());
 
         // Validate the Bussiness in the database
@@ -266,11 +259,10 @@ public class BussinessResourceIntTest {
             .surfaceSaloon(UPDATED_SURFACE_SALOON)
             .height(UPDATED_HEIGHT)
             .pool(UPDATED_POOL);
-        BussinessDTO bussinessDTO = bussinessMapper.toDto(updatedBussiness);
 
         restBussinessMockMvc.perform(put("/api/bussinesses")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bussinessDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedBussiness)))
             .andExpect(status().isOk());
 
         // Validate the Bussiness in the database
@@ -296,12 +288,11 @@ public class BussinessResourceIntTest {
         int databaseSizeBeforeUpdate = bussinessRepository.findAll().size();
 
         // Create the Bussiness
-        BussinessDTO bussinessDTO = bussinessMapper.toDto(bussiness);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restBussinessMockMvc.perform(put("/api/bussinesses")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bussinessDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(bussiness)))
             .andExpect(status().isCreated());
 
         // Validate the Bussiness in the database
@@ -339,28 +330,5 @@ public class BussinessResourceIntTest {
         assertThat(bussiness1).isNotEqualTo(bussiness2);
         bussiness1.setId(null);
         assertThat(bussiness1).isNotEqualTo(bussiness2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(BussinessDTO.class);
-        BussinessDTO bussinessDTO1 = new BussinessDTO();
-        bussinessDTO1.setId(1L);
-        BussinessDTO bussinessDTO2 = new BussinessDTO();
-        assertThat(bussinessDTO1).isNotEqualTo(bussinessDTO2);
-        bussinessDTO2.setId(bussinessDTO1.getId());
-        assertThat(bussinessDTO1).isEqualTo(bussinessDTO2);
-        bussinessDTO2.setId(2L);
-        assertThat(bussinessDTO1).isNotEqualTo(bussinessDTO2);
-        bussinessDTO1.setId(null);
-        assertThat(bussinessDTO1).isNotEqualTo(bussinessDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(bussinessMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(bussinessMapper.fromId(null)).isNull();
     }
 }

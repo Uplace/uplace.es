@@ -38,11 +38,11 @@ export class PropertyDialogComponent implements OnInit {
         this.galleryService
             .query({filter: 'property(title)-is-null'})
             .subscribe((res: ResponseWrapper) => {
-                if (!this.property.galleryId) {
+                if (!this.property.gallery || !this.property.gallery.id) {
                     this.galleries = res.json;
                 } else {
                     this.galleryService
-                        .find(this.property.galleryId)
+                        .find(this.property.gallery.id)
                         .subscribe((subRes: Gallery) => {
                             this.galleries = [subRes].concat(res.json);
                         }, (subRes: ResponseWrapper) => this.onError(subRes.json));

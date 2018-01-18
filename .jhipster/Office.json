@@ -45,7 +45,7 @@
     ],
     "changelogDate": "20180117115518",
     "entityTableName": "office",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": true

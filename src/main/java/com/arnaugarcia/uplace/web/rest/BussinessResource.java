@@ -6,8 +6,6 @@ import com.arnaugarcia.uplace.domain.Bussiness;
 import com.arnaugarcia.uplace.repository.BussinessRepository;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import com.arnaugarcia.uplace.service.dto.BussinessDTO;
-import com.arnaugarcia.uplace.service.mapper.BussinessMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,30 +31,25 @@ public class BussinessResource {
 
     private final BussinessRepository bussinessRepository;
 
-    private final BussinessMapper bussinessMapper;
-
-    public BussinessResource(BussinessRepository bussinessRepository, BussinessMapper bussinessMapper) {
+    public BussinessResource(BussinessRepository bussinessRepository) {
         this.bussinessRepository = bussinessRepository;
-        this.bussinessMapper = bussinessMapper;
     }
 
     /**
      * POST  /bussinesses : Create a new bussiness.
      *
-     * @param bussinessDTO the bussinessDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new bussinessDTO, or with status 400 (Bad Request) if the bussiness has already an ID
+     * @param bussiness the bussiness to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new bussiness, or with status 400 (Bad Request) if the bussiness has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/bussinesses")
     @Timed
-    public ResponseEntity<BussinessDTO> createBussiness(@RequestBody BussinessDTO bussinessDTO) throws URISyntaxException {
-        log.debug("REST request to save Bussiness : {}", bussinessDTO);
-        if (bussinessDTO.getId() != null) {
+    public ResponseEntity<Bussiness> createBussiness(@RequestBody Bussiness bussiness) throws URISyntaxException {
+        log.debug("REST request to save Bussiness : {}", bussiness);
+        if (bussiness.getId() != null) {
             throw new BadRequestAlertException("A new bussiness cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Bussiness bussiness = bussinessMapper.toEntity(bussinessDTO);
-        bussiness = bussinessRepository.save(bussiness);
-        BussinessDTO result = bussinessMapper.toDto(bussiness);
+        Bussiness result = bussinessRepository.save(bussiness);
         return ResponseEntity.created(new URI("/api/bussinesses/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -65,24 +58,22 @@ public class BussinessResource {
     /**
      * PUT  /bussinesses : Updates an existing bussiness.
      *
-     * @param bussinessDTO the bussinessDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated bussinessDTO,
-     * or with status 400 (Bad Request) if the bussinessDTO is not valid,
-     * or with status 500 (Internal Server Error) if the bussinessDTO couldn't be updated
+     * @param bussiness the bussiness to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated bussiness,
+     * or with status 400 (Bad Request) if the bussiness is not valid,
+     * or with status 500 (Internal Server Error) if the bussiness couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/bussinesses")
     @Timed
-    public ResponseEntity<BussinessDTO> updateBussiness(@RequestBody BussinessDTO bussinessDTO) throws URISyntaxException {
-        log.debug("REST request to update Bussiness : {}", bussinessDTO);
-        if (bussinessDTO.getId() == null) {
-            return createBussiness(bussinessDTO);
+    public ResponseEntity<Bussiness> updateBussiness(@RequestBody Bussiness bussiness) throws URISyntaxException {
+        log.debug("REST request to update Bussiness : {}", bussiness);
+        if (bussiness.getId() == null) {
+            return createBussiness(bussiness);
         }
-        Bussiness bussiness = bussinessMapper.toEntity(bussinessDTO);
-        bussiness = bussinessRepository.save(bussiness);
-        BussinessDTO result = bussinessMapper.toDto(bussiness);
+        Bussiness result = bussinessRepository.save(bussiness);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bussinessDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bussiness.getId().toString()))
             .body(result);
     }
 
@@ -93,31 +84,29 @@ public class BussinessResource {
      */
     @GetMapping("/bussinesses")
     @Timed
-    public List<BussinessDTO> getAllBussinesses() {
+    public List<Bussiness> getAllBussinesses() {
         log.debug("REST request to get all Bussinesses");
-        List<Bussiness> bussinesses = bussinessRepository.findAll();
-        return bussinessMapper.toDto(bussinesses);
+        return bussinessRepository.findAll();
         }
 
     /**
      * GET  /bussinesses/:id : get the "id" bussiness.
      *
-     * @param id the id of the bussinessDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the bussinessDTO, or with status 404 (Not Found)
+     * @param id the id of the bussiness to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the bussiness, or with status 404 (Not Found)
      */
     @GetMapping("/bussinesses/{id}")
     @Timed
-    public ResponseEntity<BussinessDTO> getBussiness(@PathVariable Long id) {
+    public ResponseEntity<Bussiness> getBussiness(@PathVariable Long id) {
         log.debug("REST request to get Bussiness : {}", id);
         Bussiness bussiness = bussinessRepository.findOne(id);
-        BussinessDTO bussinessDTO = bussinessMapper.toDto(bussiness);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bussinessDTO));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bussiness));
     }
 
     /**
      * DELETE  /bussinesses/:id : delete the "id" bussiness.
      *
-     * @param id the id of the bussinessDTO to delete
+     * @param id the id of the bussiness to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/bussinesses/{id}")

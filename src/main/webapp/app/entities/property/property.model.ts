@@ -15,7 +15,7 @@ export class Property implements BaseEntity {
         public newCreation?: boolean,
         public visible?: boolean,
         public surface?: number,
-        public galleryId?: number,
+        public gallery?: BaseEntity,
         public manageds?: BaseEntity[],
     ) {
         this.newCreation = false;

@@ -32,7 +32,6 @@ public class PropertyResource {
 
     private final PropertyRepository propertyRepository;
 
-
     public PropertyResource(PropertyRepository propertyRepository) {
         this.propertyRepository = propertyRepository;
     }
@@ -88,8 +87,7 @@ public class PropertyResource {
     @Timed
     public List<Property> getAllProperties() {
         log.debug("REST request to get all Properties");
-        List<Property> properties = propertyRepository.findAll();
-        return properties;
+        return propertyRepository.findAll();
         }
 
     /**

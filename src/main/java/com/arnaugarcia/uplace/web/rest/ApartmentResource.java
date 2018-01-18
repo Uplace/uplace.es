@@ -6,8 +6,6 @@ import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import com.arnaugarcia.uplace.service.dto.ApartmentDTO;
-import com.arnaugarcia.uplace.service.mapper.ApartmentMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +59,7 @@ public class ApartmentResource {
      * PUT  /apartments : Updates an existing apartment.
      *
      * @param apartment the apartment to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated apartmentDTO,
+     * @return the ResponseEntity with status 200 (OK) and with body the updated apartment,
      * or with status 400 (Bad Request) if the apartment is not valid,
      * or with status 500 (Internal Server Error) if the apartment couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
@@ -88,8 +86,7 @@ public class ApartmentResource {
     @Timed
     public List<Apartment> getAllApartments() {
         log.debug("REST request to get all Apartments");
-        List<Apartment> apartments = apartmentRepository.findAll();
-        return apartments;
+        return apartmentRepository.findAll();
         }
 
     /**
@@ -109,7 +106,7 @@ public class ApartmentResource {
     /**
      * DELETE  /apartments/:id : delete the "id" apartment.
      *
-     * @param id the id of the apartmentDTO to delete
+     * @param id the id of the apartment to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/apartments/{id}")

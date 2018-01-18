@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Office;
 import com.arnaugarcia.uplace.repository.OfficeRepository;
-import com.arnaugarcia.uplace.service.dto.OfficeDTO;
-import com.arnaugarcia.uplace.service.mapper.OfficeMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -75,9 +73,6 @@ public class OfficeResourceIntTest {
     private OfficeRepository officeRepository;
 
     @Autowired
-    private OfficeMapper officeMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -96,7 +91,7 @@ public class OfficeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OfficeResource officeResource = new OfficeResource(officeRepository, officeMapper);
+        final OfficeResource officeResource = new OfficeResource(officeRepository);
         this.restOfficeMockMvc = MockMvcBuilders.standaloneSetup(officeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -135,10 +130,9 @@ public class OfficeResourceIntTest {
         int databaseSizeBeforeCreate = officeRepository.findAll().size();
 
         // Create the Office
-        OfficeDTO officeDTO = officeMapper.toDto(office);
         restOfficeMockMvc.perform(post("/api/offices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(officeDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(office)))
             .andExpect(status().isCreated());
 
         // Validate the Office in the database
@@ -163,12 +157,11 @@ public class OfficeResourceIntTest {
 
         // Create the Office with an existing ID
         office.setId(1L);
-        OfficeDTO officeDTO = officeMapper.toDto(office);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restOfficeMockMvc.perform(post("/api/offices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(officeDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(office)))
             .andExpect(status().isBadRequest());
 
         // Validate the Office in the database
@@ -249,11 +242,10 @@ public class OfficeResourceIntTest {
             .officesSurface(UPDATED_OFFICES_SURFACE)
             .ac(UPDATED_AC)
             .heat(UPDATED_HEAT);
-        OfficeDTO officeDTO = officeMapper.toDto(updatedOffice);
 
         restOfficeMockMvc.perform(put("/api/offices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(officeDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedOffice)))
             .andExpect(status().isOk());
 
         // Validate the Office in the database
@@ -277,12 +269,11 @@ public class OfficeResourceIntTest {
         int databaseSizeBeforeUpdate = officeRepository.findAll().size();
 
         // Create the Office
-        OfficeDTO officeDTO = officeMapper.toDto(office);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restOfficeMockMvc.perform(put("/api/offices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(officeDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(office)))
             .andExpect(status().isCreated());
 
         // Validate the Office in the database
@@ -320,28 +311,5 @@ public class OfficeResourceIntTest {
         assertThat(office1).isNotEqualTo(office2);
         office1.setId(null);
         assertThat(office1).isNotEqualTo(office2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(OfficeDTO.class);
-        OfficeDTO officeDTO1 = new OfficeDTO();
-        officeDTO1.setId(1L);
-        OfficeDTO officeDTO2 = new OfficeDTO();
-        assertThat(officeDTO1).isNotEqualTo(officeDTO2);
-        officeDTO2.setId(officeDTO1.getId());
-        assertThat(officeDTO1).isEqualTo(officeDTO2);
-        officeDTO2.setId(2L);
-        assertThat(officeDTO1).isNotEqualTo(officeDTO2);
-        officeDTO1.setId(null);
-        assertThat(officeDTO1).isNotEqualTo(officeDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(officeMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(officeMapper.fromId(null)).isNull();
     }
 }
