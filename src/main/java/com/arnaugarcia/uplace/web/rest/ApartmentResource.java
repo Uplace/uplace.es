@@ -104,6 +104,20 @@ public class ApartmentResource {
     }
 
     /**
+     * GET  /apartments/:id : get the "id" apartment.
+     *
+     * @param reference the id of the apartment to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the apartment, or with status 404 (Not Found)
+     */
+    @GetMapping("/apartments/reference/{reference}")
+    @Timed
+    public ResponseEntity<Apartment> getApartmentByReference(@PathVariable String reference) {
+        log.debug("REST request to get Apartment : {}", reference);
+        Apartment apartment = apartmentRepository.findApartmentByReference(reference);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
+    }
+
+    /**
      * DELETE  /apartments/:id : delete the "id" apartment.
      *
      * @param id the id of the apartment to delete
