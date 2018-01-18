@@ -1,0 +1,22 @@
+{
+    "uplaceApp": {
+        "terrain" : {
+            "home": {
+                "title": "Terrains",
+                "createLabel": "Crear nuevo Terrain",
+                "createOrEditLabel": "Crear o editar Terrain"
+            },
+            "created": "Un nuevo Terrain ha sido creado con el identificador {{ param }}",
+            "updated": "Un Terrain ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Terrain ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Terrain {{ id }}?"
+            },
+            "detail": {
+                "title": "Terrain"
+            },
+            "terrainType": "Terrain Type",
+            "nearTransport": "Near Transport"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "uplaceApp": {
+        "gallery" : {
+            "home": {
+                "title": "Galleries",
+                "createLabel": "Crear nuevo Gallery",
+                "createOrEditLabel": "Crear o editar Gallery"
+            },
+            "created": "Un nuevo Gallery ha sido creado con el identificador {{ param }}",
+            "updated": "Un Gallery ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Gallery ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Gallery {{ id }}?"
+            },
+            "detail": {
+                "title": "Gallery"
+            },
+            "description": "Description",
+            "photo": "Photo",
+            "property": "Property"
+        }
+    }
+}

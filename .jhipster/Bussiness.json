@@ -1,0 +1,61 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "bussinessType",
+            "fieldType": "BussinessType",
+            "fieldValues": "PUB,HOTEL,OTHERS"
+        },
+        {
+            "fieldName": "numberBathrooms",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "elevator",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "ac",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "heat",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "surfaceTerrace",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "surfaceGarden",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "numberOffice",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "surfaceSaloon",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "height",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "pool",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        }
+    ],
+    "changelogDate": "20180117115523",
+    "entityTableName": "bussiness",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": true
+}

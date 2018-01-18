@@ -1,0 +1,95 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myBussinessLabel" jhiTranslate="uplaceApp.bussiness.home.createOrEditLabel">Create or edit a Bussiness</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <up-alert-error></up-alert-error>
+        <div class="form-group" [hidden]="!bussiness.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="bussiness.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.bussinessType" for="field_bussinessType">Bussiness Type</label>
+            <select class="form-control" name="bussinessType" [(ngModel)]="bussiness.bussinessType" id="field_bussinessType" >
+                <option value="PUB">{{'uplaceApp.BussinessType.PUB' | translate}}</option>
+                <option value="HOTEL">{{'uplaceApp.BussinessType.HOTEL' | translate}}</option>
+                <option value="OTHERS">{{'uplaceApp.BussinessType.OTHERS' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.numberBathrooms" for="field_numberBathrooms">Number Bathrooms</label>
+            <input type="number" class="form-control" name="numberBathrooms" id="field_numberBathrooms"
+                [(ngModel)]="bussiness.numberBathrooms" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.elevator" for="field_elevator">Elevator</label>
+            <select class="form-control" name="elevator" [(ngModel)]="bussiness.elevator" id="field_elevator" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.ac" for="field_ac">Ac</label>
+            <select class="form-control" name="ac" [(ngModel)]="bussiness.ac" id="field_ac" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.heat" for="field_heat">Heat</label>
+            <select class="form-control" name="heat" [(ngModel)]="bussiness.heat" id="field_heat" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.surfaceTerrace" for="field_surfaceTerrace">Surface Terrace</label>
+            <input type="number" class="form-control" name="surfaceTerrace" id="field_surfaceTerrace"
+                [(ngModel)]="bussiness.surfaceTerrace" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.surfaceGarden" for="field_surfaceGarden">Surface Garden</label>
+            <input type="number" class="form-control" name="surfaceGarden" id="field_surfaceGarden"
+                [(ngModel)]="bussiness.surfaceGarden" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.numberOffice" for="field_numberOffice">Number Office</label>
+            <input type="number" class="form-control" name="numberOffice" id="field_numberOffice"
+                [(ngModel)]="bussiness.numberOffice" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.surfaceSaloon" for="field_surfaceSaloon">Surface Saloon</label>
+            <input type="number" class="form-control" name="surfaceSaloon" id="field_surfaceSaloon"
+                [(ngModel)]="bussiness.surfaceSaloon" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.height" for="field_height">Height</label>
+            <input type="number" class="form-control" name="height" id="field_height"
+                [(ngModel)]="bussiness.height" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.bussiness.pool" for="field_pool">Pool</label>
+            <select class="form-control" name="pool" [(ngModel)]="bussiness.pool" id="field_pool" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

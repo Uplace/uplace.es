@@ -1,0 +1,10 @@
+{
+    "uplaceApp": {
+        "Select" : {
+            "null": "",
+            "YES": "YES",
+            "NO": "NO",
+            "UNDEFINED": "UNDEFINED"
+        }
+    }
+}

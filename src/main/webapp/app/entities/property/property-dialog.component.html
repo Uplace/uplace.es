@@ -1,0 +1,132 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPropertyLabel" jhiTranslate="uplaceApp.property.home.createOrEditLabel">Create or edit a Property</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <up-alert-error></up-alert-error>
+        <div class="form-group" [hidden]="!property.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="property.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.title" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                [(ngModel)]="property.title" required/>
+            <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.price" for="field_price">Price</label>
+            <input type="number" class="form-control" name="price" id="field_price"
+                [(ngModel)]="property.price" required/>
+            <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.price?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.price?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.created" for="field_created">Created</label>
+            <div class="d-flex">
+                <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="property.created"
+                required/>
+            </div>
+            <div [hidden]="!(editForm.controls.created?.dirty && editForm.controls.created?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.created?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.created?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.updated" for="field_updated">Updated</label>
+            <div class="d-flex">
+                <input id="field_updated" type="datetime-local" class="form-control" name="updated" [(ngModel)]="property.updated"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.description" for="field_description">Description</label>
+            <textarea class="form-control" name="description" id="field_description"
+                [(ngModel)]="property.description" ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.reference" for="field_reference">Reference</label>
+            <input type="text" class="form-control" name="reference" id="field_reference"
+                [(ngModel)]="property.reference" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.priceSell" for="field_priceSell">Price Sell</label>
+            <input type="number" class="form-control" name="priceSell" id="field_priceSell"
+                [(ngModel)]="property.priceSell" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.priceRent" for="field_priceRent">Price Rent</label>
+            <input type="number" class="form-control" name="priceRent" id="field_priceRent"
+                [(ngModel)]="property.priceRent" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.yearConstruction" for="field_yearConstruction">Year Construction</label>
+            <input type="number" class="form-control" name="yearConstruction" id="field_yearConstruction"
+                [(ngModel)]="property.yearConstruction" min="500"/>
+            <div [hidden]="!(editForm.controls.yearConstruction?.dirty && editForm.controls.yearConstruction?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.yearConstruction?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 500 }">
+                    This field should be at least 500.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.yearConstruction?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.newCreation" for="field_newCreation">New Creation</label>
+            <input type="checkbox" class="form-control" name="newCreation" id="field_newCreation"
+                [(ngModel)]="property.newCreation" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.visible" for="field_visible">Visible</label>
+            <input type="checkbox" class="form-control" name="visible" id="field_visible"
+                [(ngModel)]="property.visible" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.surface" for="field_surface">Surface</label>
+            <input type="number" class="form-control" name="surface" id="field_surface"
+                [(ngModel)]="property.surface" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.gallery" for="field_gallery">Gallery</label>
+            <select class="form-control" id="field_gallery" name="gallery" [(ngModel)]="property.gallery">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="galleryOption.id === property.gallery?.id ? property.gallery : galleryOption" *ngFor="let galleryOption of galleries; trackBy: trackGalleryById">{{galleryOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

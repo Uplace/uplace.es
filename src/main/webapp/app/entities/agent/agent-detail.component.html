@@ -1,0 +1,36 @@
+
+<div *ngIf="agent">
+    <h2><span jhiTranslate="uplaceApp.agent.detail.title">Agent</span> {{agent.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.agent.firstName">First Name</span></dt>
+        <dd>
+            <span>{{agent.firstName}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.agent.lastName">Last Name</span></dt>
+        <dd>
+            <span>{{agent.lastName}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.agent.property">Property</span></dt>
+        <dd>
+            <div *ngIf="agent.propertyId">
+                <a [routerLink]="['/property', agent.propertyId]">{{agent.propertyTitle}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'agent/'+ agent.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

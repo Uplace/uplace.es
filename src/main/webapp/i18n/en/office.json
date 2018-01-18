@@ -1,0 +1,29 @@
+{
+    "uplaceApp": {
+        "office" : {
+            "home": {
+                "title": "Offices",
+                "createLabel": "Create a new Office",
+                "createOrEditLabel": "Create or edit a Office"
+            },
+            "created": "A new Office is created with identifier {{ param }}",
+            "updated": "A Office is updated with identifier {{ param }}",
+            "deleted": "A Office is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Office {{ id }}?"
+            },
+            "detail": {
+                "title": "Office"
+            },
+            "bathrooms": "Bathrooms",
+            "floors": "Floors",
+            "terrace": "Terrace",
+            "office": "Office",
+            "storage": "Storage",
+            "storageSurface": "Storage Surface",
+            "officesSurface": "Offices Surface",
+            "ac": "Ac",
+            "heat": "Heat"
+        }
+    }
+}

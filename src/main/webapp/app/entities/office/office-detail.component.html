@@ -1,0 +1,58 @@
+
+<div *ngIf="office">
+    <h2><span jhiTranslate="uplaceApp.office.detail.title">Office</span> {{office.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.office.bathrooms">Bathrooms</span></dt>
+        <dd>
+            <span>{{office.bathrooms}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.office.floors">Floors</span></dt>
+        <dd>
+            <span>{{office.floors}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.office.terrace">Terrace</span></dt>
+        <dd>
+            <span>{{office.terrace}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.office.office">Office</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + office.office}}">{{office.office}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.office.storage">Storage</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + office.storage}}">{{office.storage}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.office.storageSurface">Storage Surface</span></dt>
+        <dd>
+            <span>{{office.storageSurface}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.office.officesSurface">Offices Surface</span></dt>
+        <dd>
+            <span>{{office.officesSurface}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.office.ac">Ac</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + office.ac}}">{{office.ac}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.office.heat">Heat</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + office.heat}}">{{office.heat}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'office/'+ office.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
