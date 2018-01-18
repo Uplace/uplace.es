@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
-import com.arnaugarcia.uplace.service.dto.PropertyDTO;
-import com.arnaugarcia.uplace.service.mapper.PropertyMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -86,9 +84,6 @@ public class PropertyResourceIntTest {
     private PropertyRepository propertyRepository;
 
     @Autowired
-    private PropertyMapper propertyMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -107,7 +102,7 @@ public class PropertyResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PropertyResource propertyResource = new PropertyResource(propertyRepository, propertyMapper);
+        final PropertyResource propertyResource = new PropertyResource(propertyRepository);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -149,10 +144,9 @@ public class PropertyResourceIntTest {
         int databaseSizeBeforeCreate = propertyRepository.findAll().size();
 
         // Create the Property
-        PropertyDTO propertyDTO = propertyMapper.toDto(property);
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(property)))
             .andExpect(status().isCreated());
 
         // Validate the Property in the database
@@ -180,12 +174,11 @@ public class PropertyResourceIntTest {
 
         // Create the Property with an existing ID
         property.setId(1L);
-        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(property)))
             .andExpect(status().isBadRequest());
 
         // Validate the Property in the database
@@ -201,11 +194,10 @@ public class PropertyResourceIntTest {
         property.setTitle(null);
 
         // Create the Property, which fails.
-        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(property)))
             .andExpect(status().isBadRequest());
 
         List<Property> propertyList = propertyRepository.findAll();
@@ -220,11 +212,10 @@ public class PropertyResourceIntTest {
         property.setPrice(null);
 
         // Create the Property, which fails.
-        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(property)))
             .andExpect(status().isBadRequest());
 
         List<Property> propertyList = propertyRepository.findAll();
@@ -239,11 +230,10 @@ public class PropertyResourceIntTest {
         property.setCreated(null);
 
         // Create the Property, which fails.
-        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(property)))
             .andExpect(status().isBadRequest());
 
         List<Property> propertyList = propertyRepository.findAll();
@@ -332,11 +322,10 @@ public class PropertyResourceIntTest {
             .newCreation(UPDATED_NEW_CREATION)
             .visible(UPDATED_VISIBLE)
             .surface(UPDATED_SURFACE);
-        PropertyDTO propertyDTO = propertyMapper.toDto(updatedProperty);
 
         restPropertyMockMvc.perform(put("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedProperty)))
             .andExpect(status().isOk());
 
         // Validate the Property in the database
@@ -363,12 +352,11 @@ public class PropertyResourceIntTest {
         int databaseSizeBeforeUpdate = propertyRepository.findAll().size();
 
         // Create the Property
-        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restPropertyMockMvc.perform(put("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(property)))
             .andExpect(status().isCreated());
 
         // Validate the Property in the database
@@ -406,28 +394,5 @@ public class PropertyResourceIntTest {
         assertThat(property1).isNotEqualTo(property2);
         property1.setId(null);
         assertThat(property1).isNotEqualTo(property2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(PropertyDTO.class);
-        PropertyDTO propertyDTO1 = new PropertyDTO();
-        propertyDTO1.setId(1L);
-        PropertyDTO propertyDTO2 = new PropertyDTO();
-        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2);
-        propertyDTO2.setId(propertyDTO1.getId());
-        assertThat(propertyDTO1).isEqualTo(propertyDTO2);
-        propertyDTO2.setId(2L);
-        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2);
-        propertyDTO1.setId(null);
-        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(propertyMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(propertyMapper.fromId(null)).isNull();
     }
 }

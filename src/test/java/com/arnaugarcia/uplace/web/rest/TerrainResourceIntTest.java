@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Terrain;
 import com.arnaugarcia.uplace.repository.TerrainRepository;
-import com.arnaugarcia.uplace.service.dto.TerrainDTO;
-import com.arnaugarcia.uplace.service.mapper.TerrainMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -52,9 +50,6 @@ public class TerrainResourceIntTest {
     private TerrainRepository terrainRepository;
 
     @Autowired
-    private TerrainMapper terrainMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -73,7 +68,7 @@ public class TerrainResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TerrainResource terrainResource = new TerrainResource(terrainRepository, terrainMapper);
+        final TerrainResource terrainResource = new TerrainResource(terrainRepository);
         this.restTerrainMockMvc = MockMvcBuilders.standaloneSetup(terrainResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -105,10 +100,9 @@ public class TerrainResourceIntTest {
         int databaseSizeBeforeCreate = terrainRepository.findAll().size();
 
         // Create the Terrain
-        TerrainDTO terrainDTO = terrainMapper.toDto(terrain);
         restTerrainMockMvc.perform(post("/api/terrains")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(terrainDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(terrain)))
             .andExpect(status().isCreated());
 
         // Validate the Terrain in the database
@@ -126,12 +120,11 @@ public class TerrainResourceIntTest {
 
         // Create the Terrain with an existing ID
         terrain.setId(1L);
-        TerrainDTO terrainDTO = terrainMapper.toDto(terrain);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restTerrainMockMvc.perform(post("/api/terrains")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(terrainDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(terrain)))
             .andExpect(status().isBadRequest());
 
         // Validate the Terrain in the database
@@ -191,11 +184,10 @@ public class TerrainResourceIntTest {
         updatedTerrain
             .terrainType(UPDATED_TERRAIN_TYPE)
             .nearTransport(UPDATED_NEAR_TRANSPORT);
-        TerrainDTO terrainDTO = terrainMapper.toDto(updatedTerrain);
 
         restTerrainMockMvc.perform(put("/api/terrains")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(terrainDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedTerrain)))
             .andExpect(status().isOk());
 
         // Validate the Terrain in the database
@@ -212,12 +204,11 @@ public class TerrainResourceIntTest {
         int databaseSizeBeforeUpdate = terrainRepository.findAll().size();
 
         // Create the Terrain
-        TerrainDTO terrainDTO = terrainMapper.toDto(terrain);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restTerrainMockMvc.perform(put("/api/terrains")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(terrainDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(terrain)))
             .andExpect(status().isCreated());
 
         // Validate the Terrain in the database
@@ -255,28 +246,5 @@ public class TerrainResourceIntTest {
         assertThat(terrain1).isNotEqualTo(terrain2);
         terrain1.setId(null);
         assertThat(terrain1).isNotEqualTo(terrain2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(TerrainDTO.class);
-        TerrainDTO terrainDTO1 = new TerrainDTO();
-        terrainDTO1.setId(1L);
-        TerrainDTO terrainDTO2 = new TerrainDTO();
-        assertThat(terrainDTO1).isNotEqualTo(terrainDTO2);
-        terrainDTO2.setId(terrainDTO1.getId());
-        assertThat(terrainDTO1).isEqualTo(terrainDTO2);
-        terrainDTO2.setId(2L);
-        assertThat(terrainDTO1).isNotEqualTo(terrainDTO2);
-        terrainDTO1.setId(null);
-        assertThat(terrainDTO1).isNotEqualTo(terrainDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(terrainMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(terrainMapper.fromId(null)).isNull();
     }
 }

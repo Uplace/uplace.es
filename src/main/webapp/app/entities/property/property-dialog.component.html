@@ -115,9 +115,9 @@
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.property.gallery" for="field_gallery">Gallery</label>
-            <select class="form-control" id="field_gallery" name="gallery" [(ngModel)]="property.galleryId">
+            <select class="form-control" id="field_gallery" name="gallery" [(ngModel)]="property.gallery">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="galleryOption.id" *ngFor="let galleryOption of galleries; trackBy: trackGalleryById">{{galleryOption.id}}</option>
+                <option [ngValue]="galleryOption.id === property.gallery?.id ? property.gallery : galleryOption" *ngFor="let galleryOption of galleries; trackBy: trackGalleryById">{{galleryOption.id}}</option>
             </select>
         </div>
     </div>

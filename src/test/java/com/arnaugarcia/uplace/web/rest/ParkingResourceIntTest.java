@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Parking;
 import com.arnaugarcia.uplace.repository.ParkingRepository;
-import com.arnaugarcia.uplace.service.dto.ParkingDTO;
-import com.arnaugarcia.uplace.service.mapper.ParkingMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -56,9 +54,6 @@ public class ParkingResourceIntTest {
     private ParkingRepository parkingRepository;
 
     @Autowired
-    private ParkingMapper parkingMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -77,7 +72,7 @@ public class ParkingResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ParkingResource parkingResource = new ParkingResource(parkingRepository, parkingMapper);
+        final ParkingResource parkingResource = new ParkingResource(parkingRepository);
         this.restParkingMockMvc = MockMvcBuilders.standaloneSetup(parkingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -110,10 +105,9 @@ public class ParkingResourceIntTest {
         int databaseSizeBeforeCreate = parkingRepository.findAll().size();
 
         // Create the Parking
-        ParkingDTO parkingDTO = parkingMapper.toDto(parking);
         restParkingMockMvc.perform(post("/api/parkings")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(parkingDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(parking)))
             .andExpect(status().isCreated());
 
         // Validate the Parking in the database
@@ -132,12 +126,11 @@ public class ParkingResourceIntTest {
 
         // Create the Parking with an existing ID
         parking.setId(1L);
-        ParkingDTO parkingDTO = parkingMapper.toDto(parking);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restParkingMockMvc.perform(post("/api/parkings")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(parkingDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(parking)))
             .andExpect(status().isBadRequest());
 
         // Validate the Parking in the database
@@ -200,11 +193,10 @@ public class ParkingResourceIntTest {
             .parkingType(UPDATED_PARKING_TYPE)
             .nearTransport(UPDATED_NEAR_TRANSPORT)
             .surveillance(UPDATED_SURVEILLANCE);
-        ParkingDTO parkingDTO = parkingMapper.toDto(updatedParking);
 
         restParkingMockMvc.perform(put("/api/parkings")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(parkingDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedParking)))
             .andExpect(status().isOk());
 
         // Validate the Parking in the database
@@ -222,12 +214,11 @@ public class ParkingResourceIntTest {
         int databaseSizeBeforeUpdate = parkingRepository.findAll().size();
 
         // Create the Parking
-        ParkingDTO parkingDTO = parkingMapper.toDto(parking);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restParkingMockMvc.perform(put("/api/parkings")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(parkingDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(parking)))
             .andExpect(status().isCreated());
 
         // Validate the Parking in the database
@@ -265,28 +256,5 @@ public class ParkingResourceIntTest {
         assertThat(parking1).isNotEqualTo(parking2);
         parking1.setId(null);
         assertThat(parking1).isNotEqualTo(parking2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ParkingDTO.class);
-        ParkingDTO parkingDTO1 = new ParkingDTO();
-        parkingDTO1.setId(1L);
-        ParkingDTO parkingDTO2 = new ParkingDTO();
-        assertThat(parkingDTO1).isNotEqualTo(parkingDTO2);
-        parkingDTO2.setId(parkingDTO1.getId());
-        assertThat(parkingDTO1).isEqualTo(parkingDTO2);
-        parkingDTO2.setId(2L);
-        assertThat(parkingDTO1).isNotEqualTo(parkingDTO2);
-        parkingDTO1.setId(null);
-        assertThat(parkingDTO1).isNotEqualTo(parkingDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(parkingMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(parkingMapper.fromId(null)).isNull();
     }
 }

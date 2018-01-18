@@ -49,8 +49,8 @@
                 <td>{{property.visible}}</td>
                 <td>{{property.surface}}</td>
                 <td>
-                    <div *ngIf="property.galleryId">
-                        <a [routerLink]="['../gallery', property.galleryId  ]" >{{property.galleryId}}</a>
+                    <div *ngIf="property.gallery">
+                        <a [routerLink]="['../gallery', property.gallery?.id ]" >{{property.gallery?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

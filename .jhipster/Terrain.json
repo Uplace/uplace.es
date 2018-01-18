@@ -15,7 +15,7 @@
     ],
     "changelogDate": "20180117115521",
     "entityTableName": "terrain",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": true

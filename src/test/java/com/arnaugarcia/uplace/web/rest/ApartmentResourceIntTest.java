@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
-import com.arnaugarcia.uplace.service.dto.ApartmentDTO;
-import com.arnaugarcia.uplace.service.mapper.ApartmentMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -92,9 +90,6 @@ public class ApartmentResourceIntTest {
     private ApartmentRepository apartmentRepository;
 
     @Autowired
-    private ApartmentMapper apartmentMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -113,7 +108,7 @@ public class ApartmentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ApartmentResource apartmentResource = new ApartmentResource(apartmentRepository, apartmentMapper);
+        final ApartmentResource apartmentResource = new ApartmentResource(apartmentRepository);
         this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -156,10 +151,9 @@ public class ApartmentResourceIntTest {
         int databaseSizeBeforeCreate = apartmentRepository.findAll().size();
 
         // Create the Apartment
-        ApartmentDTO apartmentDTO = apartmentMapper.toDto(apartment);
         restApartmentMockMvc.perform(post("/api/apartments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(apartmentDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(apartment)))
             .andExpect(status().isCreated());
 
         // Validate the Apartment in the database
@@ -188,12 +182,11 @@ public class ApartmentResourceIntTest {
 
         // Create the Apartment with an existing ID
         apartment.setId(1L);
-        ApartmentDTO apartmentDTO = apartmentMapper.toDto(apartment);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restApartmentMockMvc.perform(post("/api/apartments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(apartmentDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(apartment)))
             .andExpect(status().isBadRequest());
 
         // Validate the Apartment in the database
@@ -286,11 +279,10 @@ public class ApartmentResourceIntTest {
             .storage(UPDATED_STORAGE)
             .sharedPool(UPDATED_SHARED_POOL)
             .nearTransport(UPDATED_NEAR_TRANSPORT);
-        ApartmentDTO apartmentDTO = apartmentMapper.toDto(updatedApartment);
 
         restApartmentMockMvc.perform(put("/api/apartments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(apartmentDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedApartment)))
             .andExpect(status().isOk());
 
         // Validate the Apartment in the database
@@ -318,12 +310,11 @@ public class ApartmentResourceIntTest {
         int databaseSizeBeforeUpdate = apartmentRepository.findAll().size();
 
         // Create the Apartment
-        ApartmentDTO apartmentDTO = apartmentMapper.toDto(apartment);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restApartmentMockMvc.perform(put("/api/apartments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(apartmentDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(apartment)))
             .andExpect(status().isCreated());
 
         // Validate the Apartment in the database
@@ -361,28 +352,5 @@ public class ApartmentResourceIntTest {
         assertThat(apartment1).isNotEqualTo(apartment2);
         apartment1.setId(null);
         assertThat(apartment1).isNotEqualTo(apartment2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ApartmentDTO.class);
-        ApartmentDTO apartmentDTO1 = new ApartmentDTO();
-        apartmentDTO1.setId(1L);
-        ApartmentDTO apartmentDTO2 = new ApartmentDTO();
-        assertThat(apartmentDTO1).isNotEqualTo(apartmentDTO2);
-        apartmentDTO2.setId(apartmentDTO1.getId());
-        assertThat(apartmentDTO1).isEqualTo(apartmentDTO2);
-        apartmentDTO2.setId(2L);
-        assertThat(apartmentDTO1).isNotEqualTo(apartmentDTO2);
-        apartmentDTO1.setId(null);
-        assertThat(apartmentDTO1).isNotEqualTo(apartmentDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(apartmentMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(apartmentMapper.fromId(null)).isNull();
     }
 }

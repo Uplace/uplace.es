@@ -54,7 +54,7 @@
     ],
     "changelogDate": "20180117115523",
     "entityTableName": "bussiness",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": true
