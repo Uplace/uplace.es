@@ -16,16 +16,18 @@ import java.util.Objects;
 /**
  * A Property.
  */
-@Entity
 @Table(name = "property")
+@Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Property implements Serializable {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn()
+public abstract class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @NotNull
     @Column(name = "title", nullable = false)

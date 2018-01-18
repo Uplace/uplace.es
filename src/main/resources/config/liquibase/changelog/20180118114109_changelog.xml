@@ -1,0 +1,78 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="agarcia (generated)" id="1516275675392-1">
+        <addColumn tableName="property">
+            <column name="ac" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-2">
+        <addColumn tableName="property">
+            <column name="dtype" type="varchar(31)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-3">
+        <addColumn tableName="property">
+            <column name="elevator" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-4">
+        <addColumn tableName="property">
+            <column name="heat" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-5">
+        <addColumn tableName="property">
+            <column name="kitchen_office" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-6">
+        <addColumn tableName="property">
+            <column name="near_transport" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-7">
+        <addColumn tableName="property">
+            <column name="number_bathrooms" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-8">
+        <addColumn tableName="property">
+            <column name="number_bedrooms" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-9">
+        <addColumn tableName="property">
+            <column name="office" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-10">
+        <addColumn tableName="property">
+            <column name="property_type" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-11">
+        <addColumn tableName="property">
+            <column name="surface_saloon" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-12">
+        <addColumn tableName="property">
+            <column name="surface_terrace" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-13">
+        <addColumn tableName="property">
+            <column name="up_shared_pool" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-14">
+        <addColumn tableName="property">
+            <column name="up_storage" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1516275675392-15">
+        <dropTable tableName="apartment"/>
+    </changeSet>
+</databaseChangeLog>

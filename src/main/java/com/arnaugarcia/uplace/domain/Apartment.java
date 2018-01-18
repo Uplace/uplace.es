@@ -16,9 +16,9 @@ import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
  * A Apartment.
  */
 @Entity
-@Table(name = "apartment")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Apartment implements Serializable {
+@DiscriminatorValue("Apartment")
+public class Apartment extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
