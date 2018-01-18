@@ -43,20 +43,18 @@ public class ApartmentResource {
     /**
      * POST  /apartments : Create a new apartment.
      *
-     * @param apartmentDTO the apartmentDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new apartmentDTO, or with status 400 (Bad Request) if the apartment has already an ID
+     * @param apartment the apartment to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new apartment, or with status 400 (Bad Request) if the apartment has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/apartments")
     @Timed
-    public ResponseEntity<ApartmentDTO> createApartment(@RequestBody ApartmentDTO apartmentDTO) throws URISyntaxException {
-        log.debug("REST request to save Apartment : {}", apartmentDTO);
-        if (apartmentDTO.getId() != null) {
+    public ResponseEntity<Apartment> createApartment(@RequestBody Apartment apartment) throws URISyntaxException {
+        log.debug("REST request to save Apartment : {}", apartment);
+        if (apartment.getId() != null) {
             throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Apartment apartment = apartmentMapper.toEntity(apartmentDTO);
-        apartment = apartmentRepository.save(apartment);
-        ApartmentDTO result = apartmentMapper.toDto(apartment);
+        Apartment result = apartmentRepository.save(apartment);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -65,24 +63,22 @@ public class ApartmentResource {
     /**
      * PUT  /apartments : Updates an existing apartment.
      *
-     * @param apartmentDTO the apartmentDTO to update
+     * @param apartment the apartment to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated apartmentDTO,
-     * or with status 400 (Bad Request) if the apartmentDTO is not valid,
-     * or with status 500 (Internal Server Error) if the apartmentDTO couldn't be updated
+     * or with status 400 (Bad Request) if the apartment is not valid,
+     * or with status 500 (Internal Server Error) if the apartment couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/apartments")
     @Timed
-    public ResponseEntity<ApartmentDTO> updateApartment(@RequestBody ApartmentDTO apartmentDTO) throws URISyntaxException {
-        log.debug("REST request to update Apartment : {}", apartmentDTO);
-        if (apartmentDTO.getId() == null) {
+    public ResponseEntity<Apartment> updateApartment(@RequestBody Apartment apartment) throws URISyntaxException {
+        log.debug("REST request to update Apartment : {}", apartment);
+        /*if (apartmentDTO.getId() == null) {
             return createApartment(apartmentDTO);
-        }
-        Apartment apartment = apartmentMapper.toEntity(apartmentDTO);
-        apartment = apartmentRepository.save(apartment);
-        ApartmentDTO result = apartmentMapper.toDto(apartment);
+        }*/
+        Apartment result = apartmentRepository.save(apartment);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, apartmentDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, apartment.getId().toString()))
             .body(result);
     }
 
@@ -93,25 +89,24 @@ public class ApartmentResource {
      */
     @GetMapping("/apartments")
     @Timed
-    public List<ApartmentDTO> getAllApartments() {
+    public List<Apartment> getAllApartments() {
         log.debug("REST request to get all Apartments");
         List<Apartment> apartments = apartmentRepository.findAll();
-        return apartmentMapper.toDto(apartments);
+        return apartments;
         }
 
     /**
      * GET  /apartments/:id : get the "id" apartment.
      *
-     * @param id the id of the apartmentDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the apartmentDTO, or with status 404 (Not Found)
+     * @param id the id of the apartment to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the apartment, or with status 404 (Not Found)
      */
     @GetMapping("/apartments/{id}")
     @Timed
-    public ResponseEntity<ApartmentDTO> getApartment(@PathVariable Long id) {
+    public ResponseEntity<Apartment> getApartment(@PathVariable Long id) {
         log.debug("REST request to get Apartment : {}", id);
         Apartment apartment = apartmentRepository.findOne(id);
-        ApartmentDTO apartmentDTO = apartmentMapper.toDto(apartment);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartmentDTO));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
     }
 
     /**
