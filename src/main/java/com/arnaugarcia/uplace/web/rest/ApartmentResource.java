@@ -113,7 +113,7 @@ public class ApartmentResource {
     @Timed
     public ResponseEntity<Apartment> getApartmentByReference(@PathVariable String reference) {
         log.debug("REST request to get Apartment : {}", reference);
-        Apartment apartment = apartmentRepository.findApartmentByReference(reference);
+        Apartment apartment = apartmentRepository.findFirstByReference(reference);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
     }
 
