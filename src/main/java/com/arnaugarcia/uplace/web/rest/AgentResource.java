@@ -6,8 +6,6 @@ import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.repository.AgentRepository;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import com.arnaugarcia.uplace.service.dto.AgentDTO;
-import com.arnaugarcia.uplace.service.mapper.AgentMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,30 +31,25 @@ public class AgentResource {
 
     private final AgentRepository agentRepository;
 
-    private final AgentMapper agentMapper;
-
-    public AgentResource(AgentRepository agentRepository, AgentMapper agentMapper) {
+    public AgentResource(AgentRepository agentRepository) {
         this.agentRepository = agentRepository;
-        this.agentMapper = agentMapper;
     }
 
     /**
      * POST  /agents : Create a new agent.
      *
-     * @param agentDTO the agentDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new agentDTO, or with status 400 (Bad Request) if the agent has already an ID
+     * @param agent the agent to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new agent, or with status 400 (Bad Request) if the agent has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/agents")
     @Timed
-    public ResponseEntity<AgentDTO> createAgent(@RequestBody AgentDTO agentDTO) throws URISyntaxException {
-        log.debug("REST request to save Agent : {}", agentDTO);
-        if (agentDTO.getId() != null) {
+    public ResponseEntity<Agent> createAgent(@RequestBody Agent agent) throws URISyntaxException {
+        log.debug("REST request to save Agent : {}", agent);
+        if (agent.getId() != null) {
             throw new BadRequestAlertException("A new agent cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Agent agent = agentMapper.toEntity(agentDTO);
-        agent = agentRepository.save(agent);
-        AgentDTO result = agentMapper.toDto(agent);
+        Agent result = agentRepository.save(agent);
         return ResponseEntity.created(new URI("/api/agents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -65,24 +58,22 @@ public class AgentResource {
     /**
      * PUT  /agents : Updates an existing agent.
      *
-     * @param agentDTO the agentDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated agentDTO,
-     * or with status 400 (Bad Request) if the agentDTO is not valid,
-     * or with status 500 (Internal Server Error) if the agentDTO couldn't be updated
+     * @param agent the agent to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated agent,
+     * or with status 400 (Bad Request) if the agent is not valid,
+     * or with status 500 (Internal Server Error) if the agent couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/agents")
     @Timed
-    public ResponseEntity<AgentDTO> updateAgent(@RequestBody AgentDTO agentDTO) throws URISyntaxException {
-        log.debug("REST request to update Agent : {}", agentDTO);
-        if (agentDTO.getId() == null) {
-            return createAgent(agentDTO);
+    public ResponseEntity<Agent> updateAgent(@RequestBody Agent agent) throws URISyntaxException {
+        log.debug("REST request to update Agent : {}", agent);
+        if (agent.getId() == null) {
+            return createAgent(agent);
         }
-        Agent agent = agentMapper.toEntity(agentDTO);
-        agent = agentRepository.save(agent);
-        AgentDTO result = agentMapper.toDto(agent);
+        Agent result = agentRepository.save(agent);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, agentDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, agent.getId().toString()))
             .body(result);
     }
 
@@ -93,31 +84,30 @@ public class AgentResource {
      */
     @GetMapping("/agents")
     @Timed
-    public List<AgentDTO> getAllAgents() {
+    public List<Agent> getAllAgents() {
         log.debug("REST request to get all Agents");
         List<Agent> agents = agentRepository.findAll();
-        return agentMapper.toDto(agents);
+        return agents;
         }
 
     /**
      * GET  /agents/:id : get the "id" agent.
      *
-     * @param id the id of the agentDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the agentDTO, or with status 404 (Not Found)
+     * @param id the id of the agent to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the agent, or with status 404 (Not Found)
      */
     @GetMapping("/agents/{id}")
     @Timed
-    public ResponseEntity<AgentDTO> getAgent(@PathVariable Long id) {
+    public ResponseEntity<Agent> getAgent(@PathVariable Long id) {
         log.debug("REST request to get Agent : {}", id);
         Agent agent = agentRepository.findOne(id);
-        AgentDTO agentDTO = agentMapper.toDto(agent);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(agentDTO));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(agent));
     }
 
     /**
      * DELETE  /agents/:id : delete the "id" agent.
      *
-     * @param id the id of the agentDTO to delete
+     * @param id the id of the agent to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/agents/{id}")

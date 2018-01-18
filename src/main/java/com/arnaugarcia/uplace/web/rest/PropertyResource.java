@@ -6,8 +6,6 @@ import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import com.arnaugarcia.uplace.service.dto.PropertyDTO;
-import com.arnaugarcia.uplace.service.mapper.PropertyMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,30 +32,26 @@ public class PropertyResource {
 
     private final PropertyRepository propertyRepository;
 
-    private final PropertyMapper propertyMapper;
 
-    public PropertyResource(PropertyRepository propertyRepository, PropertyMapper propertyMapper) {
+    public PropertyResource(PropertyRepository propertyRepository) {
         this.propertyRepository = propertyRepository;
-        this.propertyMapper = propertyMapper;
     }
 
     /**
      * POST  /properties : Create a new property.
      *
-     * @param propertyDTO the propertyDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new propertyDTO, or with status 400 (Bad Request) if the property has already an ID
+     * @param property the property to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/properties")
     @Timed
-    public ResponseEntity<PropertyDTO> createProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
-        log.debug("REST request to save Property : {}", propertyDTO);
-        if (propertyDTO.getId() != null) {
+    public ResponseEntity<Property> createProperty(@Valid @RequestBody Property property) throws URISyntaxException {
+        log.debug("REST request to save Property : {}", property);
+        if (property.getId() != null) {
             throw new BadRequestAlertException("A new property cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Property property = propertyMapper.toEntity(propertyDTO);
-        property = propertyRepository.save(property);
-        PropertyDTO result = propertyMapper.toDto(property);
+        Property result = propertyRepository.save(property);
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -66,24 +60,22 @@ public class PropertyResource {
     /**
      * PUT  /properties : Updates an existing property.
      *
-     * @param propertyDTO the propertyDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated propertyDTO,
-     * or with status 400 (Bad Request) if the propertyDTO is not valid,
-     * or with status 500 (Internal Server Error) if the propertyDTO couldn't be updated
+     * @param property the property to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated property,
+     * or with status 400 (Bad Request) if the property is not valid,
+     * or with status 500 (Internal Server Error) if the property couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/properties")
     @Timed
-    public ResponseEntity<PropertyDTO> updateProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
-        log.debug("REST request to update Property : {}", propertyDTO);
-        if (propertyDTO.getId() == null) {
-            return createProperty(propertyDTO);
+    public ResponseEntity<Property> updateProperty(@Valid @RequestBody Property property) throws URISyntaxException {
+        log.debug("REST request to update Property : {}", property);
+        if (property.getId() == null) {
+            return createProperty(property);
         }
-        Property property = propertyMapper.toEntity(propertyDTO);
-        property = propertyRepository.save(property);
-        PropertyDTO result = propertyMapper.toDto(property);
+        Property result = propertyRepository.save(property);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, propertyDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, property.getId().toString()))
             .body(result);
     }
 
@@ -94,31 +86,30 @@ public class PropertyResource {
      */
     @GetMapping("/properties")
     @Timed
-    public List<PropertyDTO> getAllProperties() {
+    public List<Property> getAllProperties() {
         log.debug("REST request to get all Properties");
         List<Property> properties = propertyRepository.findAll();
-        return propertyMapper.toDto(properties);
+        return properties;
         }
 
     /**
      * GET  /properties/:id : get the "id" property.
      *
-     * @param id the id of the propertyDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the propertyDTO, or with status 404 (Not Found)
+     * @param id the id of the property to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
      */
     @GetMapping("/properties/{id}")
     @Timed
-    public ResponseEntity<PropertyDTO> getProperty(@PathVariable Long id) {
+    public ResponseEntity<Property> getProperty(@PathVariable Long id) {
         log.debug("REST request to get Property : {}", id);
         Property property = propertyRepository.findOne(id);
-        PropertyDTO propertyDTO = propertyMapper.toDto(property);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(propertyDTO));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(property));
     }
 
     /**
      * DELETE  /properties/:id : delete the "id" property.
      *
-     * @param id the id of the propertyDTO to delete
+     * @param id the id of the property to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/properties/{id}")
