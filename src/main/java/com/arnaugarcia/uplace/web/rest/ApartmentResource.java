@@ -33,11 +33,8 @@ public class ApartmentResource {
 
     private final ApartmentRepository apartmentRepository;
 
-    private final ApartmentMapper apartmentMapper;
-
-    public ApartmentResource(ApartmentRepository apartmentRepository, ApartmentMapper apartmentMapper) {
+    public ApartmentResource(ApartmentRepository apartmentRepository) {
         this.apartmentRepository = apartmentRepository;
-        this.apartmentMapper = apartmentMapper;
     }
 
     /**
@@ -73,9 +70,9 @@ public class ApartmentResource {
     @Timed
     public ResponseEntity<Apartment> updateApartment(@RequestBody Apartment apartment) throws URISyntaxException {
         log.debug("REST request to update Apartment : {}", apartment);
-        /*if (apartmentDTO.getId() == null) {
-            return createApartment(apartmentDTO);
-        }*/
+        if (apartment.getId() == null) {
+            return createApartment(apartment);
+        }
         Apartment result = apartmentRepository.save(apartment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, apartment.getId().toString()))
