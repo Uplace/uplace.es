@@ -36,6 +36,7 @@
       "en",
       "ca",
       "es"
-    ]
+    ],
+    "herokuAppName": "uplace-api"
   }
 }
