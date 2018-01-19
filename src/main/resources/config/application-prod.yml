@@ -141,6 +141,21 @@ jhipster:
             port: 5000
             queue-size: 512
 
+    # By default cross-origin resource sharing (CORS) is enabled in "dev" mode for
+    # monoliths and gateways.
+    # It is disabled by default in "prod" mode for security reasons, and for microservices
+    # (as you are supposed to use a gateway to access them).
+    # This configures a standard org.springframework.web.cors.CorsConfiguration
+    # Note that "exposed-headers" is mandatory for JWT-based security, which uses
+    # the "Authorization" header, and which is not a default exposed header.
+    cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+        allowed-headers: "*"
+        exposed-headers: "Authorization"
+        allow-credentials: true
+        max-age: 1800
+
 
 # ===================================================================
 # Application specific properties
