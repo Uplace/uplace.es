@@ -29,8 +29,8 @@
                 <td>{{agent.firstName}}</td>
                 <td>{{agent.lastName}}</td>
                 <td>
-                    <div *ngIf="agent.propertyId">
-                        <a [routerLink]="['../property', agent.propertyId  ]" >{{agent.propertyTitle}}</a>
+                    <div *ngIf="agent.property">
+                        <a [routerLink]="['../property', agent.property?.id ]" >{{agent.property?.title}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -31,7 +31,6 @@ public class AgentResource {
 
     private final AgentRepository agentRepository;
 
-
     public AgentResource(AgentRepository agentRepository) {
         this.agentRepository = agentRepository;
     }
@@ -87,8 +86,7 @@ public class AgentResource {
     @Timed
     public List<Agent> getAllAgents() {
         log.debug("REST request to get all Agents");
-        List<Agent> agents = agentRepository.findAll();
-        return agents;
+        return agentRepository.findAll();
         }
 
     /**

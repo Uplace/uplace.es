@@ -36,8 +36,8 @@
                     <span *ngIf="photo.photo">{{photo.photoContentType}}, {{byteSize(photo.photo)}}</span>
                 </td>
                 <td>
-                    <div *ngIf="photo.galleryId">
-                        <a [routerLink]="['../gallery', photo.galleryId  ]" >{{photo.galleryId}}</a>
+                    <div *ngIf="photo.gallery">
+                        <a [routerLink]="['../gallery', photo.gallery?.id ]" >{{photo.gallery?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -1,6 +1,6 @@
 import { BaseEntity } from './../../shared';
 
-export const enum BussinessType {
+export const enum BusinessType {
     'PUB',
     'HOTEL',
     'OTHERS'
@@ -12,10 +12,10 @@ export const enum Select {
     'UNDEFINED'
 }
 
-export class Bussiness implements BaseEntity {
+export class Business implements BaseEntity {
     constructor(
         public id?: number,
-        public bussinessType?: BussinessType,
+        public businessType?: BusinessType,
         public numberBathrooms?: number,
         public elevator?: Select,
         public ac?: Select,

@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -46,6 +47,10 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class ApartmentResourceIntTest {
+
+    private static final Double DEFAULT_PRICE = 1000.0;
+
+    private static final String DEFAULT_TITLE = "Test Apartment";
 
     private static final Integer DEFAULT_NUMBER_BEDROOMS = 1;
     private static final Integer UPDATED_NUMBER_BEDROOMS = 2;
@@ -123,7 +128,7 @@ public class ApartmentResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Apartment createEntity(EntityManager em) {
-        Apartment apartment = new Apartment()
+        Apartment apartment = (Apartment) new Apartment()
             .numberBedrooms(DEFAULT_NUMBER_BEDROOMS)
             .numberBathrooms(DEFAULT_NUMBER_BATHROOMS)
             .elevator(DEFAULT_ELEVATOR)
@@ -136,7 +141,10 @@ public class ApartmentResourceIntTest {
             .kitchenOffice(DEFAULT_KITCHEN_OFFICE)
             .storage(DEFAULT_STORAGE)
             .sharedPool(DEFAULT_SHARED_POOL)
-            .nearTransport(DEFAULT_NEAR_TRANSPORT);
+            .nearTransport(DEFAULT_NEAR_TRANSPORT)
+            .price(DEFAULT_PRICE)
+            .title(DEFAULT_TITLE)
+            .created(ZonedDateTime.now());
         return apartment;
     }
 
@@ -326,7 +334,7 @@ public class ApartmentResourceIntTest {
     @Transactional
     public void deleteApartment() throws Exception {
         // Initialize the database
-        apartmentRepository.saveAndFlush(apartment);
+        apartmentRepository.save(apartment);
         int databaseSizeBeforeDelete = apartmentRepository.findAll().size();
 
         // Get the apartment

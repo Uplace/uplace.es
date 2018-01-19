@@ -25,7 +25,7 @@
     ],
     "changelogDate": "20180117115525",
     "entityTableName": "photo",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": false

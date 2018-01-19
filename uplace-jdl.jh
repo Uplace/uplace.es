@@ -32,7 +32,7 @@ enum ParkingType {
 	CAR, MOTO, OTHER
 }
 
-enum BussinessType {
+enum BusinessType {
 	PUB, HOTEL, OTHERS
 }
 entity Apartment {
@@ -88,8 +88,8 @@ entity Location {
 
 }
 
-entity Bussiness {
-    bussinessType BussinessType,
+entity Business {
+    businessType BusinessType,
     numberBathrooms Integer,
     elevator Select,
     ac Select,
@@ -126,5 +126,3 @@ relationship OneToMany {
 relationship OneToOne {
 	Property{gallery} to Gallery{property(title)}
 }
-
-dto * with mapstruct

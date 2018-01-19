@@ -6,8 +6,6 @@ import com.arnaugarcia.uplace.domain.Location;
 import com.arnaugarcia.uplace.repository.LocationRepository;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import com.arnaugarcia.uplace.service.dto.LocationDTO;
-import com.arnaugarcia.uplace.service.mapper.LocationMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,30 +31,25 @@ public class LocationResource {
 
     private final LocationRepository locationRepository;
 
-    private final LocationMapper locationMapper;
-
-    public LocationResource(LocationRepository locationRepository, LocationMapper locationMapper) {
+    public LocationResource(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
-        this.locationMapper = locationMapper;
     }
 
     /**
      * POST  /locations : Create a new location.
      *
-     * @param locationDTO the locationDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new locationDTO, or with status 400 (Bad Request) if the location has already an ID
+     * @param location the location to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new location, or with status 400 (Bad Request) if the location has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/locations")
     @Timed
-    public ResponseEntity<LocationDTO> createLocation(@RequestBody LocationDTO locationDTO) throws URISyntaxException {
-        log.debug("REST request to save Location : {}", locationDTO);
-        if (locationDTO.getId() != null) {
+    public ResponseEntity<Location> createLocation(@RequestBody Location location) throws URISyntaxException {
+        log.debug("REST request to save Location : {}", location);
+        if (location.getId() != null) {
             throw new BadRequestAlertException("A new location cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Location location = locationMapper.toEntity(locationDTO);
-        location = locationRepository.save(location);
-        LocationDTO result = locationMapper.toDto(location);
+        Location result = locationRepository.save(location);
         return ResponseEntity.created(new URI("/api/locations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -65,24 +58,22 @@ public class LocationResource {
     /**
      * PUT  /locations : Updates an existing location.
      *
-     * @param locationDTO the locationDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated locationDTO,
-     * or with status 400 (Bad Request) if the locationDTO is not valid,
-     * or with status 500 (Internal Server Error) if the locationDTO couldn't be updated
+     * @param location the location to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated location,
+     * or with status 400 (Bad Request) if the location is not valid,
+     * or with status 500 (Internal Server Error) if the location couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/locations")
     @Timed
-    public ResponseEntity<LocationDTO> updateLocation(@RequestBody LocationDTO locationDTO) throws URISyntaxException {
-        log.debug("REST request to update Location : {}", locationDTO);
-        if (locationDTO.getId() == null) {
-            return createLocation(locationDTO);
+    public ResponseEntity<Location> updateLocation(@RequestBody Location location) throws URISyntaxException {
+        log.debug("REST request to update Location : {}", location);
+        if (location.getId() == null) {
+            return createLocation(location);
         }
-        Location location = locationMapper.toEntity(locationDTO);
-        location = locationRepository.save(location);
-        LocationDTO result = locationMapper.toDto(location);
+        Location result = locationRepository.save(location);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, locationDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, location.getId().toString()))
             .body(result);
     }
 
@@ -93,31 +84,29 @@ public class LocationResource {
      */
     @GetMapping("/locations")
     @Timed
-    public List<LocationDTO> getAllLocations() {
+    public List<Location> getAllLocations() {
         log.debug("REST request to get all Locations");
-        List<Location> locations = locationRepository.findAll();
-        return locationMapper.toDto(locations);
+        return locationRepository.findAll();
         }
 
     /**
      * GET  /locations/:id : get the "id" location.
      *
-     * @param id the id of the locationDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the locationDTO, or with status 404 (Not Found)
+     * @param id the id of the location to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the location, or with status 404 (Not Found)
      */
     @GetMapping("/locations/{id}")
     @Timed
-    public ResponseEntity<LocationDTO> getLocation(@PathVariable Long id) {
+    public ResponseEntity<Location> getLocation(@PathVariable Long id) {
         log.debug("REST request to get Location : {}", id);
         Location location = locationRepository.findOne(id);
-        LocationDTO locationDTO = locationMapper.toDto(location);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(locationDTO));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(location));
     }
 
     /**
      * DELETE  /locations/:id : delete the "id" location.
      *
-     * @param id the id of the locationDTO to delete
+     * @param id the id of the location to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/locations/{id}")

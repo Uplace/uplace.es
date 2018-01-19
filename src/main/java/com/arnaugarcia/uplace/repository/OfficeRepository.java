@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface OfficeRepository extends JpaRepository<Office, Long> {
 
+    Office findFirstByReference(String reference);
 }

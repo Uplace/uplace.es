@@ -17,6 +17,7 @@
                 "bussiness": "Bussiness",
                 "gallery": "Gallery",
                 "photo": "Photo",
+                "business": "Business",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

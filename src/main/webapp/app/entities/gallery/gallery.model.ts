@@ -5,7 +5,7 @@ export class Gallery implements BaseEntity {
         public id?: number,
         public description?: string,
         public photos?: BaseEntity[],
-        public propertyId?: number,
+        public property?: BaseEntity,
     ) {
     }
 }
