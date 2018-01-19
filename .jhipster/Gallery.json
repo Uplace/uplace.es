@@ -24,8 +24,8 @@
     "changelogDate": "20180117115524",
     "javadoc": "PHOTO",
     "entityTableName": "gallery",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": true
+    "jpaMetamodelFiltering": false
 }

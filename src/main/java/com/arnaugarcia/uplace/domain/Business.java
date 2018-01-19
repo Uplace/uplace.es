@@ -8,17 +8,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.arnaugarcia.uplace.domain.enumeration.BussinessType;
+import com.arnaugarcia.uplace.domain.enumeration.BusinessType;
 
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 
 /**
- * A Bussiness.
+ * A Business.
  */
 @Entity
-@Table(name = "bussiness")
+@Table(name = "business")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Bussiness implements Serializable {
+public class Business implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,8 +27,8 @@ public class Bussiness implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "bussiness_type")
-    private BussinessType bussinessType;
+    @Column(name = "business_type")
+    private BusinessType businessType;
 
     @Column(name = "number_bathrooms")
     private Integer numberBathrooms;
@@ -73,24 +73,24 @@ public class Bussiness implements Serializable {
         this.id = id;
     }
 
-    public BussinessType getBussinessType() {
-        return bussinessType;
+    public BusinessType getBusinessType() {
+        return businessType;
     }
 
-    public Bussiness bussinessType(BussinessType bussinessType) {
-        this.bussinessType = bussinessType;
+    public Business businessType(BusinessType businessType) {
+        this.businessType = businessType;
         return this;
     }
 
-    public void setBussinessType(BussinessType bussinessType) {
-        this.bussinessType = bussinessType;
+    public void setBusinessType(BusinessType businessType) {
+        this.businessType = businessType;
     }
 
     public Integer getNumberBathrooms() {
         return numberBathrooms;
     }
 
-    public Bussiness numberBathrooms(Integer numberBathrooms) {
+    public Business numberBathrooms(Integer numberBathrooms) {
         this.numberBathrooms = numberBathrooms;
         return this;
     }
@@ -103,7 +103,7 @@ public class Bussiness implements Serializable {
         return elevator;
     }
 
-    public Bussiness elevator(Select elevator) {
+    public Business elevator(Select elevator) {
         this.elevator = elevator;
         return this;
     }
@@ -116,7 +116,7 @@ public class Bussiness implements Serializable {
         return ac;
     }
 
-    public Bussiness ac(Select ac) {
+    public Business ac(Select ac) {
         this.ac = ac;
         return this;
     }
@@ -129,7 +129,7 @@ public class Bussiness implements Serializable {
         return heat;
     }
 
-    public Bussiness heat(Select heat) {
+    public Business heat(Select heat) {
         this.heat = heat;
         return this;
     }
@@ -142,7 +142,7 @@ public class Bussiness implements Serializable {
         return surfaceTerrace;
     }
 
-    public Bussiness surfaceTerrace(Integer surfaceTerrace) {
+    public Business surfaceTerrace(Integer surfaceTerrace) {
         this.surfaceTerrace = surfaceTerrace;
         return this;
     }
@@ -155,7 +155,7 @@ public class Bussiness implements Serializable {
         return surfaceGarden;
     }
 
-    public Bussiness surfaceGarden(Integer surfaceGarden) {
+    public Business surfaceGarden(Integer surfaceGarden) {
         this.surfaceGarden = surfaceGarden;
         return this;
     }
@@ -168,7 +168,7 @@ public class Bussiness implements Serializable {
         return numberOffice;
     }
 
-    public Bussiness numberOffice(Integer numberOffice) {
+    public Business numberOffice(Integer numberOffice) {
         this.numberOffice = numberOffice;
         return this;
     }
@@ -181,7 +181,7 @@ public class Bussiness implements Serializable {
         return surfaceSaloon;
     }
 
-    public Bussiness surfaceSaloon(Integer surfaceSaloon) {
+    public Business surfaceSaloon(Integer surfaceSaloon) {
         this.surfaceSaloon = surfaceSaloon;
         return this;
     }
@@ -194,7 +194,7 @@ public class Bussiness implements Serializable {
         return height;
     }
 
-    public Bussiness height(Integer height) {
+    public Business height(Integer height) {
         this.height = height;
         return this;
     }
@@ -207,7 +207,7 @@ public class Bussiness implements Serializable {
         return pool;
     }
 
-    public Bussiness pool(Select pool) {
+    public Business pool(Select pool) {
         this.pool = pool;
         return this;
     }
@@ -225,11 +225,11 @@ public class Bussiness implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Bussiness bussiness = (Bussiness) o;
-        if (bussiness.getId() == null || getId() == null) {
+        Business business = (Business) o;
+        if (business.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), bussiness.getId());
+        return Objects.equals(getId(), business.getId());
     }
 
     @Override
@@ -239,9 +239,9 @@ public class Bussiness implements Serializable {
 
     @Override
     public String toString() {
-        return "Bussiness{" +
+        return "Business{" +
             "id=" + getId() +
-            ", bussinessType='" + getBussinessType() + "'" +
+            ", businessType='" + getBusinessType() + "'" +
             ", numberBathrooms=" + getNumberBathrooms() +
             ", elevator='" + getElevator() + "'" +
             ", ac='" + getAc() + "'" +

@@ -3,8 +3,8 @@
     "relationships": [],
     "fields": [
         {
-            "fieldName": "bussinessType",
-            "fieldType": "BussinessType",
+            "fieldName": "businessType",
+            "fieldType": "BusinessType",
             "fieldValues": "PUB,HOTEL,OTHERS"
         },
         {
@@ -52,10 +52,10 @@
             "fieldValues": "YES,NO,UNDEFINED"
         }
     ],
-    "changelogDate": "20180117115523",
-    "entityTableName": "bussiness",
+    "changelogDate": "20180119132313",
+    "entityTableName": "business",
     "dto": "no",
     "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": true
+    "jpaMetamodelFiltering": false
 }

@@ -5,7 +5,7 @@ export class Agent implements BaseEntity {
         public id?: number,
         public firstName?: string,
         public lastName?: string,
-        public propertyId?: number,
+        public property?: BaseEntity,
     ) {
     }
 }

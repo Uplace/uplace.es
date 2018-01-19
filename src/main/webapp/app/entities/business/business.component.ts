@@ -2,21 +2,21 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Bussiness } from './bussiness.model';
-import { BussinessService } from './bussiness.service';
+import { Business } from './business.model';
+import { BusinessService } from './business.service';
 import { Principal, ResponseWrapper } from '../../shared';
 
 @Component({
-    selector: 'up-bussiness',
-    templateUrl: './bussiness.component.html'
+    selector: 'up-business',
+    templateUrl: './business.component.html'
 })
-export class BussinessComponent implements OnInit, OnDestroy {
-bussinesses: Bussiness[];
+export class BusinessComponent implements OnInit, OnDestroy {
+businesses: Business[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
     constructor(
-        private bussinessService: BussinessService,
+        private businessService: BusinessService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private principal: Principal
@@ -24,9 +24,9 @@ bussinesses: Bussiness[];
     }
 
     loadAll() {
-        this.bussinessService.query().subscribe(
+        this.businessService.query().subscribe(
             (res: ResponseWrapper) => {
-                this.bussinesses = res.json;
+                this.businesses = res.json;
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -36,18 +36,18 @@ bussinesses: Bussiness[];
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
-        this.registerChangeInBussinesses();
+        this.registerChangeInBusinesses();
     }
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: Bussiness) {
+    trackId(index: number, item: Business) {
         return item.id;
     }
-    registerChangeInBussinesses() {
-        this.eventSubscriber = this.eventManager.subscribe('bussinessListModification', (response) => this.loadAll());
+    registerChangeInBusinesses() {
+        this.eventSubscriber = this.eventManager.subscribe('businessListModification', (response) => this.loadAll());
     }
 
     private onError(error) {

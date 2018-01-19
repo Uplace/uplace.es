@@ -1,0 +1,66 @@
+
+<div *ngIf="business">
+    <h2><span jhiTranslate="uplaceApp.business.detail.title">Business</span> {{business.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.business.businessType">Business Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.BusinessType.' + business.businessType}}">{{business.businessType}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.numberBathrooms">Number Bathrooms</span></dt>
+        <dd>
+            <span>{{business.numberBathrooms}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.elevator">Elevator</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + business.elevator}}">{{business.elevator}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.ac">Ac</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + business.ac}}">{{business.ac}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.heat">Heat</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + business.heat}}">{{business.heat}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.surfaceTerrace">Surface Terrace</span></dt>
+        <dd>
+            <span>{{business.surfaceTerrace}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.surfaceGarden">Surface Garden</span></dt>
+        <dd>
+            <span>{{business.surfaceGarden}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.numberOffice">Number Office</span></dt>
+        <dd>
+            <span>{{business.numberOffice}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.surfaceSaloon">Surface Saloon</span></dt>
+        <dd>
+            <span>{{business.surfaceSaloon}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.height">Height</span></dt>
+        <dd>
+            <span>{{business.height}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.business.pool">Pool</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.Select.' + business.pool}}">{{business.pool}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'business/'+ business.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

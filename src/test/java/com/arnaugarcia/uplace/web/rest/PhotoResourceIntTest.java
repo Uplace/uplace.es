@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.repository.PhotoRepository;
-import com.arnaugarcia.uplace.service.dto.PhotoDTO;
-import com.arnaugarcia.uplace.service.mapper.PhotoMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -56,9 +54,6 @@ public class PhotoResourceIntTest {
     private PhotoRepository photoRepository;
 
     @Autowired
-    private PhotoMapper photoMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -77,7 +72,7 @@ public class PhotoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PhotoResource photoResource = new PhotoResource(photoRepository, photoMapper);
+        final PhotoResource photoResource = new PhotoResource(photoRepository);
         this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -111,10 +106,9 @@ public class PhotoResourceIntTest {
         int databaseSizeBeforeCreate = photoRepository.findAll().size();
 
         // Create the Photo
-        PhotoDTO photoDTO = photoMapper.toDto(photo);
         restPhotoMockMvc.perform(post("/api/photos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(photoDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(photo)))
             .andExpect(status().isCreated());
 
         // Validate the Photo in the database
@@ -134,12 +128,11 @@ public class PhotoResourceIntTest {
 
         // Create the Photo with an existing ID
         photo.setId(1L);
-        PhotoDTO photoDTO = photoMapper.toDto(photo);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPhotoMockMvc.perform(post("/api/photos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(photoDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(photo)))
             .andExpect(status().isBadRequest());
 
         // Validate the Photo in the database
@@ -205,11 +198,10 @@ public class PhotoResourceIntTest {
             .description(UPDATED_DESCRIPTION)
             .photo(UPDATED_PHOTO)
             .photoContentType(UPDATED_PHOTO_CONTENT_TYPE);
-        PhotoDTO photoDTO = photoMapper.toDto(updatedPhoto);
 
         restPhotoMockMvc.perform(put("/api/photos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(photoDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedPhoto)))
             .andExpect(status().isOk());
 
         // Validate the Photo in the database
@@ -228,12 +220,11 @@ public class PhotoResourceIntTest {
         int databaseSizeBeforeUpdate = photoRepository.findAll().size();
 
         // Create the Photo
-        PhotoDTO photoDTO = photoMapper.toDto(photo);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restPhotoMockMvc.perform(put("/api/photos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(photoDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(photo)))
             .andExpect(status().isCreated());
 
         // Validate the Photo in the database
@@ -271,28 +262,5 @@ public class PhotoResourceIntTest {
         assertThat(photo1).isNotEqualTo(photo2);
         photo1.setId(null);
         assertThat(photo1).isNotEqualTo(photo2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(PhotoDTO.class);
-        PhotoDTO photoDTO1 = new PhotoDTO();
-        photoDTO1.setId(1L);
-        PhotoDTO photoDTO2 = new PhotoDTO();
-        assertThat(photoDTO1).isNotEqualTo(photoDTO2);
-        photoDTO2.setId(photoDTO1.getId());
-        assertThat(photoDTO1).isEqualTo(photoDTO2);
-        photoDTO2.setId(2L);
-        assertThat(photoDTO1).isNotEqualTo(photoDTO2);
-        photoDTO1.setId(null);
-        assertThat(photoDTO1).isNotEqualTo(photoDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(photoMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(photoMapper.fromId(null)).isNull();
     }
 }

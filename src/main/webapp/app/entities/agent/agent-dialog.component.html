@@ -25,9 +25,9 @@
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.agent.property" for="field_property">Property</label>
-            <select class="form-control" id="field_property" name="property" [(ngModel)]="agent.propertyId" >
+            <select class="form-control" id="field_property" name="property" [(ngModel)]="agent.property" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="propertyOption.id" *ngFor="let propertyOption of properties; trackBy: trackPropertyById">{{propertyOption.title}}</option>
+                <option [ngValue]="propertyOption.id === agent.property?.id ? agent.property : propertyOption" *ngFor="let propertyOption of properties; trackBy: trackPropertyById">{{propertyOption.title}}</option>
             </select>
         </div>
     </div>

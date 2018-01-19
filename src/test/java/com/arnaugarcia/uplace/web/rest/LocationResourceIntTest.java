@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Location;
 import com.arnaugarcia.uplace.repository.LocationRepository;
-import com.arnaugarcia.uplace.service.dto.LocationDTO;
-import com.arnaugarcia.uplace.service.mapper.LocationMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -56,9 +54,6 @@ public class LocationResourceIntTest {
     private LocationRepository locationRepository;
 
     @Autowired
-    private LocationMapper locationMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -77,7 +72,7 @@ public class LocationResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final LocationResource locationResource = new LocationResource(locationRepository, locationMapper);
+        final LocationResource locationResource = new LocationResource(locationRepository);
         this.restLocationMockMvc = MockMvcBuilders.standaloneSetup(locationResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -111,10 +106,9 @@ public class LocationResourceIntTest {
         int databaseSizeBeforeCreate = locationRepository.findAll().size();
 
         // Create the Location
-        LocationDTO locationDTO = locationMapper.toDto(location);
         restLocationMockMvc.perform(post("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(location)))
             .andExpect(status().isCreated());
 
         // Validate the Location in the database
@@ -134,12 +128,11 @@ public class LocationResourceIntTest {
 
         // Create the Location with an existing ID
         location.setId(1L);
-        LocationDTO locationDTO = locationMapper.toDto(location);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restLocationMockMvc.perform(post("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(location)))
             .andExpect(status().isBadRequest());
 
         // Validate the Location in the database
@@ -205,11 +198,10 @@ public class LocationResourceIntTest {
             .cp(UPDATED_CP)
             .longitude(UPDATED_LONGITUDE)
             .urlGmaps(UPDATED_URL_GMAPS);
-        LocationDTO locationDTO = locationMapper.toDto(updatedLocation);
 
         restLocationMockMvc.perform(put("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedLocation)))
             .andExpect(status().isOk());
 
         // Validate the Location in the database
@@ -228,12 +220,11 @@ public class LocationResourceIntTest {
         int databaseSizeBeforeUpdate = locationRepository.findAll().size();
 
         // Create the Location
-        LocationDTO locationDTO = locationMapper.toDto(location);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restLocationMockMvc.perform(put("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(location)))
             .andExpect(status().isCreated());
 
         // Validate the Location in the database
@@ -271,28 +262,5 @@ public class LocationResourceIntTest {
         assertThat(location1).isNotEqualTo(location2);
         location1.setId(null);
         assertThat(location1).isNotEqualTo(location2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(LocationDTO.class);
-        LocationDTO locationDTO1 = new LocationDTO();
-        locationDTO1.setId(1L);
-        LocationDTO locationDTO2 = new LocationDTO();
-        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
-        locationDTO2.setId(locationDTO1.getId());
-        assertThat(locationDTO1).isEqualTo(locationDTO2);
-        locationDTO2.setId(2L);
-        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
-        locationDTO1.setId(null);
-        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(locationMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(locationMapper.fromId(null)).isNull();
     }
 }

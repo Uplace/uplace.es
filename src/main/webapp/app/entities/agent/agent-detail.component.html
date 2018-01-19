@@ -14,8 +14,8 @@
         </dd>
         <dt><span jhiTranslate="uplaceApp.agent.property">Property</span></dt>
         <dd>
-            <div *ngIf="agent.propertyId">
-                <a [routerLink]="['/property', agent.propertyId]">{{agent.propertyTitle}}</a>
+            <div *ngIf="agent.property">
+                <a [routerLink]="['/property', agent.property?.id]">{{agent.property?.title}}</a>
             </div>
         </dd>
     </dl>

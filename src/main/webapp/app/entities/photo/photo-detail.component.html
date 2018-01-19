@@ -23,8 +23,8 @@
         </dd>
         <dt><span jhiTranslate="uplaceApp.photo.gallery">Gallery</span></dt>
         <dd>
-            <div *ngIf="photo.galleryId">
-                <a [routerLink]="['/gallery', photo.galleryId]">{{photo.galleryId}}</a>
+            <div *ngIf="photo.gallery">
+                <a [routerLink]="['/gallery', photo.gallery?.id]">{{photo.gallery?.id}}</a>
             </div>
         </dd>
     </dl>
