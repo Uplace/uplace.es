@@ -12,7 +12,7 @@
 
 eureka:
     instance:
-        hostname: frozen-chamber-61306.herokuapp.com
+        hostname: uplace-api.herokuapp.com
         non-secure-port: 80
         prefer-ip-address: false
     client:

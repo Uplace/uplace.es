@@ -4,6 +4,7 @@
 /target/www/**
 /src/test/javascript/coverage/
 /src/test/javascript/PhantomJS*/
+*.lock
 
 ######################
 # Node
@@ -141,3 +142,5 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+/src/main/resources/config/application-prod.yml
+/src/main/resources/config/application-dev.yml
