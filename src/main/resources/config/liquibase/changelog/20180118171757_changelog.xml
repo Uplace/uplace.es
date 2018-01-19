@@ -1,0 +1,31 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="arnau (generated)" id="1516295883947-1">
+        <addColumn tableName="property">
+            <column name="bathrooms" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516295883947-2">
+        <addColumn tableName="property">
+            <column name="floors" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516295883947-3">
+        <addColumn tableName="property">
+            <column name="offices_surface" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516295883947-4">
+        <addColumn tableName="property">
+            <column name="storage_surface" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516295883947-5">
+        <addColumn tableName="property">
+            <column name="terrace" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516295883947-6">
+        <dropTable tableName="office"/>
+    </changeSet>
+</databaseChangeLog>

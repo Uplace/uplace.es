@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface ApartmentRepository extends JpaRepository<Apartment, Long> {
 
+    Apartment findFirstByReference(String reference);
 }
