@@ -1,0 +1,37 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="arnau (generated)" id="1516379768642-1">
+        <createTable tableName="business">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="businessPK"/>
+            </column>
+            <column name="ac" type="VARCHAR(255)"/>
+            <column name="business_type" type="VARCHAR(255)"/>
+            <column name="elevator" type="VARCHAR(255)"/>
+            <column name="heat" type="VARCHAR(255)"/>
+            <column name="height" type="INT"/>
+            <column name="number_bathrooms" type="INT"/>
+            <column name="number_office" type="INT"/>
+            <column name="pool" type="VARCHAR(255)"/>
+            <column name="surface_garden" type="INT"/>
+            <column name="surface_saloon" type="INT"/>
+            <column name="surface_terrace" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516379768642-2">
+        <addColumn tableName="property">
+            <column name="parking_type" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516379768642-3">
+        <addColumn tableName="property">
+            <column name="surveillance" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516379768642-4">
+        <dropTable tableName="bussiness"/>
+    </changeSet>
+    <changeSet author="arnau (generated)" id="1516379768642-5">
+        <dropTable tableName="parking"/>
+    </changeSet>
+</databaseChangeLog>

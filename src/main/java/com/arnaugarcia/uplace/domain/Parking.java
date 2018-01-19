@@ -1,24 +1,17 @@
 package com.arnaugarcia.uplace.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import com.arnaugarcia.uplace.domain.enumeration.ParkingType;
+import com.arnaugarcia.uplace.domain.enumeration.Select;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.arnaugarcia.uplace.domain.enumeration.ParkingType;
-
-import com.arnaugarcia.uplace.domain.enumeration.Select;
 
 /**
  * A Parking.
  */
 @Entity
-@Table(name = "parking")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Parking implements Serializable {
+public class Parking extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
