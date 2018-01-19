@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -41,6 +42,10 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class OfficeResourceIntTest {
+
+    private static final String DEFAULT_TITLE = "Test Office";
+
+    private static final Double DEFAULT_PRICE = 1000.0;
 
     private static final String DEFAULT_BATHROOMS = "AAAAAAAAAA";
     private static final String UPDATED_BATHROOMS = "BBBBBBBBBB";
@@ -106,7 +111,7 @@ public class OfficeResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Office createEntity(EntityManager em) {
-        Office office = new Office()
+        Office office = (Office) new Office()
             .bathrooms(DEFAULT_BATHROOMS)
             .floors(DEFAULT_FLOORS)
             .terrace(DEFAULT_TERRACE)
@@ -115,7 +120,10 @@ public class OfficeResourceIntTest {
             .storageSurface(DEFAULT_STORAGE_SURFACE)
             .officesSurface(DEFAULT_OFFICES_SURFACE)
             .ac(DEFAULT_AC)
-            .heat(DEFAULT_HEAT);
+            .heat(DEFAULT_HEAT)
+            .price(DEFAULT_PRICE)
+            .title(DEFAULT_TITLE)
+            .created(ZonedDateTime.now());
         return office;
     }
 
