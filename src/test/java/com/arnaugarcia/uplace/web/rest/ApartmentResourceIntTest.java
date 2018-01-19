@@ -48,6 +48,10 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @SpringBootTest(classes = UplaceApp.class)
 public class ApartmentResourceIntTest {
 
+    private static final Double DEFAULT_PRICE = 1000.0;
+
+    private static final String DEFAULT_TITLE = "Test Apartment";
+
     private static final Integer DEFAULT_NUMBER_BEDROOMS = 1;
     private static final Integer UPDATED_NUMBER_BEDROOMS = 2;
 
@@ -138,8 +142,8 @@ public class ApartmentResourceIntTest {
             .storage(DEFAULT_STORAGE)
             .sharedPool(DEFAULT_SHARED_POOL)
             .nearTransport(DEFAULT_NEAR_TRANSPORT)
-            .price(1000.0)
-            .title("Test Apartment")
+            .price(DEFAULT_PRICE)
+            .title(DEFAULT_TITLE)
             .created(ZonedDateTime.now());
         return apartment;
     }
