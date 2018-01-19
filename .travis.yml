@@ -1,41 +1,50 @@
 os:
-  - linux
+- linux
 services:
-  - docker
+- docker
 language: node_js
 node_js:
-  - "8.9.3"
+- 8.9.3
 jdk:
-  - oraclejdk8
+- oraclejdk8
 sudo: false
 cache:
   directories:
-    - node
-    - node_modules
-    - $HOME/.m2
-    - $HOME/.yarn-cache
+  - node
+  - node_modules
+  - "$HOME/.m2"
+  - "$HOME/.yarn-cache"
 env:
   global:
-    - NODE_VERSION=8.9.3
-    - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
-    - SPRING_JPA_SHOW_SQL=false
+  - NODE_VERSION=8.9.3
+  - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+  - SPRING_JPA_SHOW_SQL=false
 before_install:
-  - jdk_switcher use oraclejdk8
-  - java -version
-  - sudo /etc/init.d/mysql stop
-  - sudo /etc/init.d/postgresql stop
-  # Repo for Yarn
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
+- jdk_switcher use oraclejdk8
+- java -version
+- sudo /etc/init.d/mysql stop
+- sudo /etc/init.d/postgresql stop
+- curl -o- -L https://yarnpkg.com/install.sh | bash
+- export PATH=$HOME/.yarn/bin:$PATH
 install:
-  - yarn install
+- yarn install
 script:
-  - chmod +x mvnw
-  - ./mvnw clean test
-  - yarn test
-  - ./mvnw com.heroku.sdk:heroku-maven-plugin:1.1.1:deploy -DskipTests -Pprod -Dheroku.appName=
+- chmod +x mvnw
+- "./mvnw clean test"
+- yarn test
+- "./mvnw com.heroku.sdk:heroku-maven-plugin:1.1.1:deploy -DskipTests -Pprod -Dheroku.appName="
 notifications:
   webhooks:
-    on_success: change  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: false     # default: false
+    on_success: change
+    on_failure: always
+    on_start: false
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: AKIAJS7CQMC36TIPDEAA
+  secret_access_key:
+    secure: KOYJyQ9wMO9wo0HwixbkENaAx3/psELOvFiTrl1v49+njbvUQvNOpVAWLpsTX0pGBTK735tnivEjSvYQhXXtbbZV8RZGhkuaiL/7dBaLqadR38CO8PLpjuVeC3OC5v+troxMGsyt13k+Qg5PkNXIK9hntst+YtXZvIiJKRimAbAOH6idEpWZviMArQpEwXkGrkS28Ed8iBf8dgJx0hPZSycUGpVnWn1kCdRIIa4DsGI2GwTJIY/xqCsI5J5qaRufK7h15k5KDtipRnru7L4Mulm32GuUMXbvZzWq+4f4w4Hs82mUpyTZmZg1k9SfSy+JfIT6vYPoLKG8Vf4srAnvkPnWqZSZ0ns8E+G6EUQdaYA2amBaHOp83j9HqMj42CXgkm12p/4Vz00TmwW9hWt1hAm7oIFp7wn/808ImyhRMxjOmKFuMktwGpm6J9+oa4SD/TQO0MKE0lrzbVK2JN/2GAm2jrJjkHM9TTcxgviSQFrSC369aAqUPVUXvYh8GRZhLZNt8Un6z/FsbWJR0OsLNsjAnb1QXly8OZFAUVDZpVlhQIQuod2e764cJ1Kcz9JFoNWLLeuxKgJ3OfAvI5ZTZE+6Sa+FDSl/QJx08cBIr/PeGm/pzym3ipRSoA558D4w/r8W96bPxmvxR3nAdgCkDRtc2y6pXi+vv80qw8rqNFA=
+  region: eu-west-3
+  app: uplace.es
+  env: uplace-prod
+  on:
+    repo: Uplace/uplace.es
