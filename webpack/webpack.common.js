@@ -52,6 +52,17 @@ module.exports = (options) => ({
                 // If you use an API server, in `prod` mode, you will need to enable CORS
                 // (see the `jhipster.cors` common JHipster property in the `application-*.yml` configurations)
                 SERVER_API_URL: `''`
+            },
+            'process.prod': {
+                NODE_ENV: `'${options.env}'`,
+                BUILD_TIMESTAMP: `'${new Date().getTime()}'`,
+                VERSION: `'${utils.parseVersion()}'`,
+                DEBUG_INFO_ENABLED: options.env === 'production',
+                // The root URL for API calls, ending with a '/' - for example: `"http://www.jhipster.tech:8081/myservice/"`.
+                // If this URL is left empty (""), then it will be relative to the current context.
+                // If you use an API server, in `prod` mode, you will need to enable CORS
+                // (see the `jhipster.cors` common JHipster property in the `application-*.yml` configurations)
+                SERVER_API_URL: `'http://uplace.eu-west-3.elasticbeanstalk.com/'`
             }
         }),
         new webpack.optimize.CommonsChunkPlugin({
