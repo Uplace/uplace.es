@@ -1,0 +1,25 @@
+machine:
+    services:
+        - docker
+    java:
+        version: oraclejdk8
+    node:
+        version: 8.9.3
+dependencies:
+    cache_directories:
+        - node
+        - node_modules
+        - ~/.m2
+        - $HOME/.yarn-cache
+    override:
+        - java -version
+        # Repo for Yarn
+        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        - export PATH=$HOME/.yarn/bin:$PATH
+        - yarn install
+test:
+    override:
+        - chmod +x mvnw
+        - ./mvnw clean test
+        - yarn test
+        - ./mvnw verify -Pprod -DskipTests
