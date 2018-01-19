@@ -7,9 +7,9 @@ import { UplaceAgentModule } from './agent/agent.module';
 import { UplaceParkingModule } from './parking/parking.module';
 import { UplaceTerrainModule } from './terrain/terrain.module';
 import { UplaceLocationModule } from './location/location.module';
-import { UplaceBussinessModule } from './bussiness/bussiness.module';
 import { UplaceGalleryModule } from './gallery/gallery.module';
 import { UplacePhotoModule } from './photo/photo.module';
+import { UplaceBusinessModule } from './business/business.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -21,9 +21,9 @@ import { UplacePhotoModule } from './photo/photo.module';
         UplaceParkingModule,
         UplaceTerrainModule,
         UplaceLocationModule,
-        UplaceBussinessModule,
         UplaceGalleryModule,
         UplacePhotoModule,
+        UplaceBusinessModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

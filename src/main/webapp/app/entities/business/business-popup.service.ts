@@ -1,17 +1,17 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Bussiness } from './bussiness.model';
-import { BussinessService } from './bussiness.service';
+import { Business } from './business.model';
+import { BusinessService } from './business.service';
 
 @Injectable()
-export class BussinessPopupService {
+export class BusinessPopupService {
     private ngbModalRef: NgbModalRef;
 
     constructor(
         private modalService: NgbModal,
         private router: Router,
-        private bussinessService: BussinessService
+        private businessService: BusinessService
 
     ) {
         this.ngbModalRef = null;
@@ -25,23 +25,23 @@ export class BussinessPopupService {
             }
 
             if (id) {
-                this.bussinessService.find(id).subscribe((bussiness) => {
-                    this.ngbModalRef = this.bussinessModalRef(component, bussiness);
+                this.businessService.find(id).subscribe((business) => {
+                    this.ngbModalRef = this.businessModalRef(component, business);
                     resolve(this.ngbModalRef);
                 });
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {
-                    this.ngbModalRef = this.bussinessModalRef(component, new Bussiness());
+                    this.ngbModalRef = this.businessModalRef(component, new Business());
                     resolve(this.ngbModalRef);
                 }, 0);
             }
         });
     }
 
-    bussinessModalRef(component: Component, bussiness: Bussiness): NgbModalRef {
+    businessModalRef(component: Component, business: Business): NgbModalRef {
         const modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
-        modalRef.componentInstance.bussiness = bussiness;
+        modalRef.componentInstance.business = business;
         modalRef.result.then((result) => {
             this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });
             this.ngbModalRef = null;

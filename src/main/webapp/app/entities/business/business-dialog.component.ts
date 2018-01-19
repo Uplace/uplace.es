@@ -6,22 +6,22 @@ import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Bussiness } from './bussiness.model';
-import { BussinessPopupService } from './bussiness-popup.service';
-import { BussinessService } from './bussiness.service';
+import { Business } from './business.model';
+import { BusinessPopupService } from './business-popup.service';
+import { BusinessService } from './business.service';
 
 @Component({
-    selector: 'up-bussiness-dialog',
-    templateUrl: './bussiness-dialog.component.html'
+    selector: 'up-business-dialog',
+    templateUrl: './business-dialog.component.html'
 })
-export class BussinessDialogComponent implements OnInit {
+export class BusinessDialogComponent implements OnInit {
 
-    bussiness: Bussiness;
+    business: Business;
     isSaving: boolean;
 
     constructor(
         public activeModal: NgbActiveModal,
-        private bussinessService: BussinessService,
+        private businessService: BusinessService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -36,22 +36,22 @@ export class BussinessDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.bussiness.id !== undefined) {
+        if (this.business.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.bussinessService.update(this.bussiness));
+                this.businessService.update(this.business));
         } else {
             this.subscribeToSaveResponse(
-                this.bussinessService.create(this.bussiness));
+                this.businessService.create(this.business));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Bussiness>) {
-        result.subscribe((res: Bussiness) =>
+    private subscribeToSaveResponse(result: Observable<Business>) {
+        result.subscribe((res: Business) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError());
     }
 
-    private onSaveSuccess(result: Bussiness) {
-        this.eventManager.broadcast({ name: 'bussinessListModification', content: 'OK'});
+    private onSaveSuccess(result: Business) {
+        this.eventManager.broadcast({ name: 'businessListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -62,26 +62,26 @@ export class BussinessDialogComponent implements OnInit {
 }
 
 @Component({
-    selector: 'up-bussiness-popup',
+    selector: 'up-business-popup',
     template: ''
 })
-export class BussinessPopupComponent implements OnInit, OnDestroy {
+export class BusinessPopupComponent implements OnInit, OnDestroy {
 
     routeSub: any;
 
     constructor(
         private route: ActivatedRoute,
-        private bussinessPopupService: BussinessPopupService
+        private businessPopupService: BusinessPopupService
     ) {}
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             if ( params['id'] ) {
-                this.bussinessPopupService
-                    .open(BussinessDialogComponent as Component, params['id']);
+                this.businessPopupService
+                    .open(BusinessDialogComponent as Component, params['id']);
             } else {
-                this.bussinessPopupService
-                    .open(BussinessDialogComponent as Component);
+                this.businessPopupService
+                    .open(BusinessDialogComponent as Component);
             }
         });
     }

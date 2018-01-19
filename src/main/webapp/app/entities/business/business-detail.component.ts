@@ -3,22 +3,22 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Bussiness } from './bussiness.model';
-import { BussinessService } from './bussiness.service';
+import { Business } from './business.model';
+import { BusinessService } from './business.service';
 
 @Component({
-    selector: 'up-bussiness-detail',
-    templateUrl: './bussiness-detail.component.html'
+    selector: 'up-business-detail',
+    templateUrl: './business-detail.component.html'
 })
-export class BussinessDetailComponent implements OnInit, OnDestroy {
+export class BusinessDetailComponent implements OnInit, OnDestroy {
 
-    bussiness: Bussiness;
+    business: Business;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
 
     constructor(
         private eventManager: JhiEventManager,
-        private bussinessService: BussinessService,
+        private businessService: BusinessService,
         private route: ActivatedRoute
     ) {
     }
@@ -27,12 +27,12 @@ export class BussinessDetailComponent implements OnInit, OnDestroy {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
-        this.registerChangeInBussinesses();
+        this.registerChangeInBusinesses();
     }
 
     load(id) {
-        this.bussinessService.find(id).subscribe((bussiness) => {
-            this.bussiness = bussiness;
+        this.businessService.find(id).subscribe((business) => {
+            this.business = business;
         });
     }
     previousState() {
@@ -44,10 +44,10 @@ export class BussinessDetailComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    registerChangeInBussinesses() {
+    registerChangeInBusinesses() {
         this.eventSubscriber = this.eventManager.subscribe(
-            'bussinessListModification',
-            (response) => this.load(this.bussiness.id)
+            'businessListModification',
+            (response) => this.load(this.business.id)
         );
     }
 }

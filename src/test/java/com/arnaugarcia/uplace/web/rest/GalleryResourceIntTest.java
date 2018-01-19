@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Gallery;
 import com.arnaugarcia.uplace.repository.GalleryRepository;
-import com.arnaugarcia.uplace.service.dto.GalleryDTO;
-import com.arnaugarcia.uplace.service.mapper.GalleryMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -47,9 +45,6 @@ public class GalleryResourceIntTest {
     private GalleryRepository galleryRepository;
 
     @Autowired
-    private GalleryMapper galleryMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -68,7 +63,7 @@ public class GalleryResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final GalleryResource galleryResource = new GalleryResource(galleryRepository, galleryMapper);
+        final GalleryResource galleryResource = new GalleryResource(galleryRepository);
         this.restGalleryMockMvc = MockMvcBuilders.standaloneSetup(galleryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -99,10 +94,9 @@ public class GalleryResourceIntTest {
         int databaseSizeBeforeCreate = galleryRepository.findAll().size();
 
         // Create the Gallery
-        GalleryDTO galleryDTO = galleryMapper.toDto(gallery);
         restGalleryMockMvc.perform(post("/api/galleries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(galleryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(gallery)))
             .andExpect(status().isCreated());
 
         // Validate the Gallery in the database
@@ -119,12 +113,11 @@ public class GalleryResourceIntTest {
 
         // Create the Gallery with an existing ID
         gallery.setId(1L);
-        GalleryDTO galleryDTO = galleryMapper.toDto(gallery);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restGalleryMockMvc.perform(post("/api/galleries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(galleryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(gallery)))
             .andExpect(status().isBadRequest());
 
         // Validate the Gallery in the database
@@ -181,11 +174,10 @@ public class GalleryResourceIntTest {
         em.detach(updatedGallery);
         updatedGallery
             .description(UPDATED_DESCRIPTION);
-        GalleryDTO galleryDTO = galleryMapper.toDto(updatedGallery);
 
         restGalleryMockMvc.perform(put("/api/galleries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(galleryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedGallery)))
             .andExpect(status().isOk());
 
         // Validate the Gallery in the database
@@ -201,12 +193,11 @@ public class GalleryResourceIntTest {
         int databaseSizeBeforeUpdate = galleryRepository.findAll().size();
 
         // Create the Gallery
-        GalleryDTO galleryDTO = galleryMapper.toDto(gallery);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restGalleryMockMvc.perform(put("/api/galleries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(galleryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(gallery)))
             .andExpect(status().isCreated());
 
         // Validate the Gallery in the database
@@ -244,28 +235,5 @@ public class GalleryResourceIntTest {
         assertThat(gallery1).isNotEqualTo(gallery2);
         gallery1.setId(null);
         assertThat(gallery1).isNotEqualTo(gallery2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(GalleryDTO.class);
-        GalleryDTO galleryDTO1 = new GalleryDTO();
-        galleryDTO1.setId(1L);
-        GalleryDTO galleryDTO2 = new GalleryDTO();
-        assertThat(galleryDTO1).isNotEqualTo(galleryDTO2);
-        galleryDTO2.setId(galleryDTO1.getId());
-        assertThat(galleryDTO1).isEqualTo(galleryDTO2);
-        galleryDTO2.setId(2L);
-        assertThat(galleryDTO1).isNotEqualTo(galleryDTO2);
-        galleryDTO1.setId(null);
-        assertThat(galleryDTO1).isNotEqualTo(galleryDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(galleryMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(galleryMapper.fromId(null)).isNull();
     }
 }

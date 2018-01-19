@@ -7,7 +7,7 @@ export class Photo implements BaseEntity {
         public description?: string,
         public photoContentType?: string,
         public photo?: any,
-        public galleryId?: number,
+        public gallery?: BaseEntity,
     ) {
     }
 }

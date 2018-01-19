@@ -4,20 +4,20 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Bussiness } from './bussiness.model';
-import { BussinessPopupService } from './bussiness-popup.service';
-import { BussinessService } from './bussiness.service';
+import { Business } from './business.model';
+import { BusinessPopupService } from './business-popup.service';
+import { BusinessService } from './business.service';
 
 @Component({
-    selector: 'up-bussiness-delete-dialog',
-    templateUrl: './bussiness-delete-dialog.component.html'
+    selector: 'up-business-delete-dialog',
+    templateUrl: './business-delete-dialog.component.html'
 })
-export class BussinessDeleteDialogComponent {
+export class BusinessDeleteDialogComponent {
 
-    bussiness: Bussiness;
+    business: Business;
 
     constructor(
-        private bussinessService: BussinessService,
+        private businessService: BusinessService,
         public activeModal: NgbActiveModal,
         private eventManager: JhiEventManager
     ) {
@@ -28,10 +28,10 @@ export class BussinessDeleteDialogComponent {
     }
 
     confirmDelete(id: number) {
-        this.bussinessService.delete(id).subscribe((response) => {
+        this.businessService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
-                name: 'bussinessListModification',
-                content: 'Deleted an bussiness'
+                name: 'businessListModification',
+                content: 'Deleted an business'
             });
             this.activeModal.dismiss(true);
         });
@@ -39,22 +39,22 @@ export class BussinessDeleteDialogComponent {
 }
 
 @Component({
-    selector: 'up-bussiness-delete-popup',
+    selector: 'up-business-delete-popup',
     template: ''
 })
-export class BussinessDeletePopupComponent implements OnInit, OnDestroy {
+export class BusinessDeletePopupComponent implements OnInit, OnDestroy {
 
     routeSub: any;
 
     constructor(
         private route: ActivatedRoute,
-        private bussinessPopupService: BussinessPopupService
+        private businessPopupService: BusinessPopupService
     ) {}
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            this.bussinessPopupService
-                .open(BussinessDeleteDialogComponent as Component, params['id']);
+            this.businessPopupService
+                .open(BusinessDeleteDialogComponent as Component, params['id']);
         });
     }
 

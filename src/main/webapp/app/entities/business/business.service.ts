@@ -3,33 +3,33 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
 
-import { Bussiness } from './bussiness.model';
+import { Business } from './business.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()
-export class BussinessService {
+export class BusinessService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/bussinesses';
+    private resourceUrl =  SERVER_API_URL + 'api/businesses';
 
     constructor(private http: Http) { }
 
-    create(bussiness: Bussiness): Observable<Bussiness> {
-        const copy = this.convert(bussiness);
+    create(business: Business): Observable<Business> {
+        const copy = this.convert(business);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
     }
 
-    update(bussiness: Bussiness): Observable<Bussiness> {
-        const copy = this.convert(bussiness);
+    update(business: Business): Observable<Business> {
+        const copy = this.convert(business);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
     }
 
-    find(id: number): Observable<Bussiness> {
+    find(id: number): Observable<Business> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
@@ -56,18 +56,18 @@ export class BussinessService {
     }
 
     /**
-     * Convert a returned JSON object to Bussiness.
+     * Convert a returned JSON object to Business.
      */
-    private convertItemFromServer(json: any): Bussiness {
-        const entity: Bussiness = Object.assign(new Bussiness(), json);
+    private convertItemFromServer(json: any): Business {
+        const entity: Business = Object.assign(new Business(), json);
         return entity;
     }
 
     /**
-     * Convert a Bussiness to a JSON which can be sent to the server.
+     * Convert a Business to a JSON which can be sent to the server.
      */
-    private convert(bussiness: Bussiness): Bussiness {
-        const copy: Bussiness = Object.assign({}, bussiness);
+    private convert(business: Business): Business {
+        const copy: Business = Object.assign({}, business);
         return copy;
     }
 }
