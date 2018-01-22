@@ -96,7 +96,7 @@ public class PropertyResourceIntTest {
 
     private Property property;
 
-    @Before
+    /*@Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         final PropertyResource propertyResource = new PropertyResource(propertyRepository);
@@ -105,7 +105,7 @@ public class PropertyResourceIntTest {
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
-    }
+    }*/
 
     /**
      * Create an entity for this test.

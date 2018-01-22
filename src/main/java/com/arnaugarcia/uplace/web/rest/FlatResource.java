@@ -89,7 +89,7 @@ public class FlatResource {
     /**
      * PUT  /flats : Updates an existing flat.
      *
-     * @param flat the property to update
+     * @param flat the flat to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated flat,
      * or with status 400 (Bad Request) if the flat is not valid,
      * or with status 500 (Internal Server Error) if the flat couldn't be updated
