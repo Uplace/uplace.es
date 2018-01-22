@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/Uplace/uplace.es.svg?branch=master)](https://travis-ci.org/Uplace/uplace.es)
 # uplace
 This application was generated using JHipster 4.13.3, you can find documentation and help at [http://www.jhipster.tech/documentation-archive/v4.13.3](http://www.jhipster.tech/documentation-archive/v4.13.3).
 
@@ -150,7 +149,6 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [JHipster 4.13.3 archive]: http://www.jhipster.tech/documentation-archive/v4.13.3
 
 [Using JHipster in development]: http://www.jhipster.tech/documentation-archive/v4.13.3/development/
-[Service Discovery and Configuration with the JHipster-Registry]: http://www.jhipster.tech/documentation-archive/v4.13.3/microservices-architecture/#jhipster-registry
 [Using Docker and Docker-Compose]: http://www.jhipster.tech/documentation-archive/v4.13.3/docker-compose
 [Using JHipster in production]: http://www.jhipster.tech/documentation-archive/v4.13.3/production/
 [Running tests page]: http://www.jhipster.tech/documentation-archive/v4.13.3/running-tests/
