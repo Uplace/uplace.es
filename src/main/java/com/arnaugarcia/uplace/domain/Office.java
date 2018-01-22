@@ -12,7 +12,6 @@ import java.util.Objects;
  * A Office.
  */
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DiscriminatorValue("Office")
 public class Office extends Property implements Serializable {
 

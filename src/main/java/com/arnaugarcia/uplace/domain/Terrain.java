@@ -1,24 +1,18 @@
 package com.arnaugarcia.uplace.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
-import java.io.Serializable;
-import java.util.Objects;
-
+import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.TerrainType;
 
-import com.arnaugarcia.uplace.domain.enumeration.Select;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A Terrain.
  */
 @Entity
-@Table(name = "terrain")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Terrain implements Serializable {
+@DiscriminatorValue("Terrain")
+public class Terrain extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

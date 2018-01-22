@@ -16,9 +16,8 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
  * A Business.
  */
 @Entity
-@Table(name = "business")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Business implements Serializable {
+@DiscriminatorValue("Business")
+public class Business extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

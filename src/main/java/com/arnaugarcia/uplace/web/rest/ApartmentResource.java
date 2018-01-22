@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Apartment;
 
@@ -17,6 +18,7 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * REST controller for managing Apartment.
@@ -49,6 +51,7 @@ public class ApartmentResource {
         if (apartment.getId() != null) {
             throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        apartment.setReference(RandomUtil.generateReference().toUpperCase());
         Apartment result = apartmentRepository.save(apartment);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

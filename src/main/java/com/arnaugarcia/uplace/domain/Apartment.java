@@ -1,22 +1,16 @@
 package com.arnaugarcia.uplace.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
-import java.io.Serializable;
-import java.util.Objects;
-
+import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 
-import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A Apartment.
  */
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DiscriminatorValue("Apartment")
 public class Apartment extends Property implements Serializable {
 

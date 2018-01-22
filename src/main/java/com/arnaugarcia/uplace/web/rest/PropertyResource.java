@@ -1,9 +1,9 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.repository.*;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Property;
 
-import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +33,23 @@ public class PropertyResource {
 
     private final PropertyRepository propertyRepository;
 
-    public PropertyResource(PropertyRepository propertyRepository) {
+    private final ApartmentRepository apartmentRepository;
+
+    private final ParkingRepository parkingRepository;
+
+    private final BusinessRepository businessRepository;
+
+    private final OfficeRepository officeRepository;
+
+    private final TerrainRepository terrainRepository;
+
+    public PropertyResource(PropertyRepository propertyRepository, ApartmentRepository apartmentRepository, ParkingRepository parkingRepository, BusinessRepository businessRepository, OfficeRepository officeRepository, TerrainRepository terrainRepository) {
         this.propertyRepository = propertyRepository;
+        this.apartmentRepository = apartmentRepository;
+        this.parkingRepository = parkingRepository;
+        this.businessRepository = businessRepository;
+        this.officeRepository = officeRepository;
+        this.terrainRepository = terrainRepository;
     }
 
     /**
@@ -43,7 +59,7 @@ public class PropertyResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/properties")
+    /*@PostMapping("/properties")
     @Timed
     public ResponseEntity<Property> createProperty(@Valid @RequestBody Property property) throws URISyntaxException {
         log.debug("REST request to save Property : {}", property);
@@ -54,7 +70,7 @@ public class PropertyResource {
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
-    }
+    }*/
 
     /**
      * PUT  /properties : Updates an existing property.
@@ -65,7 +81,7 @@ public class PropertyResource {
      * or with status 500 (Internal Server Error) if the property couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/properties")
+    /*@PutMapping("/properties")
     @Timed
     public ResponseEntity<Property> updateProperty(@Valid @RequestBody Property property) throws URISyntaxException {
         log.debug("REST request to update Property : {}", property);
@@ -76,7 +92,7 @@ public class PropertyResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, property.getId().toString()))
             .body(result);
-    }
+    }*/
 
     /**
      * GET  /properties : get all the properties.
@@ -86,8 +102,25 @@ public class PropertyResource {
     @GetMapping("/properties")
     @Timed
     public List<Property> getAllProperties() {
+        List<Property> properties = new ArrayList<>();
         log.debug("REST request to get all Properties");
-        return propertyRepository.findAll();
+
+        //Add all apartments(FLATS, HOUSES, TOWERS, ETC...)
+        properties.addAll(apartmentRepository.findAll());
+
+        //Adds business to list
+        properties.addAll(businessRepository.findAll());
+
+        //Adds offices to list
+        properties.addAll(officeRepository.findAll());
+
+        //Adds parking to list
+        properties.addAll(parkingRepository.findAll());
+
+        //Adds terrain to list
+        properties.addAll(terrainRepository.findAll());
+
+        return properties;
         }
 
     /**
@@ -96,13 +129,13 @@ public class PropertyResource {
      * @param id the id of the property to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
      */
-    @GetMapping("/properties/{id}")
+    /*@GetMapping("/properties/{id}")
     @Timed
     public ResponseEntity<Property> getProperty(@PathVariable Long id) {
         log.debug("REST request to get Property : {}", id);
         Property property = propertyRepository.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(property));
-    }
+    }*/
 
     /**
      * DELETE  /properties/:id : delete the "id" property.
@@ -110,11 +143,11 @@ public class PropertyResource {
      * @param id the id of the property to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/properties/{id}")
+    /*@DeleteMapping("/properties/{id}")
     @Timed
     public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
         log.debug("REST request to delete Property : {}", id);
         propertyRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
+    }*/
 }

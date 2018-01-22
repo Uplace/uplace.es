@@ -116,4 +116,18 @@ public class OfficeResource {
         officeRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * GET  /office/reference/:reference : get the office by reference.
+     *
+     * @param reference the id of the office to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @GetMapping("/office/reference/{reference}")
+    @Timed
+    public ResponseEntity<Office> getOfficeByReference(@PathVariable String reference) {
+        log.debug("REST request to get Office : {}", reference);
+        Office office = officeRepository.findFirstByReference(reference);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(office));
+    }
 }
