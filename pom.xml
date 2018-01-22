@@ -805,7 +805,8 @@
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
-                                    <arguments>run webpack:test</arguments>
+                                    <!-- Disable test on front end -->
+                                    <!--<arguments>run webpack:test</arguments>-->
                                     <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
                                 </configuration>
                             </execution>

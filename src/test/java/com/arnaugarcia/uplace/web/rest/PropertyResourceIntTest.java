@@ -135,6 +135,11 @@ public class PropertyResourceIntTest {
         property = createEntity(em);
     }*/
 
+    @Test
+    public void test() {
+        System.out.println("TEST");
+    }
+
     /*@Test
     @Transactional
     public void createProperty() throws Exception {
