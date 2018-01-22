@@ -97,7 +97,7 @@ public class FlatResource {
      */
     @PutMapping("/flats")
     @Timed
-    public ResponseEntity<Property> updateProperty(@Valid @RequestBody Apartment flat) throws URISyntaxException {
+    public ResponseEntity<Property> updateFlat (@RequestBody Apartment flat) throws URISyntaxException {
         log.debug("REST request to update Flat : {}", flat);
         if (flat.getId() == null) {
             return createFlat(flat);
