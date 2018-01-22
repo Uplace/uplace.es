@@ -11,7 +11,8 @@ import { Principal, ResponseWrapper } from '../../shared';
     templateUrl: './apartment.component.html'
 })
 export class ApartmentComponent implements OnInit, OnDestroy {
-apartments: Apartment[];
+
+    apartments: Apartment[];
     currentAccount: any;
     eventSubscriber: Subscription;
 

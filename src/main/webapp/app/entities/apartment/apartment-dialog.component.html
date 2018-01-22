@@ -12,6 +12,25 @@
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="apartment.id" readonly />
         </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_title">Title</label>
+            <input type="text" class="form-control" name="numberBedrooms" id="field_title"
+                   [(ngModel)]="apartment.title" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_price">Price</label>
+            <input type="number" class="form-control" name="numberBedrooms" id="field_price"
+                   [(ngModel)]="apartment.price" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_surface">Surface</label>
+            <input type="number" class="form-control" name="numberBedrooms" id="field_surface"
+                   [(ngModel)]="apartment.surface" />
+        </div>
+
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.apartment.numberBedrooms" for="field_numberBedrooms">Number Bedrooms</label>
             <input type="number" class="form-control" name="numberBedrooms" id="field_numberBedrooms"
