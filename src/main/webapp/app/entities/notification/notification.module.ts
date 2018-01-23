@@ -14,6 +14,7 @@ import {
     NotificationDeleteDialogComponent,
     notificationRoute,
     notificationPopupRoute,
+    NotificationResolvePagingParams,
 } from './';
 
 const ENTITY_STATES = [
@@ -45,6 +46,7 @@ const ENTITY_STATES = [
     providers: [
         NotificationService,
         NotificationPopupService,
+        NotificationResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

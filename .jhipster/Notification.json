@@ -39,7 +39,7 @@
     "changelogDate": "20180123092114",
     "entityTableName": "notification",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "pagination",
     "service": "no",
     "jpaMetamodelFiltering": false
 }
