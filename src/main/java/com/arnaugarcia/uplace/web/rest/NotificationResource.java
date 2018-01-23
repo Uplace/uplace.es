@@ -1,5 +1,8 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.domain.User;
+import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
+import com.arnaugarcia.uplace.repository.UserRepository;
 import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Notification;
@@ -9,7 +12,6 @@ import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.checkerframework.checker.units.qual.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,9 +21,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,8 +43,11 @@ public class NotificationResource {
 
     private final NotificationRepository notificationRepository;
 
-    public NotificationResource(NotificationRepository notificationRepository) {
+    private final UserRepository userRepository;
+
+    public NotificationResource(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -55,9 +62,26 @@ public class NotificationResource {
     public ResponseEntity<Notification> createNotification(@RequestBody Notification notification) throws URISyntaxException {
         log.debug("REST request to save Notification : {}", notification);
         if (notification.getId() != null) {
+
             throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, "idexists");
+
+        } else if (!notification.getType().equals(NotificationType.NOTIFICATION) ){
+
+            throw new BadRequestAlertException("The notification must contains the type 'NOTIFICATION'", ENTITY_NAME, "badtype");
+
+        } else if (notification.getUser() == null && SecurityUtils.getCurrentUserLogin().isPresent()) {
+
+            Optional<User> result = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+
+            result.ifPresent(user -> notification.setUser(user));
+
+        } else {
+            throw new BadRequestAlertException("Error getting the logged user", ENTITY_NAME, "baduser");
         }
+
+        notification.setCreation(ZonedDateTime.now());
         Notification result = notificationRepository.save(notification);
+
         return ResponseEntity.created(new URI("/api/notifications/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -173,7 +197,7 @@ public class NotificationResource {
      * @param id the id of the notification to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
      */
-    @GetMapping("/notifications/{id}/unread")
+    /*@GetMapping("/notifications/{id}/unread")
     @Timed
     public ResponseEntity<Notification> updateNotificationAsUnRead(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
@@ -185,7 +209,7 @@ public class NotificationResource {
         }
         notification = notificationRepository.save(notification);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
-    }
+    }*/
 
     /**
      * DELETE  /notifications/:id : delete the "id" notification.
@@ -197,7 +221,28 @@ public class NotificationResource {
     @Timed
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         log.debug("REST request to delete Notification : {}", id);
-        notificationRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        Notification notification = notificationRepository.findOne(id);
+        if (notification != null) {
+            notificationRepository.delete(notification);
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        } else {
+            throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, "badid");
+        }
+    }
+
+    @DeleteMapping("/notifications/")
+    @Timed
+    public ResponseEntity<Void> deleteNotifications(@RequestBody List<Notification> notifications) {
+        log.debug("REST request to delete notifications: {}", notifications.size());
+        List<Notification> result = new ArrayList<>();
+        notifications.forEach(notification -> {
+            if (notification.getId() != null) {
+                result.add(notification);
+            } else {
+                throw new BadRequestAlertException("Some notification doesn't have a valid ID or it's malformed", ENTITY_NAME, "badid");
+            }
+        });
+        notificationRepository.delete(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "delete")).build();
     }
 }
