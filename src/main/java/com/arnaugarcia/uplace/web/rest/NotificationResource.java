@@ -12,8 +12,6 @@ import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.checkerframework.checker.units.qual.Time;
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -223,7 +221,28 @@ public class NotificationResource {
     @Timed
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         log.debug("REST request to delete Notification : {}", id);
-        notificationRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        Notification notification = notificationRepository.findOne(id);
+        if (notification != null) {
+            notificationRepository.delete(notification);
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        } else {
+            throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, "badid");
+        }
+    }
+
+    @DeleteMapping("/notifications/")
+    @Timed
+    public ResponseEntity<Void> deleteNotifications(@RequestBody List<Notification> notifications) {
+        log.debug("REST request to delete notifications: {}", notifications.size());
+        List<Notification> result = new ArrayList<>();
+        notifications.forEach(notification -> {
+            if (notification.getId() != null) {
+                result.add(notification);
+            } else {
+                throw new BadRequestAlertException("Some notification doesn't have a valid ID or it's malformed", ENTITY_NAME, "badid");
+            }
+        });
+        notificationRepository.delete(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "delete")).build();
     }
 }
