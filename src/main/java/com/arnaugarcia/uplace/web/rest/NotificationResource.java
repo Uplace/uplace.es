@@ -27,6 +27,7 @@ import javax.swing.text.html.Option;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,6 +80,8 @@ public class NotificationResource {
         } else {
             throw new BadRequestAlertException("Error getting the logged user", ENTITY_NAME, "baduser");
         }
+
+        notification.setCreation(ZonedDateTime.now());
         Notification result = notificationRepository.save(notification);
 
         return ResponseEntity.created(new URI("/api/notifications/" + result.getId()))

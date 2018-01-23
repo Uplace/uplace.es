@@ -4,6 +4,7 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Notification;
 import com.arnaugarcia.uplace.repository.NotificationRepository;
+import com.arnaugarcia.uplace.repository.UserRepository;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -67,6 +68,9 @@ public class NotificationResourceIntTest {
     private NotificationRepository notificationRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -85,7 +89,7 @@ public class NotificationResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final NotificationResource notificationResource = new NotificationResource(notificationRepository);
+        final NotificationResource notificationResource = new NotificationResource(notificationRepository, userRepository);
         this.restNotificationMockMvc = MockMvcBuilders.standaloneSetup(notificationResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
