@@ -66,6 +66,8 @@ entity Office {
 entity Agent {
 	firstName String,
     lastName String
+    phone String,
+    photo ImageBlob
 }
 
 entity Parking {
@@ -100,7 +102,19 @@ entity Business {
     surfaceSaloon Integer,
     height Integer,
     pool Select,
+}
 
+entity Notification {
+	title String,
+    content TextBlob,
+    creation ZonedDateTime,
+    type NotificationType,
+    token String,
+    read Boolean
+}
+
+enum NotificationType{
+    NOTIFICATION, REQUEST, ALERT
 }
 
 /* PHOTO */
@@ -119,10 +133,14 @@ entity Photo {
 relationship OneToMany {
 	// One Gallery can own many photos
     Gallery{photo(name)} to Photo{gallery},
-    // ONE PROPERTY CAN BE MANAGED BY VARIOUS AGENTS
-    Property{managed} to Agent{property(title)}
+    User{notification(title)} to Notification{user(login)}
+}
+
+relationship ManyToMany {
+    Property{manager(firstName)} to Agent{property(title)}
 }
 
 relationship OneToOne {
-	Property{gallery} to Gallery{property(title)}
+	Property{gallery} to Gallery{property(title)},
+    Agent{user(login)} to User{agent(firstName)}
 }

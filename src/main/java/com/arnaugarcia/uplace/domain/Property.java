@@ -16,11 +16,11 @@ import java.util.Objects;
 /**
  * A Property.
  */
-@Table(name = "property")
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table(name = "property")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn()
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public abstract class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,7 +77,7 @@ public abstract class Property implements Serializable {
     @OneToMany(mappedBy = "property")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Agent> manageds = new HashSet<>();
+    private Set<Agent> managers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -257,29 +257,29 @@ public abstract class Property implements Serializable {
         this.gallery = gallery;
     }
 
-    public Set<Agent> getManageds() {
-        return manageds;
+    public Set<Agent> getManagers() {
+        return managers;
     }
 
-    public Property manageds(Set<Agent> agents) {
-        this.manageds = agents;
+    public Property managers(Set<Agent> agents) {
+        this.managers = agents;
         return this;
     }
 
-    public Property addManaged(Agent agent) {
-        this.manageds.add(agent);
+    public Property addManagers(Agent agent) {
+        this.managers.add(agent);
         agent.setProperty(this);
         return this;
     }
 
-    public Property removeManaged(Agent agent) {
-        this.manageds.remove(agent);
+    public Property removeManagers(Agent agent) {
+        this.managers.remove(agent);
         agent.setProperty(null);
         return this;
     }
 
-    public void setManageds(Set<Agent> agents) {
-        this.manageds = agents;
+    public void setManagers(Set<Agent> agents) {
+        this.managers = agents;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

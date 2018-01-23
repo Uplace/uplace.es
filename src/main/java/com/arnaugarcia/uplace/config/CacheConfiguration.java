@@ -54,6 +54,7 @@ public class CacheConfiguration {
             cm.createCache(com.arnaugarcia.uplace.domain.Gallery.class.getName() + ".photos", jcacheConfiguration);
             cm.createCache(com.arnaugarcia.uplace.domain.Photo.class.getName(), jcacheConfiguration);
             cm.createCache(com.arnaugarcia.uplace.domain.Business.class.getName(), jcacheConfiguration);
+            cm.createCache(com.arnaugarcia.uplace.domain.Property.class.getName() + ".managers", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

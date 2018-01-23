@@ -28,7 +28,7 @@
             "visible": "Visible",
             "surface": "Surface",
             "gallery": "Gallery",
-            "managed": "Managed"
+            "managers": "Managers"
         }
     }
 }

@@ -11,7 +11,7 @@
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "managed",
+            "relationshipName": "managers",
             "otherEntityName": "agent",
             "otherEntityRelationshipName": "property"
         }
@@ -85,5 +85,5 @@
     "dto": "no",
     "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": true
+    "jpaMetamodelFiltering": false
 }
