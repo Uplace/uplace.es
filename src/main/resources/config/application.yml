@@ -81,20 +81,20 @@ jhipster:
         allow-credentials: true
         max-age: 1800
     mail:
-        from: uplace@localhost
+        from: no-reply@uplace.es
     swagger:
         default-include-pattern: /api/.*
-        title: uplace API
-        description: uplace API documentation
-        version: 0.0.1
+        title: Uplace API
+        description: Uplace API documentation
+        version: 0.0.2
         terms-of-service-url:
-        contact-name:
-        contact-url:
-        contact-email:
+        contact-name: Uplace Team
+        contact-url: http://uplace.es/staff
+        contact-email: arnau.garcia@uplace.es
         license:
         license-url:
     ribbon:
-        display-on-active-profiles: dev
+        display-on-active-profiles: dev,prod
 
 # ===================================================================
 # Application specific properties
