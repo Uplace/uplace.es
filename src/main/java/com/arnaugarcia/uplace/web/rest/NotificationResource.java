@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Notification;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,8 +93,15 @@ public class NotificationResource {
     @GetMapping("/notifications")
     @Timed
     public ResponseEntity<List<Notification>> getAllNotifications(Pageable pageable) {
-        log.debug("REST request to get a page of Notifications");
-        Page<Notification> page = notificationRepository.findAll(pageable);
+        // log.debug("REST request to get a page of Notifications");
+        Page<Notification> page;
+        if (SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
+            log.debug("REST request to get a page of Notifications as ADMIN");
+            page = notificationRepository.findAll(pageable);
+        } else {
+            log.debug("REST request to get a page of Notifications as Agent");
+            page = notificationRepository.findByUserIsCurrentUserAndReadFalse(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/notifications");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

@@ -1,6 +1,8 @@
 package com.arnaugarcia.uplace.repository;
 
 import com.arnaugarcia.uplace.domain.Notification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -14,6 +16,9 @@ import java.util.List;
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
     @Query("select notification from Notification notification where notification.user.login = ?#{principal.username}")
-    List<Notification> findByUserIsCurrentUser();
+    Page<Notification> findByUserIsCurrentUser(Pageable pageable);
+
+    @Query("select notification from Notification notification where notification.user.login = ?#{principal.username}")
+    Page<Notification> findByUserIsCurrentUserAndReadFalse(Pageable pageable);
 
 }
