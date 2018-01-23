@@ -9,6 +9,7 @@ import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.checkerframework.checker.units.qual.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -116,6 +117,34 @@ public class NotificationResource {
         log.debug("REST request to get Notification : {}", id);
         Notification notification = notificationRepository.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
+    }
+
+    /**
+     * GET  /notifications/read
+     * @return the ResponseEntity with status 200 (OK) and with body the notifications updated, or with status 404 (Not Found)
+     */
+
+    @GetMapping("/notifications/read")
+    @Timed
+    public List<Notification> updateNotificationsAsRead() {
+        log.debug("REST request to mark all the Notifications as read : {}");
+        List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
+        notifications.forEach((notification -> notification.setRead(true)));
+        return notificationRepository.save(notifications);
+    }
+
+    /**
+     * GET  /notifications/unread
+     * @return the List<Notification> with status 200 (OK) and with body the notifications updated, or with status 404 (Not Found)
+     */
+
+    @GetMapping("/notifications/unread")
+    @Timed
+    public List<Notification> updateNotificationsAsUnRead() {
+        log.debug("REST request to mark all the Notifications as unread : {}");
+        List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
+        notifications.forEach((notification -> notification.setRead(false)));
+        return notificationRepository.save(notifications);
     }
 
     /**

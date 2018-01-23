@@ -19,6 +19,9 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     Page<Notification> findByUserIsCurrentUser(Pageable pageable);
 
     @Query("select notification from Notification notification where notification.user.login = ?#{principal.username}")
+    List<Notification> findByUserIsCurrentUser();
+
+    @Query("select notification from Notification notification where notification.user.login = ?#{principal.username}")
     Page<Notification> findByUserIsCurrentUserAndReadFalse(Pageable pageable);
 
 }
