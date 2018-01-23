@@ -14,5 +14,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="gallery"/>
 
+        <addForeignKeyConstraint baseColumnNames="properties_id"
+                                 baseTableName="property_manager"
+                                 constraintName="fk_property_manager_properties_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="property"/>
+        <addForeignKeyConstraint baseColumnNames="managers_id"
+                                 baseTableName="property_manager"
+                                 constraintName="fk_property_manager_managers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="agent"/>
+        
     </changeSet>
 </databaseChangeLog>

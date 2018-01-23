@@ -1,6 +1,5 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -74,9 +73,11 @@ public abstract class Property implements Serializable {
     @JoinColumn(unique = true)
     private Gallery gallery;
 
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "property_manager",
+               joinColumns = @JoinColumn(name="properties_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -266,15 +267,15 @@ public abstract class Property implements Serializable {
         return this;
     }
 
-    public Property addManagers(Agent agent) {
+    public Property addManager(Agent agent) {
         this.managers.add(agent);
-        agent.setProperty(this);
+        agent.getProperties().add(this);
         return this;
     }
 
-    public Property removeManagers(Agent agent) {
+    public Property removeManager(Agent agent) {
         this.managers.remove(agent);
-        agent.setProperty(null);
+        agent.getProperties().remove(this);
         return this;
     }
 

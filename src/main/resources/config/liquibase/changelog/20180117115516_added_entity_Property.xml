@@ -77,6 +77,17 @@
         <dropDefaultValue tableName="property" columnName="created" columnDataType="datetime"/>
         <dropDefaultValue tableName="property" columnName="updated" columnDataType="datetime"/>
         
+        <createTable tableName="property_manager">
+            <column name="managers_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="properties_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="properties_id, managers_id" tableName="property_manager"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

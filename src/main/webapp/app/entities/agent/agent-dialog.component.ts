@@ -1,14 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Agent } from './agent.model';
 import { AgentPopupService } from './agent-popup.service';
 import { AgentService } from './agent.service';
+import { User, UserService } from '../../shared';
 import { Property, PropertyService } from '../property';
 import { ResponseWrapper } from '../../shared';
 
@@ -21,21 +22,44 @@ export class AgentDialogComponent implements OnInit {
     agent: Agent;
     isSaving: boolean;
 
+    users: User[];
+
     properties: Property[];
 
     constructor(
         public activeModal: NgbActiveModal,
+        private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
         private agentService: AgentService,
+        private userService: UserService,
         private propertyService: PropertyService,
+        private elementRef: ElementRef,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.userService.query()
+            .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.propertyService.query()
             .subscribe((res: ResponseWrapper) => { this.properties = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+    }
+
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
+
+    setFileData(event, entity, field, isImage) {
+        this.dataUtils.setFileData(event, entity, field, isImage);
+    }
+
+    clearInputImage(field: string, fieldContentType: string, idInput: string) {
+        this.dataUtils.clearInputImage(this.agent, this.elementRef, field, fieldContentType, idInput);
     }
 
     clear() {
@@ -72,8 +96,23 @@ export class AgentDialogComponent implements OnInit {
         this.jhiAlertService.error(error.message, null, null);
     }
 
+    trackUserById(index: number, item: User) {
+        return item.id;
+    }
+
     trackPropertyById(index: number, item: Property) {
         return item.id;
+    }
+
+    getSelected(selectedVals: Array<any>, option: any) {
+        if (selectedVals) {
+            for (let i = 0; i < selectedVals.length; i++) {
+                if (option.id === selectedVals[i].id) {
+                    return selectedVals[i];
+                }
+            }
+        }
+        return option;
     }
 }
 

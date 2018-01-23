@@ -2,10 +2,19 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "many-to-one",
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "agent(firstName)"
+        },
+        {
+            "relationshipType": "many-to-many",
             "relationshipName": "property",
             "otherEntityName": "property",
-            "otherEntityField": "title"
+            "ownerSide": false,
+            "otherEntityRelationshipName": "manager"
         }
     ],
     "fields": [
@@ -16,6 +25,15 @@
         {
             "fieldName": "lastName",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "photo",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
         }
     ],
     "changelogDate": "20180117115519",

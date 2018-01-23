@@ -1,0 +1,10 @@
+{
+    "uplaceApp": {
+        "NotificationType" : {
+            "null": "",
+            "NOTIFICATION": "NOTIFICATION",
+            "REQUEST": "REQUEST",
+            "ALERT": "ALERT"
+        }
+    }
+}

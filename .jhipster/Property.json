@@ -10,10 +10,12 @@
             "otherEntityRelationshipName": "property(title)"
         },
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "managers",
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "property",
+            "relationshipName": "manager",
             "otherEntityName": "agent",
-            "otherEntityRelationshipName": "property"
+            "otherEntityField": "firstName",
+            "ownerSide": true
         }
     ],
     "fields": [

@@ -1,11 +1,14 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -28,8 +31,24 @@ public class Agent implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    @ManyToOne
-    private Property property;
+    @Column(name = "phone")
+    private String phone;
+
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
+
+    @Column(name = "photo_content_type")
+    private String photoContentType;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
+    @ManyToMany(mappedBy = "managers")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Property> properties = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -66,17 +85,81 @@ public class Agent implements Serializable {
         this.lastName = lastName;
     }
 
-    public Property getProperty() {
-        return property;
+    public String getPhone() {
+        return phone;
     }
 
-    public Agent property(Property property) {
-        this.property = property;
+    public Agent phone(String phone) {
+        this.phone = phone;
         return this;
     }
 
-    public void setProperty(Property property) {
-        this.property = property;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public Agent photo(byte[] photo) {
+        this.photo = photo;
+        return this;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public String getPhotoContentType() {
+        return photoContentType;
+    }
+
+    public Agent photoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
+        return this;
+    }
+
+    public void setPhotoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Agent user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Property> getProperties() {
+        return properties;
+    }
+
+    public Agent properties(Set<Property> properties) {
+        this.properties = properties;
+        return this;
+    }
+
+    public Agent addProperty(Property property) {
+        this.properties.add(property);
+        property.getManagers().add(this);
+        return this;
+    }
+
+    public Agent removeProperty(Property property) {
+        this.properties.remove(property);
+        property.getManagers().remove(this);
+        return this;
+    }
+
+    public void setProperties(Set<Property> properties) {
+        this.properties = properties;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -106,6 +189,9 @@ public class Agent implements Serializable {
             "id=" + getId() +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
+            ", phone='" + getPhone() + "'" +
+            ", photo='" + getPhoto() + "'" +
+            ", photoContentType='" + getPhotoContentType() + "'" +
             "}";
     }
 }

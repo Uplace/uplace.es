@@ -9,6 +9,7 @@ import { PropertyDialogComponent } from '../../../../../../main/webapp/app/entit
 import { PropertyService } from '../../../../../../main/webapp/app/entities/property/property.service';
 import { Property } from '../../../../../../main/webapp/app/entities/property/property.model';
 import { GalleryService } from '../../../../../../main/webapp/app/entities/gallery';
+import { AgentService } from '../../../../../../main/webapp/app/entities/agent';
 
 describe('Component Tests', () => {
 
@@ -25,6 +26,7 @@ describe('Component Tests', () => {
                 declarations: [PropertyDialogComponent],
                 providers: [
                     GalleryService,
+                    AgentService,
                     PropertyService
                 ]
             })

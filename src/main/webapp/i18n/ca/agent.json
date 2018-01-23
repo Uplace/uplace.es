@@ -17,6 +17,9 @@
             },
             "firstName": "First Name",
             "lastName": "Last Name",
+            "phone": "Phone",
+            "photo": "Photo",
+            "user": "User",
             "property": "Property"
         }
     }

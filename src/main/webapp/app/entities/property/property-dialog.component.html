@@ -120,6 +120,12 @@
                 <option [ngValue]="galleryOption.id === property.gallery?.id ? property.gallery : galleryOption" *ngFor="let galleryOption of galleries; trackBy: trackGalleryById">{{galleryOption.id}}</option>
             </select>
         </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.property.manager" for="field_manager">Manager</label>
+            <select class="form-control" id="field_manager" multiple name="manager" [(ngModel)]="property.managers">
+                <option [ngValue]="getSelected(property.managers, agentOption)" *ngFor="let agentOption of agents; trackBy: trackAgentById">{{agentOption.firstName}}</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">

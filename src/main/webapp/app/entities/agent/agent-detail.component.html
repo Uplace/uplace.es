@@ -12,11 +12,22 @@
         <dd>
             <span>{{agent.lastName}}</span>
         </dd>
-        <dt><span jhiTranslate="uplaceApp.agent.property">Property</span></dt>
+        <dt><span jhiTranslate="uplaceApp.agent.phone">Phone</span></dt>
         <dd>
-            <div *ngIf="agent.property">
-                <a [routerLink]="['/property', agent.property?.id]">{{agent.property?.title}}</a>
+            <span>{{agent.phone}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.agent.photo">Photo</span></dt>
+        <dd>
+            <div *ngIf="agent.photo">
+                <a (click)="openFile(agent.photoContentType, agent.photo)">
+                    <img [src]="'data:' + agent.photoContentType + ';base64,' + agent.photo" style="max-width: 100%;" alt="agent image"/>
+                </a>
+                {{agent.photoContentType}}, {{byteSize(agent.photo)}}
             </div>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.agent.user">User</span></dt>
+        <dd>
+            {{agent.user?.login}}
         </dd>
     </dl>
 

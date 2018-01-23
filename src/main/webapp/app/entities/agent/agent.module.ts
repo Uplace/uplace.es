@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { UplaceSharedModule } from '../../shared';
+import { UplaceAdminModule } from '../../admin/admin.module';
 import {
     AgentService,
     AgentPopupService,
@@ -23,6 +24,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         UplaceSharedModule,
+        UplaceAdminModule,
         RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [

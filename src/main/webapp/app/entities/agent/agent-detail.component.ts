@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 
 import { Agent } from './agent.model';
 import { AgentService } from './agent.service';
@@ -18,6 +18,7 @@ export class AgentDetailComponent implements OnInit, OnDestroy {
 
     constructor(
         private eventManager: JhiEventManager,
+        private dataUtils: JhiDataUtils,
         private agentService: AgentService,
         private route: ActivatedRoute
     ) {
@@ -34,6 +35,13 @@ export class AgentDetailComponent implements OnInit, OnDestroy {
         this.agentService.find(id).subscribe((agent) => {
             this.agent = agent;
         });
+    }
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
     }
     previousState() {
         window.history.back();

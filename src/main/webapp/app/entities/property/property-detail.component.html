@@ -58,6 +58,12 @@
                 <a [routerLink]="['/gallery', property.gallery?.id]">{{property.gallery?.id}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="uplaceApp.property.manager">Manager</span></dt>
+        <dd>
+            <span *ngFor="let manager of property.managers; let last = last">
+                <a [routerLink]="['/agent', manager?.id ]">{{manager.firstName}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
     </dl>
 
     <button type="submit"

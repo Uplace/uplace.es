@@ -10,6 +10,7 @@ import { Property } from './property.model';
 import { PropertyPopupService } from './property-popup.service';
 import { PropertyService } from './property.service';
 import { Gallery, GalleryService } from '../gallery';
+import { Agent, AgentService } from '../agent';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -23,12 +24,15 @@ export class PropertyDialogComponent implements OnInit {
 
     galleries: Gallery[];
 
+    agents: Agent[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
         private propertyService: PropertyService,
         private galleryService: GalleryService,
+        private agentService: AgentService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -48,6 +52,8 @@ export class PropertyDialogComponent implements OnInit {
                         }, (subRes: ResponseWrapper) => this.onError(subRes.json));
                 }
             }, (res: ResponseWrapper) => this.onError(res.json));
+        this.agentService.query()
+            .subscribe((res: ResponseWrapper) => { this.agents = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     byteSize(field) {
@@ -98,6 +104,21 @@ export class PropertyDialogComponent implements OnInit {
 
     trackGalleryById(index: number, item: Gallery) {
         return item.id;
+    }
+
+    trackAgentById(index: number, item: Agent) {
+        return item.id;
+    }
+
+    getSelected(selectedVals: Array<any>, option: any) {
+        if (selectedVals) {
+            for (let i = 0; i < selectedVals.length; i++) {
+                if (option.id === selectedVals[i].id) {
+                    return selectedVals[i];
+                }
+            }
+        }
+        return option;
     }
 }
 

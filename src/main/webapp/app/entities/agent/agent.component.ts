@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Agent } from './agent.model';
 import { AgentService } from './agent.service';
@@ -18,6 +18,7 @@ agents: Agent[];
     constructor(
         private agentService: AgentService,
         private jhiAlertService: JhiAlertService,
+        private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
         private principal: Principal
     ) {
@@ -45,6 +46,14 @@ agents: Agent[];
 
     trackId(index: number, item: Agent) {
         return item.id;
+    }
+
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
     }
     registerChangeInAgents() {
         this.eventSubscriber = this.eventManager.subscribe('agentListModification', (response) => this.loadAll());

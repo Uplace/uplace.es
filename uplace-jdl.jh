@@ -132,8 +132,11 @@ entity Photo {
 
 relationship OneToMany {
 	// One Gallery can own many photos
-    Gallery{photo(name)} to Photo{gallery},
-    User{notification(title)} to Notification{user(login)}
+    Gallery{photo(name)} to Photo{gallery}
+}
+
+relationship ManyToOne {
+    Notification{user(login)} to User{notification(title)}
 }
 
 relationship ManyToMany {

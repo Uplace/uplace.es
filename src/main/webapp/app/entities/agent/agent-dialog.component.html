@@ -22,12 +22,34 @@
             <input type="text" class="form-control" name="lastName" id="field_lastName"
                 [(ngModel)]="agent.lastName" />
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.agent.phone" for="field_phone">Phone</label>
+            <input type="text" class="form-control" name="phone" id="field_phone"
+                [(ngModel)]="agent.phone" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.agent.photo" for="field_photo">Photo</label>
+            <div>
+                <img [src]="'data:' + agent.photoContentType + ';base64,' + agent.photo" style="max-height: 100px;" *ngIf="agent.photo" alt="agent image"/>
+                <div *ngIf="agent.photo" class="form-text text-danger clearfix">
+                    <span class="pull-left">{{agent.photoContentType}}, {{byteSize(agent.photo)}}</span>
+                    <button type="button" (click)="clearInputImage('photo', 'photoContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_photo" (change)="setFileData($event, agent, 'photo', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+            </div>
+            <input type="hidden" class="form-control" name="photo" id="field_photo"
+                [(ngModel)]="agent.photo" />
+            <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType"
+                [(ngModel)]="agent.photoContentType" />
+        </div>
 
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="uplaceApp.agent.property" for="field_property">Property</label>
-            <select class="form-control" id="field_property" name="property" [(ngModel)]="agent.property" >
+            <label class="form-control-label" jhiTranslate="uplaceApp.agent.user" for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" [(ngModel)]="agent.user" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="propertyOption.id === agent.property?.id ? agent.property : propertyOption" *ngFor="let propertyOption of properties; trackBy: trackPropertyById">{{propertyOption.title}}</option>
+                <option [ngValue]="userOption.id === agent.user?.id ? agent.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
             </select>
         </div>
     </div>
