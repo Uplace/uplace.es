@@ -197,7 +197,7 @@ public class NotificationResource {
      * @param id the id of the notification to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
      */
-    @GetMapping("/notifications/{id}/unread")
+    /*@GetMapping("/notifications/{id}/unread")
     @Timed
     public ResponseEntity<Notification> updateNotificationAsUnRead(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
@@ -209,7 +209,7 @@ public class NotificationResource {
         }
         notification = notificationRepository.save(notification);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
-    }
+    }*/
 
     /**
      * DELETE  /notifications/:id : delete the "id" notification.
