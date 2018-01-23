@@ -93,13 +93,11 @@ public class NotificationResource {
     @GetMapping("/notifications")
     @Timed
     public ResponseEntity<List<Notification>> getAllNotifications(Pageable pageable) {
-        // log.debug("REST request to get a page of Notifications");
+        log.debug("REST request to get a page of Notifications");
         Page<Notification> page;
         if (SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
-            log.debug("REST request to get a page of Notifications as ADMIN");
             page = notificationRepository.findAll(pageable);
         } else {
-            log.debug("REST request to get a page of Notifications as Agent");
             page = notificationRepository.findByUserIsCurrentUserAndReadFalse(pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/notifications");
@@ -117,6 +115,46 @@ public class NotificationResource {
     public ResponseEntity<Notification> getNotification(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
         Notification notification = notificationRepository.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
+    }
+
+    /**
+     * GET  /notifications/:id/read : get the "id" notification.
+     *
+     * @param id the id of the notification to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
+     */
+    @GetMapping("/notifications/{id}/read")
+    @Timed
+    public ResponseEntity<Notification> updateNotificationAsRead(@PathVariable Long id) {
+        log.debug("REST request to get Notification : {}", id);
+        Notification notification = notificationRepository.findOne(id);
+        if (notification != null) {
+            notification.setRead(true);
+        } else {
+            throw new BadRequestAlertException("Notification don't exists", ENTITY_NAME, "notexists");
+        }
+        notification = notificationRepository.save(notification);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
+    }
+
+    /**
+     * GET  /notifications/:id/unread : get the "id" notification.
+     *
+     * @param id the id of the notification to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
+     */
+    @GetMapping("/notifications/{id}/unread")
+    @Timed
+    public ResponseEntity<Notification> updateNotificationAsUnRead(@PathVariable Long id) {
+        log.debug("REST request to get Notification : {}", id);
+        Notification notification = notificationRepository.findOne(id);
+        if (notification != null) {
+            notification.setRead(false);
+        } else {
+            throw new BadRequestAlertException("Notification don't exists", ENTITY_NAME, "notexists");
+        }
+        notification = notificationRepository.save(notification);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
     }
 
