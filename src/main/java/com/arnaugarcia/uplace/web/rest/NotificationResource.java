@@ -1,5 +1,8 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.domain.User;
+import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
+import com.arnaugarcia.uplace.repository.UserRepository;
 import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Notification;
@@ -10,6 +13,7 @@ import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.checkerframework.checker.units.qual.Time;
+import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -39,8 +44,11 @@ public class NotificationResource {
 
     private final NotificationRepository notificationRepository;
 
-    public NotificationResource(NotificationRepository notificationRepository) {
+    private final UserRepository userRepository;
+
+    public NotificationResource(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -55,9 +63,24 @@ public class NotificationResource {
     public ResponseEntity<Notification> createNotification(@RequestBody Notification notification) throws URISyntaxException {
         log.debug("REST request to save Notification : {}", notification);
         if (notification.getId() != null) {
+
             throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, "idexists");
+
+        } else if (!notification.getType().equals(NotificationType.NOTIFICATION) ){
+
+            throw new BadRequestAlertException("The notification must contains the type 'NOTIFICATION'", ENTITY_NAME, "badtype");
+
+        } else if (notification.getUser() == null && SecurityUtils.getCurrentUserLogin().isPresent()) {
+
+            Optional<User> result = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+
+            result.ifPresent(user -> notification.setUser(user));
+
+        } else {
+            throw new BadRequestAlertException("Error getting the logged user", ENTITY_NAME, "baduser");
         }
         Notification result = notificationRepository.save(notification);
+
         return ResponseEntity.created(new URI("/api/notifications/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
