@@ -147,3 +147,5 @@ relationship OneToOne {
 	Property{gallery} to Gallery{property(title)},
     Agent{user(login)} to User{agent(firstName)}
 }
+
+paginate Notification with pagination
