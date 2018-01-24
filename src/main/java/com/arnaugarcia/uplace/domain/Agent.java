@@ -46,7 +46,6 @@ public class Agent implements Serializable {
     private User user;
 
     @ManyToMany(mappedBy = "managers")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Property> properties = new HashSet<>();
 

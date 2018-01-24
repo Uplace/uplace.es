@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Property;
@@ -13,11 +14,15 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.Authorization;
 import io.undertow.util.BadRequestException;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Role;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -110,16 +115,33 @@ public class FlatResource {
     }
 
     /**
-     * GET  /flats : get all the properties.
+     * GET  /flats : get all flats.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of flats in body
      */
     @GetMapping("/flats")
     @Timed
     @Transactional(readOnly = true)
-    public List<Apartment> getAllFlats() {
+    public Page<Apartment> getAllFlats(Pageable pageable) {
         log.debug("REST request to get all flats");
-        return apartmentRepository.findAllByPropertyType(ApartmentType.FLAT);
+        return apartmentRepository.findAllByPropertyType(ApartmentType.FLAT, pageable);
+    }
+
+    /**
+     * GET  /flats : get all the properties.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of flats in body
+     */
+    @GetMapping("/flats/{reference}/agents")
+    @Timed
+    @Transactional(readOnly = true)
+    public Set<Agent> getAgentsOfFlat(@PathVariable String reference) {
+        log.debug("REST request to get all flats");
+        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        if (apartment == null || apartment.getManagers() == null) {
+            throw new BadRequestAlertException("The Flat with this reference doesn't exists or we have an error with our agents", ENTITY_NAME, "badagent");
+        }
+        return apartment.getManagers();
     }
 
     /**
@@ -182,7 +204,7 @@ public class FlatResource {
      * @param reference the reference of the property to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
      */
-    @PutMapping("/flats/{reference}/photo/")
+    @PutMapping("/flats/{reference}/photo")
     @Timed
     @Transactional(readOnly = true)
     public Set<Photo> UpdatePhotoFlat(@PathVariable String reference, @RequestBody Photo photo) {
