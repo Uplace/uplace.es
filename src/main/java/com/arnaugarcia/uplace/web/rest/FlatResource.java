@@ -1,19 +1,23 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.domain.Apartment;
+import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
+import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.Authorization;
+import io.undertow.util.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +27,7 @@ import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing Flat.
@@ -37,9 +42,12 @@ public class FlatResource {
 
     private final ApartmentRepository apartmentRepository;
 
+    private final PhotoRepository photoRepository;
 
-    public FlatResource(ApartmentRepository apartmentRepository) {
+
+    public FlatResource(ApartmentRepository apartmentRepository, PhotoRepository photoRepository) {
         this.apartmentRepository = apartmentRepository;
+        this.photoRepository = photoRepository;
     }
 
     /**
@@ -63,15 +71,11 @@ public class FlatResource {
         //Set the created to now()
         flat.setCreated(ZonedDateTime.now());
 
-        //Create and save a new empty gallery
         flat.propertyType(ApartmentType.FLAT);
         //Generate the random reference
         flat.setReference(RandomUtil.generateReference().toUpperCase());
         Apartment result = apartmentRepository.save(flat);
-        /*
-         * Updates the apartment in order to set the correct gallery with the correct ID of the gallery otherwise,
-         * the gallery assigned will not have an ID
-         */
+
         apartmentRepository.save(result);
 
         return ResponseEntity.created(new URI("/api/flat/" + result.getId()))
@@ -112,9 +116,29 @@ public class FlatResource {
      */
     @GetMapping("/flats")
     @Timed
+    @Transactional(readOnly = true)
     public List<Apartment> getAllFlats() {
         log.debug("REST request to get all flats");
         return apartmentRepository.findAllByPropertyType(ApartmentType.FLAT);
+    }
+
+    /**
+     * GET  /flats/photos : create and assign all the photos to the Flat
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of photos in body
+     */
+    @GetMapping("/flats/{reference}/photos")
+    @Timed
+    @Transactional(readOnly = true)
+    public Set<Photo> getPhotosOfFlat(@PathVariable String reference) {
+        log.debug("REST request to get all flats");
+        Apartment flat = this.apartmentRepository.findFirstByReference(reference);
+
+        if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
+            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
+        }
+
+        return flat.getPhotos();
     }
 
     /*@GetMapping("/flats/{id}")
@@ -126,17 +150,59 @@ public class FlatResource {
     }*/
 
     /**
-     * GET  /properties/:reference : get the "id" property.
+     * GET  /flats/:reference : get the "id" property.
      *
      * @param reference the reference of the property to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
      */
     @GetMapping("/flats/{reference}")
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<Property> getFlat(@PathVariable String reference) {
         log.debug("REST request to get Property : {}", reference);
         Apartment apartment = apartmentRepository.findFirstByReference(reference);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
+    }
+
+    /**
+     * GET  /properties/:reference : get the "id" property.
+     *
+     * @param reference the reference of the property to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
+     */
+    @DeleteMapping("/flats/{reference}/photo/{id}")
+    @Timed
+    @Transactional(readOnly = true)
+    public Set<Photo> deletePhotoFlat(@PathVariable String reference, @PathVariable Long id) {
+        log.debug("REST request to delete Photo of a Flat : {}", reference);
+        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        Photo photo = photoRepository.findOne(id);
+        if (!apartment.getPhotos().contains(photo)) {
+            throw new BadRequestAlertException("This id dosen't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
+        }
+        photoRepository.delete(id);
+        return getPhotosOfFlat(reference);
+    }
+
+    /**
+     * POST  /flats/{reference}/photos : get the "id" property.
+     *
+     * @param reference the reference of the property to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
+     */
+    @PostMapping("/flats/{reference}/photos")
+    @Timed
+    public List<Photo> addPhotosToFlat(@PathVariable String reference, @RequestBody List<Photo> photos) {
+        log.debug("REST request to get all flats");
+        Apartment flat = this.apartmentRepository.findFirstByReference(reference);
+
+        if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
+            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
+        }
+
+        photos.forEach((photo -> photo.setProperty(flat)));
+
+        return photoRepository.save(photos);
     }
 
     /**
