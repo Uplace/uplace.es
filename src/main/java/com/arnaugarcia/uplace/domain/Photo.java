@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -39,7 +40,7 @@ public class Photo implements Serializable {
     private String photoContentType;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Property property;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
