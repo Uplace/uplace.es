@@ -178,7 +178,7 @@ public class FlatResource {
         Apartment apartment = apartmentRepository.findFirstByReference(reference);
         Photo photo = photoRepository.findOne(id);
         if (!apartment.getPhotos().contains(photo)) {
-            throw new BadRequestAlertException("This id dosen't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
+            throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
         }
         photoRepository.delete(id);
         return getPhotosOfFlat(reference);
