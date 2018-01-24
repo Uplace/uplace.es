@@ -9,7 +9,6 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { Property } from './property.model';
 import { PropertyPopupService } from './property-popup.service';
 import { PropertyService } from './property.service';
-import { Gallery, GalleryService } from '../gallery';
 import { Agent, AgentService } from '../agent';
 import { ResponseWrapper } from '../../shared';
 
@@ -22,8 +21,6 @@ export class PropertyDialogComponent implements OnInit {
     property: Property;
     isSaving: boolean;
 
-    galleries: Gallery[];
-
     agents: Agent[];
 
     constructor(
@@ -31,7 +28,6 @@ export class PropertyDialogComponent implements OnInit {
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
         private propertyService: PropertyService,
-        private galleryService: GalleryService,
         private agentService: AgentService,
         private eventManager: JhiEventManager
     ) {
@@ -39,19 +35,6 @@ export class PropertyDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.galleryService
-            .query({filter: 'property(title)-is-null'})
-            .subscribe((res: ResponseWrapper) => {
-                if (!this.property.gallery || !this.property.gallery.id) {
-                    this.galleries = res.json;
-                } else {
-                    this.galleryService
-                        .find(this.property.gallery.id)
-                        .subscribe((subRes: Gallery) => {
-                            this.galleries = [subRes].concat(res.json);
-                        }, (subRes: ResponseWrapper) => this.onError(subRes.json));
-                }
-            }, (res: ResponseWrapper) => this.onError(res.json));
         this.agentService.query()
             .subscribe((res: ResponseWrapper) => { this.agents = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
@@ -100,10 +83,6 @@ export class PropertyDialogComponent implements OnInit {
 
     private onError(error: any) {
         this.jhiAlertService.error(error.message, null, null);
-    }
-
-    trackGalleryById(index: number, item: Gallery) {
-        return item.id;
     }
 
     trackAgentById(index: number, item: Agent) {

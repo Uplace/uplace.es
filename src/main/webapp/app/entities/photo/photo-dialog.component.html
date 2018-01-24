@@ -41,10 +41,10 @@
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="uplaceApp.photo.gallery" for="field_gallery">Gallery</label>
-            <select class="form-control" id="field_gallery" name="gallery" [(ngModel)]="photo.gallery" >
+            <label class="form-control-label" jhiTranslate="uplaceApp.photo.property" for="field_property">Property</label>
+            <select class="form-control" id="field_property" name="property" [(ngModel)]="photo.property" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="galleryOption.id === photo.gallery?.id ? photo.gallery : galleryOption" *ngFor="let galleryOption of galleries; trackBy: trackGalleryById">{{galleryOption.id}}</option>
+                <option [ngValue]="propertyOption.id === photo.property?.id ? photo.property : propertyOption" *ngFor="let propertyOption of properties; trackBy: trackPropertyById">{{propertyOption.reference}}</option>
             </select>
         </div>
     </div>

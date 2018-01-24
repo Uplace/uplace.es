@@ -3,9 +3,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "gallery",
-            "otherEntityName": "gallery",
-            "otherEntityField": "id"
+            "relationshipName": "property",
+            "otherEntityName": "property",
+            "otherEntityField": "reference"
         }
     ],
     "fields": [
@@ -24,6 +24,7 @@
         }
     ],
     "changelogDate": "20180117115525",
+    "javadoc": "PHOTO",
     "entityTableName": "photo",
     "dto": "no",
     "pagination": "no",

@@ -119,20 +119,15 @@ enum NotificationType{
 
 /* PHOTO */
 
-entity Gallery {
-    description String
-}
-
 entity Photo {
 	name String,
     description String,
     photo ImageBlob
-    //BELONGS TO A ONE GALLERY
 }
 
 relationship OneToMany {
-	// One Gallery can own many photos
-    Gallery{photo(name)} to Photo{gallery}
+	// One Property can own many photos
+    Property{photo(name)} to Photo{property(reference)}
 }
 
 relationship ManyToOne {
@@ -144,7 +139,6 @@ relationship ManyToMany {
 }
 
 relationship OneToOne {
-	Property{gallery} to Gallery{property(title)},
     Agent{user(login)} to User{agent(firstName)}
 }
 

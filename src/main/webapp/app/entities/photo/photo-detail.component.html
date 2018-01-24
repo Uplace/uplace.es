@@ -21,10 +21,10 @@
                 {{photo.photoContentType}}, {{byteSize(photo.photo)}}
             </div>
         </dd>
-        <dt><span jhiTranslate="uplaceApp.photo.gallery">Gallery</span></dt>
+        <dt><span jhiTranslate="uplaceApp.photo.property">Property</span></dt>
         <dd>
-            <div *ngIf="photo.gallery">
-                <a [routerLink]="['/gallery', photo.gallery?.id]">{{photo.gallery?.id}}</a>
+            <div *ngIf="photo.property">
+                <a [routerLink]="['/property', photo.property?.id]">{{photo.property?.reference}}</a>
             </div>
         </dd>
     </dl>

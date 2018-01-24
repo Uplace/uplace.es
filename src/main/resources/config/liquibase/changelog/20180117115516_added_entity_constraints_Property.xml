@@ -8,12 +8,6 @@
     -->
     <changeSet id="20180117115516-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="gallery_id"
-                                 baseTableName="property"
-                                 constraintName="fk_property_gallery_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="gallery"/>
-
         <addForeignKeyConstraint baseColumnNames="properties_id"
                                  baseTableName="property_manager"
                                  constraintName="fk_property_manager_properties_id"

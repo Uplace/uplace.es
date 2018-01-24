@@ -1,11 +1,9 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.domain.Apartment;
-import com.arnaugarcia.uplace.domain.Gallery;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
-import com.arnaugarcia.uplace.repository.GalleryRepository;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
@@ -39,11 +37,9 @@ public class FlatResource {
 
     private final ApartmentRepository apartmentRepository;
 
-    private final GalleryRepository galleryRepository;
 
-    public FlatResource(ApartmentRepository apartmentRepository, GalleryRepository galleryRepository) {
+    public FlatResource(ApartmentRepository apartmentRepository) {
         this.apartmentRepository = apartmentRepository;
-        this.galleryRepository = galleryRepository;
     }
 
     /**
@@ -68,13 +64,10 @@ public class FlatResource {
         flat.setCreated(ZonedDateTime.now());
 
         //Create and save a new empty gallery
-        Gallery gallery = galleryRepository.save(new Gallery());
-        flat.setGallery(gallery);
         flat.propertyType(ApartmentType.FLAT);
         //Generate the random reference
         flat.setReference(RandomUtil.generateReference().toUpperCase());
         Apartment result = apartmentRepository.save(flat);
-        result.getGallery().setProperty(result);
         /*
          * Updates the apartment in order to set the correct gallery with the correct ID of the gallery otherwise,
          * the gallery assigned will not have an ID
@@ -160,9 +153,6 @@ public class FlatResource {
         Apartment apartment = apartmentRepository.findFirstByReference(reference);
         if (apartment.getId() == null) {
             throw new BadRequestAlertException("The referenced Flat doesn't exists", ENTITY_NAME, "idnoexists");
-        } else if (apartment.getGallery() != null) {
-            // Deletes the gallery if exists
-            galleryRepository.delete(apartment.getGallery());
         }
         apartmentRepository.deleteByReference(reference);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, reference)).build();

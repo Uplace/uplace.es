@@ -1,5 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -69,9 +71,9 @@ public abstract class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Gallery gallery;
+    @OneToMany(mappedBy = "property")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -245,17 +247,29 @@ public abstract class Property implements Serializable {
         this.surface = surface;
     }
 
-    public Gallery getGallery() {
-        return gallery;
+    public Set<Photo> getPhotos() {
+        return photos;
     }
 
-    public Property gallery(Gallery gallery) {
-        this.gallery = gallery;
+    public Property photos(Set<Photo> photos) {
+        this.photos = photos;
         return this;
     }
 
-    public void setGallery(Gallery gallery) {
-        this.gallery = gallery;
+    public Property addPhoto(Photo photo) {
+        this.photos.add(photo);
+        photo.setProperty(this);
+        return this;
+    }
+
+    public Property removePhoto(Photo photo) {
+        this.photos.remove(photo);
+        photo.setProperty(null);
+        return this;
+    }
+
+    public void setPhotos(Set<Photo> photos) {
+        this.photos = photos;
     }
 
     public Set<Agent> getManagers() {

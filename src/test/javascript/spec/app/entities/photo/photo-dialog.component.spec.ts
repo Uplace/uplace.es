@@ -8,7 +8,7 @@ import { UplaceTestModule } from '../../../test.module';
 import { PhotoDialogComponent } from '../../../../../../main/webapp/app/entities/photo/photo-dialog.component';
 import { PhotoService } from '../../../../../../main/webapp/app/entities/photo/photo.service';
 import { Photo } from '../../../../../../main/webapp/app/entities/photo/photo.model';
-import { GalleryService } from '../../../../../../main/webapp/app/entities/gallery';
+import { PropertyService } from '../../../../../../main/webapp/app/entities/property';
 
 describe('Component Tests', () => {
 
@@ -24,7 +24,7 @@ describe('Component Tests', () => {
                 imports: [UplaceTestModule],
                 declarations: [PhotoDialogComponent],
                 providers: [
-                    GalleryService,
+                    PropertyService,
                     PhotoService
                 ]
             })

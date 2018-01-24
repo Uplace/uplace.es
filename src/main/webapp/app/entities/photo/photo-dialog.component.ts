@@ -9,7 +9,7 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { Photo } from './photo.model';
 import { PhotoPopupService } from './photo-popup.service';
 import { PhotoService } from './photo.service';
-import { Gallery, GalleryService } from '../gallery';
+import { Property, PropertyService } from '../property';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -21,14 +21,14 @@ export class PhotoDialogComponent implements OnInit {
     photo: Photo;
     isSaving: boolean;
 
-    galleries: Gallery[];
+    properties: Property[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
         private photoService: PhotoService,
-        private galleryService: GalleryService,
+        private propertyService: PropertyService,
         private elementRef: ElementRef,
         private eventManager: JhiEventManager
     ) {
@@ -36,8 +36,8 @@ export class PhotoDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.galleryService.query()
-            .subscribe((res: ResponseWrapper) => { this.galleries = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.propertyService.query()
+            .subscribe((res: ResponseWrapper) => { this.properties = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     byteSize(field) {
@@ -90,7 +90,7 @@ export class PhotoDialogComponent implements OnInit {
         this.jhiAlertService.error(error.message, null, null);
     }
 
-    trackGalleryById(index: number, item: Gallery) {
+    trackPropertyById(index: number, item: Property) {
         return item.id;
     }
 }

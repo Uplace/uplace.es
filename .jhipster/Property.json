@@ -2,12 +2,10 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "gallery",
-            "otherEntityName": "gallery",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "property(title)"
+            "relationshipType": "one-to-many",
+            "relationshipName": "photo",
+            "otherEntityName": "photo",
+            "otherEntityRelationshipName": "property"
         },
         {
             "relationshipType": "many-to-many",

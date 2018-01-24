@@ -1,5 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,8 +11,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Photo.
+ * PHOTO
  */
+@ApiModel(description = "PHOTO")
 @Entity
 @Table(name = "photo")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -36,7 +39,8 @@ public class Photo implements Serializable {
     private String photoContentType;
 
     @ManyToOne
-    private Gallery gallery;
+    @JsonIgnore
+    private Property property;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -99,17 +103,17 @@ public class Photo implements Serializable {
         this.photoContentType = photoContentType;
     }
 
-    public Gallery getGallery() {
-        return gallery;
+    public Property getProperty() {
+        return property;
     }
 
-    public Photo gallery(Gallery gallery) {
-        this.gallery = gallery;
+    public Photo property(Property property) {
+        this.property = property;
         return this;
     }
 
-    public void setGallery(Gallery gallery) {
-        this.gallery = gallery;
+    public void setProperty(Property property) {
+        this.property = property;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

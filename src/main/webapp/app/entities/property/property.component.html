@@ -29,7 +29,6 @@
             <th><span jhiTranslate="uplaceApp.property.newCreation">New Creation</span></th>
             <th><span jhiTranslate="uplaceApp.property.visible">Visible</span></th>
             <th><span jhiTranslate="uplaceApp.property.surface">Surface</span></th>
-            <th><span jhiTranslate="uplaceApp.property.gallery">Gallery</span></th>
             <th><span jhiTranslate="uplaceApp.property.manager">Manager</span></th>
             <th></th>
             </tr>
@@ -49,11 +48,6 @@
                 <td>{{property.newCreation}}</td>
                 <td>{{property.visible}}</td>
                 <td>{{property.surface}}</td>
-                <td>
-                    <div *ngIf="property.gallery">
-                        <a [routerLink]="['../gallery', property.gallery?.id ]" >{{property.gallery?.id}}</a>
-                    </div>
-                </td>
                 <td>
                     <span *ngFor="let manager of property.managers; let last = last">
                             <a class="form-control-static" [routerLink]="['../agent', manager?.id ]">{{manager.firstName}}</a>{{last ? '' : ', '}}
