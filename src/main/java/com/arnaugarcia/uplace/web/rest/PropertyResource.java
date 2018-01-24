@@ -10,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -101,6 +102,7 @@ public class PropertyResource {
      */
     @GetMapping("/properties")
     @Timed
+    @Transactional(readOnly = true)
     public List<Property> getAllProperties() {
         List<Property> properties = new ArrayList<>();
         log.debug("REST request to get all Properties");
@@ -121,7 +123,7 @@ public class PropertyResource {
         properties.addAll(terrainRepository.findAll());
 
         return properties;
-        }
+    }
 
     /**
      * GET  /properties/:id : get the "id" property.
