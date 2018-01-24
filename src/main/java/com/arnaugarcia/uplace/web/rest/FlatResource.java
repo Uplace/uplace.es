@@ -68,10 +68,9 @@ public class FlatResource {
         log.debug("REST request to save a new Flat : {}", flat);
         if (flat.getId() != null) {
             throw new BadRequestAlertException("A new flat cannot already have an ID", ENTITY_NAME, "idexists");
-        } else if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
-            //If the user is trying to delete other property
-            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to create a new FLAT",ENTITY_NAME,"badtype");
         }
+
+        flat.setPropertyType(ApartmentType.FLAT);
 
         //Set the created to now()
         flat.setCreated(ZonedDateTime.now());
@@ -179,10 +178,10 @@ public class FlatResource {
     }
 
     /**
-     * GET  /properties/:reference : get the "id" property.
+     * GET  /flats/:reference : get the "reference" flat.
      *
-     * @param reference the reference of the property to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
+     * @param reference the reference of the flat to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the flat, or with status 404 (Not Found)
      */
     @DeleteMapping("/flats/{reference}/photo/{id}")
     @Timed
@@ -199,10 +198,10 @@ public class FlatResource {
     }
 
     /**
-     * GET  /properties/:reference : get the "id" property.
+     * GET  /flats/:reference : get the "reference" flat.
      *
-     * @param reference the reference of the property to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
+     * @param reference the reference of the flat to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the flat, or with status 404 (Not Found)
      */
     @PutMapping("/flats/{reference}/photo")
     @Timed
