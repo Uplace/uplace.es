@@ -99,7 +99,7 @@ public class FlatResource {
         if (flat.getId() == null) {
             return createFlat(flat);
         } else if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
-            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to update a FLAT",ENTITY_NAME,"badType");
+            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to update a FLAT", ENTITY_NAME ,"badType");
         }
         // Set updated to now()
         flat.setUpdated(ZonedDateTime.now());
@@ -141,14 +141,6 @@ public class FlatResource {
         return flat.getPhotos();
     }
 
-    /*@GetMapping("/flats/{id}")
-    @Timed
-    public ResponseEntity<Apartment> getFlatByReference(@PathVariable Long id) {
-        log.debug("REST request to get flat : {}", id);
-        Apartment apartment = apartmentRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
-    }*/
-
     /**
      * GET  /flats/:reference : get the "id" property.
      *
@@ -181,6 +173,25 @@ public class FlatResource {
             throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
         }
         photoRepository.delete(id);
+        return getPhotosOfFlat(reference);
+    }
+
+    /**
+     * GET  /properties/:reference : get the "id" property.
+     *
+     * @param reference the reference of the property to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
+     */
+    @PutMapping("/flats/{reference}/photo/")
+    @Timed
+    @Transactional(readOnly = true)
+    public Set<Photo> UpdatePhotoFlat(@PathVariable String reference, @RequestBody Photo photo) {
+        log.debug("REST request to update Photo of a Flat : {}", reference);
+        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        if (!apartment.getPhotos().contains(photo)) {
+            throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
+        }
+        photoRepository.save(photo);
         return getPhotosOfFlat(reference);
     }
 
