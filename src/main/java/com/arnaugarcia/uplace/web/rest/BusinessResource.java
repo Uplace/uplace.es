@@ -2,8 +2,7 @@ package com.arnaugarcia.uplace.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Business;
-
-import com.arnaugarcia.uplace.repository.BusinessRepository;
+import com.arnaugarcia.uplace.service.BusinessService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,10 +28,10 @@ public class BusinessResource {
 
     private static final String ENTITY_NAME = "business";
 
-    private final BusinessRepository businessRepository;
+    private final BusinessService businessService;
 
-    public BusinessResource(BusinessRepository businessRepository) {
-        this.businessRepository = businessRepository;
+    public BusinessResource(BusinessService businessService) {
+        this.businessService = businessService;
     }
 
     /**
@@ -49,7 +48,7 @@ public class BusinessResource {
         if (business.getId() != null) {
             throw new BadRequestAlertException("A new business cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Business result = businessRepository.save(business);
+        Business result = businessService.save(business);
         return ResponseEntity.created(new URI("/api/businesses/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,7 +70,7 @@ public class BusinessResource {
         if (business.getId() == null) {
             return createBusiness(business);
         }
-        Business result = businessRepository.save(business);
+        Business result = businessService.save(business);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, business.getId().toString()))
             .body(result);
@@ -86,7 +85,7 @@ public class BusinessResource {
     @Timed
     public List<Business> getAllBusinesses() {
         log.debug("REST request to get all Businesses");
-        return businessRepository.findAll();
+        return businessService.findAll();
         }
 
     /**
@@ -99,7 +98,7 @@ public class BusinessResource {
     @Timed
     public ResponseEntity<Business> getBusiness(@PathVariable Long id) {
         log.debug("REST request to get Business : {}", id);
-        Business business = businessRepository.findOne(id);
+        Business business = businessService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(business));
     }
 
@@ -113,7 +112,7 @@ public class BusinessResource {
     @Timed
     public ResponseEntity<Void> deleteBusiness(@PathVariable Long id) {
         log.debug("REST request to delete Business : {}", id);
-        businessRepository.delete(id);
+        businessService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
