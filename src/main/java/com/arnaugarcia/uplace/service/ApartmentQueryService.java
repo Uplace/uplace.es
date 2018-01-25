@@ -18,15 +18,6 @@ import com.arnaugarcia.uplace.domain.*; // for static metamodels
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
 import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
 
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
 
 /**
  * Service for executing complex queries for Apartment entities in the database.
@@ -78,8 +69,8 @@ public class ApartmentQueryService extends QueryService<Apartment> {
     private Specifications<Apartment> createSpecification(ApartmentCriteria criteria) {
         Specifications<Apartment> specification = Specifications.where(null);
         if (criteria != null) {
-            if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Apartment_.id));
+            if (criteria.getPrice() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPrice(), Apartment_.price));
             }
             if (criteria.getNumberBedrooms() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getNumberBedrooms(), Apartment_.numberBedrooms));

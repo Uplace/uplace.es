@@ -31,7 +31,7 @@ import io.github.jhipster.service.filter.StringFilter;
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
-public class ApartmentCriteria implements Serializable {
+public class ApartmentCriteria extends PropertyCriteria implements Serializable {
     /**
      * Class for filtering Select
      */
@@ -48,6 +48,8 @@ public class ApartmentCriteria implements Serializable {
 
 
     private LongFilter id;
+
+    private DoubleFilter price;
 
     private IntegerFilter numberBedrooms;
 
@@ -84,6 +86,16 @@ public class ApartmentCriteria implements Serializable {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    @Override
+    public DoubleFilter getPrice() {
+        return price;
+    }
+
+    @Override
+    public void setPrice(DoubleFilter price) {
+        this.price = price;
     }
 
     public IntegerFilter getNumberBedrooms() {
