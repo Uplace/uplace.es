@@ -4,6 +4,7 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Business;
 import com.arnaugarcia.uplace.repository.BusinessRepository;
+import com.arnaugarcia.uplace.service.BusinessService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -21,7 +22,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -43,10 +43,6 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class BusinessResourceIntTest {
-
-    private static final Double DEFAULT_PRICE = 1000.0;
-
-    private static final String DEFAULT_TITLE = "Test Business";
 
     private static final BusinessType DEFAULT_BUSINESS_TYPE = BusinessType.PUB;
     private static final BusinessType UPDATED_BUSINESS_TYPE = BusinessType.HOTEL;
@@ -85,6 +81,9 @@ public class BusinessResourceIntTest {
     private BusinessRepository businessRepository;
 
     @Autowired
+    private BusinessService businessService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -103,7 +102,7 @@ public class BusinessResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BusinessResource businessResource = new BusinessResource(businessRepository);
+        final BusinessResource businessResource = new BusinessResource(businessService);
         this.restBusinessMockMvc = MockMvcBuilders.standaloneSetup(businessResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -118,7 +117,7 @@ public class BusinessResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Business createEntity(EntityManager em) {
-        Business business = (Business) new Business()
+        Business business = new Business()
             .businessType(DEFAULT_BUSINESS_TYPE)
             .numberBathrooms(DEFAULT_NUMBER_BATHROOMS)
             .elevator(DEFAULT_ELEVATOR)
@@ -129,10 +128,7 @@ public class BusinessResourceIntTest {
             .numberOffice(DEFAULT_NUMBER_OFFICE)
             .surfaceSaloon(DEFAULT_SURFACE_SALOON)
             .height(DEFAULT_HEIGHT)
-            .pool(DEFAULT_POOL)
-            .price(DEFAULT_PRICE)
-            .title(DEFAULT_TITLE)
-            .created(ZonedDateTime.now());
+            .pool(DEFAULT_POOL);
         return business;
     }
 
@@ -248,7 +244,8 @@ public class BusinessResourceIntTest {
     @Transactional
     public void updateBusiness() throws Exception {
         // Initialize the database
-        businessRepository.saveAndFlush(business);
+        businessService.save(business);
+
         int databaseSizeBeforeUpdate = businessRepository.findAll().size();
 
         // Update the business
@@ -312,7 +309,8 @@ public class BusinessResourceIntTest {
     @Transactional
     public void deleteBusiness() throws Exception {
         // Initialize the database
-        businessRepository.saveAndFlush(business);
+        businessService.save(business);
+
         int databaseSizeBeforeDelete = businessRepository.findAll().size();
 
         // Get the business

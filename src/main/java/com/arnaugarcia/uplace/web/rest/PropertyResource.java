@@ -1,6 +1,9 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.repository.*;
+import com.arnaugarcia.uplace.service.PropertyQueryService;
+import com.arnaugarcia.uplace.service.PropertyService;
+import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Property;
 
@@ -34,6 +37,10 @@ public class PropertyResource {
 
     private final PropertyRepository propertyRepository;
 
+    private final PropertyQueryService propertyQueryService;
+
+    private final PropertyService propertyService;
+
     private final ApartmentRepository apartmentRepository;
 
     private final ParkingRepository parkingRepository;
@@ -44,13 +51,15 @@ public class PropertyResource {
 
     private final TerrainRepository terrainRepository;
 
-    public PropertyResource(PropertyRepository propertyRepository, ApartmentRepository apartmentRepository, ParkingRepository parkingRepository, BusinessRepository businessRepository, OfficeRepository officeRepository, TerrainRepository terrainRepository) {
+    public PropertyResource(PropertyRepository propertyRepository, ApartmentRepository apartmentRepository, ParkingRepository parkingRepository, BusinessRepository businessRepository, OfficeRepository officeRepository, TerrainRepository terrainRepository, PropertyQueryService propertyQueryService, PropertyService propertyService) {
         this.propertyRepository = propertyRepository;
         this.apartmentRepository = apartmentRepository;
         this.parkingRepository = parkingRepository;
         this.businessRepository = businessRepository;
         this.officeRepository = officeRepository;
         this.terrainRepository = terrainRepository;
+        this.propertyQueryService = propertyQueryService;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -124,6 +133,16 @@ public class PropertyResource {
 
         return properties;
     }
+
+    @GetMapping("/properties/criteria")
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<Property>> getAllPropertiesCriteria(PropertyCriteria criteria) {
+        log.debug("REST request to get Properties by criteria: {}", criteria);
+        List<Property> entityList = propertyQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
 
     /**
      * GET  /properties/:id : get the "id" property.

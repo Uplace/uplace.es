@@ -30,7 +30,7 @@ public abstract class Property implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
     @NotNull
     @Column(name = "title", nullable = false)
