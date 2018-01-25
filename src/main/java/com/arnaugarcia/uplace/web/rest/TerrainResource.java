@@ -2,10 +2,11 @@ package com.arnaugarcia.uplace.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Terrain;
-
-import com.arnaugarcia.uplace.repository.TerrainRepository;
+import com.arnaugarcia.uplace.service.TerrainService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
+import com.arnaugarcia.uplace.service.dto.TerrainCriteria;
+import com.arnaugarcia.uplace.service.TerrainQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,13 @@ public class TerrainResource {
 
     private static final String ENTITY_NAME = "terrain";
 
-    private final TerrainRepository terrainRepository;
+    private final TerrainService terrainService;
 
-    public TerrainResource(TerrainRepository terrainRepository) {
-        this.terrainRepository = terrainRepository;
+    private final TerrainQueryService terrainQueryService;
+
+    public TerrainResource(TerrainService terrainService, TerrainQueryService terrainQueryService) {
+        this.terrainService = terrainService;
+        this.terrainQueryService = terrainQueryService;
     }
 
     /**
@@ -49,7 +53,7 @@ public class TerrainResource {
         if (terrain.getId() != null) {
             throw new BadRequestAlertException("A new terrain cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Terrain result = terrainRepository.save(terrain);
+        Terrain result = terrainService.save(terrain);
         return ResponseEntity.created(new URI("/api/terrains/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,7 +75,7 @@ public class TerrainResource {
         if (terrain.getId() == null) {
             return createTerrain(terrain);
         }
-        Terrain result = terrainRepository.save(terrain);
+        Terrain result = terrainService.save(terrain);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, terrain.getId().toString()))
             .body(result);
@@ -80,14 +84,16 @@ public class TerrainResource {
     /**
      * GET  /terrains : get all the terrains.
      *
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of terrains in body
      */
     @GetMapping("/terrains")
     @Timed
-    public List<Terrain> getAllTerrains() {
-        log.debug("REST request to get all Terrains");
-        return terrainRepository.findAll();
-        }
+    public ResponseEntity<List<Terrain>> getAllTerrains(TerrainCriteria criteria) {
+        log.debug("REST request to get Terrains by criteria: {}", criteria);
+        List<Terrain> entityList = terrainQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
 
     /**
      * GET  /terrains/:id : get the "id" terrain.
@@ -99,7 +105,7 @@ public class TerrainResource {
     @Timed
     public ResponseEntity<Terrain> getTerrain(@PathVariable Long id) {
         log.debug("REST request to get Terrain : {}", id);
-        Terrain terrain = terrainRepository.findOne(id);
+        Terrain terrain = terrainService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(terrain));
     }
 
@@ -113,7 +119,7 @@ public class TerrainResource {
     @Timed
     public ResponseEntity<Void> deleteTerrain(@PathVariable Long id) {
         log.debug("REST request to delete Terrain : {}", id);
-        terrainRepository.delete(id);
+        terrainService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
