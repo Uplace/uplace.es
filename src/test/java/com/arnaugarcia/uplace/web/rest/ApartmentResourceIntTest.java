@@ -4,6 +4,8 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
+import com.arnaugarcia.uplace.service.ApartmentQueryService;
+import com.arnaugarcia.uplace.service.ApartmentService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -92,7 +94,10 @@ public class ApartmentResourceIntTest {
     private static final Select UPDATED_NEAR_TRANSPORT = Select.NO;
 
     @Autowired
-    private ApartmentRepository apartmentRepository;
+    private ApartmentService apartmentService;
+
+    @Autowired
+    private ApartmentQueryService apartmentQueryService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -113,7 +118,7 @@ public class ApartmentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ApartmentResource apartmentResource = new ApartmentResource(apartmentRepository);
+        final ApartmentResource apartmentResource = new ApartmentResource(apartmentService, apartmentQueryService);
         this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -156,7 +161,7 @@ public class ApartmentResourceIntTest {
     @Test
     @Transactional
     public void createApartment() throws Exception {
-        int databaseSizeBeforeCreate = apartmentRepository.findAll().size();
+        int databaseSizeBeforeCreate = apartmentService.findAll().size();
 
         // Create the Apartment
         restApartmentMockMvc.perform(post("/api/apartments")
@@ -165,7 +170,7 @@ public class ApartmentResourceIntTest {
             .andExpect(status().isCreated());
 
         // Validate the Apartment in the database
-        List<Apartment> apartmentList = apartmentRepository.findAll();
+        List<Apartment> apartmentList = apartmentService.findAll();
         assertThat(apartmentList).hasSize(databaseSizeBeforeCreate + 1);
         Apartment testApartment = apartmentList.get(apartmentList.size() - 1);
         assertThat(testApartment.getNumberBedrooms()).isEqualTo(DEFAULT_NUMBER_BEDROOMS);
@@ -186,7 +191,7 @@ public class ApartmentResourceIntTest {
     @Test
     @Transactional
     public void createApartmentWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = apartmentRepository.findAll().size();
+        int databaseSizeBeforeCreate = apartmentService.findAll().size();
 
         // Create the Apartment with an existing ID
         apartment.setId(1L);
@@ -198,7 +203,7 @@ public class ApartmentResourceIntTest {
             .andExpect(status().isBadRequest());
 
         // Validate the Apartment in the database
-        List<Apartment> apartmentList = apartmentRepository.findAll();
+        List<Apartment> apartmentList = apartmentService.findAll();
         assertThat(apartmentList).hasSize(databaseSizeBeforeCreate);
     }
 
@@ -206,7 +211,7 @@ public class ApartmentResourceIntTest {
     @Transactional
     public void getAllApartments() throws Exception {
         // Initialize the database
-        apartmentRepository.saveAndFlush(apartment);
+        apartmentService.save(apartment);
 
         // Get all the apartmentList
         restApartmentMockMvc.perform(get("/api/apartments?sort=id,desc"))
@@ -232,7 +237,7 @@ public class ApartmentResourceIntTest {
     @Transactional
     public void getApartment() throws Exception {
         // Initialize the database
-        apartmentRepository.saveAndFlush(apartment);
+        apartmentService.save(apartment);
 
         // Get the apartment
         restApartmentMockMvc.perform(get("/api/apartments/{id}", apartment.getId()))
@@ -266,11 +271,11 @@ public class ApartmentResourceIntTest {
     @Transactional
     public void updateApartment() throws Exception {
         // Initialize the database
-        apartmentRepository.saveAndFlush(apartment);
-        int databaseSizeBeforeUpdate = apartmentRepository.findAll().size();
+        apartmentService.save(apartment);
+        int databaseSizeBeforeUpdate = apartmentService.findAll().size();
 
         // Update the apartment
-        Apartment updatedApartment = apartmentRepository.findOne(apartment.getId());
+        Apartment updatedApartment = apartmentService.findOne(apartment.getId());
         // Disconnect from session so that the updates on updatedApartment are not directly saved in db
         em.detach(updatedApartment);
         updatedApartment
@@ -294,7 +299,7 @@ public class ApartmentResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the Apartment in the database
-        List<Apartment> apartmentList = apartmentRepository.findAll();
+        List<Apartment> apartmentList = apartmentService.findAll();
         assertThat(apartmentList).hasSize(databaseSizeBeforeUpdate);
         Apartment testApartment = apartmentList.get(apartmentList.size() - 1);
         assertThat(testApartment.getNumberBedrooms()).isEqualTo(UPDATED_NUMBER_BEDROOMS);
@@ -315,7 +320,7 @@ public class ApartmentResourceIntTest {
     @Test
     @Transactional
     public void updateNonExistingApartment() throws Exception {
-        int databaseSizeBeforeUpdate = apartmentRepository.findAll().size();
+        int databaseSizeBeforeUpdate = apartmentService.findAll().size();
 
         // Create the Apartment
 
@@ -326,7 +331,7 @@ public class ApartmentResourceIntTest {
             .andExpect(status().isCreated());
 
         // Validate the Apartment in the database
-        List<Apartment> apartmentList = apartmentRepository.findAll();
+        List<Apartment> apartmentList = apartmentService.findAll();
         assertThat(apartmentList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
@@ -334,8 +339,8 @@ public class ApartmentResourceIntTest {
     @Transactional
     public void deleteApartment() throws Exception {
         // Initialize the database
-        apartmentRepository.save(apartment);
-        int databaseSizeBeforeDelete = apartmentRepository.findAll().size();
+        apartmentService.save(apartment);
+        int databaseSizeBeforeDelete = apartmentService.findAll().size();
 
         // Get the apartment
         restApartmentMockMvc.perform(delete("/api/apartments/{id}", apartment.getId())
@@ -343,7 +348,7 @@ public class ApartmentResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<Apartment> apartmentList = apartmentRepository.findAll();
+        List<Apartment> apartmentList = apartmentService.findAll();
         assertThat(apartmentList).hasSize(databaseSizeBeforeDelete - 1);
     }
 

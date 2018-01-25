@@ -1,12 +1,12 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Apartment;
-
-import com.arnaugarcia.uplace.repository.ApartmentRepository;
+import com.arnaugarcia.uplace.service.ApartmentService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
+import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
+import com.arnaugarcia.uplace.service.ApartmentQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 /**
  * REST controller for managing Apartment.
@@ -31,10 +30,13 @@ public class ApartmentResource {
 
     private static final String ENTITY_NAME = "apartment";
 
-    private final ApartmentRepository apartmentRepository;
+    private final ApartmentService apartmentService;
 
-    public ApartmentResource(ApartmentRepository apartmentRepository) {
-        this.apartmentRepository = apartmentRepository;
+    private final ApartmentQueryService apartmentQueryService;
+
+    public ApartmentResource(ApartmentService apartmentService, ApartmentQueryService apartmentQueryService) {
+        this.apartmentService = apartmentService;
+        this.apartmentQueryService = apartmentQueryService;
     }
 
     /**
@@ -51,8 +53,7 @@ public class ApartmentResource {
         if (apartment.getId() != null) {
             throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        apartment.setReference(RandomUtil.generateReference().toUpperCase());
-        Apartment result = apartmentRepository.save(apartment);
+        Apartment result = apartmentService.save(apartment);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -74,7 +75,7 @@ public class ApartmentResource {
         if (apartment.getId() == null) {
             return createApartment(apartment);
         }
-        Apartment result = apartmentRepository.save(apartment);
+        Apartment result = apartmentService.save(apartment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, apartment.getId().toString()))
             .body(result);
@@ -83,14 +84,16 @@ public class ApartmentResource {
     /**
      * GET  /apartments : get all the apartments.
      *
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of apartments in body
      */
     @GetMapping("/apartments")
     @Timed
-    public List<Apartment> getAllApartments() {
-        log.debug("REST request to get all Apartments");
-        return apartmentRepository.findAll();
-        }
+    public ResponseEntity<List<Apartment>> getAllApartments(ApartmentCriteria criteria) {
+        log.debug("REST request to get Apartments by criteria: {}", criteria);
+        List<Apartment> entityList = apartmentQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
 
     /**
      * GET  /apartments/:id : get the "id" apartment.
@@ -102,21 +105,7 @@ public class ApartmentResource {
     @Timed
     public ResponseEntity<Apartment> getApartment(@PathVariable Long id) {
         log.debug("REST request to get Apartment : {}", id);
-        Apartment apartment = apartmentRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
-    }
-
-    /**
-     * GET  /apartments/:id : get the "id" apartment.
-     *
-     * @param reference the id of the apartment to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the apartment, or with status 404 (Not Found)
-     */
-    @GetMapping("/apartments/reference/{reference}")
-    @Timed
-    public ResponseEntity<Apartment> getApartmentByReference(@PathVariable String reference) {
-        log.debug("REST request to get Apartment : {}", reference);
-        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        Apartment apartment = apartmentService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
     }
 
@@ -130,7 +119,7 @@ public class ApartmentResource {
     @Timed
     public ResponseEntity<Void> deleteApartment(@PathVariable Long id) {
         log.debug("REST request to delete Apartment : {}", id);
-        apartmentRepository.delete(id);
+        apartmentService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
