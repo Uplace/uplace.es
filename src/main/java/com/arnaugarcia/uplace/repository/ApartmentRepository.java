@@ -18,7 +18,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ApartmentRepository extends JpaRepository<Apartment, Long> {
+public interface ApartmentRepository extends JpaRepository<Apartment, Long>, JpaSpecificationExecutor<Apartment>{
 
     Apartment findFirstByReference(String reference);
 

@@ -4,7 +4,10 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Terrain;
 import com.arnaugarcia.uplace.repository.TerrainRepository;
+import com.arnaugarcia.uplace.service.TerrainService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
+import com.arnaugarcia.uplace.service.dto.TerrainCriteria;
+import com.arnaugarcia.uplace.service.TerrainQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -41,10 +43,6 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @SpringBootTest(classes = UplaceApp.class)
 public class TerrainResourceIntTest {
 
-    private static final Double DEFAULT_PRICE = 1000.0;
-
-    private static final String DEFAULT_TITLE = "Test Terrain";
-
     private static final TerrainType DEFAULT_TERRAIN_TYPE = TerrainType.RESIDENTIAL;
     private static final TerrainType UPDATED_TERRAIN_TYPE = TerrainType.URBAN;
 
@@ -53,6 +51,12 @@ public class TerrainResourceIntTest {
 
     @Autowired
     private TerrainRepository terrainRepository;
+
+    @Autowired
+    private TerrainService terrainService;
+
+    @Autowired
+    private TerrainQueryService terrainQueryService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -73,7 +77,7 @@ public class TerrainResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TerrainResource terrainResource = new TerrainResource(terrainRepository);
+        final TerrainResource terrainResource = new TerrainResource(terrainService, terrainQueryService);
         this.restTerrainMockMvc = MockMvcBuilders.standaloneSetup(terrainResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -88,12 +92,9 @@ public class TerrainResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Terrain createEntity(EntityManager em) {
-        Terrain terrain = (Terrain) new Terrain()
+        Terrain terrain = new Terrain()
             .terrainType(DEFAULT_TERRAIN_TYPE)
-            .nearTransport(DEFAULT_NEAR_TRANSPORT)
-            .price(DEFAULT_PRICE)
-            .title(DEFAULT_TITLE)
-            .created(ZonedDateTime.now());
+            .nearTransport(DEFAULT_NEAR_TRANSPORT);
         return terrain;
     }
 
@@ -172,6 +173,107 @@ public class TerrainResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllTerrainsByTerrainTypeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        terrainRepository.saveAndFlush(terrain);
+
+        // Get all the terrainList where terrainType equals to DEFAULT_TERRAIN_TYPE
+        defaultTerrainShouldBeFound("terrainType.equals=" + DEFAULT_TERRAIN_TYPE);
+
+        // Get all the terrainList where terrainType equals to UPDATED_TERRAIN_TYPE
+        defaultTerrainShouldNotBeFound("terrainType.equals=" + UPDATED_TERRAIN_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTerrainsByTerrainTypeIsInShouldWork() throws Exception {
+        // Initialize the database
+        terrainRepository.saveAndFlush(terrain);
+
+        // Get all the terrainList where terrainType in DEFAULT_TERRAIN_TYPE or UPDATED_TERRAIN_TYPE
+        defaultTerrainShouldBeFound("terrainType.in=" + DEFAULT_TERRAIN_TYPE + "," + UPDATED_TERRAIN_TYPE);
+
+        // Get all the terrainList where terrainType equals to UPDATED_TERRAIN_TYPE
+        defaultTerrainShouldNotBeFound("terrainType.in=" + UPDATED_TERRAIN_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTerrainsByTerrainTypeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        terrainRepository.saveAndFlush(terrain);
+
+        // Get all the terrainList where terrainType is not null
+        defaultTerrainShouldBeFound("terrainType.specified=true");
+
+        // Get all the terrainList where terrainType is null
+        defaultTerrainShouldNotBeFound("terrainType.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTerrainsByNearTransportIsEqualToSomething() throws Exception {
+        // Initialize the database
+        terrainRepository.saveAndFlush(terrain);
+
+        // Get all the terrainList where nearTransport equals to DEFAULT_NEAR_TRANSPORT
+        defaultTerrainShouldBeFound("nearTransport.equals=" + DEFAULT_NEAR_TRANSPORT);
+
+        // Get all the terrainList where nearTransport equals to UPDATED_NEAR_TRANSPORT
+        defaultTerrainShouldNotBeFound("nearTransport.equals=" + UPDATED_NEAR_TRANSPORT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTerrainsByNearTransportIsInShouldWork() throws Exception {
+        // Initialize the database
+        terrainRepository.saveAndFlush(terrain);
+
+        // Get all the terrainList where nearTransport in DEFAULT_NEAR_TRANSPORT or UPDATED_NEAR_TRANSPORT
+        defaultTerrainShouldBeFound("nearTransport.in=" + DEFAULT_NEAR_TRANSPORT + "," + UPDATED_NEAR_TRANSPORT);
+
+        // Get all the terrainList where nearTransport equals to UPDATED_NEAR_TRANSPORT
+        defaultTerrainShouldNotBeFound("nearTransport.in=" + UPDATED_NEAR_TRANSPORT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTerrainsByNearTransportIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        terrainRepository.saveAndFlush(terrain);
+
+        // Get all the terrainList where nearTransport is not null
+        defaultTerrainShouldBeFound("nearTransport.specified=true");
+
+        // Get all the terrainList where nearTransport is null
+        defaultTerrainShouldNotBeFound("nearTransport.specified=false");
+    }
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultTerrainShouldBeFound(String filter) throws Exception {
+        restTerrainMockMvc.perform(get("/api/terrains?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(terrain.getId().intValue())))
+            .andExpect(jsonPath("$.[*].terrainType").value(hasItem(DEFAULT_TERRAIN_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].nearTransport").value(hasItem(DEFAULT_NEAR_TRANSPORT.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultTerrainShouldNotBeFound(String filter) throws Exception {
+        restTerrainMockMvc.perform(get("/api/terrains?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
+
+    @Test
+    @Transactional
     public void getNonExistingTerrain() throws Exception {
         // Get the terrain
         restTerrainMockMvc.perform(get("/api/terrains/{id}", Long.MAX_VALUE))
@@ -182,7 +284,8 @@ public class TerrainResourceIntTest {
     @Transactional
     public void updateTerrain() throws Exception {
         // Initialize the database
-        terrainRepository.saveAndFlush(terrain);
+        terrainService.save(terrain);
+
         int databaseSizeBeforeUpdate = terrainRepository.findAll().size();
 
         // Update the terrain
@@ -228,7 +331,8 @@ public class TerrainResourceIntTest {
     @Transactional
     public void deleteTerrain() throws Exception {
         // Initialize the database
-        terrainRepository.saveAndFlush(terrain);
+        terrainService.save(terrain);
+
         int databaseSizeBeforeDelete = terrainRepository.findAll().size();
 
         // Get the terrain

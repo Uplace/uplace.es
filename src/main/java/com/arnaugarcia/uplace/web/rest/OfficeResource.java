@@ -2,10 +2,11 @@ package com.arnaugarcia.uplace.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Office;
-
-import com.arnaugarcia.uplace.repository.OfficeRepository;
+import com.arnaugarcia.uplace.service.OfficeService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
+import com.arnaugarcia.uplace.service.dto.OfficeCriteria;
+import com.arnaugarcia.uplace.service.OfficeQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,13 @@ public class OfficeResource {
 
     private static final String ENTITY_NAME = "office";
 
-    private final OfficeRepository officeRepository;
+    private final OfficeService officeService;
 
-    public OfficeResource(OfficeRepository officeRepository) {
-        this.officeRepository = officeRepository;
+    private final OfficeQueryService officeQueryService;
+
+    public OfficeResource(OfficeService officeService, OfficeQueryService officeQueryService) {
+        this.officeService = officeService;
+        this.officeQueryService = officeQueryService;
     }
 
     /**
@@ -49,7 +53,7 @@ public class OfficeResource {
         if (office.getId() != null) {
             throw new BadRequestAlertException("A new office cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Office result = officeRepository.save(office);
+        Office result = officeService.save(office);
         return ResponseEntity.created(new URI("/api/offices/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,7 +75,7 @@ public class OfficeResource {
         if (office.getId() == null) {
             return createOffice(office);
         }
-        Office result = officeRepository.save(office);
+        Office result = officeService.save(office);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, office.getId().toString()))
             .body(result);
@@ -80,14 +84,16 @@ public class OfficeResource {
     /**
      * GET  /offices : get all the offices.
      *
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of offices in body
      */
     @GetMapping("/offices")
     @Timed
-    public List<Office> getAllOffices() {
-        log.debug("REST request to get all Offices");
-        return officeRepository.findAll();
-        }
+    public ResponseEntity<List<Office>> getAllOffices(OfficeCriteria criteria) {
+        log.debug("REST request to get Offices by criteria: {}", criteria);
+        List<Office> entityList = officeQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
 
     /**
      * GET  /offices/:id : get the "id" office.
@@ -99,7 +105,7 @@ public class OfficeResource {
     @Timed
     public ResponseEntity<Office> getOffice(@PathVariable Long id) {
         log.debug("REST request to get Office : {}", id);
-        Office office = officeRepository.findOne(id);
+        Office office = officeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(office));
     }
 
@@ -113,21 +119,7 @@ public class OfficeResource {
     @Timed
     public ResponseEntity<Void> deleteOffice(@PathVariable Long id) {
         log.debug("REST request to delete Office : {}", id);
-        officeRepository.delete(id);
+        officeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
-     * GET  /office/reference/:reference : get the office by reference.
-     *
-     * @param reference the id of the office to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/office/reference/{reference}")
-    @Timed
-    public ResponseEntity<Office> getOfficeByReference(@PathVariable String reference) {
-        log.debug("REST request to get Office : {}", reference);
-        Office office = officeRepository.findFirstByReference(reference);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(office));
     }
 }

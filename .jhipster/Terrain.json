@@ -17,6 +17,6 @@
     "entityTableName": "terrain",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": true
 }
