@@ -40,10 +40,6 @@
             <tbody>
             <tr *ngFor="let apartment of apartments ;trackBy: trackId">
                 <td><a [routerLink]="['../apartment', apartment.id ]">{{apartment.id}}</a></td>
-                <td>{{apartment.title}}</td>
-                <td>{{apartment.created | date}}</td>
-                <td>{{apartment.price}}</td>
-                <td>{{apartment.surface}}</td>
                 <td>{{apartment.numberBedrooms}}</td>
                 <td>{{apartment.numberBathrooms}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.elevator}}">{{apartment.elevator}}</td>
