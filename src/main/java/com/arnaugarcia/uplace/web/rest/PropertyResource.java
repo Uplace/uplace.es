@@ -1,8 +1,7 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.repository.*;
-import com.arnaugarcia.uplace.service.PropertyQueryService;
-import com.arnaugarcia.uplace.service.PropertyService;
+import com.arnaugarcia.uplace.service.*;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Property;
@@ -35,31 +34,26 @@ public class PropertyResource {
 
     private static final String ENTITY_NAME = "property";
 
-    private final PropertyRepository propertyRepository;
 
     private final PropertyQueryService propertyQueryService;
 
-    private final PropertyService propertyService;
+    private final ApartmentService apartmentService;
 
-    private final ApartmentRepository apartmentRepository;
+    private final ParkingService parkingService;
 
-    private final ParkingRepository parkingRepository;
+    private final BusinessService businessService;
 
-    private final BusinessRepository businessRepository;
+    private final OfficeService officeService;
 
-    private final OfficeRepository officeRepository;
+    private final TerrainService terrainService;
 
-    private final TerrainRepository terrainRepository;
-
-    public PropertyResource(PropertyRepository propertyRepository, ApartmentRepository apartmentRepository, ParkingRepository parkingRepository, BusinessRepository businessRepository, OfficeRepository officeRepository, TerrainRepository terrainRepository, PropertyQueryService propertyQueryService, PropertyService propertyService) {
-        this.propertyRepository = propertyRepository;
-        this.apartmentRepository = apartmentRepository;
-        this.parkingRepository = parkingRepository;
-        this.businessRepository = businessRepository;
-        this.officeRepository = officeRepository;
-        this.terrainRepository = terrainRepository;
+    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService) {
         this.propertyQueryService = propertyQueryService;
-        this.propertyService = propertyService;
+        this.apartmentService = apartmentService;
+        this.parkingService = parkingService;
+        this.businessService = businessService;
+        this.officeService = officeService;
+        this.terrainService = terrainService;
     }
 
     /**
@@ -117,19 +111,19 @@ public class PropertyResource {
         log.debug("REST request to get all Properties");
 
         //Add all apartments(FLATS, HOUSES, TOWERS, ETC...)
-        properties.addAll(apartmentRepository.findAll());
+        properties.addAll(apartmentService.findAll());
 
         //Adds business to list
-        properties.addAll(businessRepository.findAll());
+        properties.addAll(businessService.findAll());
 
         //Adds offices to list
-        properties.addAll(officeRepository.findAll());
+        properties.addAll(officeService.findAll());
 
         //Adds parking to list
-        properties.addAll(parkingRepository.findAll());
+        properties.addAll(parkingService.findAll());
 
         //Adds terrain to list
-        properties.addAll(terrainRepository.findAll());
+        properties.addAll(terrainService.findAll());
 
         return properties;
     }
