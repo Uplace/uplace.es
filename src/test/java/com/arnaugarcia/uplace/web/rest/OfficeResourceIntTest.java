@@ -4,7 +4,10 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Office;
 import com.arnaugarcia.uplace.repository.OfficeRepository;
+import com.arnaugarcia.uplace.service.OfficeService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
+import com.arnaugarcia.uplace.service.dto.OfficeCriteria;
+import com.arnaugarcia.uplace.service.OfficeQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -42,10 +44,6 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class OfficeResourceIntTest {
-
-    private static final String DEFAULT_TITLE = "Test Office";
-
-    private static final Double DEFAULT_PRICE = 1000.0;
 
     private static final String DEFAULT_BATHROOMS = "AAAAAAAAAA";
     private static final String UPDATED_BATHROOMS = "BBBBBBBBBB";
@@ -78,6 +76,12 @@ public class OfficeResourceIntTest {
     private OfficeRepository officeRepository;
 
     @Autowired
+    private OfficeService officeService;
+
+    @Autowired
+    private OfficeQueryService officeQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -96,7 +100,7 @@ public class OfficeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OfficeResource officeResource = new OfficeResource(officeRepository);
+        final OfficeResource officeResource = new OfficeResource(officeService, officeQueryService);
         this.restOfficeMockMvc = MockMvcBuilders.standaloneSetup(officeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -111,7 +115,7 @@ public class OfficeResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Office createEntity(EntityManager em) {
-        Office office = (Office) new Office()
+        Office office = new Office()
             .bathrooms(DEFAULT_BATHROOMS)
             .floors(DEFAULT_FLOORS)
             .terrace(DEFAULT_TERRACE)
@@ -120,10 +124,7 @@ public class OfficeResourceIntTest {
             .storageSurface(DEFAULT_STORAGE_SURFACE)
             .officesSurface(DEFAULT_OFFICES_SURFACE)
             .ac(DEFAULT_AC)
-            .heat(DEFAULT_HEAT)
-            .price(DEFAULT_PRICE)
-            .title(DEFAULT_TITLE)
-            .created(ZonedDateTime.now());
+            .heat(DEFAULT_HEAT);
         return office;
     }
 
@@ -223,6 +224,495 @@ public class OfficeResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllOfficesByBathroomsIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where bathrooms equals to DEFAULT_BATHROOMS
+        defaultOfficeShouldBeFound("bathrooms.equals=" + DEFAULT_BATHROOMS);
+
+        // Get all the officeList where bathrooms equals to UPDATED_BATHROOMS
+        defaultOfficeShouldNotBeFound("bathrooms.equals=" + UPDATED_BATHROOMS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByBathroomsIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where bathrooms in DEFAULT_BATHROOMS or UPDATED_BATHROOMS
+        defaultOfficeShouldBeFound("bathrooms.in=" + DEFAULT_BATHROOMS + "," + UPDATED_BATHROOMS);
+
+        // Get all the officeList where bathrooms equals to UPDATED_BATHROOMS
+        defaultOfficeShouldNotBeFound("bathrooms.in=" + UPDATED_BATHROOMS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByBathroomsIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where bathrooms is not null
+        defaultOfficeShouldBeFound("bathrooms.specified=true");
+
+        // Get all the officeList where bathrooms is null
+        defaultOfficeShouldNotBeFound("bathrooms.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByFloorsIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where floors equals to DEFAULT_FLOORS
+        defaultOfficeShouldBeFound("floors.equals=" + DEFAULT_FLOORS);
+
+        // Get all the officeList where floors equals to UPDATED_FLOORS
+        defaultOfficeShouldNotBeFound("floors.equals=" + UPDATED_FLOORS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByFloorsIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where floors in DEFAULT_FLOORS or UPDATED_FLOORS
+        defaultOfficeShouldBeFound("floors.in=" + DEFAULT_FLOORS + "," + UPDATED_FLOORS);
+
+        // Get all the officeList where floors equals to UPDATED_FLOORS
+        defaultOfficeShouldNotBeFound("floors.in=" + UPDATED_FLOORS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByFloorsIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where floors is not null
+        defaultOfficeShouldBeFound("floors.specified=true");
+
+        // Get all the officeList where floors is null
+        defaultOfficeShouldNotBeFound("floors.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByFloorsIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where floors greater than or equals to DEFAULT_FLOORS
+        defaultOfficeShouldBeFound("floors.greaterOrEqualThan=" + DEFAULT_FLOORS);
+
+        // Get all the officeList where floors greater than or equals to UPDATED_FLOORS
+        defaultOfficeShouldNotBeFound("floors.greaterOrEqualThan=" + UPDATED_FLOORS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByFloorsIsLessThanSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where floors less than or equals to DEFAULT_FLOORS
+        defaultOfficeShouldNotBeFound("floors.lessThan=" + DEFAULT_FLOORS);
+
+        // Get all the officeList where floors less than or equals to UPDATED_FLOORS
+        defaultOfficeShouldBeFound("floors.lessThan=" + UPDATED_FLOORS);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllOfficesByTerraceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where terrace equals to DEFAULT_TERRACE
+        defaultOfficeShouldBeFound("terrace.equals=" + DEFAULT_TERRACE);
+
+        // Get all the officeList where terrace equals to UPDATED_TERRACE
+        defaultOfficeShouldNotBeFound("terrace.equals=" + UPDATED_TERRACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByTerraceIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where terrace in DEFAULT_TERRACE or UPDATED_TERRACE
+        defaultOfficeShouldBeFound("terrace.in=" + DEFAULT_TERRACE + "," + UPDATED_TERRACE);
+
+        // Get all the officeList where terrace equals to UPDATED_TERRACE
+        defaultOfficeShouldNotBeFound("terrace.in=" + UPDATED_TERRACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByTerraceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where terrace is not null
+        defaultOfficeShouldBeFound("terrace.specified=true");
+
+        // Get all the officeList where terrace is null
+        defaultOfficeShouldNotBeFound("terrace.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByTerraceIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where terrace greater than or equals to DEFAULT_TERRACE
+        defaultOfficeShouldBeFound("terrace.greaterOrEqualThan=" + DEFAULT_TERRACE);
+
+        // Get all the officeList where terrace greater than or equals to UPDATED_TERRACE
+        defaultOfficeShouldNotBeFound("terrace.greaterOrEqualThan=" + UPDATED_TERRACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByTerraceIsLessThanSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where terrace less than or equals to DEFAULT_TERRACE
+        defaultOfficeShouldNotBeFound("terrace.lessThan=" + DEFAULT_TERRACE);
+
+        // Get all the officeList where terrace less than or equals to UPDATED_TERRACE
+        defaultOfficeShouldBeFound("terrace.lessThan=" + UPDATED_TERRACE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllOfficesByOfficeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where office equals to DEFAULT_OFFICE
+        defaultOfficeShouldBeFound("office.equals=" + DEFAULT_OFFICE);
+
+        // Get all the officeList where office equals to UPDATED_OFFICE
+        defaultOfficeShouldNotBeFound("office.equals=" + UPDATED_OFFICE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByOfficeIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where office in DEFAULT_OFFICE or UPDATED_OFFICE
+        defaultOfficeShouldBeFound("office.in=" + DEFAULT_OFFICE + "," + UPDATED_OFFICE);
+
+        // Get all the officeList where office equals to UPDATED_OFFICE
+        defaultOfficeShouldNotBeFound("office.in=" + UPDATED_OFFICE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByOfficeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where office is not null
+        defaultOfficeShouldBeFound("office.specified=true");
+
+        // Get all the officeList where office is null
+        defaultOfficeShouldNotBeFound("office.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByStorageIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where storage equals to DEFAULT_STORAGE
+        defaultOfficeShouldBeFound("storage.equals=" + DEFAULT_STORAGE);
+
+        // Get all the officeList where storage equals to UPDATED_STORAGE
+        defaultOfficeShouldNotBeFound("storage.equals=" + UPDATED_STORAGE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByStorageIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where storage in DEFAULT_STORAGE or UPDATED_STORAGE
+        defaultOfficeShouldBeFound("storage.in=" + DEFAULT_STORAGE + "," + UPDATED_STORAGE);
+
+        // Get all the officeList where storage equals to UPDATED_STORAGE
+        defaultOfficeShouldNotBeFound("storage.in=" + UPDATED_STORAGE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByStorageIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where storage is not null
+        defaultOfficeShouldBeFound("storage.specified=true");
+
+        // Get all the officeList where storage is null
+        defaultOfficeShouldNotBeFound("storage.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByStorageSurfaceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where storageSurface equals to DEFAULT_STORAGE_SURFACE
+        defaultOfficeShouldBeFound("storageSurface.equals=" + DEFAULT_STORAGE_SURFACE);
+
+        // Get all the officeList where storageSurface equals to UPDATED_STORAGE_SURFACE
+        defaultOfficeShouldNotBeFound("storageSurface.equals=" + UPDATED_STORAGE_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByStorageSurfaceIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where storageSurface in DEFAULT_STORAGE_SURFACE or UPDATED_STORAGE_SURFACE
+        defaultOfficeShouldBeFound("storageSurface.in=" + DEFAULT_STORAGE_SURFACE + "," + UPDATED_STORAGE_SURFACE);
+
+        // Get all the officeList where storageSurface equals to UPDATED_STORAGE_SURFACE
+        defaultOfficeShouldNotBeFound("storageSurface.in=" + UPDATED_STORAGE_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByStorageSurfaceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where storageSurface is not null
+        defaultOfficeShouldBeFound("storageSurface.specified=true");
+
+        // Get all the officeList where storageSurface is null
+        defaultOfficeShouldNotBeFound("storageSurface.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByStorageSurfaceIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where storageSurface greater than or equals to DEFAULT_STORAGE_SURFACE
+        defaultOfficeShouldBeFound("storageSurface.greaterOrEqualThan=" + DEFAULT_STORAGE_SURFACE);
+
+        // Get all the officeList where storageSurface greater than or equals to UPDATED_STORAGE_SURFACE
+        defaultOfficeShouldNotBeFound("storageSurface.greaterOrEqualThan=" + UPDATED_STORAGE_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByStorageSurfaceIsLessThanSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where storageSurface less than or equals to DEFAULT_STORAGE_SURFACE
+        defaultOfficeShouldNotBeFound("storageSurface.lessThan=" + DEFAULT_STORAGE_SURFACE);
+
+        // Get all the officeList where storageSurface less than or equals to UPDATED_STORAGE_SURFACE
+        defaultOfficeShouldBeFound("storageSurface.lessThan=" + UPDATED_STORAGE_SURFACE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllOfficesByOfficesSurfaceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where officesSurface equals to DEFAULT_OFFICES_SURFACE
+        defaultOfficeShouldBeFound("officesSurface.equals=" + DEFAULT_OFFICES_SURFACE);
+
+        // Get all the officeList where officesSurface equals to UPDATED_OFFICES_SURFACE
+        defaultOfficeShouldNotBeFound("officesSurface.equals=" + UPDATED_OFFICES_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByOfficesSurfaceIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where officesSurface in DEFAULT_OFFICES_SURFACE or UPDATED_OFFICES_SURFACE
+        defaultOfficeShouldBeFound("officesSurface.in=" + DEFAULT_OFFICES_SURFACE + "," + UPDATED_OFFICES_SURFACE);
+
+        // Get all the officeList where officesSurface equals to UPDATED_OFFICES_SURFACE
+        defaultOfficeShouldNotBeFound("officesSurface.in=" + UPDATED_OFFICES_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByOfficesSurfaceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where officesSurface is not null
+        defaultOfficeShouldBeFound("officesSurface.specified=true");
+
+        // Get all the officeList where officesSurface is null
+        defaultOfficeShouldNotBeFound("officesSurface.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByOfficesSurfaceIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where officesSurface greater than or equals to DEFAULT_OFFICES_SURFACE
+        defaultOfficeShouldBeFound("officesSurface.greaterOrEqualThan=" + DEFAULT_OFFICES_SURFACE);
+
+        // Get all the officeList where officesSurface greater than or equals to UPDATED_OFFICES_SURFACE
+        defaultOfficeShouldNotBeFound("officesSurface.greaterOrEqualThan=" + UPDATED_OFFICES_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByOfficesSurfaceIsLessThanSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where officesSurface less than or equals to DEFAULT_OFFICES_SURFACE
+        defaultOfficeShouldNotBeFound("officesSurface.lessThan=" + DEFAULT_OFFICES_SURFACE);
+
+        // Get all the officeList where officesSurface less than or equals to UPDATED_OFFICES_SURFACE
+        defaultOfficeShouldBeFound("officesSurface.lessThan=" + UPDATED_OFFICES_SURFACE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllOfficesByAcIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where ac equals to DEFAULT_AC
+        defaultOfficeShouldBeFound("ac.equals=" + DEFAULT_AC);
+
+        // Get all the officeList where ac equals to UPDATED_AC
+        defaultOfficeShouldNotBeFound("ac.equals=" + UPDATED_AC);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByAcIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where ac in DEFAULT_AC or UPDATED_AC
+        defaultOfficeShouldBeFound("ac.in=" + DEFAULT_AC + "," + UPDATED_AC);
+
+        // Get all the officeList where ac equals to UPDATED_AC
+        defaultOfficeShouldNotBeFound("ac.in=" + UPDATED_AC);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByAcIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where ac is not null
+        defaultOfficeShouldBeFound("ac.specified=true");
+
+        // Get all the officeList where ac is null
+        defaultOfficeShouldNotBeFound("ac.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByHeatIsEqualToSomething() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where heat equals to DEFAULT_HEAT
+        defaultOfficeShouldBeFound("heat.equals=" + DEFAULT_HEAT);
+
+        // Get all the officeList where heat equals to UPDATED_HEAT
+        defaultOfficeShouldNotBeFound("heat.equals=" + UPDATED_HEAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByHeatIsInShouldWork() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where heat in DEFAULT_HEAT or UPDATED_HEAT
+        defaultOfficeShouldBeFound("heat.in=" + DEFAULT_HEAT + "," + UPDATED_HEAT);
+
+        // Get all the officeList where heat equals to UPDATED_HEAT
+        defaultOfficeShouldNotBeFound("heat.in=" + UPDATED_HEAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOfficesByHeatIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        officeRepository.saveAndFlush(office);
+
+        // Get all the officeList where heat is not null
+        defaultOfficeShouldBeFound("heat.specified=true");
+
+        // Get all the officeList where heat is null
+        defaultOfficeShouldNotBeFound("heat.specified=false");
+    }
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultOfficeShouldBeFound(String filter) throws Exception {
+        restOfficeMockMvc.perform(get("/api/offices?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(office.getId().intValue())))
+            .andExpect(jsonPath("$.[*].bathrooms").value(hasItem(DEFAULT_BATHROOMS.toString())))
+            .andExpect(jsonPath("$.[*].floors").value(hasItem(DEFAULT_FLOORS)))
+            .andExpect(jsonPath("$.[*].terrace").value(hasItem(DEFAULT_TERRACE)))
+            .andExpect(jsonPath("$.[*].office").value(hasItem(DEFAULT_OFFICE.toString())))
+            .andExpect(jsonPath("$.[*].storage").value(hasItem(DEFAULT_STORAGE.toString())))
+            .andExpect(jsonPath("$.[*].storageSurface").value(hasItem(DEFAULT_STORAGE_SURFACE)))
+            .andExpect(jsonPath("$.[*].officesSurface").value(hasItem(DEFAULT_OFFICES_SURFACE)))
+            .andExpect(jsonPath("$.[*].ac").value(hasItem(DEFAULT_AC.toString())))
+            .andExpect(jsonPath("$.[*].heat").value(hasItem(DEFAULT_HEAT.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultOfficeShouldNotBeFound(String filter) throws Exception {
+        restOfficeMockMvc.perform(get("/api/offices?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
+
+    @Test
+    @Transactional
     public void getNonExistingOffice() throws Exception {
         // Get the office
         restOfficeMockMvc.perform(get("/api/offices/{id}", Long.MAX_VALUE))
@@ -233,7 +723,8 @@ public class OfficeResourceIntTest {
     @Transactional
     public void updateOffice() throws Exception {
         // Initialize the database
-        officeRepository.saveAndFlush(office);
+        officeService.save(office);
+
         int databaseSizeBeforeUpdate = officeRepository.findAll().size();
 
         // Update the office
@@ -293,7 +784,8 @@ public class OfficeResourceIntTest {
     @Transactional
     public void deleteOffice() throws Exception {
         // Initialize the database
-        officeRepository.saveAndFlush(office);
+        officeService.save(office);
+
         int databaseSizeBeforeDelete = officeRepository.findAll().size();
 
         // Get the office

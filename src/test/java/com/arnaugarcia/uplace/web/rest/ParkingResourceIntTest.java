@@ -4,7 +4,10 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Parking;
 import com.arnaugarcia.uplace.repository.ParkingRepository;
+import com.arnaugarcia.uplace.service.ParkingService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
+import com.arnaugarcia.uplace.service.dto.ParkingCriteria;
+import com.arnaugarcia.uplace.service.ParkingQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -42,10 +44,6 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @SpringBootTest(classes = UplaceApp.class)
 public class ParkingResourceIntTest {
 
-    private static final Double DEFAULT_PRICE = 1000.0;
-
-    private static final String DEFAULT_TITLE = "Test parking";
-
     private static final ParkingType DEFAULT_PARKING_TYPE = ParkingType.CAR;
     private static final ParkingType UPDATED_PARKING_TYPE = ParkingType.MOTO;
 
@@ -57,6 +55,12 @@ public class ParkingResourceIntTest {
 
     @Autowired
     private ParkingRepository parkingRepository;
+
+    @Autowired
+    private ParkingService parkingService;
+
+    @Autowired
+    private ParkingQueryService parkingQueryService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -77,7 +81,7 @@ public class ParkingResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ParkingResource parkingResource = new ParkingResource(parkingRepository);
+        final ParkingResource parkingResource = new ParkingResource(parkingService, parkingQueryService);
         this.restParkingMockMvc = MockMvcBuilders.standaloneSetup(parkingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -92,13 +96,10 @@ public class ParkingResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Parking createEntity(EntityManager em) {
-        Parking parking = (Parking) new Parking()
+        Parking parking = new Parking()
             .parkingType(DEFAULT_PARKING_TYPE)
             .nearTransport(DEFAULT_NEAR_TRANSPORT)
-            .surveillance(DEFAULT_SURVEILLANCE)
-            .price(DEFAULT_PRICE)
-            .title(DEFAULT_TITLE)
-            .created(ZonedDateTime.now());
+            .surveillance(DEFAULT_SURVEILLANCE);
         return parking;
     }
 
@@ -180,6 +181,147 @@ public class ParkingResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllParkingsByParkingTypeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where parkingType equals to DEFAULT_PARKING_TYPE
+        defaultParkingShouldBeFound("parkingType.equals=" + DEFAULT_PARKING_TYPE);
+
+        // Get all the parkingList where parkingType equals to UPDATED_PARKING_TYPE
+        defaultParkingShouldNotBeFound("parkingType.equals=" + UPDATED_PARKING_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllParkingsByParkingTypeIsInShouldWork() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where parkingType in DEFAULT_PARKING_TYPE or UPDATED_PARKING_TYPE
+        defaultParkingShouldBeFound("parkingType.in=" + DEFAULT_PARKING_TYPE + "," + UPDATED_PARKING_TYPE);
+
+        // Get all the parkingList where parkingType equals to UPDATED_PARKING_TYPE
+        defaultParkingShouldNotBeFound("parkingType.in=" + UPDATED_PARKING_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllParkingsByParkingTypeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where parkingType is not null
+        defaultParkingShouldBeFound("parkingType.specified=true");
+
+        // Get all the parkingList where parkingType is null
+        defaultParkingShouldNotBeFound("parkingType.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllParkingsByNearTransportIsEqualToSomething() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where nearTransport equals to DEFAULT_NEAR_TRANSPORT
+        defaultParkingShouldBeFound("nearTransport.equals=" + DEFAULT_NEAR_TRANSPORT);
+
+        // Get all the parkingList where nearTransport equals to UPDATED_NEAR_TRANSPORT
+        defaultParkingShouldNotBeFound("nearTransport.equals=" + UPDATED_NEAR_TRANSPORT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllParkingsByNearTransportIsInShouldWork() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where nearTransport in DEFAULT_NEAR_TRANSPORT or UPDATED_NEAR_TRANSPORT
+        defaultParkingShouldBeFound("nearTransport.in=" + DEFAULT_NEAR_TRANSPORT + "," + UPDATED_NEAR_TRANSPORT);
+
+        // Get all the parkingList where nearTransport equals to UPDATED_NEAR_TRANSPORT
+        defaultParkingShouldNotBeFound("nearTransport.in=" + UPDATED_NEAR_TRANSPORT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllParkingsByNearTransportIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where nearTransport is not null
+        defaultParkingShouldBeFound("nearTransport.specified=true");
+
+        // Get all the parkingList where nearTransport is null
+        defaultParkingShouldNotBeFound("nearTransport.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllParkingsBySurveillanceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where surveillance equals to DEFAULT_SURVEILLANCE
+        defaultParkingShouldBeFound("surveillance.equals=" + DEFAULT_SURVEILLANCE);
+
+        // Get all the parkingList where surveillance equals to UPDATED_SURVEILLANCE
+        defaultParkingShouldNotBeFound("surveillance.equals=" + UPDATED_SURVEILLANCE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllParkingsBySurveillanceIsInShouldWork() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where surveillance in DEFAULT_SURVEILLANCE or UPDATED_SURVEILLANCE
+        defaultParkingShouldBeFound("surveillance.in=" + DEFAULT_SURVEILLANCE + "," + UPDATED_SURVEILLANCE);
+
+        // Get all the parkingList where surveillance equals to UPDATED_SURVEILLANCE
+        defaultParkingShouldNotBeFound("surveillance.in=" + UPDATED_SURVEILLANCE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllParkingsBySurveillanceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        parkingRepository.saveAndFlush(parking);
+
+        // Get all the parkingList where surveillance is not null
+        defaultParkingShouldBeFound("surveillance.specified=true");
+
+        // Get all the parkingList where surveillance is null
+        defaultParkingShouldNotBeFound("surveillance.specified=false");
+    }
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultParkingShouldBeFound(String filter) throws Exception {
+        restParkingMockMvc.perform(get("/api/parkings?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(parking.getId().intValue())))
+            .andExpect(jsonPath("$.[*].parkingType").value(hasItem(DEFAULT_PARKING_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].nearTransport").value(hasItem(DEFAULT_NEAR_TRANSPORT.toString())))
+            .andExpect(jsonPath("$.[*].surveillance").value(hasItem(DEFAULT_SURVEILLANCE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultParkingShouldNotBeFound(String filter) throws Exception {
+        restParkingMockMvc.perform(get("/api/parkings?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
+
+    @Test
+    @Transactional
     public void getNonExistingParking() throws Exception {
         // Get the parking
         restParkingMockMvc.perform(get("/api/parkings/{id}", Long.MAX_VALUE))
@@ -190,7 +332,8 @@ public class ParkingResourceIntTest {
     @Transactional
     public void updateParking() throws Exception {
         // Initialize the database
-        parkingRepository.saveAndFlush(parking);
+        parkingService.save(parking);
+
         int databaseSizeBeforeUpdate = parkingRepository.findAll().size();
 
         // Update the parking
@@ -238,7 +381,8 @@ public class ParkingResourceIntTest {
     @Transactional
     public void deleteParking() throws Exception {
         // Initialize the database
-        parkingRepository.saveAndFlush(parking);
+        parkingService.save(parking);
+
         int databaseSizeBeforeDelete = parkingRepository.findAll().size();
 
         // Get the parking

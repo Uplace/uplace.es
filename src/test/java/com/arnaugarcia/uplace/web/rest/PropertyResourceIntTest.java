@@ -1,9 +1,16 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.UplaceApp;
+
 import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.domain.Photo;
+import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
+import com.arnaugarcia.uplace.service.*;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
+import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
+
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,16 +24,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 
-import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
 import static com.arnaugarcia.uplace.web.rest.TestUtil.sameInstant;
+import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -81,6 +89,27 @@ public class PropertyResourceIntTest {
     private PropertyRepository propertyRepository;
 
     @Autowired
+    private PropertyService propertyService;
+
+    @Autowired
+    private PropertyQueryService propertyQueryService;
+
+    @Autowired
+    private ApartmentService apartmentService;
+
+    @Autowired
+    private ParkingService parkingService;
+
+    @Autowired
+    private BusinessService businessService;
+
+    @Autowired
+    private OfficeService officeService;
+
+    @Autowired
+    private TerrainService terrainService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -96,16 +125,16 @@ public class PropertyResourceIntTest {
 
     private Property property;
 
-    /*@Before
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PropertyResource propertyResource = new PropertyResource(propertyRepository);
+        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService, apartmentService, parkingService, businessService, officeService, terrainService);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
-    }*/
+    }
 
     /**
      * Create an entity for this test.
@@ -130,17 +159,12 @@ public class PropertyResourceIntTest {
         return property;
     }*/
 
-    /*@Before
+   /* @Before
     public void initTest() {
         property = createEntity(em);
     }*/
 
     @Test
-    public void test() {
-        System.out.println("TEST");
-    }
-
-    /*@Test
     @Transactional
     public void createProperty() throws Exception {
         int databaseSizeBeforeCreate = propertyRepository.findAll().size();
@@ -167,9 +191,9 @@ public class PropertyResourceIntTest {
         assertThat(testProperty.isNewCreation()).isEqualTo(DEFAULT_NEW_CREATION);
         assertThat(testProperty.isVisible()).isEqualTo(DEFAULT_VISIBLE);
         assertThat(testProperty.getSurface()).isEqualTo(DEFAULT_SURFACE);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void createPropertyWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = propertyRepository.findAll().size();
@@ -186,9 +210,9 @@ public class PropertyResourceIntTest {
         // Validate the Property in the database
         List<Property> propertyList = propertyRepository.findAll();
         assertThat(propertyList).hasSize(databaseSizeBeforeCreate);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void checkTitleIsRequired() throws Exception {
         int databaseSizeBeforeTest = propertyRepository.findAll().size();
@@ -204,9 +228,9 @@ public class PropertyResourceIntTest {
 
         List<Property> propertyList = propertyRepository.findAll();
         assertThat(propertyList).hasSize(databaseSizeBeforeTest);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void checkPriceIsRequired() throws Exception {
         int databaseSizeBeforeTest = propertyRepository.findAll().size();
@@ -222,9 +246,9 @@ public class PropertyResourceIntTest {
 
         List<Property> propertyList = propertyRepository.findAll();
         assertThat(propertyList).hasSize(databaseSizeBeforeTest);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void checkCreatedIsRequired() throws Exception {
         int databaseSizeBeforeTest = propertyRepository.findAll().size();
@@ -240,9 +264,9 @@ public class PropertyResourceIntTest {
 
         List<Property> propertyList = propertyRepository.findAll();
         assertThat(propertyList).hasSize(databaseSizeBeforeTest);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void getAllProperties() throws Exception {
         // Initialize the database
@@ -265,9 +289,9 @@ public class PropertyResourceIntTest {
             .andExpect(jsonPath("$.[*].newCreation").value(hasItem(DEFAULT_NEW_CREATION.booleanValue())))
             .andExpect(jsonPath("$.[*].visible").value(hasItem(DEFAULT_VISIBLE.booleanValue())))
             .andExpect(jsonPath("$.[*].surface").value(hasItem(DEFAULT_SURFACE)));
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void getProperty() throws Exception {
         // Initialize the database
@@ -290,21 +314,630 @@ public class PropertyResourceIntTest {
             .andExpect(jsonPath("$.newCreation").value(DEFAULT_NEW_CREATION.booleanValue()))
             .andExpect(jsonPath("$.visible").value(DEFAULT_VISIBLE.booleanValue()))
             .andExpect(jsonPath("$.surface").value(DEFAULT_SURFACE));
-    }*/
+    }
 
-    /*@Test
+    @Test
+    @Transactional
+    public void getAllPropertiesByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where title equals to DEFAULT_TITLE
+        defaultPropertyShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the propertyList where title equals to UPDATED_TITLE
+        defaultPropertyShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultPropertyShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the propertyList where title equals to UPDATED_TITLE
+        defaultPropertyShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where title is not null
+        defaultPropertyShouldBeFound("title.specified=true");
+
+        // Get all the propertyList where title is null
+        defaultPropertyShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where price equals to DEFAULT_PRICE
+        defaultPropertyShouldBeFound("price.equals=" + DEFAULT_PRICE);
+
+        // Get all the propertyList where price equals to UPDATED_PRICE
+        defaultPropertyShouldNotBeFound("price.equals=" + UPDATED_PRICE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where price in DEFAULT_PRICE or UPDATED_PRICE
+        defaultPropertyShouldBeFound("price.in=" + DEFAULT_PRICE + "," + UPDATED_PRICE);
+
+        // Get all the propertyList where price equals to UPDATED_PRICE
+        defaultPropertyShouldNotBeFound("price.in=" + UPDATED_PRICE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where price is not null
+        defaultPropertyShouldBeFound("price.specified=true");
+
+        // Get all the propertyList where price is null
+        defaultPropertyShouldNotBeFound("price.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByCreatedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where created equals to DEFAULT_CREATED
+        defaultPropertyShouldBeFound("created.equals=" + DEFAULT_CREATED);
+
+        // Get all the propertyList where created equals to UPDATED_CREATED
+        defaultPropertyShouldNotBeFound("created.equals=" + UPDATED_CREATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByCreatedIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where created in DEFAULT_CREATED or UPDATED_CREATED
+        defaultPropertyShouldBeFound("created.in=" + DEFAULT_CREATED + "," + UPDATED_CREATED);
+
+        // Get all the propertyList where created equals to UPDATED_CREATED
+        defaultPropertyShouldNotBeFound("created.in=" + UPDATED_CREATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByCreatedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where created is not null
+        defaultPropertyShouldBeFound("created.specified=true");
+
+        // Get all the propertyList where created is null
+        defaultPropertyShouldNotBeFound("created.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByCreatedIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where created greater than or equals to DEFAULT_CREATED
+        defaultPropertyShouldBeFound("created.greaterOrEqualThan=" + DEFAULT_CREATED);
+
+        // Get all the propertyList where created greater than or equals to UPDATED_CREATED
+        defaultPropertyShouldNotBeFound("created.greaterOrEqualThan=" + UPDATED_CREATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByCreatedIsLessThanSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where created less than or equals to DEFAULT_CREATED
+        defaultPropertyShouldNotBeFound("created.lessThan=" + DEFAULT_CREATED);
+
+        // Get all the propertyList where created less than or equals to UPDATED_CREATED
+        defaultPropertyShouldBeFound("created.lessThan=" + UPDATED_CREATED);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByUpdatedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where updated equals to DEFAULT_UPDATED
+        defaultPropertyShouldBeFound("updated.equals=" + DEFAULT_UPDATED);
+
+        // Get all the propertyList where updated equals to UPDATED_UPDATED
+        defaultPropertyShouldNotBeFound("updated.equals=" + UPDATED_UPDATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByUpdatedIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where updated in DEFAULT_UPDATED or UPDATED_UPDATED
+        defaultPropertyShouldBeFound("updated.in=" + DEFAULT_UPDATED + "," + UPDATED_UPDATED);
+
+        // Get all the propertyList where updated equals to UPDATED_UPDATED
+        defaultPropertyShouldNotBeFound("updated.in=" + UPDATED_UPDATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByUpdatedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where updated is not null
+        defaultPropertyShouldBeFound("updated.specified=true");
+
+        // Get all the propertyList where updated is null
+        defaultPropertyShouldNotBeFound("updated.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByUpdatedIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where updated greater than or equals to DEFAULT_UPDATED
+        defaultPropertyShouldBeFound("updated.greaterOrEqualThan=" + DEFAULT_UPDATED);
+
+        // Get all the propertyList where updated greater than or equals to UPDATED_UPDATED
+        defaultPropertyShouldNotBeFound("updated.greaterOrEqualThan=" + UPDATED_UPDATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByUpdatedIsLessThanSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where updated less than or equals to DEFAULT_UPDATED
+        defaultPropertyShouldNotBeFound("updated.lessThan=" + DEFAULT_UPDATED);
+
+        // Get all the propertyList where updated less than or equals to UPDATED_UPDATED
+        defaultPropertyShouldBeFound("updated.lessThan=" + UPDATED_UPDATED);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByReferenceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where reference equals to DEFAULT_REFERENCE
+        defaultPropertyShouldBeFound("reference.equals=" + DEFAULT_REFERENCE);
+
+        // Get all the propertyList where reference equals to UPDATED_REFERENCE
+        defaultPropertyShouldNotBeFound("reference.equals=" + UPDATED_REFERENCE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByReferenceIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where reference in DEFAULT_REFERENCE or UPDATED_REFERENCE
+        defaultPropertyShouldBeFound("reference.in=" + DEFAULT_REFERENCE + "," + UPDATED_REFERENCE);
+
+        // Get all the propertyList where reference equals to UPDATED_REFERENCE
+        defaultPropertyShouldNotBeFound("reference.in=" + UPDATED_REFERENCE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByReferenceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where reference is not null
+        defaultPropertyShouldBeFound("reference.specified=true");
+
+        // Get all the propertyList where reference is null
+        defaultPropertyShouldNotBeFound("reference.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceSellIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where priceSell equals to DEFAULT_PRICE_SELL
+        defaultPropertyShouldBeFound("priceSell.equals=" + DEFAULT_PRICE_SELL);
+
+        // Get all the propertyList where priceSell equals to UPDATED_PRICE_SELL
+        defaultPropertyShouldNotBeFound("priceSell.equals=" + UPDATED_PRICE_SELL);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceSellIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where priceSell in DEFAULT_PRICE_SELL or UPDATED_PRICE_SELL
+        defaultPropertyShouldBeFound("priceSell.in=" + DEFAULT_PRICE_SELL + "," + UPDATED_PRICE_SELL);
+
+        // Get all the propertyList where priceSell equals to UPDATED_PRICE_SELL
+        defaultPropertyShouldNotBeFound("priceSell.in=" + UPDATED_PRICE_SELL);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceSellIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where priceSell is not null
+        defaultPropertyShouldBeFound("priceSell.specified=true");
+
+        // Get all the propertyList where priceSell is null
+        defaultPropertyShouldNotBeFound("priceSell.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceRentIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where priceRent equals to DEFAULT_PRICE_RENT
+        defaultPropertyShouldBeFound("priceRent.equals=" + DEFAULT_PRICE_RENT);
+
+        // Get all the propertyList where priceRent equals to UPDATED_PRICE_RENT
+        defaultPropertyShouldNotBeFound("priceRent.equals=" + UPDATED_PRICE_RENT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceRentIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where priceRent in DEFAULT_PRICE_RENT or UPDATED_PRICE_RENT
+        defaultPropertyShouldBeFound("priceRent.in=" + DEFAULT_PRICE_RENT + "," + UPDATED_PRICE_RENT);
+
+        // Get all the propertyList where priceRent equals to UPDATED_PRICE_RENT
+        defaultPropertyShouldNotBeFound("priceRent.in=" + UPDATED_PRICE_RENT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPriceRentIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where priceRent is not null
+        defaultPropertyShouldBeFound("priceRent.specified=true");
+
+        // Get all the propertyList where priceRent is null
+        defaultPropertyShouldNotBeFound("priceRent.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByYearConstructionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where yearConstruction equals to DEFAULT_YEAR_CONSTRUCTION
+        defaultPropertyShouldBeFound("yearConstruction.equals=" + DEFAULT_YEAR_CONSTRUCTION);
+
+        // Get all the propertyList where yearConstruction equals to UPDATED_YEAR_CONSTRUCTION
+        defaultPropertyShouldNotBeFound("yearConstruction.equals=" + UPDATED_YEAR_CONSTRUCTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByYearConstructionIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where yearConstruction in DEFAULT_YEAR_CONSTRUCTION or UPDATED_YEAR_CONSTRUCTION
+        defaultPropertyShouldBeFound("yearConstruction.in=" + DEFAULT_YEAR_CONSTRUCTION + "," + UPDATED_YEAR_CONSTRUCTION);
+
+        // Get all the propertyList where yearConstruction equals to UPDATED_YEAR_CONSTRUCTION
+        defaultPropertyShouldNotBeFound("yearConstruction.in=" + UPDATED_YEAR_CONSTRUCTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByYearConstructionIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where yearConstruction is not null
+        defaultPropertyShouldBeFound("yearConstruction.specified=true");
+
+        // Get all the propertyList where yearConstruction is null
+        defaultPropertyShouldNotBeFound("yearConstruction.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByYearConstructionIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where yearConstruction greater than or equals to DEFAULT_YEAR_CONSTRUCTION
+        defaultPropertyShouldBeFound("yearConstruction.greaterOrEqualThan=" + DEFAULT_YEAR_CONSTRUCTION);
+
+        // Get all the propertyList where yearConstruction greater than or equals to UPDATED_YEAR_CONSTRUCTION
+        defaultPropertyShouldNotBeFound("yearConstruction.greaterOrEqualThan=" + UPDATED_YEAR_CONSTRUCTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByYearConstructionIsLessThanSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where yearConstruction less than or equals to DEFAULT_YEAR_CONSTRUCTION
+        defaultPropertyShouldNotBeFound("yearConstruction.lessThan=" + DEFAULT_YEAR_CONSTRUCTION);
+
+        // Get all the propertyList where yearConstruction less than or equals to UPDATED_YEAR_CONSTRUCTION
+        defaultPropertyShouldBeFound("yearConstruction.lessThan=" + UPDATED_YEAR_CONSTRUCTION);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByNewCreationIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where newCreation equals to DEFAULT_NEW_CREATION
+        defaultPropertyShouldBeFound("newCreation.equals=" + DEFAULT_NEW_CREATION);
+
+        // Get all the propertyList where newCreation equals to UPDATED_NEW_CREATION
+        defaultPropertyShouldNotBeFound("newCreation.equals=" + UPDATED_NEW_CREATION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByNewCreationIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where newCreation in DEFAULT_NEW_CREATION or UPDATED_NEW_CREATION
+        defaultPropertyShouldBeFound("newCreation.in=" + DEFAULT_NEW_CREATION + "," + UPDATED_NEW_CREATION);
+
+        // Get all the propertyList where newCreation equals to UPDATED_NEW_CREATION
+        defaultPropertyShouldNotBeFound("newCreation.in=" + UPDATED_NEW_CREATION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByNewCreationIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where newCreation is not null
+        defaultPropertyShouldBeFound("newCreation.specified=true");
+
+        // Get all the propertyList where newCreation is null
+        defaultPropertyShouldNotBeFound("newCreation.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByVisibleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where visible equals to DEFAULT_VISIBLE
+        defaultPropertyShouldBeFound("visible.equals=" + DEFAULT_VISIBLE);
+
+        // Get all the propertyList where visible equals to UPDATED_VISIBLE
+        defaultPropertyShouldNotBeFound("visible.equals=" + UPDATED_VISIBLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByVisibleIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where visible in DEFAULT_VISIBLE or UPDATED_VISIBLE
+        defaultPropertyShouldBeFound("visible.in=" + DEFAULT_VISIBLE + "," + UPDATED_VISIBLE);
+
+        // Get all the propertyList where visible equals to UPDATED_VISIBLE
+        defaultPropertyShouldNotBeFound("visible.in=" + UPDATED_VISIBLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByVisibleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where visible is not null
+        defaultPropertyShouldBeFound("visible.specified=true");
+
+        // Get all the propertyList where visible is null
+        defaultPropertyShouldNotBeFound("visible.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesBySurfaceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where surface equals to DEFAULT_SURFACE
+        defaultPropertyShouldBeFound("surface.equals=" + DEFAULT_SURFACE);
+
+        // Get all the propertyList where surface equals to UPDATED_SURFACE
+        defaultPropertyShouldNotBeFound("surface.equals=" + UPDATED_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesBySurfaceIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where surface in DEFAULT_SURFACE or UPDATED_SURFACE
+        defaultPropertyShouldBeFound("surface.in=" + DEFAULT_SURFACE + "," + UPDATED_SURFACE);
+
+        // Get all the propertyList where surface equals to UPDATED_SURFACE
+        defaultPropertyShouldNotBeFound("surface.in=" + UPDATED_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesBySurfaceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where surface is not null
+        defaultPropertyShouldBeFound("surface.specified=true");
+
+        // Get all the propertyList where surface is null
+        defaultPropertyShouldNotBeFound("surface.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesBySurfaceIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where surface greater than or equals to DEFAULT_SURFACE
+        defaultPropertyShouldBeFound("surface.greaterOrEqualThan=" + DEFAULT_SURFACE);
+
+        // Get all the propertyList where surface greater than or equals to UPDATED_SURFACE
+        defaultPropertyShouldNotBeFound("surface.greaterOrEqualThan=" + UPDATED_SURFACE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesBySurfaceIsLessThanSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where surface less than or equals to DEFAULT_SURFACE
+        defaultPropertyShouldNotBeFound("surface.lessThan=" + DEFAULT_SURFACE);
+
+        // Get all the propertyList where surface less than or equals to UPDATED_SURFACE
+        defaultPropertyShouldBeFound("surface.lessThan=" + UPDATED_SURFACE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByPhotoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Photo photo = PhotoResourceIntTest.createEntity(em);
+        em.persist(photo);
+        em.flush();
+        property.addPhoto(photo);
+        propertyRepository.saveAndFlush(property);
+        Long photoId = photo.getId();
+
+        // Get all the propertyList where photo equals to photoId
+        defaultPropertyShouldBeFound("photoId.equals=" + photoId);
+
+        // Get all the propertyList where photo equals to photoId + 1
+        defaultPropertyShouldNotBeFound("photoId.equals=" + (photoId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByManagerIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Agent manager = AgentResourceIntTest.createEntity(em);
+        em.persist(manager);
+        em.flush();
+        property.addManager(manager);
+        propertyRepository.saveAndFlush(property);
+        Long managerId = manager.getId();
+
+        // Get all the propertyList where manager equals to managerId
+        defaultPropertyShouldBeFound("managerId.equals=" + managerId);
+
+        // Get all the propertyList where manager equals to managerId + 1
+        defaultPropertyShouldNotBeFound("managerId.equals=" + (managerId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultPropertyShouldBeFound(String filter) throws Exception {
+        restPropertyMockMvc.perform(get("/api/properties?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(property.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.[*].created").value(hasItem(sameInstant(DEFAULT_CREATED))))
+            .andExpect(jsonPath("$.[*].updated").value(hasItem(sameInstant(DEFAULT_UPDATED))))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
+            .andExpect(jsonPath("$.[*].priceSell").value(hasItem(DEFAULT_PRICE_SELL.doubleValue())))
+            .andExpect(jsonPath("$.[*].priceRent").value(hasItem(DEFAULT_PRICE_RENT.doubleValue())))
+            .andExpect(jsonPath("$.[*].yearConstruction").value(hasItem(DEFAULT_YEAR_CONSTRUCTION)))
+            .andExpect(jsonPath("$.[*].newCreation").value(hasItem(DEFAULT_NEW_CREATION.booleanValue())))
+            .andExpect(jsonPath("$.[*].visible").value(hasItem(DEFAULT_VISIBLE.booleanValue())))
+            .andExpect(jsonPath("$.[*].surface").value(hasItem(DEFAULT_SURFACE)));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultPropertyShouldNotBeFound(String filter) throws Exception {
+        restPropertyMockMvc.perform(get("/api/properties?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
+
+    @Test
     @Transactional
     public void getNonExistingProperty() throws Exception {
         // Get the property
-        restPropertyMockMvc.perform(get("/api/properties/{reference}", Long.MAX_VALUE))
+        restPropertyMockMvc.perform(get("/api/properties/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void updateProperty() throws Exception {
         // Initialize the database
-        propertyRepository.saveAndFlush(property);
+        propertyService.save(property);
+
         int databaseSizeBeforeUpdate = propertyRepository.findAll().size();
 
         // Update the property
@@ -346,9 +979,9 @@ public class PropertyResourceIntTest {
         assertThat(testProperty.isNewCreation()).isEqualTo(UPDATED_NEW_CREATION);
         assertThat(testProperty.isVisible()).isEqualTo(UPDATED_VISIBLE);
         assertThat(testProperty.getSurface()).isEqualTo(UPDATED_SURFACE);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void updateNonExistingProperty() throws Exception {
         int databaseSizeBeforeUpdate = propertyRepository.findAll().size();
@@ -364,13 +997,14 @@ public class PropertyResourceIntTest {
         // Validate the Property in the database
         List<Property> propertyList = propertyRepository.findAll();
         assertThat(propertyList).hasSize(databaseSizeBeforeUpdate + 1);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void deleteProperty() throws Exception {
         // Initialize the database
-        propertyRepository.saveAndFlush(property);
+        propertyService.save(property);
+
         int databaseSizeBeforeDelete = propertyRepository.findAll().size();
 
         // Get the property
@@ -381,9 +1015,9 @@ public class PropertyResourceIntTest {
         // Validate the database is empty
         List<Property> propertyList = propertyRepository.findAll();
         assertThat(propertyList).hasSize(databaseSizeBeforeDelete - 1);
-    }*/
+    }
 
-    /*@Test
+   /* @Test
     @Transactional
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Property.class);

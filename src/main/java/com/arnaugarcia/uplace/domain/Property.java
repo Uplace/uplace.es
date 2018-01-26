@@ -1,7 +1,9 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mysql.jdbc.Constants;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,7 +30,7 @@ public abstract class Property implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
     @NotNull
     @Column(name = "title", nullable = false)
@@ -38,7 +40,6 @@ public abstract class Property implements Serializable {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @NotNull
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 

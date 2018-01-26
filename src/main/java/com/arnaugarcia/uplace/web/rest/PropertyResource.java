@@ -1,6 +1,8 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.repository.*;
+import com.arnaugarcia.uplace.service.*;
+import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Property;
 
@@ -10,6 +12,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,25 +34,26 @@ public class PropertyResource {
 
     private static final String ENTITY_NAME = "property";
 
-    private final PropertyRepository propertyRepository;
 
-    private final ApartmentRepository apartmentRepository;
+    private final PropertyQueryService propertyQueryService;
 
-    private final ParkingRepository parkingRepository;
+    private final ApartmentService apartmentService;
 
-    private final BusinessRepository businessRepository;
+    private final ParkingService parkingService;
 
-    private final OfficeRepository officeRepository;
+    private final BusinessService businessService;
 
-    private final TerrainRepository terrainRepository;
+    private final OfficeService officeService;
 
-    public PropertyResource(PropertyRepository propertyRepository, ApartmentRepository apartmentRepository, ParkingRepository parkingRepository, BusinessRepository businessRepository, OfficeRepository officeRepository, TerrainRepository terrainRepository) {
-        this.propertyRepository = propertyRepository;
-        this.apartmentRepository = apartmentRepository;
-        this.parkingRepository = parkingRepository;
-        this.businessRepository = businessRepository;
-        this.officeRepository = officeRepository;
-        this.terrainRepository = terrainRepository;
+    private final TerrainService terrainService;
+
+    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService) {
+        this.propertyQueryService = propertyQueryService;
+        this.apartmentService = apartmentService;
+        this.parkingService = parkingService;
+        this.businessService = businessService;
+        this.officeService = officeService;
+        this.terrainService = terrainService;
     }
 
     /**
@@ -101,27 +105,38 @@ public class PropertyResource {
      */
     @GetMapping("/properties")
     @Timed
+    @Transactional(readOnly = true)
     public List<Property> getAllProperties() {
         List<Property> properties = new ArrayList<>();
         log.debug("REST request to get all Properties");
 
         //Add all apartments(FLATS, HOUSES, TOWERS, ETC...)
-        properties.addAll(apartmentRepository.findAll());
+        properties.addAll(apartmentService.findAll());
 
         //Adds business to list
-        properties.addAll(businessRepository.findAll());
+        properties.addAll(businessService.findAll());
 
         //Adds offices to list
-        properties.addAll(officeRepository.findAll());
+        properties.addAll(officeService.findAll());
 
         //Adds parking to list
-        properties.addAll(parkingRepository.findAll());
+        properties.addAll(parkingService.findAll());
 
         //Adds terrain to list
-        properties.addAll(terrainRepository.findAll());
+        properties.addAll(terrainService.findAll());
 
         return properties;
-        }
+    }
+
+    @GetMapping("/properties/criteria")
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<Property>> getAllPropertiesCriteria(PropertyCriteria criteria) {
+        log.debug("REST request to get Properties by criteria: {}", criteria);
+        List<Property> entityList = propertyQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
 
     /**
      * GET  /properties/:id : get the "id" property.
