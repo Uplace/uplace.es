@@ -84,6 +84,6 @@
     "entityTableName": "property",
     "dto": "no",
     "pagination": "no",
-    "service": "serviceImpl",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": true
 }
