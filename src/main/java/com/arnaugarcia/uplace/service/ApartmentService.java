@@ -1,12 +1,14 @@
 package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Apartment;
+import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 /**
@@ -47,6 +49,28 @@ public class ApartmentService {
     }
 
     /**
+     * Get all the flats
+     *
+     * @return the list of flats
+     */
+    @Transactional(readOnly = true)
+    public Page<Apartment> findAllFlats(Pageable pageable) {
+        log.debug("Request to get all flats");
+        return apartmentRepository.findAllByPropertyType(ApartmentType.FLAT, pageable);
+    }
+
+    /**
+     * Get a flat
+     *
+     * @return the flat of with the requested reference
+     */
+    @Transactional(readOnly = true)
+    public Apartment findFlatByReference(String reference) {
+        log.debug("Request to get all flats");
+        return apartmentRepository.findFirstByReference(reference);
+    }
+
+    /**
      * Get one apartment by id.
      *
      * @param id the id of the entity
@@ -66,5 +90,15 @@ public class ApartmentService {
     public void delete(Long id) {
         log.debug("Request to delete Apartment : {}", id);
         apartmentRepository.delete(id);
+    }
+
+    /**
+     * Delete the apartment by id.
+     *
+     * @param reference the reference of the apartment
+     */
+    public void deleteByReference(String reference) {
+        log.debug("Request to delete Apartment : {}", reference);
+        apartmentRepository.deleteByReference(reference);
     }
 }

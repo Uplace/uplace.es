@@ -7,6 +7,7 @@ import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
 import com.arnaugarcia.uplace.repository.PhotoRepository;
+import com.arnaugarcia.uplace.service.ApartmentService;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
@@ -45,14 +46,15 @@ public class FlatResource {
 
     private static final String ENTITY_NAME = "flat";
 
-    private final ApartmentRepository apartmentRepository;
 
     private final PhotoRepository photoRepository;
 
+    private final ApartmentService apartmentService;
 
-    public FlatResource(ApartmentRepository apartmentRepository, PhotoRepository photoRepository) {
-        this.apartmentRepository = apartmentRepository;
+
+    public FlatResource(PhotoRepository photoRepository, ApartmentService apartmentService) {
         this.photoRepository = photoRepository;
+        this.apartmentService = apartmentService;
     }
 
     /**
@@ -78,9 +80,9 @@ public class FlatResource {
         flat.propertyType(ApartmentType.FLAT);
         //Generate the random reference
         flat.setReference(RandomUtil.generateReference().toUpperCase());
-        Apartment result = apartmentRepository.save(flat);
+        Apartment result = apartmentService.save(flat);
 
-        apartmentRepository.save(result);
+        apartmentService.save(result);
 
         return ResponseEntity.created(new URI("/api/flat/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -107,7 +109,7 @@ public class FlatResource {
         }
         // Set updated to now()
         flat.setUpdated(ZonedDateTime.now());
-        Property result = apartmentRepository.save(flat);
+        Property result = apartmentService.save(flat);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, flat.getId().toString()))
             .body(result);
@@ -123,7 +125,7 @@ public class FlatResource {
     @Transactional(readOnly = true)
     public Page<Apartment> getAllFlats(Pageable pageable) {
         log.debug("REST request to get all flats");
-        return apartmentRepository.findAllByPropertyType(ApartmentType.FLAT, pageable);
+        return apartmentService.findAllFlats(pageable);
     }
 
     /**
@@ -136,7 +138,7 @@ public class FlatResource {
     @Transactional(readOnly = true)
     public Set<Agent> getAgentsOfFlat(@PathVariable String reference) {
         log.debug("REST request to get all flats");
-        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        Apartment apartment = apartmentService.findFlatByReference(reference);
         if (apartment == null || apartment.getManagers() == null) {
             throw new BadRequestAlertException("The Flat with this reference doesn't exists or we have an error with our agents", ENTITY_NAME, "badagent");
         }
@@ -153,7 +155,7 @@ public class FlatResource {
     @Transactional(readOnly = true)
     public Set<Photo> getPhotosOfFlat(@PathVariable String reference) {
         log.debug("REST request to get all flats");
-        Apartment flat = this.apartmentRepository.findFirstByReference(reference);
+        Apartment flat = this.apartmentService.findFlatByReference(reference);
 
         if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
             throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
@@ -173,7 +175,7 @@ public class FlatResource {
     @Transactional(readOnly = true)
     public ResponseEntity<Property> getFlat(@PathVariable String reference) {
         log.debug("REST request to get Property : {}", reference);
-        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        Apartment apartment = apartmentService.findFlatByReference(reference);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
     }
 
@@ -188,7 +190,7 @@ public class FlatResource {
     @Transactional(readOnly = true)
     public Set<Photo> deletePhotoFlat(@PathVariable String reference, @PathVariable Long id) {
         log.debug("REST request to delete Photo of a Flat : {}", reference);
-        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        Apartment apartment = apartmentService.findFlatByReference(reference);
         Photo photo = photoRepository.findOne(id);
         if (!apartment.getPhotos().contains(photo)) {
             throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
@@ -208,7 +210,7 @@ public class FlatResource {
     @Transactional(readOnly = true)
     public Set<Photo> UpdatePhotoFlat(@PathVariable String reference, @RequestBody Photo photo) {
         log.debug("REST request to update Photo of a Flat : {}", reference);
-        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        Apartment apartment = apartmentService.findFlatByReference(reference);
         if (!apartment.getPhotos().contains(photo)) {
             throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
         }
@@ -226,7 +228,7 @@ public class FlatResource {
     @Timed
     public List<Photo> addPhotosToFlat(@PathVariable String reference, @RequestBody List<Photo> photos) {
         log.debug("REST request to get all flats");
-        Apartment flat = this.apartmentRepository.findFirstByReference(reference);
+        Apartment flat = apartmentService.findFlatByReference(reference);
 
         if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
             throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
@@ -248,11 +250,11 @@ public class FlatResource {
     @Transactional
     public ResponseEntity<Void> deleteProperty(@PathVariable String reference) {
         log.debug("REST request to delete a Flat : {}", reference);
-        Apartment apartment = apartmentRepository.findFirstByReference(reference);
+        Apartment apartment = apartmentService.findFlatByReference(reference);
         if (apartment.getId() == null) {
             throw new BadRequestAlertException("The referenced Flat doesn't exists", ENTITY_NAME, "idnoexists");
         }
-        apartmentRepository.deleteByReference(reference);
+        apartmentService.deleteByReference(reference);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, reference)).build();
     }
 }
