@@ -21,6 +21,10 @@
                 {{photo.photoContentType}}, {{byteSize(photo.photo)}}
             </div>
         </dd>
+        <dt><span jhiTranslate="uplaceApp.photo.thumbnail">Thumbnail</span></dt>
+        <dd>
+            <span>{{photo.thumbnail}}</span>
+        </dd>
         <dt><span jhiTranslate="uplaceApp.photo.property">Property</span></dt>
         <dd>
             <div *ngIf="photo.property">

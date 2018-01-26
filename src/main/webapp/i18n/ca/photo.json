@@ -18,6 +18,7 @@
             "name": "Name",
             "description": "Description",
             "photo": "Photo",
+            "thumbnail": "Thumbnail",
             "property": "Property"
         }
     }

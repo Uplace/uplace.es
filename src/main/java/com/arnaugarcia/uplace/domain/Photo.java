@@ -1,12 +1,12 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -38,6 +38,10 @@ public class Photo implements Serializable {
 
     @Column(name = "photo_content_type")
     private String photoContentType;
+
+    @NotNull
+    @Column(name = "thumbnail", nullable = false)
+    private Boolean thumbnail;
 
     @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -104,6 +108,19 @@ public class Photo implements Serializable {
         this.photoContentType = photoContentType;
     }
 
+    public Boolean isThumbnail() {
+        return thumbnail;
+    }
+
+    public Photo thumbnail(Boolean thumbnail) {
+        this.thumbnail = thumbnail;
+        return this;
+    }
+
+    public void setThumbnail(Boolean thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     public Property getProperty() {
         return property;
     }
@@ -146,6 +163,7 @@ public class Photo implements Serializable {
             ", description='" + getDescription() + "'" +
             ", photo='" + getPhoto() + "'" +
             ", photoContentType='" + getPhotoContentType() + "'" +
+            ", thumbnail='" + isThumbnail() + "'" +
             "}";
     }
 }
