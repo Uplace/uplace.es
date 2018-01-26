@@ -6,6 +6,7 @@ import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import org.hibernate.validator.internal.xml.PropertyType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -20,7 +21,8 @@ import java.util.List;
 @Repository
 public interface ApartmentRepository extends JpaRepository<Apartment, Long>, JpaSpecificationExecutor<Apartment>{
 
-    Apartment findFirstByReference(String reference);
+    @Query("SELECT p FROM Apartment p where p.reference = :reference")
+    Apartment findByReference(@Param("reference") String reference);
 
     Page<Apartment> findAllByPropertyType(ApartmentType apartmentType, Pageable pageable);
 
