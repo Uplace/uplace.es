@@ -20,6 +20,7 @@
             <th><span jhiTranslate="uplaceApp.photo.name">Name</span></th>
             <th><span jhiTranslate="uplaceApp.photo.description">Description</span></th>
             <th><span jhiTranslate="uplaceApp.photo.photo">Photo</span></th>
+            <th><span jhiTranslate="uplaceApp.photo.thumbnail">Thumbnail</span></th>
             <th><span jhiTranslate="uplaceApp.photo.property">Property</span></th>
             <th></th>
             </tr>
@@ -35,6 +36,7 @@
                     </a>
                     <span *ngIf="photo.photo">{{photo.photoContentType}}, {{byteSize(photo.photo)}}</span>
                 </td>
+                <td>{{photo.thumbnail}}</td>
                 <td>
                     <div *ngIf="photo.property">
                         <a [routerLink]="['../property', photo.property?.id ]" >{{photo.property?.reference}}</a>

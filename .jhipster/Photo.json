@@ -21,13 +21,20 @@
             "fieldName": "photo",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "thumbnail",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20180117115525",
-    "javadoc": "PHOTO",
-    "entityTableName": "photo",
     "dto": "no",
-    "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "entityTableName": "photo",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no",
+    "javadoc": "PHOTO"
 }
