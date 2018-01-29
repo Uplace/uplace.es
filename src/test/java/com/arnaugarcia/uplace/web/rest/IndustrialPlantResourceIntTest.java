@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -41,6 +42,12 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class IndustrialPlantResourceIntTest {
+
+    private static final String DEFAULT_TITLE = "TEST Apartment";
+
+    private static final Double DEFAULT_PRICE = 0.0;
+
+    private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.now();
 
     private static final Integer DEFAULT_SOLAR_SURFACE = 1;
     private static final Integer UPDATED_SOLAR_SURFACE = 2;
@@ -106,14 +113,17 @@ public class IndustrialPlantResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static IndustrialPlant createEntity(EntityManager em) {
-        IndustrialPlant industrialPlant = new IndustrialPlant()
+        IndustrialPlant industrialPlant = (IndustrialPlant) new IndustrialPlant()
             .solarSurface(DEFAULT_SOLAR_SURFACE)
             .numberRooms(DEFAULT_NUMBER_ROOMS)
             .m2Offices(DEFAULT_M_2_OFFICES)
             .m2Storage(DEFAULT_M_2_STORAGE)
             .heightFree(DEFAULT_HEIGHT_FREE)
             .numberDocks(DEFAULT_NUMBER_DOCKS)
-            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE);
+            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE)
+            .created(DEFAULT_CREATED)
+            .title(DEFAULT_TITLE)
+            .price(DEFAULT_PRICE);
         return industrialPlant;
     }
 

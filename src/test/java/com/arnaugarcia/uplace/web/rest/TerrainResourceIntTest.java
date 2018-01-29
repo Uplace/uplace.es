@@ -160,8 +160,7 @@ public class TerrainResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(terrain.getId().intValue())))
-            .andExpect(jsonPath("$.[*].terrainType").value(hasItem(DEFAULT_TERRAIN_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].nearTransport").value(hasItem(DEFAULT_NEAR_TRANSPORT.toString())));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TERRAIN_TYPE.toString())));
     }
 
     @Test
@@ -175,8 +174,7 @@ public class TerrainResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(terrain.getId().intValue()))
-            .andExpect(jsonPath("$.terrainType").value(DEFAULT_TERRAIN_TYPE.toString()))
-            .andExpect(jsonPath("$.nearTransport").value(DEFAULT_NEAR_TRANSPORT.toString()));
+            .andExpect(jsonPath("$.type").value(DEFAULT_TERRAIN_TYPE.toString()));
     }
 
     @Test
@@ -186,10 +184,10 @@ public class TerrainResourceIntTest {
         terrainRepository.saveAndFlush(terrain);
 
         // Get all the terrainList where terrainType equals to DEFAULT_TERRAIN_TYPE
-        defaultTerrainShouldBeFound("terrainType.equals=" + DEFAULT_TERRAIN_TYPE);
+        defaultTerrainShouldBeFound("type.equals=" + DEFAULT_TERRAIN_TYPE);
 
         // Get all the terrainList where terrainType equals to UPDATED_TERRAIN_TYPE
-        defaultTerrainShouldNotBeFound("terrainType.equals=" + UPDATED_TERRAIN_TYPE);
+        defaultTerrainShouldNotBeFound("type.equals=" + UPDATED_TERRAIN_TYPE);
     }
 
     @Test
@@ -199,10 +197,10 @@ public class TerrainResourceIntTest {
         terrainRepository.saveAndFlush(terrain);
 
         // Get all the terrainList where terrainType in DEFAULT_TERRAIN_TYPE or UPDATED_TERRAIN_TYPE
-        defaultTerrainShouldBeFound("terrainType.in=" + DEFAULT_TERRAIN_TYPE + "," + UPDATED_TERRAIN_TYPE);
+        defaultTerrainShouldBeFound("type.in=" + DEFAULT_TERRAIN_TYPE + "," + UPDATED_TERRAIN_TYPE);
 
         // Get all the terrainList where terrainType equals to UPDATED_TERRAIN_TYPE
-        defaultTerrainShouldNotBeFound("terrainType.in=" + UPDATED_TERRAIN_TYPE);
+        defaultTerrainShouldNotBeFound("type.in=" + UPDATED_TERRAIN_TYPE);
     }
 
     @Test
@@ -212,50 +210,12 @@ public class TerrainResourceIntTest {
         terrainRepository.saveAndFlush(terrain);
 
         // Get all the terrainList where terrainType is not null
-        defaultTerrainShouldBeFound("terrainType.specified=true");
+        defaultTerrainShouldBeFound("type.specified=true");
 
         // Get all the terrainList where terrainType is null
-        defaultTerrainShouldNotBeFound("terrainType.specified=false");
+        defaultTerrainShouldNotBeFound("type.specified=false");
     }
 
-    @Test
-    @Transactional
-    public void getAllTerrainsByNearTransportIsEqualToSomething() throws Exception {
-        // Initialize the database
-        terrainRepository.saveAndFlush(terrain);
-
-        // Get all the terrainList where nearTransport equals to DEFAULT_NEAR_TRANSPORT
-        defaultTerrainShouldBeFound("nearTransport.equals=" + DEFAULT_NEAR_TRANSPORT);
-
-        // Get all the terrainList where nearTransport equals to UPDATED_NEAR_TRANSPORT
-        defaultTerrainShouldNotBeFound("nearTransport.equals=" + UPDATED_NEAR_TRANSPORT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllTerrainsByNearTransportIsInShouldWork() throws Exception {
-        // Initialize the database
-        terrainRepository.saveAndFlush(terrain);
-
-        // Get all the terrainList where nearTransport in DEFAULT_NEAR_TRANSPORT or UPDATED_NEAR_TRANSPORT
-        defaultTerrainShouldBeFound("nearTransport.in=" + DEFAULT_NEAR_TRANSPORT + "," + UPDATED_NEAR_TRANSPORT);
-
-        // Get all the terrainList where nearTransport equals to UPDATED_NEAR_TRANSPORT
-        defaultTerrainShouldNotBeFound("nearTransport.in=" + UPDATED_NEAR_TRANSPORT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllTerrainsByNearTransportIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        terrainRepository.saveAndFlush(terrain);
-
-        // Get all the terrainList where nearTransport is not null
-        defaultTerrainShouldBeFound("nearTransport.specified=true");
-
-        // Get all the terrainList where nearTransport is null
-        defaultTerrainShouldNotBeFound("nearTransport.specified=false");
-    }
     /**
      * Executes the search, and checks that the default entity is returned
      */
@@ -264,8 +224,7 @@ public class TerrainResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(terrain.getId().intValue())))
-            .andExpect(jsonPath("$.[*].terrainType").value(hasItem(DEFAULT_TERRAIN_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].nearTransport").value(hasItem(DEFAULT_NEAR_TRANSPORT.toString())));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TERRAIN_TYPE.toString())));
     }
 
     /**

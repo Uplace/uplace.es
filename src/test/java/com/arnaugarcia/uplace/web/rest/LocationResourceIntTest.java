@@ -152,7 +152,7 @@ public class LocationResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(location.getId().intValue())))
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.toString())))
-            .andExpect(jsonPath("$.[*].cp").value(hasItem(DEFAULT_CP.toString())))
+            .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_CP.toString())))
             .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.toString())))
             .andExpect(jsonPath("$.[*].urlGmaps").value(hasItem(DEFAULT_URL_GMAPS.toString())));
     }
@@ -169,7 +169,7 @@ public class LocationResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(location.getId().intValue()))
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.toString()))
-            .andExpect(jsonPath("$.cp").value(DEFAULT_CP.toString()))
+            .andExpect(jsonPath("$.postalCode").value(DEFAULT_CP.toString()))
             .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.toString()))
             .andExpect(jsonPath("$.urlGmaps").value(DEFAULT_URL_GMAPS.toString()));
     }

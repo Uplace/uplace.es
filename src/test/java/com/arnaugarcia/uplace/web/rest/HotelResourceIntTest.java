@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -45,6 +46,12 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class HotelResourceIntTest {
+
+    private static final String DEFAULT_TITLE = "TEST Apartment";
+
+    private static final Double DEFAULT_PRICE = 0.0;
+
+    private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.now();
 
     private static final Integer DEFAULT_SOLAR_SURFACE = 1;
     private static final Integer UPDATED_SOLAR_SURFACE = 2;
@@ -119,7 +126,7 @@ public class HotelResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Hotel createEntity(EntityManager em) {
-        Hotel hotel = new Hotel()
+        Hotel hotel = (Hotel) new Hotel()
             .solarSurface(DEFAULT_SOLAR_SURFACE)
             .m2Edified(DEFAULT_M_2_EDIFIED)
             .numberRooms(DEFAULT_NUMBER_ROOMS)
@@ -129,7 +136,10 @@ public class HotelResourceIntTest {
             .conferenceRoom(DEFAULT_CONFERENCE_ROOM)
             .floorsSR(DEFAULT_FLOORS_SR)
             .floorsBR(DEFAULT_FLOORS_BR)
-            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE);
+            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE)
+            .created(DEFAULT_CREATED)
+            .title(DEFAULT_TITLE)
+            .price(DEFAULT_PRICE);
         return hotel;
     }
 

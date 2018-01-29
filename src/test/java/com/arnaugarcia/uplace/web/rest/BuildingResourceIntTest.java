@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -42,6 +43,12 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class BuildingResourceIntTest {
+
+    private static final String DEFAULT_TITLE = "TEST Apartment";
+
+    private static final Double DEFAULT_PRICE = 0.0;
+
+    private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.now();
 
     private static final BuildingType DEFAULT_TYPE = BuildingType.RESIDENTIAL;
     private static final BuildingType UPDATED_TYPE = BuildingType.HOTEL;
@@ -104,13 +111,16 @@ public class BuildingResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Building createEntity(EntityManager em) {
-        Building building = new Building()
+        Building building = (Building) new Building()
             .type(DEFAULT_TYPE)
             .solarSurface(DEFAULT_SOLAR_SURFACE)
             .m2Edified(DEFAULT_M_2_EDIFIED)
             .floorsSR(DEFAULT_FLOORS_SR)
             .floorsBR(DEFAULT_FLOORS_BR)
-            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE);
+            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE)
+            .created(DEFAULT_CREATED)
+            .title(DEFAULT_TITLE)
+            .price(DEFAULT_PRICE);
         return building;
     }
 

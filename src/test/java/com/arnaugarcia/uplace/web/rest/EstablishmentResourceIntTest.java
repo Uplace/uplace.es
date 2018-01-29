@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -40,6 +41,12 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class EstablishmentResourceIntTest {
+
+    private static final String DEFAULT_TITLE = "TEST Apartment";
+
+    private static final Double DEFAULT_PRICE = 0.0;
+
+    private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.now();
 
     private static final Integer DEFAULT_M_2_FACADE = 1;
     private static final Integer UPDATED_M_2_FACADE = 2;
@@ -90,11 +97,14 @@ public class EstablishmentResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Establishment createEntity(EntityManager em) {
-        Establishment establishment = new Establishment()
+        Establishment establishment = (Establishment) new Establishment()
             .m2Facade(DEFAULT_M_2_FACADE)
             .bathroom(DEFAULT_BATHROOM)
             .use(DEFAULT_USE)
-            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE);
+            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE)
+            .created(DEFAULT_CREATED)
+            .title(DEFAULT_TITLE)
+            .price(DEFAULT_PRICE);
         return establishment;
     }
 
