@@ -15,7 +15,7 @@ export const enum Select {
 export class Business implements BaseEntity {
     constructor(
         public id?: number,
-        public businessType?: BusinessType,
+        public type?: BusinessType,
         public numberBathrooms?: number,
         public elevator?: Select,
         public ac?: Select,

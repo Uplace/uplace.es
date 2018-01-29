@@ -11,6 +11,10 @@ import { UplaceGalleryModule } from './gallery/gallery.module';
 import { UplacePhotoModule } from './photo/photo.module';
 import { UplaceBusinessModule } from './business/business.module';
 import { UplaceNotificationModule } from './notification/notification.module';
+import { UplaceBuildingModule } from './building/building.module';
+import { UplaceHotelModule } from './hotel/hotel.module';
+import { UplaceIndustrialPlantModule } from './industrial-plant/industrial-plant.module';
+import { UplaceEstablishmentModule } from './establishment/establishment.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -26,6 +30,10 @@ import { UplaceNotificationModule } from './notification/notification.module';
         UplacePhotoModule,
         UplaceBusinessModule,
         UplaceNotificationModule,
+        UplaceBuildingModule,
+        UplaceHotelModule,
+        UplaceIndustrialPlantModule,
+        UplaceEstablishmentModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

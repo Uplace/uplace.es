@@ -3,20 +3,19 @@ import { BaseEntity } from './../../shared';
 export const enum TerrainType {
     'RESIDENTIAL',
     'URBAN',
-    'RUSTIC'
-}
-
-export const enum Select {
-    'YES',
-    'NO',
-    'UNDEFINED'
+    'RUSTIC',
+    'INDUSTRIAL'
 }
 
 export class Terrain implements BaseEntity {
     constructor(
         public id?: number,
-        public terrainType?: TerrainType,
-        public nearTransport?: Select,
+        public m2Buildable?: number,
+        public buildableDepth?: number,
+        public floorsSR?: number,
+        public floorsBR?: number,
+        public constructionCoefficient?: number,
+        public type?: TerrainType,
     ) {
     }
 }

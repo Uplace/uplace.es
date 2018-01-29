@@ -1,12 +1,16 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.arnaugarcia.uplace.domain.enumeration.Select;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
+
+import com.arnaugarcia.uplace.domain.enumeration.Select;
+
+import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 
 /**
  * A Office.
@@ -27,8 +31,9 @@ public class Office extends Property implements Serializable {
     @Column(name = "floors")
     private Integer floors;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "terrace")
-    private Integer terrace;
+    private Select terrace;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "office")
@@ -51,6 +56,10 @@ public class Office extends Property implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "heat")
     private Select heat;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "energy_certificate")
+    private EnergyCertificate energyCertificate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -87,16 +96,16 @@ public class Office extends Property implements Serializable {
         this.floors = floors;
     }
 
-    public Integer getTerrace() {
+    public Select getTerrace() {
         return terrace;
     }
 
-    public Office terrace(Integer terrace) {
+    public Office terrace(Select terrace) {
         this.terrace = terrace;
         return this;
     }
 
-    public void setTerrace(Integer terrace) {
+    public void setTerrace(Select terrace) {
         this.terrace = terrace;
     }
 
@@ -177,6 +186,19 @@ public class Office extends Property implements Serializable {
     public void setHeat(Select heat) {
         this.heat = heat;
     }
+
+    public EnergyCertificate getEnergyCertificate() {
+        return energyCertificate;
+    }
+
+    public Office energyCertificate(EnergyCertificate energyCertificate) {
+        this.energyCertificate = energyCertificate;
+        return this;
+    }
+
+    public void setEnergyCertificate(EnergyCertificate energyCertificate) {
+        this.energyCertificate = energyCertificate;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -205,13 +227,14 @@ public class Office extends Property implements Serializable {
             "id=" + getId() +
             ", bathrooms='" + getBathrooms() + "'" +
             ", floors=" + getFloors() +
-            ", terrace=" + getTerrace() +
+            ", terrace='" + getTerrace() + "'" +
             ", office='" + getOffice() + "'" +
             ", storage='" + getStorage() + "'" +
             ", storageSurface=" + getStorageSurface() +
             ", officesSurface=" + getOfficesSurface() +
             ", ac='" + getAc() + "'" +
             ", heat='" + getHeat() + "'" +
+            ", energyCertificate='" + getEnergyCertificate() + "'" +
             "}";
     }
 }

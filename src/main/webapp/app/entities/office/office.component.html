@@ -26,6 +26,7 @@
             <th><span jhiTranslate="uplaceApp.office.officesSurface">Offices Surface</span></th>
             <th><span jhiTranslate="uplaceApp.office.ac">Ac</span></th>
             <th><span jhiTranslate="uplaceApp.office.heat">Heat</span></th>
+            <th><span jhiTranslate="uplaceApp.office.energyCertificate">Energy Certificate</span></th>
             <th></th>
             </tr>
             </thead>
@@ -34,13 +35,14 @@
                 <td><a [routerLink]="['../office', office.id ]">{{office.id}}</a></td>
                 <td>{{office.bathrooms}}</td>
                 <td>{{office.floors}}</td>
-                <td>{{office.terrace}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + office.terrace}}">{{office.terrace}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + office.office}}">{{office.office}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + office.storage}}">{{office.storage}}</td>
                 <td>{{office.storageSurface}}</td>
                 <td>{{office.officesSurface}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + office.ac}}">{{office.ac}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + office.heat}}">{{office.heat}}</td>
+                <td jhiTranslate="{{'uplaceApp.EnergyCertificate.' + office.energyCertificate}}">{{office.energyCertificate}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

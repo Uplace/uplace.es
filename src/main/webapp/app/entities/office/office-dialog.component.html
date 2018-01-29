@@ -24,8 +24,11 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.office.terrace" for="field_terrace">Terrace</label>
-            <input type="number" class="form-control" name="terrace" id="field_terrace"
-                [(ngModel)]="office.terrace" />
+            <select class="form-control" name="terrace" [(ngModel)]="office.terrace" id="field_terrace" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.office.office" for="field_office">Office</label>
@@ -67,6 +70,19 @@
                 <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
                 <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
                 <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.energyCertificate" for="field_energyCertificate">Energy Certificate</label>
+            <select class="form-control" name="energyCertificate" [(ngModel)]="office.energyCertificate" id="field_energyCertificate" >
+                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
             </select>
         </div>
 

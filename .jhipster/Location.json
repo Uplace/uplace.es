@@ -7,7 +7,7 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "cp",
+            "fieldName": "postalCode",
             "fieldType": "String"
         },
         {

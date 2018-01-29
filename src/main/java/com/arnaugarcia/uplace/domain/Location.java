@@ -25,8 +25,8 @@ public class Location implements Serializable {
     @Column(name = "latitude")
     private String latitude;
 
-    @Column(name = "cp")
-    private String cp;
+    @Column(name = "postal_code")
+    private String postalCode;
 
     @Column(name = "longitude")
     private String longitude;
@@ -56,17 +56,17 @@ public class Location implements Serializable {
         this.latitude = latitude;
     }
 
-    public String getCp() {
-        return cp;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public Location cp(String cp) {
-        this.cp = cp;
+    public Location postalCode(String postalCode) {
+        this.postalCode = postalCode;
         return this;
     }
 
-    public void setCp(String cp) {
-        this.cp = cp;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getLongitude() {
@@ -121,7 +121,7 @@ public class Location implements Serializable {
         return "Location{" +
             "id=" + getId() +
             ", latitude='" + getLatitude() + "'" +
-            ", cp='" + getCp() + "'" +
+            ", postalCode='" + getPostalCode() + "'" +
             ", longitude='" + getLongitude() + "'" +
             ", urlGmaps='" + getUrlGmaps() + "'" +
             "}";

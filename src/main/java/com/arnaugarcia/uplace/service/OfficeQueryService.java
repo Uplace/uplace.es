@@ -22,6 +22,8 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
+import com.arnaugarcia.uplace.domain.enumeration.Select;
+import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 
 /**
  * Service for executing complex queries for Office entities in the database.
@@ -83,7 +85,7 @@ public class OfficeQueryService extends QueryService<Office> {
                 specification = specification.and(buildRangeSpecification(criteria.getFloors(), Office_.floors));
             }
             if (criteria.getTerrace() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getTerrace(), Office_.terrace));
+                specification = specification.and(buildSpecification(criteria.getTerrace(), Office_.terrace));
             }
             if (criteria.getOffice() != null) {
                 specification = specification.and(buildSpecification(criteria.getOffice(), Office_.office));
@@ -102,6 +104,9 @@ public class OfficeQueryService extends QueryService<Office> {
             }
             if (criteria.getHeat() != null) {
                 specification = specification.and(buildSpecification(criteria.getHeat(), Office_.heat));
+            }
+            if (criteria.getEnergyCertificate() != null) {
+                specification = specification.and(buildSpecification(criteria.getEnergyCertificate(), Office_.energyCertificate));
             }
         }
         return specification;

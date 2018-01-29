@@ -3,7 +3,7 @@
     "relationships": [],
     "fields": [
         {
-            "fieldName": "businessType",
+            "fieldName": "type",
             "fieldType": "BusinessType",
             "fieldValues": "PUB,HOTEL,OTHERS"
         },
@@ -57,5 +57,5 @@
     "dto": "no",
     "pagination": "no",
     "service": "serviceClass",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": true
 }

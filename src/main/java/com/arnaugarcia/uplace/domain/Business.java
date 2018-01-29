@@ -26,8 +26,8 @@ public class Business extends Property implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "business_type")
-    private BusinessType businessType;
+    @Column(name = "up_type")
+    private BusinessType type;
 
     @Column(name = "number_bathrooms")
     private Integer numberBathrooms;
@@ -72,17 +72,17 @@ public class Business extends Property implements Serializable {
         this.id = id;
     }
 
-    public BusinessType getBusinessType() {
-        return businessType;
+    public BusinessType getType() {
+        return type;
     }
 
-    public Business businessType(BusinessType businessType) {
-        this.businessType = businessType;
+    public Business type(BusinessType type) {
+        this.type = type;
         return this;
     }
 
-    public void setBusinessType(BusinessType businessType) {
-        this.businessType = businessType;
+    public void setType(BusinessType type) {
+        this.type = type;
     }
 
     public Integer getNumberBathrooms() {
@@ -240,7 +240,7 @@ public class Business extends Property implements Serializable {
     public String toString() {
         return "Business{" +
             "id=" + getId() +
-            ", businessType='" + getBusinessType() + "'" +
+            ", type='" + getType() + "'" +
             ", numberBathrooms=" + getNumberBathrooms() +
             ", elevator='" + getElevator() + "'" +
             ", ac='" + getAc() + "'" +

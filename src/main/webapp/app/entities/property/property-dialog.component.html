@@ -68,6 +68,15 @@
                 [(ngModel)]="property.description" ></textarea>
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.transaction" for="field_transaction">Transaction</label>
+            <select class="form-control" name="transaction" [(ngModel)]="property.transaction" id="field_transaction" >
+                <option value="RENT">{{'uplaceApp.TransactionType.RENT' | translate}}</option>
+                <option value="BUY">{{'uplaceApp.TransactionType.BUY' | translate}}</option>
+                <option value="TRANSFER">{{'uplaceApp.TransactionType.TRANSFER' | translate}}</option>
+                <option value="RENT_BUY">{{'uplaceApp.TransactionType.RENT_BUY' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.property.reference" for="field_reference">Reference</label>
             <input type="text" class="form-control" name="reference" id="field_reference"
                 [(ngModel)]="property.reference" />

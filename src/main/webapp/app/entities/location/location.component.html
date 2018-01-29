@@ -18,7 +18,7 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="uplaceApp.location.latitude">Latitude</span></th>
-            <th><span jhiTranslate="uplaceApp.location.cp">Cp</span></th>
+            <th><span jhiTranslate="uplaceApp.location.postalCode">Postal Code</span></th>
             <th><span jhiTranslate="uplaceApp.location.longitude">Longitude</span></th>
             <th><span jhiTranslate="uplaceApp.location.urlGmaps">Url Gmaps</span></th>
             <th></th>
@@ -28,7 +28,7 @@
             <tr *ngFor="let location of locations ;trackBy: trackId">
                 <td><a [routerLink]="['../location', location.id ]">{{location.id}}</a></td>
                 <td>{{location.latitude}}</td>
-                <td>{{location.cp}}</td>
+                <td>{{location.postalCode}}</td>
                 <td>{{location.longitude}}</td>
                 <td>{{location.urlGmaps}}</td>
                 <td class="text-right">

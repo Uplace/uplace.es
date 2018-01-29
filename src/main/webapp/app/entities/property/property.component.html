@@ -22,6 +22,7 @@
             <th><span jhiTranslate="uplaceApp.property.created">Created</span></th>
             <th><span jhiTranslate="uplaceApp.property.updated">Updated</span></th>
             <th><span jhiTranslate="uplaceApp.property.description">Description</span></th>
+            <th><span jhiTranslate="uplaceApp.property.transaction">Transaction</span></th>
             <th><span jhiTranslate="uplaceApp.property.reference">Reference</span></th>
             <th><span jhiTranslate="uplaceApp.property.priceSell">Price Sell</span></th>
             <th><span jhiTranslate="uplaceApp.property.priceRent">Price Rent</span></th>
@@ -41,6 +42,7 @@
                 <td>{{property.created | date:'medium'}}</td>
                 <td>{{property.updated | date:'medium'}}</td>
                 <td>{{property.description}}</td>
+                <td jhiTranslate="{{'uplaceApp.TransactionType.' + property.transaction}}">{{property.transaction}}</td>
                 <td>{{property.reference}}</td>
                 <td>{{property.priceSell}}</td>
                 <td>{{property.priceRent}}</td>

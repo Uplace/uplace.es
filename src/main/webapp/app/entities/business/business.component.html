@@ -17,7 +17,7 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="uplaceApp.business.businessType">Business Type</span></th>
+            <th><span jhiTranslate="uplaceApp.business.type">Type</span></th>
             <th><span jhiTranslate="uplaceApp.business.numberBathrooms">Number Bathrooms</span></th>
             <th><span jhiTranslate="uplaceApp.business.elevator">Elevator</span></th>
             <th><span jhiTranslate="uplaceApp.business.ac">Ac</span></th>
@@ -34,7 +34,7 @@
             <tbody>
             <tr *ngFor="let business of businesses ;trackBy: trackId">
                 <td><a [routerLink]="['../business', business.id ]">{{business.id}}</a></td>
-                <td jhiTranslate="{{'uplaceApp.BusinessType.' + business.businessType}}">{{business.businessType}}</td>
+                <td jhiTranslate="{{'uplaceApp.BusinessType.' + business.type}}">{{business.type}}</td>
                 <td>{{business.numberBathrooms}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + business.elevator}}">{{business.elevator}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + business.ac}}">{{business.ac}}</td>

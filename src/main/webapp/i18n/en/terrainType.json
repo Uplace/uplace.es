@@ -4,7 +4,8 @@
             "null": "",
             "RESIDENTIAL": "RESIDENTIAL",
             "URBAN": "URBAN",
-            "RUSTIC": "RUSTIC"
+            "RUSTIC": "RUSTIC",
+            "INDUSTRIAL": "INDUSTRIAL"
         }
     }
 }

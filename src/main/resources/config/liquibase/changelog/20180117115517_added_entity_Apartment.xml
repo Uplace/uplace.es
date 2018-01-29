@@ -30,6 +30,18 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="m_2_edified" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="m_2_usable" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="height" type="integer">
+                <constraints nullable="true" />
+            </column>
+
             <column name="elevator" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -42,6 +54,18 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="parking" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="terrace" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="balcony" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="surface_terrace" type="integer">
                 <constraints nullable="true" />
             </column>
@@ -50,7 +74,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="property_type" type="varchar(255)">
+            <column name="up_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -71,6 +95,18 @@
             </column>
 
             <column name="near_transport" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="reformed" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="energy_certificate" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="certificate_habitability" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

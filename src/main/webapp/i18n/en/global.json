@@ -19,6 +19,10 @@
                 "photo": "Photo",
                 "business": "Business",
                 "notification": "Notification",
+                "building": "Building",
+                "hotel": "Hotel",
+                "industrialPlant": "Industrial Plant",
+                "establishment": "Establishment",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

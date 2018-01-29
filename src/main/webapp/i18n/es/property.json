@@ -20,6 +20,7 @@
             "created": "Created",
             "updated": "Updated",
             "description": "Description",
+            "transaction": "Transaction",
             "reference": "Reference",
             "priceSell": "Price Sell",
             "priceRent": "Price Rent",

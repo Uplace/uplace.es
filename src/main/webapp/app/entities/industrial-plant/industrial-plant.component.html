@@ -1,0 +1,70 @@
+<div>
+    <h2>
+        <span jhiTranslate="uplaceApp.industrialPlant.home.title">Industrial Plants</span>
+        <button class="btn btn-primary float-right jh-create-entity create-industrial-plant" [routerLink]="['/', { outlets: { popup: ['industrial-plant-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="uplaceApp.industrialPlant.home.createLabel">
+            Create new Industrial Plant
+            </span>
+        </button>
+    </h2>
+    <up-alert></up-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="industrialPlants">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="uplaceApp.industrialPlant.solarSurface">Solar Surface</span></th>
+            <th><span jhiTranslate="uplaceApp.industrialPlant.numberRooms">Number Rooms</span></th>
+            <th><span jhiTranslate="uplaceApp.industrialPlant.m2Offices">M 2 Offices</span></th>
+            <th><span jhiTranslate="uplaceApp.industrialPlant.m2Storage">M 2 Storage</span></th>
+            <th><span jhiTranslate="uplaceApp.industrialPlant.heightFree">Height Free</span></th>
+            <th><span jhiTranslate="uplaceApp.industrialPlant.numberDocks">Number Docks</span></th>
+            <th><span jhiTranslate="uplaceApp.industrialPlant.energyCertificate">Energy Certificate</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let industrialPlant of industrialPlants ;trackBy: trackId">
+                <td><a [routerLink]="['../industrial-plant', industrialPlant.id ]">{{industrialPlant.id}}</a></td>
+                <td>{{industrialPlant.solarSurface}}</td>
+                <td>{{industrialPlant.numberRooms}}</td>
+                <td>{{industrialPlant.m2Offices}}</td>
+                <td>{{industrialPlant.m2Storage}}</td>
+                <td>{{industrialPlant.heightFree}}</td>
+                <td>{{industrialPlant.numberDocks}}</td>
+                <td jhiTranslate="{{'uplaceApp.EnergyCertificate.' + industrialPlant.energyCertificate}}">{{industrialPlant.energyCertificate}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../industrial-plant', industrialPlant.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'industrial-plant/'+ industrialPlant.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'industrial-plant/'+ industrialPlant.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
