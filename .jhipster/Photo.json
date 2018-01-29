@@ -24,17 +24,14 @@
         },
         {
             "fieldName": "thumbnail",
-            "fieldType": "Boolean",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20180117115525",
-    "dto": "no",
-    "service": "no",
+    "javadoc": "PHOTO",
     "entityTableName": "photo",
-    "jpaMetamodelFiltering": false,
+    "dto": "no",
     "pagination": "no",
-    "javadoc": "PHOTO"
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

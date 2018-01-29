@@ -16,25 +16,30 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><span jhiTranslate="global.field.id">ID</span></th>
-                <th><span>Title</span></th>
-                <th><span>Created</span></th>
-                <th><span>Price</span></th>
-                <th><span>Surface</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.numberBedrooms">Number Bedrooms</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.numberBathrooms">Number Bathrooms</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.elevator">Elevator</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.ac">Ac</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.heat">Heat</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.surfaceTerrace">Surface Terrace</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.surfaceSaloon">Surface Saloon</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.propertyType">Property Type</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.office">Office</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.kitchenOffice">Kitchen Office</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.storage">Storage</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.sharedPool">Shared Pool</span></th>
-                <th><span jhiTranslate="uplaceApp.apartment.nearTransport">Near Transport</span></th>
-                <th></th>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.numberBedrooms">Number Bedrooms</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.numberBathrooms">Number Bathrooms</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.m2Edified">M 2 Edified</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.m2Usable">M 2 Usable</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.height">Height</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.elevator">Elevator</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.ac">Ac</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.heat">Heat</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.parking">Parking</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.terrace">Terrace</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.balcony">Balcony</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.surfaceTerrace">Surface Terrace</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.surfaceSaloon">Surface Saloon</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.type">Type</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.office">Office</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.kitchenOffice">Kitchen Office</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.storage">Storage</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.sharedPool">Shared Pool</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.nearTransport">Near Transport</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.reformed">Reformed</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.energyCertificate">Energy Certificate</span></th>
+            <th><span jhiTranslate="uplaceApp.apartment.certificateHabitability">Certificate Habitability</span></th>
+            <th></th>
             </tr>
             </thead>
             <tbody>
@@ -42,17 +47,26 @@
                 <td><a [routerLink]="['../apartment', apartment.id ]">{{apartment.id}}</a></td>
                 <td>{{apartment.numberBedrooms}}</td>
                 <td>{{apartment.numberBathrooms}}</td>
+                <td>{{apartment.m2Edified}}</td>
+                <td>{{apartment.m2Usable}}</td>
+                <td>{{apartment.height}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.elevator}}">{{apartment.elevator}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.ac}}">{{apartment.ac}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.heat}}">{{apartment.heat}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + apartment.parking}}">{{apartment.parking}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + apartment.terrace}}">{{apartment.terrace}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + apartment.balcony}}">{{apartment.balcony}}</td>
                 <td>{{apartment.surfaceTerrace}}</td>
                 <td>{{apartment.surfaceSaloon}}</td>
-                <td jhiTranslate="{{'uplaceApp.ApartmentType.' + apartment.propertyType}}">{{apartment.propertyType}}</td>
+                <td jhiTranslate="{{'uplaceApp.ApartmentType.' + apartment.type}}">{{apartment.type}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.office}}">{{apartment.office}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.kitchenOffice}}">{{apartment.kitchenOffice}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.storage}}">{{apartment.storage}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.sharedPool}}">{{apartment.sharedPool}}</td>
                 <td jhiTranslate="{{'uplaceApp.Select.' + apartment.nearTransport}}">{{apartment.nearTransport}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + apartment.reformed}}">{{apartment.reformed}}</td>
+                <td jhiTranslate="{{'uplaceApp.EnergyCertificate.' + apartment.energyCertificate}}">{{apartment.energyCertificate}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + apartment.certificateHabitability}}">{{apartment.certificateHabitability}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

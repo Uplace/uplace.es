@@ -1,12 +1,10 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -39,12 +37,10 @@ public class Photo implements Serializable {
     @Column(name = "photo_content_type")
     private String photoContentType;
 
-    @NotNull
-    @Column(name = "thumbnail", nullable = false)
+    @Column(name = "thumbnail")
     private Boolean thumbnail;
 
     @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Property property;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

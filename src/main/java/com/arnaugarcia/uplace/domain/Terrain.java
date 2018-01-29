@@ -1,6 +1,5 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.TerrainType;
 
 import javax.persistence.*;
@@ -20,13 +19,27 @@ public class Terrain extends Property implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "terrain_type")
-    private TerrainType terrainType;
+    @Column(name = "m_2_buildable")
+    private Integer m2Buildable;
+
+    @Column(name = "buildable")
+    private Boolean buildable;
+
+    @Column(name = "buildable_depth")
+    private Integer buildableDepth;
+
+    @Column(name = "floors_sr")
+    private Integer floorsSR;
+
+    @Column(name = "floors_br")
+    private Integer floorsBR;
+
+    @Column(name = "construction_coefficient")
+    private Double constructionCoefficient;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "near_transport")
-    private Select nearTransport;
+    @Column(name = "up_type")
+    private TerrainType type;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -37,30 +50,95 @@ public class Terrain extends Property implements Serializable {
         this.id = id;
     }
 
-    public TerrainType getTerrainType() {
-        return terrainType;
+    public Integer getm2Buildable() {
+        return m2Buildable;
     }
 
-    public Terrain terrainType(TerrainType terrainType) {
-        this.terrainType = terrainType;
+    public Terrain m2Buildable(Integer m2Buildable) {
+        this.m2Buildable = m2Buildable;
         return this;
     }
 
-    public void setTerrainType(TerrainType terrainType) {
-        this.terrainType = terrainType;
+    public void setm2Buildable(Integer m2Buildable) {
+        this.m2Buildable = m2Buildable;
     }
 
-    public Select getNearTransport() {
-        return nearTransport;
+    public Boolean isBuildable() {
+        return buildable;
     }
 
-    public Terrain nearTransport(Select nearTransport) {
-        this.nearTransport = nearTransport;
+    public Terrain buildable(Boolean buildable) {
+        this.buildable = buildable;
         return this;
     }
 
-    public void setNearTransport(Select nearTransport) {
-        this.nearTransport = nearTransport;
+    public void setBuildable(Boolean buildable) {
+        this.buildable = buildable;
+    }
+
+    public Integer getBuildableDepth() {
+        return buildableDepth;
+    }
+
+    public Terrain buildableDepth(Integer buildableDepth) {
+        this.buildableDepth = buildableDepth;
+        return this;
+    }
+
+    public void setBuildableDepth(Integer buildableDepth) {
+        this.buildableDepth = buildableDepth;
+    }
+
+    public Integer getFloorsSR() {
+        return floorsSR;
+    }
+
+    public Terrain floorsSR(Integer floorsSR) {
+        this.floorsSR = floorsSR;
+        return this;
+    }
+
+    public void setFloorsSR(Integer floorsSR) {
+        this.floorsSR = floorsSR;
+    }
+
+    public Integer getFloorsBR() {
+        return floorsBR;
+    }
+
+    public Terrain floorsBR(Integer floorsBR) {
+        this.floorsBR = floorsBR;
+        return this;
+    }
+
+    public void setFloorsBR(Integer floorsBR) {
+        this.floorsBR = floorsBR;
+    }
+
+    public Double getConstructionCoefficient() {
+        return constructionCoefficient;
+    }
+
+    public Terrain constructionCoefficient(Double constructionCoefficient) {
+        this.constructionCoefficient = constructionCoefficient;
+        return this;
+    }
+
+    public void setConstructionCoefficient(Double constructionCoefficient) {
+        this.constructionCoefficient = constructionCoefficient;
+    }
+
+    public TerrainType getType() {
+        return type;
+    }
+
+    public Terrain type(TerrainType type) {
+        this.type = type;
+        return this;
+    }
+
+    public void setType(TerrainType type) {
+        this.type = type;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -88,8 +166,13 @@ public class Terrain extends Property implements Serializable {
     public String toString() {
         return "Terrain{" +
             "id=" + getId() +
-            ", terrainType='" + getTerrainType() + "'" +
-            ", nearTransport='" + getNearTransport() + "'" +
+            ", m2Buildable=" + getm2Buildable() +
+            ", buildable='" + isBuildable() + "'" +
+            ", buildableDepth=" + getBuildableDepth() +
+            ", floorsSR=" + getFloorsSR() +
+            ", floorsBR=" + getFloorsBR() +
+            ", constructionCoefficient=" + getConstructionCoefficient() +
+            ", type='" + getType() + "'" +
             "}";
     }
 }

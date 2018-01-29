@@ -35,7 +35,6 @@ export class ApartmentDialogComponent implements OnInit {
     }
 
     save() {
-        console.log(this.apartment);
         this.isSaving = true;
         if (this.apartment.id !== undefined) {
             this.subscribeToSaveResponse(

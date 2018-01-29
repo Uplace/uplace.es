@@ -16,7 +16,7 @@
                 "title": "Location"
             },
             "latitude": "Latitude",
-            "cp": "Cp",
+            "postalCode": "Postal Code",
             "longitude": "Longitude",
             "urlGmaps": "Url Gmaps"
         }

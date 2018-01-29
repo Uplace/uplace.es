@@ -23,7 +23,8 @@
             "storageSurface": "Storage Surface",
             "officesSurface": "Offices Surface",
             "ac": "Ac",
-            "heat": "Heat"
+            "heat": "Heat",
+            "energyCertificate": "Energy Certificate"
         }
     }
 }

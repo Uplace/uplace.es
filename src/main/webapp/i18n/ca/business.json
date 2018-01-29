@@ -15,7 +15,7 @@
             "detail": {
                 "title": "Business"
             },
-            "businessType": "Business Type",
+            "type": "Type",
             "numberBathrooms": "Number Bathrooms",
             "elevator": "Elevator",
             "ac": "Ac",

@@ -1,20 +1,18 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mysql.jdbc.Constants;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Property.
@@ -24,7 +22,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn()
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public abstract class Property implements Serializable {
+public class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,6 +49,10 @@ public abstract class Property implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "up_transaction")
+    private TransactionType transaction;
+
     @Column(name = "reference")
     private String reference;
 
@@ -74,8 +76,8 @@ public abstract class Property implements Serializable {
     private Integer surface;
 
     @OneToMany(mappedBy = "property")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JsonIgnore
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany
@@ -157,6 +159,19 @@ public abstract class Property implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public TransactionType getTransaction() {
+        return transaction;
+    }
+
+    public Property transaction(TransactionType transaction) {
+        this.transaction = transaction;
+        return this;
+    }
+
+    public void setTransaction(TransactionType transaction) {
+        this.transaction = transaction;
     }
 
     public String getReference() {
@@ -330,6 +345,7 @@ public abstract class Property implements Serializable {
             ", created='" + getCreated() + "'" +
             ", updated='" + getUpdated() + "'" +
             ", description='" + getDescription() + "'" +
+            ", transaction='" + getTransaction() + "'" +
             ", reference='" + getReference() + "'" +
             ", priceSell=" + getPriceSell() +
             ", priceRent=" + getPriceRent() +

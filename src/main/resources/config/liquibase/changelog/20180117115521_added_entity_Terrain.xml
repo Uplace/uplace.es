@@ -22,11 +22,31 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="terrain_type" type="varchar(255)">
+            <column name="m_2_buildable" type="integer">
                 <constraints nullable="true" />
             </column>
 
-            <column name="near_transport" type="varchar(255)">
+            <column name="buildable" type="bit">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="buildable_depth" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="floors_sr" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="floors_br" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="construction_coefficient" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="up_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

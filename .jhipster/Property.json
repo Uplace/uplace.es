@@ -48,6 +48,11 @@
             "fieldTypeBlobContent": "text"
         },
         {
+            "fieldName": "transaction",
+            "fieldType": "TransactionType",
+            "fieldValues": "RENT,BUY,TRANSFER,RENT_BUY"
+        },
+        {
             "fieldName": "reference",
             "fieldType": "String"
         },
@@ -84,6 +89,6 @@
     "entityTableName": "property",
     "dto": "no",
     "pagination": "no",
-    "service": "serviceClass",
-    "jpaMetamodelFiltering": true
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

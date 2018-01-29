@@ -11,6 +11,7 @@ import java.util.Objects;
  * A Parking.
  */
 @Entity
+@DiscriminatorValue("Parking")
 public class Parking extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;

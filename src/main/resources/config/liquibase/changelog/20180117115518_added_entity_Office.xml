@@ -30,7 +30,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="terrace" type="integer">
+            <column name="terrace" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -55,6 +55,10 @@
             </column>
 
             <column name="heat" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="energy_certificate" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

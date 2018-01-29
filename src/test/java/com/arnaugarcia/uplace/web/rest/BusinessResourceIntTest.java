@@ -125,7 +125,7 @@ public class BusinessResourceIntTest {
      */
     public static Business createEntity(EntityManager em) {
         Business business = (Business) new Business()
-            .businessType(DEFAULT_BUSINESS_TYPE)
+            .type(DEFAULT_BUSINESS_TYPE)
             .numberBathrooms(DEFAULT_NUMBER_BATHROOMS)
             .elevator(DEFAULT_ELEVATOR)
             .ac(DEFAULT_AC)
@@ -162,7 +162,7 @@ public class BusinessResourceIntTest {
         List<Business> businessList = businessRepository.findAll();
         assertThat(businessList).hasSize(databaseSizeBeforeCreate + 1);
         Business testBusiness = businessList.get(businessList.size() - 1);
-        assertThat(testBusiness.getBusinessType()).isEqualTo(DEFAULT_BUSINESS_TYPE);
+        assertThat(testBusiness.getType()).isEqualTo(DEFAULT_BUSINESS_TYPE);
         assertThat(testBusiness.getNumberBathrooms()).isEqualTo(DEFAULT_NUMBER_BATHROOMS);
         assertThat(testBusiness.getElevator()).isEqualTo(DEFAULT_ELEVATOR);
         assertThat(testBusiness.getAc()).isEqualTo(DEFAULT_AC);
@@ -205,7 +205,7 @@ public class BusinessResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(business.getId().intValue())))
-            .andExpect(jsonPath("$.[*].businessType").value(hasItem(DEFAULT_BUSINESS_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_BUSINESS_TYPE.toString())))
             .andExpect(jsonPath("$.[*].numberBathrooms").value(hasItem(DEFAULT_NUMBER_BATHROOMS)))
             .andExpect(jsonPath("$.[*].elevator").value(hasItem(DEFAULT_ELEVATOR.toString())))
             .andExpect(jsonPath("$.[*].ac").value(hasItem(DEFAULT_AC.toString())))
@@ -229,7 +229,7 @@ public class BusinessResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(business.getId().intValue()))
-            .andExpect(jsonPath("$.businessType").value(DEFAULT_BUSINESS_TYPE.toString()))
+            .andExpect(jsonPath("$.type").value(DEFAULT_BUSINESS_TYPE.toString()))
             .andExpect(jsonPath("$.numberBathrooms").value(DEFAULT_NUMBER_BATHROOMS))
             .andExpect(jsonPath("$.elevator").value(DEFAULT_ELEVATOR.toString()))
             .andExpect(jsonPath("$.ac").value(DEFAULT_AC.toString()))
@@ -263,7 +263,7 @@ public class BusinessResourceIntTest {
         // Disconnect from session so that the updates on updatedBusiness are not directly saved in db
         em.detach(updatedBusiness);
         updatedBusiness
-            .businessType(UPDATED_BUSINESS_TYPE)
+            .type(UPDATED_BUSINESS_TYPE)
             .numberBathrooms(UPDATED_NUMBER_BATHROOMS)
             .elevator(UPDATED_ELEVATOR)
             .ac(UPDATED_AC)
@@ -284,7 +284,7 @@ public class BusinessResourceIntTest {
         List<Business> businessList = businessRepository.findAll();
         assertThat(businessList).hasSize(databaseSizeBeforeUpdate);
         Business testBusiness = businessList.get(businessList.size() - 1);
-        assertThat(testBusiness.getBusinessType()).isEqualTo(UPDATED_BUSINESS_TYPE);
+        assertThat(testBusiness.getType()).isEqualTo(UPDATED_BUSINESS_TYPE);
         assertThat(testBusiness.getNumberBathrooms()).isEqualTo(UPDATED_NUMBER_BATHROOMS);
         assertThat(testBusiness.getElevator()).isEqualTo(UPDATED_ELEVATOR);
         assertThat(testBusiness.getAc()).isEqualTo(UPDATED_AC);

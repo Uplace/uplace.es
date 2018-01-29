@@ -17,16 +17,26 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="uplaceApp.terrain.terrainType">Terrain Type</span></th>
-            <th><span jhiTranslate="uplaceApp.terrain.nearTransport">Near Transport</span></th>
+            <th><span jhiTranslate="uplaceApp.terrain.m2Buildable">M 2 Buildable</span></th>
+            <th><span jhiTranslate="uplaceApp.terrain.buildable">Buildable</span></th>
+            <th><span jhiTranslate="uplaceApp.terrain.buildableDepth">Buildable Depth</span></th>
+            <th><span jhiTranslate="uplaceApp.terrain.floorsSR">Floors SR</span></th>
+            <th><span jhiTranslate="uplaceApp.terrain.floorsBR">Floors BR</span></th>
+            <th><span jhiTranslate="uplaceApp.terrain.constructionCoefficient">Construction Coefficient</span></th>
+            <th><span jhiTranslate="uplaceApp.terrain.type">Type</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let terrain of terrains ;trackBy: trackId">
                 <td><a [routerLink]="['../terrain', terrain.id ]">{{terrain.id}}</a></td>
-                <td jhiTranslate="{{'uplaceApp.TerrainType.' + terrain.terrainType}}">{{terrain.terrainType}}</td>
-                <td jhiTranslate="{{'uplaceApp.Select.' + terrain.nearTransport}}">{{terrain.nearTransport}}</td>
+                <td>{{terrain.m2Buildable}}</td>
+                <td>{{terrain.buildable}}</td>
+                <td>{{terrain.buildableDepth}}</td>
+                <td>{{terrain.floorsSR}}</td>
+                <td>{{terrain.floorsBR}}</td>
+                <td>{{terrain.constructionCoefficient}}</td>
+                <td jhiTranslate="{{'uplaceApp.TerrainType.' + terrain.type}}">{{terrain.type}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

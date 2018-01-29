@@ -2,7 +2,6 @@ package com.arnaugarcia.uplace.service.dto;
 
 import java.io.Serializable;
 import com.arnaugarcia.uplace.domain.enumeration.TerrainType;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
@@ -31,20 +30,24 @@ public class TerrainCriteria implements Serializable {
     public static class TerrainTypeFilter extends Filter<TerrainType> {
     }
 
-    /**
-     * Class for filtering Select
-     */
-    public static class SelectFilter extends Filter<Select> {
-    }
-
     private static final long serialVersionUID = 1L;
 
 
     private LongFilter id;
 
-    private TerrainTypeFilter terrainType;
+    private IntegerFilter m2Buildable;
 
-    private SelectFilter nearTransport;
+    private BooleanFilter buildable;
+
+    private IntegerFilter buildableDepth;
+
+    private IntegerFilter floorsSR;
+
+    private IntegerFilter floorsBR;
+
+    private DoubleFilter constructionCoefficient;
+
+    private TerrainTypeFilter type;
 
     public TerrainCriteria() {
     }
@@ -57,28 +60,73 @@ public class TerrainCriteria implements Serializable {
         this.id = id;
     }
 
-    public TerrainTypeFilter getTerrainType() {
-        return terrainType;
+    public IntegerFilter getm2Buildable() {
+        return m2Buildable;
     }
 
-    public void setTerrainType(TerrainTypeFilter terrainType) {
-        this.terrainType = terrainType;
+    public void setm2Buildable(IntegerFilter m2Buildable) {
+        this.m2Buildable = m2Buildable;
     }
 
-    public SelectFilter getNearTransport() {
-        return nearTransport;
+    public BooleanFilter getBuildable() {
+        return buildable;
     }
 
-    public void setNearTransport(SelectFilter nearTransport) {
-        this.nearTransport = nearTransport;
+    public void setBuildable(BooleanFilter buildable) {
+        this.buildable = buildable;
+    }
+
+    public IntegerFilter getBuildableDepth() {
+        return buildableDepth;
+    }
+
+    public void setBuildableDepth(IntegerFilter buildableDepth) {
+        this.buildableDepth = buildableDepth;
+    }
+
+    public IntegerFilter getFloorsSR() {
+        return floorsSR;
+    }
+
+    public void setFloorsSR(IntegerFilter floorsSR) {
+        this.floorsSR = floorsSR;
+    }
+
+    public IntegerFilter getFloorsBR() {
+        return floorsBR;
+    }
+
+    public void setFloorsBR(IntegerFilter floorsBR) {
+        this.floorsBR = floorsBR;
+    }
+
+    public DoubleFilter getConstructionCoefficient() {
+        return constructionCoefficient;
+    }
+
+    public void setConstructionCoefficient(DoubleFilter constructionCoefficient) {
+        this.constructionCoefficient = constructionCoefficient;
+    }
+
+    public TerrainTypeFilter getType() {
+        return type;
+    }
+
+    public void setType(TerrainTypeFilter type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "TerrainCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
-                (terrainType != null ? "terrainType=" + terrainType + ", " : "") +
-                (nearTransport != null ? "nearTransport=" + nearTransport + ", " : "") +
+                (m2Buildable != null ? "m2Buildable=" + m2Buildable + ", " : "") +
+                (buildable != null ? "buildable=" + buildable + ", " : "") +
+                (buildableDepth != null ? "buildableDepth=" + buildableDepth + ", " : "") +
+                (floorsSR != null ? "floorsSR=" + floorsSR + ", " : "") +
+                (floorsBR != null ? "floorsBR=" + floorsBR + ", " : "") +
+                (constructionCoefficient != null ? "constructionCoefficient=" + constructionCoefficient + ", " : "") +
+                (type != null ? "type=" + type + ", " : "") +
             "}";
     }
 

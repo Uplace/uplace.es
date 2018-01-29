@@ -1,0 +1,30 @@
+{
+    "uplaceApp": {
+        "hotel" : {
+            "home": {
+                "title": "Hotels",
+                "createLabel": "Crear nuevo Hotel",
+                "createOrEditLabel": "Crear o editar Hotel"
+            },
+            "created": "Un nuevo Hotel ha sido creado con el identificador {{ param }}",
+            "updated": "Un Hotel ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Hotel ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Hotel {{ id }}?"
+            },
+            "detail": {
+                "title": "Hotel"
+            },
+            "solarSurface": "Solar Surface",
+            "m2Edified": "M 2 Edified",
+            "numberRooms": "Number Rooms",
+            "operator": "Operator",
+            "pool": "Pool",
+            "spa": "Spa",
+            "conferenceRoom": "Conference Room",
+            "floorsSR": "Floors SR",
+            "floorsBR": "Floors BR",
+            "energyCertificate": "Energy Certificate"
+        }
+    }
+}

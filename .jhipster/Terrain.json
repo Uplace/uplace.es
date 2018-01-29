@@ -3,14 +3,33 @@
     "relationships": [],
     "fields": [
         {
-            "fieldName": "terrainType",
-            "fieldType": "TerrainType",
-            "fieldValues": "RESIDENTIAL,URBAN,RUSTIC"
+            "fieldName": "m2Buildable",
+            "fieldType": "Integer"
         },
         {
-            "fieldName": "nearTransport",
-            "fieldType": "Select",
-            "fieldValues": "YES,NO,UNDEFINED"
+            "fieldName": "buildable",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "buildableDepth",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "floorsSR",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "floorsBR",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "constructionCoefficient",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "TerrainType",
+            "fieldValues": "RESIDENTIAL,URBAN,RUSTIC,INDUSTRIAL"
         }
     ],
     "changelogDate": "20180117115521",

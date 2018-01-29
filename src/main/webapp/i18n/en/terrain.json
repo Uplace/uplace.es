@@ -15,8 +15,13 @@
             "detail": {
                 "title": "Terrain"
             },
-            "terrainType": "Terrain Type",
-            "nearTransport": "Near Transport"
+            "m2Buildable": "M 2 Buildable",
+            "buildable": "Buildable",
+            "buildableDepth": "Buildable Depth",
+            "floorsSR": "Floors SR",
+            "floorsBR": "Floors BR",
+            "constructionCoefficient": "Construction Coefficient",
+            "type": "Type"
         }
     }
 }

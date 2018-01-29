@@ -17,6 +17,10 @@
     <include file="config/liquibase/changelog/20180117115525_added_entity_Photo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180119132313_added_entity_Business.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180123092114_added_entity_Notification.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180129130240_added_entity_Building.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180129130241_added_entity_Hotel.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180129130242_added_entity_IndustrialPlant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180129130243_added_entity_Establishment.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180117115516_added_entity_constraints_Property.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180117115519_added_entity_constraints_Agent.xml" relativeToChangelogFile="false"/>
@@ -28,5 +32,5 @@
     <include file="config/liquibase/changelog/20180119163000_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180119163602_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180119170413_changelog.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180126102804_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180129133224_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

@@ -4,13 +4,33 @@
     <hr>
     <up-alert-error></up-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="uplaceApp.terrain.terrainType">Terrain Type</span></dt>
+        <dt><span jhiTranslate="uplaceApp.terrain.m2Buildable">M 2 Buildable</span></dt>
         <dd>
-            <span jhiTranslate="{{'uplaceApp.TerrainType.' + terrain.terrainType}}">{{terrain.terrainType}}</span>
+            <span>{{terrain.m2Buildable}}</span>
         </dd>
-        <dt><span jhiTranslate="uplaceApp.terrain.nearTransport">Near Transport</span></dt>
+        <dt><span jhiTranslate="uplaceApp.terrain.buildable">Buildable</span></dt>
         <dd>
-            <span jhiTranslate="{{'uplaceApp.Select.' + terrain.nearTransport}}">{{terrain.nearTransport}}</span>
+            <span>{{terrain.buildable}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.terrain.buildableDepth">Buildable Depth</span></dt>
+        <dd>
+            <span>{{terrain.buildableDepth}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.terrain.floorsSR">Floors SR</span></dt>
+        <dd>
+            <span>{{terrain.floorsSR}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.terrain.floorsBR">Floors BR</span></dt>
+        <dd>
+            <span>{{terrain.floorsBR}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.terrain.constructionCoefficient">Construction Coefficient</span></dt>
+        <dd>
+            <span>{{terrain.constructionCoefficient}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.terrain.type">Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.TerrainType.' + terrain.type}}">{{terrain.type}}</span>
         </dd>
     </dl>
 

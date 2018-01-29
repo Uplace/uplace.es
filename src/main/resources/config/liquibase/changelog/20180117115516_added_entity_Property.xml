@@ -42,6 +42,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="up_transaction" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="reference" type="varchar(255)">
                 <constraints nullable="true" />
             </column>

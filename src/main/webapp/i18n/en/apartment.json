@@ -17,17 +17,26 @@
             },
             "numberBedrooms": "Number Bedrooms",
             "numberBathrooms": "Number Bathrooms",
+            "m2Edified": "M 2 Edified",
+            "m2Usable": "M 2 Usable",
+            "height": "Height",
             "elevator": "Elevator",
             "ac": "Ac",
             "heat": "Heat",
+            "parking": "Parking",
+            "terrace": "Terrace",
+            "balcony": "Balcony",
             "surfaceTerrace": "Surface Terrace",
             "surfaceSaloon": "Surface Saloon",
-            "propertyType": "Property Type",
+            "type": "Type",
             "office": "Office",
             "kitchenOffice": "Kitchen Office",
             "storage": "Storage",
             "sharedPool": "Shared Pool",
-            "nearTransport": "Near Transport"
+            "nearTransport": "Near Transport",
+            "reformed": "Reformed",
+            "energyCertificate": "Energy Certificate",
+            "certificateHabitability": "Certificate Habitability"
         }
     }
 }

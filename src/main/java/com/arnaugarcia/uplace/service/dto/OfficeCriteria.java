@@ -5,6 +5,8 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
+import com.arnaugarcia.uplace.domain.enumeration.Select;
+import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
@@ -33,6 +35,12 @@ public class OfficeCriteria implements Serializable {
     public static class SelectFilter extends Filter<Select> {
     }
 
+    /**
+     * Class for filtering EnergyCertificate
+     */
+    public static class EnergyCertificateFilter extends Filter<EnergyCertificate> {
+    }
+
     private static final long serialVersionUID = 1L;
 
 
@@ -42,7 +50,7 @@ public class OfficeCriteria implements Serializable {
 
     private IntegerFilter floors;
 
-    private IntegerFilter terrace;
+    private SelectFilter terrace;
 
     private SelectFilter office;
 
@@ -55,6 +63,8 @@ public class OfficeCriteria implements Serializable {
     private SelectFilter ac;
 
     private SelectFilter heat;
+
+    private EnergyCertificateFilter energyCertificate;
 
     public OfficeCriteria() {
     }
@@ -83,11 +93,11 @@ public class OfficeCriteria implements Serializable {
         this.floors = floors;
     }
 
-    public IntegerFilter getTerrace() {
+    public SelectFilter getTerrace() {
         return terrace;
     }
 
-    public void setTerrace(IntegerFilter terrace) {
+    public void setTerrace(SelectFilter terrace) {
         this.terrace = terrace;
     }
 
@@ -139,6 +149,14 @@ public class OfficeCriteria implements Serializable {
         this.heat = heat;
     }
 
+    public EnergyCertificateFilter getEnergyCertificate() {
+        return energyCertificate;
+    }
+
+    public void setEnergyCertificate(EnergyCertificateFilter energyCertificate) {
+        this.energyCertificate = energyCertificate;
+    }
+
     @Override
     public String toString() {
         return "OfficeCriteria{" +
@@ -152,6 +170,7 @@ public class OfficeCriteria implements Serializable {
                 (officesSurface != null ? "officesSurface=" + officesSurface + ", " : "") +
                 (ac != null ? "ac=" + ac + ", " : "") +
                 (heat != null ? "heat=" + heat + ", " : "") +
+                (energyCertificate != null ? "energyCertificate=" + energyCertificate + ", " : "") +
             "}";
     }
 

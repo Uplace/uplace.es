@@ -1,11 +1,18 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
+
+import com.arnaugarcia.uplace.domain.enumeration.Select;
+
+import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
+
+import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 
 /**
  * A Apartment.
@@ -26,6 +33,15 @@ public class Apartment extends Property implements Serializable {
     @Column(name = "number_bathrooms")
     private Integer numberBathrooms;
 
+    @Column(name = "m_2_edified")
+    private Integer m2Edified;
+
+    @Column(name = "m_2_usable")
+    private Integer m2Usable;
+
+    @Column(name = "height")
+    private Integer height;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "elevator")
     private Select elevator;
@@ -38,6 +54,18 @@ public class Apartment extends Property implements Serializable {
     @Column(name = "heat")
     private Select heat;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "parking")
+    private Select parking;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "terrace")
+    private Select terrace;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "balcony")
+    private Select balcony;
+
     @Column(name = "surface_terrace")
     private Integer surfaceTerrace;
 
@@ -45,8 +73,8 @@ public class Apartment extends Property implements Serializable {
     private Integer surfaceSaloon;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "property_type")
-    private ApartmentType propertyType;
+    @Column(name = "up_type")
+    private ApartmentType type;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "office")
@@ -67,6 +95,18 @@ public class Apartment extends Property implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "near_transport")
     private Select nearTransport;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reformed")
+    private Select reformed;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "energy_certificate")
+    private EnergyCertificate energyCertificate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "certificate_habitability")
+    private Select certificateHabitability;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -101,6 +141,45 @@ public class Apartment extends Property implements Serializable {
 
     public void setNumberBathrooms(Integer numberBathrooms) {
         this.numberBathrooms = numberBathrooms;
+    }
+
+    public Integer getm2Edified() {
+        return m2Edified;
+    }
+
+    public Apartment m2Edified(Integer m2Edified) {
+        this.m2Edified = m2Edified;
+        return this;
+    }
+
+    public void setm2Edified(Integer m2Edified) {
+        this.m2Edified = m2Edified;
+    }
+
+    public Integer getm2Usable() {
+        return m2Usable;
+    }
+
+    public Apartment m2Usable(Integer m2Usable) {
+        this.m2Usable = m2Usable;
+        return this;
+    }
+
+    public void setm2Usable(Integer m2Usable) {
+        this.m2Usable = m2Usable;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public Apartment height(Integer height) {
+        this.height = height;
+        return this;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
     public Select getElevator() {
@@ -142,6 +221,45 @@ public class Apartment extends Property implements Serializable {
         this.heat = heat;
     }
 
+    public Select getParking() {
+        return parking;
+    }
+
+    public Apartment parking(Select parking) {
+        this.parking = parking;
+        return this;
+    }
+
+    public void setParking(Select parking) {
+        this.parking = parking;
+    }
+
+    public Select getTerrace() {
+        return terrace;
+    }
+
+    public Apartment terrace(Select terrace) {
+        this.terrace = terrace;
+        return this;
+    }
+
+    public void setTerrace(Select terrace) {
+        this.terrace = terrace;
+    }
+
+    public Select getBalcony() {
+        return balcony;
+    }
+
+    public Apartment balcony(Select balcony) {
+        this.balcony = balcony;
+        return this;
+    }
+
+    public void setBalcony(Select balcony) {
+        this.balcony = balcony;
+    }
+
     public Integer getSurfaceTerrace() {
         return surfaceTerrace;
     }
@@ -168,17 +286,17 @@ public class Apartment extends Property implements Serializable {
         this.surfaceSaloon = surfaceSaloon;
     }
 
-    public ApartmentType getPropertyType() {
-        return propertyType;
+    public ApartmentType getType() {
+        return type;
     }
 
-    public Apartment propertyType(ApartmentType propertyType) {
-        this.propertyType = propertyType;
+    public Apartment type(ApartmentType type) {
+        this.type = type;
         return this;
     }
 
-    public void setPropertyType(ApartmentType propertyType) {
-        this.propertyType = propertyType;
+    public void setType(ApartmentType type) {
+        this.type = type;
     }
 
     public Select getOffice() {
@@ -245,6 +363,45 @@ public class Apartment extends Property implements Serializable {
     public void setNearTransport(Select nearTransport) {
         this.nearTransport = nearTransport;
     }
+
+    public Select getReformed() {
+        return reformed;
+    }
+
+    public Apartment reformed(Select reformed) {
+        this.reformed = reformed;
+        return this;
+    }
+
+    public void setReformed(Select reformed) {
+        this.reformed = reformed;
+    }
+
+    public EnergyCertificate getEnergyCertificate() {
+        return energyCertificate;
+    }
+
+    public Apartment energyCertificate(EnergyCertificate energyCertificate) {
+        this.energyCertificate = energyCertificate;
+        return this;
+    }
+
+    public void setEnergyCertificate(EnergyCertificate energyCertificate) {
+        this.energyCertificate = energyCertificate;
+    }
+
+    public Select getCertificateHabitability() {
+        return certificateHabitability;
+    }
+
+    public Apartment certificateHabitability(Select certificateHabitability) {
+        this.certificateHabitability = certificateHabitability;
+        return this;
+    }
+
+    public void setCertificateHabitability(Select certificateHabitability) {
+        this.certificateHabitability = certificateHabitability;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -273,17 +430,26 @@ public class Apartment extends Property implements Serializable {
             "id=" + getId() +
             ", numberBedrooms=" + getNumberBedrooms() +
             ", numberBathrooms=" + getNumberBathrooms() +
+            ", m2Edified=" + getm2Edified() +
+            ", m2Usable=" + getm2Usable() +
+            ", height=" + getHeight() +
             ", elevator='" + getElevator() + "'" +
             ", ac='" + getAc() + "'" +
             ", heat='" + getHeat() + "'" +
+            ", parking='" + getParking() + "'" +
+            ", terrace='" + getTerrace() + "'" +
+            ", balcony='" + getBalcony() + "'" +
             ", surfaceTerrace=" + getSurfaceTerrace() +
             ", surfaceSaloon=" + getSurfaceSaloon() +
-            ", propertyType='" + getPropertyType() + "'" +
+            ", type='" + getType() + "'" +
             ", office='" + getOffice() + "'" +
             ", kitchenOffice='" + getKitchenOffice() + "'" +
             ", storage='" + getStorage() + "'" +
             ", sharedPool='" + getSharedPool() + "'" +
             ", nearTransport='" + getNearTransport() + "'" +
+            ", reformed='" + getReformed() + "'" +
+            ", energyCertificate='" + getEnergyCertificate() + "'" +
+            ", certificateHabitability='" + getCertificateHabitability() + "'" +
             "}";
     }
 }

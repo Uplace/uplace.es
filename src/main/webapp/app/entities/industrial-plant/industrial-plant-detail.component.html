@@ -1,0 +1,50 @@
+
+<div *ngIf="industrialPlant">
+    <h2><span jhiTranslate="uplaceApp.industrialPlant.detail.title">Industrial Plant</span> {{industrialPlant.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.industrialPlant.solarSurface">Solar Surface</span></dt>
+        <dd>
+            <span>{{industrialPlant.solarSurface}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.industrialPlant.numberRooms">Number Rooms</span></dt>
+        <dd>
+            <span>{{industrialPlant.numberRooms}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.industrialPlant.m2Offices">M 2 Offices</span></dt>
+        <dd>
+            <span>{{industrialPlant.m2Offices}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.industrialPlant.m2Storage">M 2 Storage</span></dt>
+        <dd>
+            <span>{{industrialPlant.m2Storage}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.industrialPlant.heightFree">Height Free</span></dt>
+        <dd>
+            <span>{{industrialPlant.heightFree}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.industrialPlant.numberDocks">Number Docks</span></dt>
+        <dd>
+            <span>{{industrialPlant.numberDocks}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.industrialPlant.energyCertificate">Energy Certificate</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.EnergyCertificate.' + industrialPlant.energyCertificate}}">{{industrialPlant.energyCertificate}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'industrial-plant/'+ industrialPlant.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

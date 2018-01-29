@@ -74,12 +74,12 @@ public class FlatResource {
             throw new BadRequestAlertException("A new flat cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        flat.setPropertyType(ApartmentType.FLAT);
+        flat.setType(ApartmentType.FLAT);
 
         //Set the created to now()
         flat.setCreated(ZonedDateTime.now());
 
-        flat.propertyType(ApartmentType.FLAT);
+        flat.type(ApartmentType.FLAT);
         //Generate the random reference
         flat.setReference(RandomUtil.generateReference().toUpperCase());
         Apartment result = apartmentService.save(flat);
@@ -106,7 +106,7 @@ public class FlatResource {
         log.debug("REST request to update Flat : {}", flat);
         if (flat.getId() == null) {
             return createFlat(flat);
-        } else if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
+        } else if (!flat.getType().equals(ApartmentType.FLAT)) {
             throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to update a FLAT", ENTITY_NAME ,"badType");
         }
         // Set updated to now()
@@ -175,7 +175,7 @@ public class FlatResource {
     public Set<Photo> getPhotosOfFlat(@PathVariable String reference) {
         log.debug("REST request to get all flats");
         Apartment flat = this.apartmentService.findFlatByReference(reference);
-        if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
+        if (!flat.getType().equals(ApartmentType.FLAT)) {
             throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
         }
 
@@ -248,7 +248,7 @@ public class FlatResource {
         log.debug("REST request to get all flats");
         Apartment flat = apartmentService.findFlatByReference(reference);
 
-        if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
+        if (!flat.getType().equals(ApartmentType.FLAT)) {
             throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
         }
 

@@ -12,7 +12,8 @@
         },
         {
             "fieldName": "terrace",
-            "fieldType": "Integer"
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
         },
         {
             "fieldName": "office",
@@ -41,6 +42,11 @@
             "fieldName": "heat",
             "fieldType": "Select",
             "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "energyCertificate",
+            "fieldType": "EnergyCertificate",
+            "fieldValues": "A,B,C,D,E,F,G,UNDEFINED"
         }
     ],
     "changelogDate": "20180117115518",

@@ -4,6 +4,7 @@ entity Property {
     created ZonedDateTime required,
     updated ZonedDateTime,
     description TextBlob,
+    transaction TransactionType,
     reference String,
     // PONGO DOS CAMPOS POR QUE PUEDE QUE SE PUEDA VENDER Y ALQUILAR A LA VEZ
     priceSell Double,
@@ -17,7 +18,11 @@ entity Property {
 }
 
 enum TerrainType {
-	RESIDENTIAL, URBAN, RUSTIC
+	RESIDENTIAL, URBAN, RUSTIC, INDUSTRIAL
+}
+
+enum TransactionType {
+	RENT, BUY, TRANSFER, RENT_BUY
 }
 
 enum ApartmentType {
@@ -35,32 +40,43 @@ enum ParkingType {
 enum BusinessType {
 	PUB, HOTEL, OTHERS
 }
+
 entity Apartment {
     numberBedrooms Integer,
     numberBathrooms Integer,
+  	m2Edified Integer,
+    m2Usable Integer,
+    height Integer,
     elevator Select,
     ac Select,
     heat Select,
+    parking Select,
+    terrace Select,
+    balcony Select,
     surfaceTerrace Integer,
     surfaceSaloon Integer,
-	propertyType ApartmentType,
+	type ApartmentType,
     office Select,
     kitchenOffice Select,
     storage Select,
     sharedPool Select,
-    nearTransport Select
+    nearTransport Select,
+    reformed Select,
+    energyCertificate EnergyCertificate,
+    certificateHabitability  Select,
 }
 
 entity Office {
     bathrooms String,
     floors Integer,
-    terrace Integer,
+    terrace Select,
     office Select,
     storage Select,
     storageSurface Integer,
     officesSurface Integer,
   	ac Select,
-    heat Select
+    heat Select,
+    energyCertificate EnergyCertificate
 }
 
 entity Agent {
@@ -77,21 +93,77 @@ entity Parking {
 
 }
 
+entity Building {
+	type BuildingType,
+    solarSurface Integer,
+    m2Edified Integer,
+    floorsSR Integer,
+    floorsBR Integer,
+    energyCertificate EnergyCertificate
+}
+
+enum BuildingType {
+	RESIDENTIAL, HOTEL, INDUSTRIAL
+}
+
+entity Hotel {
+	solarSurface Integer,
+    m2Edified Integer,
+    numberRooms Integer,
+    operator Select,
+    pool Select,
+    spa Select,
+    conferenceRoom Select,
+    floorsSR Integer,
+    floorsBR Integer,
+    energyCertificate EnergyCertificate
+}
+
+entity IndustrialPlant {
+	solarSurface Integer,
+    numberRooms Integer,
+    m2Offices Integer,
+    m2Storage Integer,
+    heightFree Integer,
+    numberDocks Integer,
+    energyCertificate EnergyCertificate
+}
+
+entity Establishment {
+	m2Facade Integer,
+    bathroom Select,
+    use UseEstablishment,
+    energyCertificate EnergyCertificate
+}
+
+enum UseEstablishment {
+	RESTAURANT, PUB, SHOP, OTHER
+}
+
+enum EnergyCertificate {
+	A, B, C, D, E, F, G, UNDEFINED
+}
+
 entity Terrain {
-    terrainType TerrainType
-    nearTransport Select
+    m2Buildable Integer,
+    buildable Boolean,
+    buildableDepth Integer,
+    floorsSR Integer,
+    floorsBR Integer,
+    constructionCoefficient Double,
+    type TerrainType
 }
 
 entity Location {
 	latitude String,
-    cp String,
+    postalCode String,
     longitude String,
     urlGmaps String
 
 }
 
 entity Business {
-    businessType BusinessType,
+    type BusinessType,
     numberBathrooms Integer,
     elevator Select,
     ac Select,
@@ -122,7 +194,8 @@ enum NotificationType{
 entity Photo {
 	name String,
     description String,
-    photo ImageBlob
+    photo ImageBlob,
+    thumbnail Boolean
 }
 
 relationship OneToMany {
@@ -143,3 +216,7 @@ relationship OneToOne {
 }
 
 paginate Notification with pagination
+
+service Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, IndustrialPlant with serviceClass
+
+filter Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, IndustrialPlant
