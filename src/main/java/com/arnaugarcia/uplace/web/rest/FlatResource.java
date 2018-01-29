@@ -5,31 +5,22 @@ import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
-import com.arnaugarcia.uplace.repository.ApartmentRepository;
 import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.service.ApartmentService;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import com.arnaugarcia.uplace.web.rest.impl.PhotoResourceImpl;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.annotations.Authorization;
-import io.undertow.util.BadRequestException;
-import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
@@ -42,7 +33,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api")
-public class FlatResource {
+public class FlatResource implements PhotoResourceImpl {
 
     private final Logger log = LoggerFactory.getLogger(FlatResource.class);
 
@@ -226,7 +217,7 @@ public class FlatResource {
     @PutMapping("/flats/{reference}/photo")
     @Timed
     @Transactional(readOnly = true)
-    public Set<Photo> UpdatePhotoFlat(@PathVariable String reference, @RequestBody Photo photo) {
+    public Set<Photo> updatePhotosFlat(@PathVariable String reference, @RequestBody Photo photo) {
         log.debug("REST request to update Photo of a Flat : {}", reference);
         Apartment apartment = apartmentService.findFlatByReference(reference);
         if (!apartment.getPhotos().contains(photo)) {
