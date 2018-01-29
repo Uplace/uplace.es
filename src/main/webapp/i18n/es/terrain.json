@@ -16,6 +16,7 @@
                 "title": "Terrain"
             },
             "m2Buildable": "M 2 Buildable",
+            "buildable": "Buildable",
             "buildableDepth": "Buildable Depth",
             "floorsSR": "Floors SR",
             "floorsBR": "Floors BR",

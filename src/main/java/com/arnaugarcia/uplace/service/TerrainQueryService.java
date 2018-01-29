@@ -1,8 +1,11 @@
 package com.arnaugarcia.uplace.service;
 
 
-import java.util.List;
-
+import com.arnaugarcia.uplace.domain.Terrain;
+import com.arnaugarcia.uplace.domain.Terrain_;
+import com.arnaugarcia.uplace.repository.TerrainRepository;
+import com.arnaugarcia.uplace.service.dto.TerrainCriteria;
+import io.github.jhipster.service.QueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -11,14 +14,7 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.github.jhipster.service.QueryService;
-
-import com.arnaugarcia.uplace.domain.Terrain;
-import com.arnaugarcia.uplace.domain.*; // for static metamodels
-import com.arnaugarcia.uplace.repository.TerrainRepository;
-import com.arnaugarcia.uplace.service.dto.TerrainCriteria;
-
-import com.arnaugarcia.uplace.domain.enumeration.TerrainType;
+import java.util.List;
 
 /**
  * Service for executing complex queries for Terrain entities in the database.
@@ -75,6 +71,9 @@ public class TerrainQueryService extends QueryService<Terrain> {
             }
             if (criteria.getm2Buildable() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getm2Buildable(), Terrain_.m2Buildable));
+            }
+            if (criteria.getBuildable() != null) {
+                specification = specification.and(buildSpecification(criteria.getBuildable(), Terrain_.buildable));
             }
             if (criteria.getBuildableDepth() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getBuildableDepth(), Terrain_.buildableDepth));

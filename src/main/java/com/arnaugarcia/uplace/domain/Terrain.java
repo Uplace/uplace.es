@@ -1,14 +1,10 @@
 package com.arnaugarcia.uplace.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import com.arnaugarcia.uplace.domain.enumeration.TerrainType;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.arnaugarcia.uplace.domain.enumeration.TerrainType;
 
 /**
  * A Terrain.
@@ -25,6 +21,9 @@ public class Terrain extends Property implements Serializable {
 
     @Column(name = "m_2_buildable")
     private Integer m2Buildable;
+
+    @Column(name = "buildable")
+    private Boolean buildable;
 
     @Column(name = "buildable_depth")
     private Integer buildableDepth;
@@ -62,6 +61,19 @@ public class Terrain extends Property implements Serializable {
 
     public void setm2Buildable(Integer m2Buildable) {
         this.m2Buildable = m2Buildable;
+    }
+
+    public Boolean isBuildable() {
+        return buildable;
+    }
+
+    public Terrain buildable(Boolean buildable) {
+        this.buildable = buildable;
+        return this;
+    }
+
+    public void setBuildable(Boolean buildable) {
+        this.buildable = buildable;
     }
 
     public Integer getBuildableDepth() {
@@ -155,6 +167,7 @@ public class Terrain extends Property implements Serializable {
         return "Terrain{" +
             "id=" + getId() +
             ", m2Buildable=" + getm2Buildable() +
+            ", buildable='" + isBuildable() + "'" +
             ", buildableDepth=" + getBuildableDepth() +
             ", floorsSR=" + getFloorsSR() +
             ", floorsBR=" + getFloorsBR() +

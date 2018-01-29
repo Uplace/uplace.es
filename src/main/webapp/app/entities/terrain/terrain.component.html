@@ -18,6 +18,7 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="uplaceApp.terrain.m2Buildable">M 2 Buildable</span></th>
+            <th><span jhiTranslate="uplaceApp.terrain.buildable">Buildable</span></th>
             <th><span jhiTranslate="uplaceApp.terrain.buildableDepth">Buildable Depth</span></th>
             <th><span jhiTranslate="uplaceApp.terrain.floorsSR">Floors SR</span></th>
             <th><span jhiTranslate="uplaceApp.terrain.floorsBR">Floors BR</span></th>
@@ -30,6 +31,7 @@
             <tr *ngFor="let terrain of terrains ;trackBy: trackId">
                 <td><a [routerLink]="['../terrain', terrain.id ]">{{terrain.id}}</a></td>
                 <td>{{terrain.m2Buildable}}</td>
+                <td>{{terrain.buildable}}</td>
                 <td>{{terrain.buildableDepth}}</td>
                 <td>{{terrain.floorsSR}}</td>
                 <td>{{terrain.floorsBR}}</td>

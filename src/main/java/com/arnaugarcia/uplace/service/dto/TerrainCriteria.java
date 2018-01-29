@@ -37,6 +37,8 @@ public class TerrainCriteria implements Serializable {
 
     private IntegerFilter m2Buildable;
 
+    private BooleanFilter buildable;
+
     private IntegerFilter buildableDepth;
 
     private IntegerFilter floorsSR;
@@ -64,6 +66,14 @@ public class TerrainCriteria implements Serializable {
 
     public void setm2Buildable(IntegerFilter m2Buildable) {
         this.m2Buildable = m2Buildable;
+    }
+
+    public BooleanFilter getBuildable() {
+        return buildable;
+    }
+
+    public void setBuildable(BooleanFilter buildable) {
+        this.buildable = buildable;
     }
 
     public IntegerFilter getBuildableDepth() {
@@ -111,6 +121,7 @@ public class TerrainCriteria implements Serializable {
         return "TerrainCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (m2Buildable != null ? "m2Buildable=" + m2Buildable + ", " : "") +
+                (buildable != null ? "buildable=" + buildable + ", " : "") +
                 (buildableDepth != null ? "buildableDepth=" + buildableDepth + ", " : "") +
                 (floorsSR != null ? "floorsSR=" + floorsSR + ", " : "") +
                 (floorsBR != null ? "floorsBR=" + floorsBR + ", " : "") +

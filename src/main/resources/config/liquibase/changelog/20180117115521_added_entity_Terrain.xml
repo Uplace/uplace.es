@@ -26,6 +26,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="buildable" type="bit">
+                <constraints nullable="true" />
+            </column>
+
             <column name="buildable_depth" type="integer">
                 <constraints nullable="true" />
             </column>

@@ -146,6 +146,7 @@ enum EnergyCertificate {
 
 entity Terrain {
     m2Buildable Integer,
+    buildable Boolean,
     buildableDepth Integer,
     floorsSR Integer,
     floorsBR Integer,

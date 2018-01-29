@@ -18,6 +18,11 @@
                 [(ngModel)]="terrain.m2Buildable" />
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.buildable" for="field_buildable">Buildable</label>
+            <input type="checkbox" class="form-control" name="buildable" id="field_buildable"
+                [(ngModel)]="terrain.buildable" />
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.terrain.buildableDepth" for="field_buildableDepth">Buildable Depth</label>
             <input type="number" class="form-control" name="buildableDepth" id="field_buildableDepth"
                 [(ngModel)]="terrain.buildableDepth" />
