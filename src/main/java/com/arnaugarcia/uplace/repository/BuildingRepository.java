@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.*;
 public interface BuildingRepository extends JpaRepository<Building, Long>, JpaSpecificationExecutor<Building> {
 
     /**
-     * Query to get a building by ID
+     * Query to get a building by reference
      *
      * @param reference of the building to search
      * @return building if found or null if not

@@ -20,11 +20,12 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
     Property findOneWithEagerRelationships(@Param("id") Long id);
 
     /**
-     * Find property by reference
+     * Query to get a building by reference
      *
-     * @param reference the reference to find the property
-     * @return the Property
+     * @param reference of the building to search
+     * @return building if found or null if not
      */
-    Property findByReference(String reference);
+    @Query("SELECT p FROM Property p where p.reference = :reference")
+    Property findByReference(@Param("reference") String reference);
 
 }
