@@ -50,6 +50,9 @@ public class PhotoResourceIntTest {
     private static final String DEFAULT_PHOTO_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_PHOTO_CONTENT_TYPE = "image/png";
 
+    private static final Boolean DEFAULT_THUMBNAIL = false;
+    private static final Boolean UPDATED_THUMBNAIL = true;
+
     @Autowired
     private PhotoRepository photoRepository;
 
@@ -91,7 +94,8 @@ public class PhotoResourceIntTest {
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .photo(DEFAULT_PHOTO)
-            .photoContentType(DEFAULT_PHOTO_CONTENT_TYPE);
+            .photoContentType(DEFAULT_PHOTO_CONTENT_TYPE)
+            .thumbnail(DEFAULT_THUMBNAIL);
         return photo;
     }
 
@@ -119,6 +123,7 @@ public class PhotoResourceIntTest {
         assertThat(testPhoto.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testPhoto.getPhoto()).isEqualTo(DEFAULT_PHOTO);
         assertThat(testPhoto.getPhotoContentType()).isEqualTo(DEFAULT_PHOTO_CONTENT_TYPE);
+        assertThat(testPhoto.isThumbnail()).isEqualTo(DEFAULT_THUMBNAIL);
     }
 
     @Test
@@ -142,6 +147,24 @@ public class PhotoResourceIntTest {
 
     @Test
     @Transactional
+    public void checkThumbnailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = photoRepository.findAll().size();
+        // set the field null
+        photo.setThumbnail(null);
+
+        // Create the Photo, which fails.
+
+        restPhotoMockMvc.perform(post("/api/photos")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(photo)))
+            .andExpect(status().isBadRequest());
+
+        List<Photo> photoList = photoRepository.findAll();
+        assertThat(photoList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPhotos() throws Exception {
         // Initialize the database
         photoRepository.saveAndFlush(photo);
@@ -154,7 +177,8 @@ public class PhotoResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].photoContentType").value(hasItem(DEFAULT_PHOTO_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].photo").value(hasItem(Base64Utils.encodeToString(DEFAULT_PHOTO))));
+            .andExpect(jsonPath("$.[*].photo").value(hasItem(Base64Utils.encodeToString(DEFAULT_PHOTO))))
+            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.booleanValue())));
     }
 
     @Test
@@ -171,7 +195,8 @@ public class PhotoResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.photoContentType").value(DEFAULT_PHOTO_CONTENT_TYPE))
-            .andExpect(jsonPath("$.photo").value(Base64Utils.encodeToString(DEFAULT_PHOTO)));
+            .andExpect(jsonPath("$.photo").value(Base64Utils.encodeToString(DEFAULT_PHOTO)))
+            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL.booleanValue()));
     }
 
     @Test
@@ -197,7 +222,8 @@ public class PhotoResourceIntTest {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .photo(UPDATED_PHOTO)
-            .photoContentType(UPDATED_PHOTO_CONTENT_TYPE);
+            .photoContentType(UPDATED_PHOTO_CONTENT_TYPE)
+            .thumbnail(UPDATED_THUMBNAIL);
 
         restPhotoMockMvc.perform(put("/api/photos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -212,6 +238,7 @@ public class PhotoResourceIntTest {
         assertThat(testPhoto.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testPhoto.getPhoto()).isEqualTo(UPDATED_PHOTO);
         assertThat(testPhoto.getPhotoContentType()).isEqualTo(UPDATED_PHOTO_CONTENT_TYPE);
+        assertThat(testPhoto.isThumbnail()).isEqualTo(UPDATED_THUMBNAIL);
     }
 
     @Test

@@ -40,6 +40,7 @@ public abstract class Property implements Serializable {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @NotNull
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
@@ -74,6 +75,7 @@ public abstract class Property implements Serializable {
 
     @OneToMany(mappedBy = "property")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany
