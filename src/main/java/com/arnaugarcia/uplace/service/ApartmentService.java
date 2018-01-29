@@ -4,6 +4,7 @@ import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
+import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Set;
@@ -29,9 +29,11 @@ public class ApartmentService {
     private static final String ENTITY_FLAT = "FLAT";
 
     private final ApartmentRepository apartmentRepository;
+    private final PropertyRepository propertyRepository;
 
-    public ApartmentService(ApartmentRepository apartmentRepository) {
+    public ApartmentService(ApartmentRepository apartmentRepository, PropertyRepository propertyRepository) {
         this.apartmentRepository = apartmentRepository;
+        this.propertyRepository = propertyRepository;
     }
 
     /**
@@ -150,7 +152,7 @@ public class ApartmentService {
         do {
             reference = RandomUtil.generateReference().toUpperCase();
             log.debug("Generating reference: " + reference);
-        } while (apartmentRepository.findByReference(reference) != null);
+        } while (propertyRepository.findByReference(reference) != null);
         return reference;
     }
 
