@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.repository;
 
+import com.arnaugarcia.uplace.domain.Building;
 import com.arnaugarcia.uplace.domain.Business;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface BusinessRepository extends JpaRepository<Business, Long> {
+public interface BusinessRepository extends JpaRepository<Business, Long>, JpaSpecificationExecutor<Business> {
 
 }

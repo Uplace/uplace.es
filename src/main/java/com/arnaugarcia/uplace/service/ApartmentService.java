@@ -63,7 +63,7 @@ public class ApartmentService {
     @Transactional(readOnly = true)
     public Page<Apartment> findAllFlats(Pageable pageable) {
         log.debug("Request to get all flats");
-        return apartmentRepository.findAllByPropertyType(ApartmentType.FLAT, pageable);
+        return apartmentRepository.findAllByType(ApartmentType.FLAT, pageable);
     }
     /**
      * Get all the flats
@@ -98,7 +98,7 @@ public class ApartmentService {
         Apartment apartment = apartmentRepository.findByReference(reference);;
         if (apartment == null) {
             throw new BadRequestAlertException("Flat not found", ENTITY_FLAT,"badreference");
-        } else if (!apartment.getPropertyType().equals(ApartmentType.FLAT)) {
+        } else if (!apartment.getType().equals(ApartmentType.FLAT)) {
             throw new BadRequestAlertException("The type must be 'FLAT' in order to retrieve a FLAT", ENTITY_FLAT ,"badtype");
         }
         return apartment;

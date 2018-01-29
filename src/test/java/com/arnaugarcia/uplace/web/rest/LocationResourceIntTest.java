@@ -89,7 +89,7 @@ public class LocationResourceIntTest {
     public static Location createEntity(EntityManager em) {
         Location location = new Location()
             .latitude(DEFAULT_LATITUDE)
-            .cp(DEFAULT_CP)
+            .postalCode(DEFAULT_CP)
             .longitude(DEFAULT_LONGITUDE)
             .urlGmaps(DEFAULT_URL_GMAPS);
         return location;
@@ -116,7 +116,7 @@ public class LocationResourceIntTest {
         assertThat(locationList).hasSize(databaseSizeBeforeCreate + 1);
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
-        assertThat(testLocation.getCp()).isEqualTo(DEFAULT_CP);
+        assertThat(testLocation.getPostalCode()).isEqualTo(DEFAULT_CP);
         assertThat(testLocation.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
         assertThat(testLocation.getUrlGmaps()).isEqualTo(DEFAULT_URL_GMAPS);
     }
@@ -195,7 +195,7 @@ public class LocationResourceIntTest {
         em.detach(updatedLocation);
         updatedLocation
             .latitude(UPDATED_LATITUDE)
-            .cp(UPDATED_CP)
+            .postalCode(UPDATED_CP)
             .longitude(UPDATED_LONGITUDE)
             .urlGmaps(UPDATED_URL_GMAPS);
 
@@ -209,7 +209,7 @@ public class LocationResourceIntTest {
         assertThat(locationList).hasSize(databaseSizeBeforeUpdate);
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getLatitude()).isEqualTo(UPDATED_LATITUDE);
-        assertThat(testLocation.getCp()).isEqualTo(UPDATED_CP);
+        assertThat(testLocation.getPostalCode()).isEqualTo(UPDATED_CP);
         assertThat(testLocation.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testLocation.getUrlGmaps()).isEqualTo(UPDATED_URL_GMAPS);
     }

@@ -1,0 +1,152 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="agarcia (generated)" id="1517232749773-1">
+        <addColumn tableName="property">
+            <column name="balcony" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-2">
+        <addColumn tableName="property">
+            <column name="bathroom" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-3">
+        <addColumn tableName="property">
+            <column name="buildable_depth" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-4">
+        <addColumn tableName="property">
+            <column name="certificate_habitability" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-5">
+        <addColumn tableName="property">
+            <column name="conference_room" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-6">
+        <addColumn tableName="property">
+            <column name="construction_coefficient" type="double precision"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-7">
+        <addColumn tableName="property">
+            <column name="energy_certificate" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-8">
+        <addColumn tableName="property">
+            <column name="floors_br" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-9">
+        <addColumn tableName="property">
+            <column name="floors_sr" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-10">
+        <addColumn tableName="property">
+            <column name="height_free" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-11">
+        <addColumn tableName="property">
+            <column name="m_2_buildable" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-12">
+        <addColumn tableName="property">
+            <column name="m_2_edified" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-13">
+        <addColumn tableName="property">
+            <column name="m_2_facade" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-14">
+        <addColumn tableName="property">
+            <column name="m_2_offices" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-15">
+        <addColumn tableName="property">
+            <column name="m_2_storage" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-16">
+        <addColumn tableName="property">
+            <column name="m_2_usable" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-17">
+        <addColumn tableName="property">
+            <column name="number_docks" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-18">
+        <addColumn tableName="property">
+            <column name="number_rooms" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-19">
+        <addColumn tableName="property">
+            <column name="operator" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-20">
+        <addColumn tableName="property">
+            <column name="parking" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-21">
+        <addColumn tableName="property">
+            <column name="reformed" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-22">
+        <addColumn tableName="property">
+            <column name="solar_surface" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-23">
+        <addColumn tableName="property">
+            <column name="spa" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-24">
+        <addColumn tableName="property">
+            <column name="up_type" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-25">
+        <addColumn tableName="property">
+            <column name="up_use" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-26">
+        <dropTable tableName="building"/>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-27">
+        <dropTable tableName="establishment"/>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-28">
+        <dropTable tableName="gallery"/>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-29">
+        <dropTable tableName="hotel"/>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-30">
+        <dropTable tableName="industrial_plant"/>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-31">
+        <dropColumn columnName="business_type" tableName="property"/>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-32">
+        <dropColumn columnName="property_type" tableName="property"/>
+    </changeSet>
+    <changeSet author="agarcia (generated)" id="1517232749773-33">
+        <dropColumn columnName="terrain_type" tableName="property"/>
+    </changeSet>
+</databaseChangeLog>

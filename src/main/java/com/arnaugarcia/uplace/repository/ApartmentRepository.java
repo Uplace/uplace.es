@@ -24,7 +24,7 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Long>, Jpa
     @Query("SELECT p FROM Apartment p where p.reference = :reference")
     Apartment findByReference(@Param("reference") String reference);
 
-    Page<Apartment> findAllByPropertyType(ApartmentType apartmentType, Pageable pageable);
+    Page<Apartment> findAllByType(ApartmentType apartmentType, Pageable pageable);
 
     void deleteByReference(String reference);
 }

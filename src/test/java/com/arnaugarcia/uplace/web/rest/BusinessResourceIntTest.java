@@ -125,7 +125,7 @@ public class BusinessResourceIntTest {
      */
     public static Business createEntity(EntityManager em) {
         Business business = (Business) new Business()
-            .businessType(DEFAULT_BUSINESS_TYPE)
+            .type(DEFAULT_BUSINESS_TYPE)
             .numberBathrooms(DEFAULT_NUMBER_BATHROOMS)
             .elevator(DEFAULT_ELEVATOR)
             .ac(DEFAULT_AC)
@@ -162,7 +162,7 @@ public class BusinessResourceIntTest {
         List<Business> businessList = businessRepository.findAll();
         assertThat(businessList).hasSize(databaseSizeBeforeCreate + 1);
         Business testBusiness = businessList.get(businessList.size() - 1);
-        assertThat(testBusiness.getBusinessType()).isEqualTo(DEFAULT_BUSINESS_TYPE);
+        assertThat(testBusiness.getType()).isEqualTo(DEFAULT_BUSINESS_TYPE);
         assertThat(testBusiness.getNumberBathrooms()).isEqualTo(DEFAULT_NUMBER_BATHROOMS);
         assertThat(testBusiness.getElevator()).isEqualTo(DEFAULT_ELEVATOR);
         assertThat(testBusiness.getAc()).isEqualTo(DEFAULT_AC);
@@ -263,7 +263,7 @@ public class BusinessResourceIntTest {
         // Disconnect from session so that the updates on updatedBusiness are not directly saved in db
         em.detach(updatedBusiness);
         updatedBusiness
-            .businessType(UPDATED_BUSINESS_TYPE)
+            .type(UPDATED_BUSINESS_TYPE)
             .numberBathrooms(UPDATED_NUMBER_BATHROOMS)
             .elevator(UPDATED_ELEVATOR)
             .ac(UPDATED_AC)
@@ -284,7 +284,7 @@ public class BusinessResourceIntTest {
         List<Business> businessList = businessRepository.findAll();
         assertThat(businessList).hasSize(databaseSizeBeforeUpdate);
         Business testBusiness = businessList.get(businessList.size() - 1);
-        assertThat(testBusiness.getBusinessType()).isEqualTo(UPDATED_BUSINESS_TYPE);
+        assertThat(testBusiness.getType()).isEqualTo(UPDATED_BUSINESS_TYPE);
         assertThat(testBusiness.getNumberBathrooms()).isEqualTo(UPDATED_NUMBER_BATHROOMS);
         assertThat(testBusiness.getElevator()).isEqualTo(UPDATED_ELEVATOR);
         assertThat(testBusiness.getAc()).isEqualTo(UPDATED_AC);

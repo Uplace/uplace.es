@@ -147,7 +147,7 @@ public class ApartmentResourceIntTest {
             .heat(DEFAULT_HEAT)
             .surfaceTerrace(DEFAULT_SURFACE_TERRACE)
             .surfaceSaloon(DEFAULT_SURFACE_SALOON)
-            .propertyType(DEFAULT_PROPERTY_TYPE)
+            .type(DEFAULT_PROPERTY_TYPE)
             .office(DEFAULT_OFFICE)
             .kitchenOffice(DEFAULT_KITCHEN_OFFICE)
             .storage(DEFAULT_STORAGE)
@@ -186,7 +186,7 @@ public class ApartmentResourceIntTest {
         assertThat(testApartment.getHeat()).isEqualTo(DEFAULT_HEAT);
         assertThat(testApartment.getSurfaceTerrace()).isEqualTo(DEFAULT_SURFACE_TERRACE);
         assertThat(testApartment.getSurfaceSaloon()).isEqualTo(DEFAULT_SURFACE_SALOON);
-        assertThat(testApartment.getPropertyType()).isEqualTo(DEFAULT_PROPERTY_TYPE);
+        assertThat(testApartment.getType()).isEqualTo(DEFAULT_PROPERTY_TYPE);
         assertThat(testApartment.getOffice()).isEqualTo(DEFAULT_OFFICE);
         assertThat(testApartment.getKitchenOffice()).isEqualTo(DEFAULT_KITCHEN_OFFICE);
         assertThat(testApartment.getStorage()).isEqualTo(DEFAULT_STORAGE);
@@ -942,7 +942,7 @@ public class ApartmentResourceIntTest {
             .heat(UPDATED_HEAT)
             .surfaceTerrace(UPDATED_SURFACE_TERRACE)
             .surfaceSaloon(UPDATED_SURFACE_SALOON)
-            .propertyType(UPDATED_PROPERTY_TYPE)
+            .type(UPDATED_PROPERTY_TYPE)
             .office(UPDATED_OFFICE)
             .kitchenOffice(UPDATED_KITCHEN_OFFICE)
             .storage(UPDATED_STORAGE)
@@ -965,7 +965,7 @@ public class ApartmentResourceIntTest {
         assertThat(testApartment.getHeat()).isEqualTo(UPDATED_HEAT);
         assertThat(testApartment.getSurfaceTerrace()).isEqualTo(UPDATED_SURFACE_TERRACE);
         assertThat(testApartment.getSurfaceSaloon()).isEqualTo(UPDATED_SURFACE_SALOON);
-        assertThat(testApartment.getPropertyType()).isEqualTo(UPDATED_PROPERTY_TYPE);
+        assertThat(testApartment.getType()).isEqualTo(UPDATED_PROPERTY_TYPE);
         assertThat(testApartment.getOffice()).isEqualTo(UPDATED_OFFICE);
         assertThat(testApartment.getKitchenOffice()).isEqualTo(UPDATED_KITCHEN_OFFICE);
         assertThat(testApartment.getStorage()).isEqualTo(UPDATED_STORAGE);

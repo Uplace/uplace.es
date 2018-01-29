@@ -58,8 +58,8 @@ public class OfficeResourceIntTest {
     private static final Integer DEFAULT_FLOORS = 1;
     private static final Integer UPDATED_FLOORS = 2;
 
-    private static final Integer DEFAULT_TERRACE = 1;
-    private static final Integer UPDATED_TERRACE = 2;
+    private static final Select DEFAULT_TERRACE = Select.YES;
+    private static final Select UPDATED_TERRACE = Select.NO;
 
     private static final Select DEFAULT_OFFICE = Select.YES;
     private static final Select UPDATED_OFFICE = Select.NO;

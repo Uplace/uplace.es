@@ -100,8 +100,7 @@ public class TerrainResourceIntTest {
      */
     public static Terrain createEntity(EntityManager em) {
         Terrain terrain = (Terrain) new Terrain()
-            .terrainType(DEFAULT_TERRAIN_TYPE)
-            .nearTransport(DEFAULT_NEAR_TRANSPORT)
+            .type(DEFAULT_TERRAIN_TYPE)
             .created(DEFAULT_CREATED)
             .title(DEFAULT_TITLE)
             .price(DEFAULT_PRICE);
@@ -128,8 +127,7 @@ public class TerrainResourceIntTest {
         List<Terrain> terrainList = terrainRepository.findAll();
         assertThat(terrainList).hasSize(databaseSizeBeforeCreate + 1);
         Terrain testTerrain = terrainList.get(terrainList.size() - 1);
-        assertThat(testTerrain.getTerrainType()).isEqualTo(DEFAULT_TERRAIN_TYPE);
-        assertThat(testTerrain.getNearTransport()).isEqualTo(DEFAULT_NEAR_TRANSPORT);
+        assertThat(testTerrain.getType()).isEqualTo(DEFAULT_TERRAIN_TYPE);
     }
 
     @Test
@@ -303,8 +301,7 @@ public class TerrainResourceIntTest {
         // Disconnect from session so that the updates on updatedTerrain are not directly saved in db
         em.detach(updatedTerrain);
         updatedTerrain
-            .terrainType(UPDATED_TERRAIN_TYPE)
-            .nearTransport(UPDATED_NEAR_TRANSPORT);
+            .type(UPDATED_TERRAIN_TYPE);
 
         restTerrainMockMvc.perform(put("/api/terrains")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -315,8 +312,7 @@ public class TerrainResourceIntTest {
         List<Terrain> terrainList = terrainRepository.findAll();
         assertThat(terrainList).hasSize(databaseSizeBeforeUpdate);
         Terrain testTerrain = terrainList.get(terrainList.size() - 1);
-        assertThat(testTerrain.getTerrainType()).isEqualTo(UPDATED_TERRAIN_TYPE);
-        assertThat(testTerrain.getNearTransport()).isEqualTo(UPDATED_NEAR_TRANSPORT);
+        assertThat(testTerrain.getType()).isEqualTo(UPDATED_TERRAIN_TYPE);
     }
 
     @Test
