@@ -16,9 +16,8 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
  * A Building.
  */
 @Entity
-@Table(name = "building")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Building implements Serializable {
+@DiscriminatorValue("Building")
+public class Building extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

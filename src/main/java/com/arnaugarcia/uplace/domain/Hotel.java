@@ -16,9 +16,8 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
  * A Hotel.
  */
 @Entity
-@Table(name = "hotel")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Hotel implements Serializable {
+@DiscriminatorValue("Hotel")
+public class Hotel extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

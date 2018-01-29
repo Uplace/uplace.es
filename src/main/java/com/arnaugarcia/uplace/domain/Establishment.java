@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.arnaugarcia.uplace.repository.PhotoRepository;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -18,9 +19,8 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
  * A Establishment.
  */
 @Entity
-@Table(name = "establishment")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Establishment implements Serializable {
+@DiscriminatorValue("Establishment")
+public class Establishment extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

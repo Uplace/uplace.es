@@ -14,9 +14,8 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
  * A IndustrialPlant.
  */
 @Entity
-@Table(name = "industrial_plant")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class IndustrialPlant implements Serializable {
+@DiscriminatorValue("IndustrialPlant")
+public class IndustrialPlant extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
