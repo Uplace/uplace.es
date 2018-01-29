@@ -53,6 +53,7 @@ public class BuildingResource {
         if (building.getId() != null) {
             throw new BadRequestAlertException("A new building cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        building.setReference(buildingService.createReference());
         Building result = buildingService.save(building);
         return ResponseEntity.created(new URI("/api/buildings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

@@ -141,9 +141,9 @@ public class ApartmentService {
 
 
     /**
+     * Create unique reference randomly.
      *
-     *
-     * @return
+     * @return reference created
      */
     public String createReference() {
         String reference;
