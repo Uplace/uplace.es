@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
 import org.springframework.transaction.annotation.Propagation;
@@ -146,6 +148,23 @@ public class FlatResource {
     }
 
     /**
+     * GET  /flats : get all flats.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of flats in body
+     */
+    @GetMapping("/flats/{reference}/thumbnail")
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<Photo> getAllFlats(@PathVariable String reference) {
+        log.debug("REST request to get all flats");
+        Photo photo = apartmentService.findThumbnailByReference(reference);
+        if (photo == null) {
+           return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert(ENTITY_NAME, "Found")).body(photo);
+    }
+
+    /**
      * GET  /flats/photos : create and assign all the photos to the Flat
      *
      * @return the ResponseEntity with status 200 (OK) and the list of photos in body
@@ -156,7 +175,6 @@ public class FlatResource {
     public Set<Photo> getPhotosOfFlat(@PathVariable String reference) {
         log.debug("REST request to get all flats");
         Apartment flat = this.apartmentService.findFlatByReference(reference);
-
         if (!flat.getPropertyType().equals(ApartmentType.FLAT)) {
             throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
         }
