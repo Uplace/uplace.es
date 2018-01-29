@@ -4,6 +4,7 @@ import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
+import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +66,7 @@ public class ApartmentService {
         log.debug("Request to get all flats");
         return apartmentRepository.findAllByType(ApartmentType.FLAT, pageable);
     }
+
     /**
      * Get all the flats
      *
@@ -74,7 +76,7 @@ public class ApartmentService {
         log.debug("Request to get all flats");
         Apartment apartment = apartmentRepository.findByReference(reference);
         if (apartment == null) {
-            throw new BadRequestAlertException("FLAT","No Apartment was found with this reference", "badreference");
+            throw new BadRequestAlertException("FLAT", "No Apartment was found with this reference", "badreference");
         }
         Photo thumbnail = null;
         Set<Photo> photos = apartment.getPhotos();
@@ -95,11 +97,12 @@ public class ApartmentService {
     @Transactional(readOnly = true)
     public Apartment findFlatByReference(String reference) {
         log.debug("Request to get all flats");
-        Apartment apartment = apartmentRepository.findByReference(reference);;
+        Apartment apartment = apartmentRepository.findByReference(reference);
+        ;
         if (apartment == null) {
-            throw new BadRequestAlertException("Flat not found", ENTITY_FLAT,"badreference");
+            throw new BadRequestAlertException("Flat not found", ENTITY_FLAT, "badreference");
         } else if (!apartment.getType().equals(ApartmentType.FLAT)) {
-            throw new BadRequestAlertException("The type must be 'FLAT' in order to retrieve a FLAT", ENTITY_FLAT ,"badtype");
+            throw new BadRequestAlertException("The type must be 'FLAT' in order to retrieve a FLAT", ENTITY_FLAT, "badtype");
         }
         return apartment;
     }
@@ -135,4 +138,20 @@ public class ApartmentService {
         log.debug("Request to delete Apartment : {}", reference);
         apartmentRepository.deleteByReference(reference);
     }
+
+
+    /**
+     *
+     *
+     * @return
+     */
+    public String createReference() {
+        String reference;
+        do {
+            reference = RandomUtil.generateReference().toUpperCase();
+            log.debug("Generating reference: " + reference);
+        } while (apartmentRepository.findByReference(reference) != null);
+        return reference;
+    }
+
 }

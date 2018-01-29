@@ -19,4 +19,12 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
     @Query("select property from Property property left join fetch property.managers where property.id =:id")
     Property findOneWithEagerRelationships(@Param("id") Long id);
 
+    /**
+     * Find property by reference
+     *
+     * @param reference the reference to find the property
+     * @return the Property
+     */
+    Property findByReference(String reference);
+
 }
