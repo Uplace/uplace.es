@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -43,6 +44,12 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class BusinessResourceIntTest {
+
+    private static final String DEFAULT_TITLE = "TEST Business";
+
+    private static final Double DEFAULT_PRICE = 0.0;
+
+    private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.now();
 
     private static final BusinessType DEFAULT_BUSINESS_TYPE = BusinessType.PUB;
     private static final BusinessType UPDATED_BUSINESS_TYPE = BusinessType.HOTEL;
@@ -117,7 +124,7 @@ public class BusinessResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Business createEntity(EntityManager em) {
-        Business business = new Business()
+        Business business = (Business) new Business()
             .businessType(DEFAULT_BUSINESS_TYPE)
             .numberBathrooms(DEFAULT_NUMBER_BATHROOMS)
             .elevator(DEFAULT_ELEVATOR)
@@ -128,7 +135,10 @@ public class BusinessResourceIntTest {
             .numberOffice(DEFAULT_NUMBER_OFFICE)
             .surfaceSaloon(DEFAULT_SURFACE_SALOON)
             .height(DEFAULT_HEIGHT)
-            .pool(DEFAULT_POOL);
+            .pool(DEFAULT_POOL)
+            .created(DEFAULT_CREATED)
+            .title(DEFAULT_TITLE)
+            .price(DEFAULT_PRICE);
         return business;
     }
 

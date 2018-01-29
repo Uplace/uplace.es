@@ -145,7 +145,7 @@ public class PhotoResourceIntTest {
         assertThat(photoList).hasSize(databaseSizeBeforeCreate);
     }
 
-    @Test
+    /*@Test
     @Transactional
     public void checkThumbnailIsRequired() throws Exception {
         int databaseSizeBeforeTest = photoRepository.findAll().size();
@@ -161,7 +161,7 @@ public class PhotoResourceIntTest {
 
         List<Photo> photoList = photoRepository.findAll();
         assertThat(photoList).hasSize(databaseSizeBeforeTest);
-    }
+    }*/
 
     @Test
     @Transactional

@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -42,6 +43,12 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
 public class TerrainResourceIntTest {
+
+    private static final String DEFAULT_TITLE = "TEST Apartment";
+
+    private static final Double DEFAULT_PRICE = 0.0;
+
+    private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.now();
 
     private static final TerrainType DEFAULT_TERRAIN_TYPE = TerrainType.RESIDENTIAL;
     private static final TerrainType UPDATED_TERRAIN_TYPE = TerrainType.URBAN;
@@ -92,9 +99,12 @@ public class TerrainResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Terrain createEntity(EntityManager em) {
-        Terrain terrain = new Terrain()
+        Terrain terrain = (Terrain) new Terrain()
             .terrainType(DEFAULT_TERRAIN_TYPE)
-            .nearTransport(DEFAULT_NEAR_TRANSPORT);
+            .nearTransport(DEFAULT_NEAR_TRANSPORT)
+            .created(DEFAULT_CREATED)
+            .title(DEFAULT_TITLE)
+            .price(DEFAULT_PRICE);
         return terrain;
     }
 
