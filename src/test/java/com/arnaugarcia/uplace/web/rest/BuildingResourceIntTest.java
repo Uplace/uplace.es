@@ -5,8 +5,8 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Building;
 import com.arnaugarcia.uplace.repository.BuildingRepository;
 import com.arnaugarcia.uplace.service.BuildingService;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
 import com.arnaugarcia.uplace.service.BuildingQueryService;
 
 import org.junit.Before;
@@ -93,10 +93,12 @@ public class BuildingResourceIntTest {
 
     private Building building;
 
+    private PropertyService propertyService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BuildingResource buildingResource = new BuildingResource(buildingService, buildingQueryService);
+        final BuildingResource buildingResource = new BuildingResource(buildingService, propertyService, buildingQueryService);
         this.restBuildingMockMvc = MockMvcBuilders.standaloneSetup(buildingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
