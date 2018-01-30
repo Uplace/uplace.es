@@ -4,9 +4,9 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Terrain;
 import com.arnaugarcia.uplace.repository.TerrainRepository;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.service.TerrainService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.dto.TerrainCriteria;
 import com.arnaugarcia.uplace.service.TerrainQueryService;
 
 import org.junit.Before;
@@ -81,10 +81,12 @@ public class TerrainResourceIntTest {
 
     private Terrain terrain;
 
+    private PropertyService propertyService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TerrainResource terrainResource = new TerrainResource(terrainService, terrainQueryService);
+        final TerrainResource terrainResource = new TerrainResource(terrainService, terrainQueryService, propertyService);
         this.restTerrainMockMvc = MockMvcBuilders.standaloneSetup(terrainResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
