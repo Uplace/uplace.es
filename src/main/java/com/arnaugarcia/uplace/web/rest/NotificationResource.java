@@ -4,6 +4,7 @@ import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
 import com.arnaugarcia.uplace.repository.UserRepository;
 import com.arnaugarcia.uplace.security.SecurityUtils;
+import com.arnaugarcia.uplace.service.NotificationService;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Notification;
 
@@ -41,12 +42,12 @@ public class NotificationResource {
 
     private static final String ENTITY_NAME = "notification";
 
-    private final NotificationRepository notificationRepository;
+    private final NotificationService notificationService;
 
     private final UserRepository userRepository;
 
-    public NotificationResource(NotificationRepository notificationRepository, UserRepository userRepository) {
-        this.notificationRepository = notificationRepository;
+    public NotificationResource(NotificationService notificationService, UserRepository userRepository) {
+        this.notificationService = notificationService;
         this.userRepository = userRepository;
     }
 
@@ -80,7 +81,7 @@ public class NotificationResource {
         }
 
         notification.setCreation(ZonedDateTime.now());
-        Notification result = notificationRepository.save(notification);
+        Notification result = notificationService.save(notification);
 
         return ResponseEntity.created(new URI("/api/notifications/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -103,13 +104,13 @@ public class NotificationResource {
         if (notification.getId() == null) {
             return createNotification(notification);
         }
-        Notification result = notificationRepository.save(notification);
+        Notification result = notificationService.save(notification);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, notification.getId().toString()))
             .body(result);
     }
 
-    /**
+s    /**
      * GET  /notifications : get all the notifications.
      *
      * @param pageable the pagination information
@@ -121,7 +122,7 @@ public class NotificationResource {
         log.debug("REST request to get a page of Notifications");
         Page<Notification> page;
         if (SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
-            page = notificationRepository.findAll(pageable);
+            page = notificationService.findAll(pageable);
         } else {
             page = notificationRepository.findByUserIsCurrentUserAndReadFalse(pageable);
         }
@@ -139,7 +140,7 @@ public class NotificationResource {
     @Timed
     public ResponseEntity<Notification> getNotification(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
-        Notification notification = notificationRepository.findOne(id);
+        Notification notification = notificationService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
     }
 
@@ -154,7 +155,7 @@ public class NotificationResource {
         log.debug("REST request to mark all the Notifications as read : {}");
         List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
         notifications.forEach((notification -> notification.setRead(true)));
-        return notificationRepository.save(notifications);
+        return notificationService.save(notifications);
     }
 
     /**
@@ -168,7 +169,7 @@ public class NotificationResource {
         log.debug("REST request to mark all the Notifications as unread : {}");
         List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
         notifications.forEach((notification -> notification.setRead(false)));
-        return notificationRepository.save(notifications);
+        return notificationService.save(notifications);
     }
 
     /**
@@ -187,7 +188,7 @@ public class NotificationResource {
         } else {
             throw new BadRequestAlertException("Notification don't exists", ENTITY_NAME, "notexists");
         }
-        notification = notificationRepository.save(notification);
+        notification = notificationService.save(notification);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
     }
 
@@ -197,7 +198,7 @@ public class NotificationResource {
      * @param id the id of the notification to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
      */
-    /*@GetMapping("/notifications/{id}/unread")
+    @GetMapping("/notifications/{id}/unread")
     @Timed
     public ResponseEntity<Notification> updateNotificationAsUnRead(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
@@ -207,9 +208,9 @@ public class NotificationResource {
         } else {
             throw new BadRequestAlertException("Notification don't exists", ENTITY_NAME, "notexists");
         }
-        notification = notificationRepository.save(notification);
+        notification = notificationService.save(notification);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
-    }*/
+    }
 
     /**
      * DELETE  /notifications/:id : delete the "id" notification.
@@ -223,7 +224,7 @@ public class NotificationResource {
         log.debug("REST request to delete Notification : {}", id);
         Notification notification = notificationRepository.findOne(id);
         if (notification != null) {
-            notificationRepository.delete(notification);
+            notificationService.delete(notification);
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
         } else {
             throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, "badid");
@@ -242,7 +243,7 @@ public class NotificationResource {
                 throw new BadRequestAlertException("Some notification doesn't have a valid ID or it's malformed", ENTITY_NAME, "badid");
             }
         });
-        notificationRepository.delete(result);
+        notificationService.delete(result);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "delete")).build();
     }
 }
