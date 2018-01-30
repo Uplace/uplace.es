@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Office;
 import com.arnaugarcia.uplace.service.OfficeService;
@@ -33,10 +34,12 @@ public class OfficeResource {
     private final OfficeService officeService;
 
     private final OfficeQueryService officeQueryService;
+    private final PropertyService propertyService;
 
-    public OfficeResource(OfficeService officeService, OfficeQueryService officeQueryService) {
+    public OfficeResource(OfficeService officeService, OfficeQueryService officeQueryService, PropertyService propertyService) {
         this.officeService = officeService;
         this.officeQueryService = officeQueryService;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -53,6 +56,7 @@ public class OfficeResource {
         if (office.getId() != null) {
             throw new BadRequestAlertException("A new office cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        office.setReference(propertyService.createReference());
         Office result = officeService.save(office);
         return ResponseEntity.created(new URI("/api/offices/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
