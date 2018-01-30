@@ -44,11 +44,8 @@ public class NotificationResource {
 
     private final NotificationService notificationService;
 
-    private final UserRepository userRepository;
-
-    public NotificationResource(NotificationService notificationService, UserRepository userRepository) {
+    public NotificationResource(NotificationService notificationService) {
         this.notificationService = notificationService;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -62,7 +59,7 @@ public class NotificationResource {
     @Timed
     public ResponseEntity<Notification> createNotification(@RequestBody Notification notification) throws URISyntaxException {
         log.debug("REST request to save Notification : {}", notification);
-        if (notification.getId() != null) {
+        /*if (notification.getId() != null) {
 
             throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, "idexists");
 
@@ -78,10 +75,10 @@ public class NotificationResource {
 
         } else {
             throw new BadRequestAlertException("Error getting the logged user", ENTITY_NAME, "baduser");
-        }
+        }*/
 
         notification.setCreation(ZonedDateTime.now());
-        Notification result = notificationService.save(notification);
+        Notification result = notificationService.saveNotification(notification);
 
         return ResponseEntity.created(new URI("/api/notifications/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -97,20 +94,20 @@ public class NotificationResource {
      * or with status 500 (Internal Server Error) if the notification couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/notifications")
+    /*@PutMapping("/notifications")
     @Timed
     public ResponseEntity<Notification> updateNotification(@RequestBody Notification notification) throws URISyntaxException {
         log.debug("REST request to update Notification : {}", notification);
         if (notification.getId() == null) {
             return createNotification(notification);
         }
-        Notification result = notificationService.save(notification);
+        Notification result = notificationService.saveNotification(notification);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, notification.getId().toString()))
             .body(result);
-    }
+    }*/
 
-s    /**
+    /**
      * GET  /notifications : get all the notifications.
      *
      * @param pageable the pagination information
@@ -120,13 +117,11 @@ s    /**
     @Timed
     public ResponseEntity<List<Notification>> getAllNotifications(Pageable pageable) {
         log.debug("REST request to get a page of Notifications");
-        Page<Notification> page;
-        if (SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
-            page = notificationService.findAll(pageable);
-        } else {
-            page = notificationRepository.findByUserIsCurrentUserAndReadFalse(pageable);
-        }
+
+        Page<Notification> page = notificationService.findAllNotifications(pageable);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/notifications");
+
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -140,7 +135,9 @@ s    /**
     @Timed
     public ResponseEntity<Notification> getNotification(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
-        Notification notification = notificationService.findOne(id);
+
+        Notification notification = notificationService.findOneNotification(id);
+
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
     }
 
@@ -149,28 +146,28 @@ s    /**
      * @return the ResponseEntity with status 200 (OK) and with body the notifications updated, or with status 404 (Not Found)
      */
 
-    @GetMapping("/notifications/read")
+    /*@GetMapping("/notifications/read")
     @Timed
     public List<Notification> updateNotificationsAsRead() {
         log.debug("REST request to mark all the Notifications as read : {}");
         List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
         notifications.forEach((notification -> notification.setRead(true)));
         return notificationService.save(notifications);
-    }
+    }*/
 
     /**
      * GET  /notifications/unread
      * @return the List<Notification> with status 200 (OK) and with body the notifications updated, or with status 404 (Not Found)
      */
 
-    @GetMapping("/notifications/unread")
+    /*@GetMapping("/notifications/unread")
     @Timed
     public List<Notification> updateNotificationsAsUnRead() {
         log.debug("REST request to mark all the Notifications as unread : {}");
         List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
         notifications.forEach((notification -> notification.setRead(false)));
         return notificationService.save(notifications);
-    }
+    }*/
 
     /**
      * GET  /notifications/:id/read : get the "id" notification.
@@ -178,7 +175,7 @@ s    /**
      * @param id the id of the notification to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
      */
-    @GetMapping("/notifications/{id}/read")
+    /*@GetMapping("/notifications/{id}/read")
     @Timed
     public ResponseEntity<Notification> updateNotificationAsRead(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
@@ -190,7 +187,7 @@ s    /**
         }
         notification = notificationService.save(notification);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
-    }
+    }*/
 
     /**
      * GET  /notifications/:id/unread : get the "id" notification.
@@ -198,7 +195,7 @@ s    /**
      * @param id the id of the notification to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
      */
-    @GetMapping("/notifications/{id}/unread")
+    /*@GetMapping("/notifications/{id}/unread")
     @Timed
     public ResponseEntity<Notification> updateNotificationAsUnRead(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
@@ -210,7 +207,7 @@ s    /**
         }
         notification = notificationService.save(notification);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
-    }
+    }*/
 
     /**
      * DELETE  /notifications/:id : delete the "id" notification.
@@ -218,7 +215,7 @@ s    /**
      * @param id the id of the notification to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/notifications/{id}")
+   /* @DeleteMapping("/notifications/{id}")
     @Timed
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         log.debug("REST request to delete Notification : {}", id);
@@ -229,9 +226,9 @@ s    /**
         } else {
             throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, "badid");
         }
-    }
+    }*/
 
-    @DeleteMapping("/notifications/")
+    /*@DeleteMapping("/notifications/")
     @Timed
     public ResponseEntity<Void> deleteNotifications(@RequestBody List<Notification> notifications) {
         log.debug("REST request to delete notifications: {}", notifications.size());
@@ -245,5 +242,5 @@ s    /**
         });
         notificationService.delete(result);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "delete")).build();
-    }
+    }*/
 }

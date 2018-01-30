@@ -50,11 +50,17 @@
         {
             "fieldName": "transaction",
             "fieldType": "TransactionType",
-            "fieldValues": "RENT,BUY,TRANSFER,RENT_BUY"
+            "fieldValues": "RENT,BUY,TRANSFER,RENT_BUY",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "reference",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "priceSell",

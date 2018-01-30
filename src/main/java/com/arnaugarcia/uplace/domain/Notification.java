@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -25,18 +26,21 @@ public class Notification implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
+    @NotNull
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Lob
     @Column(name = "content")
     private String content;
 
-    @Column(name = "creation")
+    @NotNull
+    @Column(name = "creation", nullable = false)
     private ZonedDateTime creation;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "up_type")
+    @Column(name = "up_type", nullable = false)
     private NotificationType type;
 
     @Column(name = "token")
@@ -45,7 +49,8 @@ public class Notification implements Serializable {
     @Column(name = "up_read")
     private Boolean read;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
