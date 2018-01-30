@@ -5,8 +5,8 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Hotel;
 import com.arnaugarcia.uplace.repository.HotelRepository;
 import com.arnaugarcia.uplace.service.HotelService;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.dto.HotelCriteria;
 import com.arnaugarcia.uplace.service.HotelQueryService;
 
 import org.junit.Before;
@@ -33,9 +33,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 /**
@@ -108,10 +105,12 @@ public class HotelResourceIntTest {
 
     private Hotel hotel;
 
+    private PropertyService propertyService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final HotelResource hotelResource = new HotelResource(hotelService, hotelQueryService);
+        final HotelResource hotelResource = new HotelResource(hotelService, hotelQueryService, propertyService);
         this.restHotelMockMvc = MockMvcBuilders.standaloneSetup(hotelResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

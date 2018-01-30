@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Hotel;
 import com.arnaugarcia.uplace.service.HotelService;
@@ -33,10 +34,12 @@ public class HotelResource {
     private final HotelService hotelService;
 
     private final HotelQueryService hotelQueryService;
+    private final PropertyService propertyService;
 
-    public HotelResource(HotelService hotelService, HotelQueryService hotelQueryService) {
+    public HotelResource(HotelService hotelService, HotelQueryService hotelQueryService, PropertyService propertyService) {
         this.hotelService = hotelService;
         this.hotelQueryService = hotelQueryService;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -53,6 +56,7 @@ public class HotelResource {
         if (hotel.getId() != null) {
             throw new BadRequestAlertException("A new hotel cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        hotel.setReference(propertyService.createReference());
         Hotel result = hotelService.save(hotel);
         return ResponseEntity.created(new URI("/api/hotels/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
