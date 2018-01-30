@@ -1,18 +1,19 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
+
+import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 
 /**
  * A Property.
@@ -21,7 +22,6 @@ import java.util.Set;
 @Table(name = "property")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn()
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,11 +49,13 @@ public class Property implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "up_transaction")
+    @Column(name = "up_transaction", nullable = false)
     private TransactionType transaction;
 
-    @Column(name = "reference")
+    @NotNull
+    @Column(name = "reference", nullable = false)
     private String reference;
 
     @Column(name = "price_sell")
@@ -76,7 +78,7 @@ public class Property implements Serializable {
     private Integer surface;
 
     @OneToMany(mappedBy = "property")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 

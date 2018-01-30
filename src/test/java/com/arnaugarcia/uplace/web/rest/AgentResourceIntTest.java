@@ -3,6 +3,7 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Agent;
+import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.repository.AgentRepository;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
@@ -96,6 +97,11 @@ public class AgentResourceIntTest {
             .phone(DEFAULT_PHONE)
             .photo(DEFAULT_PHOTO)
             .photoContentType(DEFAULT_PHOTO_CONTENT_TYPE);
+        // Add required entity
+        User user = UserResourceIntTest.createEntity(em);
+        em.persist(user);
+        em.flush();
+        agent.setUser(user);
         return agent;
     }
 

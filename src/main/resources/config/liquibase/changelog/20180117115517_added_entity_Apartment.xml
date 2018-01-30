@@ -75,7 +75,7 @@
             </column>
 
             <column name="up_type" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="office" type="varchar(255)">

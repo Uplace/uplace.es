@@ -145,7 +145,43 @@ public class PhotoResourceIntTest {
         assertThat(photoList).hasSize(databaseSizeBeforeCreate);
     }
 
-    /*@Test
+    @Test
+    @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = photoRepository.findAll().size();
+        // set the field null
+        photo.setName(null);
+
+        // Create the Photo, which fails.
+
+        restPhotoMockMvc.perform(post("/api/photos")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(photo)))
+            .andExpect(status().isBadRequest());
+
+        List<Photo> photoList = photoRepository.findAll();
+        assertThat(photoList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPhotoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = photoRepository.findAll().size();
+        // set the field null
+        photo.setPhoto(null);
+
+        // Create the Photo, which fails.
+
+        restPhotoMockMvc.perform(post("/api/photos")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(photo)))
+            .andExpect(status().isBadRequest());
+
+        List<Photo> photoList = photoRepository.findAll();
+        assertThat(photoList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
     @Transactional
     public void checkThumbnailIsRequired() throws Exception {
         int databaseSizeBeforeTest = photoRepository.findAll().size();
@@ -161,7 +197,7 @@ public class PhotoResourceIntTest {
 
         List<Photo> photoList = photoRepository.findAll();
         assertThat(photoList).hasSize(databaseSizeBeforeTest);
-    }*/
+    }
 
     @Test
     @Transactional

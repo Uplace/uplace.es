@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -24,20 +25,23 @@ public class Photo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description")
     private String description;
 
+    @NotNull
     @Lob
-    @Column(name = "photo")
+    @Column(name = "photo", nullable = false)
     private byte[] photo;
 
-    @Column(name = "photo_content_type")
+    @Column(name = "photo_content_type", nullable = false)
     private String photoContentType;
 
-    @Column(name = "thumbnail")
+    @NotNull
+    @Column(name = "thumbnail", nullable = false)
     private Boolean thumbnail;
 
     @ManyToOne

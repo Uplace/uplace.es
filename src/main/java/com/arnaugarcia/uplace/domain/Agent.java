@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -41,11 +42,13 @@ public class Agent implements Serializable {
     @Column(name = "photo_content_type")
     private String photoContentType;
 
-    @OneToOne
+    @OneToOne(optional = false)
+    @NotNull
     @JoinColumn(unique = true)
     private User user;
 
     @ManyToMany(mappedBy = "managers")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Property> properties = new HashSet<>();
 
