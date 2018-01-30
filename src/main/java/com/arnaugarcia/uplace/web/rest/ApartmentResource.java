@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.service.ApartmentService;
@@ -31,11 +32,13 @@ public class ApartmentResource {
     private static final String ENTITY_NAME = "apartment";
 
     private final ApartmentService apartmentService;
+    private final PropertyService propertyService;
 
     private final ApartmentQueryService apartmentQueryService;
 
-    public ApartmentResource(ApartmentService apartmentService, ApartmentQueryService apartmentQueryService) {
+    public ApartmentResource(ApartmentService apartmentService, PropertyService propertyService, ApartmentQueryService apartmentQueryService) {
         this.apartmentService = apartmentService;
+        this.propertyService = propertyService;
         this.apartmentQueryService = apartmentQueryService;
     }
 
@@ -53,7 +56,7 @@ public class ApartmentResource {
         if (apartment.getId() != null) {
             throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        apartment.setReference(apartmentService.createReference());
+        apartment.setReference(propertyService.createReference());
         Apartment result = apartmentService.save(apartment);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
