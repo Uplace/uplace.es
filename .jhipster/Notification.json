@@ -3,6 +3,7 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
             "relationshipName": "user",
             "otherEntityName": "user",
             "otherEntityField": "login"
@@ -11,7 +12,10 @@
     "fields": [
         {
             "fieldName": "title",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "content",
@@ -20,12 +24,18 @@
         },
         {
             "fieldName": "creation",
-            "fieldType": "ZonedDateTime"
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "type",
             "fieldType": "NotificationType",
-            "fieldValues": "NOTIFICATION,REQUEST,ALERT"
+            "fieldValues": "NOTIFICATION,REQUEST,ALERT",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "token",
@@ -33,13 +43,16 @@
         },
         {
             "fieldName": "read",
-            "fieldType": "Boolean"
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20180123092114",
     "entityTableName": "notification",
     "dto": "no",
     "pagination": "pagination",
-    "service": "serviceClass",
+    "service": "no",
     "jpaMetamodelFiltering": false
 }

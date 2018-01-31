@@ -43,11 +43,11 @@
             </column>
 
             <column name="up_transaction" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="reference" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="price_sell" type="double">

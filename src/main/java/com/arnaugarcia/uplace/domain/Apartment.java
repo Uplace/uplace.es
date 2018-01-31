@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -72,8 +73,9 @@ public class Apartment extends Property implements Serializable {
     @Column(name = "surface_saloon")
     private Integer surfaceSaloon;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "up_type")
+    @Column(name = "up_type", nullable = false)
     private ApartmentType type;
 
     @Enumerated(EnumType.STRING)

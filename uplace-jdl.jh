@@ -4,8 +4,8 @@ entity Property {
     created ZonedDateTime required,
     updated ZonedDateTime,
     description TextBlob,
-    transaction TransactionType,
-    reference String,
+    transaction TransactionType required,
+    reference String required,
     // PONGO DOS CAMPOS POR QUE PUEDE QUE SE PUEDA VENDER Y ALQUILAR A LA VEZ
     priceSell Double,
     priceRent Double,
@@ -55,7 +55,7 @@ entity Apartment {
     balcony Select,
     surfaceTerrace Integer,
     surfaceSaloon Integer,
-	type ApartmentType,
+	type ApartmentType required,
     office Select,
     kitchenOffice Select,
     storage Select,
@@ -177,12 +177,12 @@ entity Business {
 }
 
 entity Notification {
-	title String,
+	title String required,
     content TextBlob,
-    creation ZonedDateTime,
-    type NotificationType,
+    creation ZonedDateTime required,
+    type NotificationType required,
     token String,
-    read Boolean
+    read Boolean required
 }
 
 enum NotificationType{
@@ -192,10 +192,10 @@ enum NotificationType{
 /* PHOTO */
 
 entity Photo {
-	name String,
+	name String required,
     description String,
-    photo ImageBlob,
-    thumbnail Boolean
+    photo ImageBlob required,
+    thumbnail Boolean required
 }
 
 relationship OneToMany {
@@ -204,7 +204,7 @@ relationship OneToMany {
 }
 
 relationship ManyToOne {
-    Notification{user(login)} to User{notification(title)}
+    Notification{user(login) required} to User{notification(title) required}
 }
 
 relationship ManyToMany {
@@ -212,7 +212,7 @@ relationship ManyToMany {
 }
 
 relationship OneToOne {
-    Agent{user(login)} to User{agent(firstName)}
+    Agent{user(login) required} to User{agent(firstName) required}
 }
 
 paginate Notification with pagination

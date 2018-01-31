@@ -69,17 +69,29 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.property.transaction" for="field_transaction">Transaction</label>
-            <select class="form-control" name="transaction" [(ngModel)]="property.transaction" id="field_transaction" >
+            <select class="form-control" name="transaction" [(ngModel)]="property.transaction" id="field_transaction"  required>
                 <option value="RENT">{{'uplaceApp.TransactionType.RENT' | translate}}</option>
                 <option value="BUY">{{'uplaceApp.TransactionType.BUY' | translate}}</option>
                 <option value="TRANSFER">{{'uplaceApp.TransactionType.TRANSFER' | translate}}</option>
                 <option value="RENT_BUY">{{'uplaceApp.TransactionType.RENT_BUY' | translate}}</option>
             </select>
+            <div [hidden]="!(editForm.controls.transaction?.dirty && editForm.controls.transaction?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.transaction?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.property.reference" for="field_reference">Reference</label>
             <input type="text" class="form-control" name="reference" id="field_reference"
-                [(ngModel)]="property.reference" />
+                [(ngModel)]="property.reference" required/>
+            <div [hidden]="!(editForm.controls.reference?.dirty && editForm.controls.reference?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.reference?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.property.priceSell" for="field_priceSell">Price Sell</label>

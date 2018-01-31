@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -44,7 +45,7 @@ public class PhotoResource {
      */
     @PostMapping("/photos")
     @Timed
-    public ResponseEntity<Photo> createPhoto(@RequestBody Photo photo) throws URISyntaxException {
+    public ResponseEntity<Photo> createPhoto(@Valid @RequestBody Photo photo) throws URISyntaxException {
         log.debug("REST request to save Photo : {}", photo);
         if (photo.getId() != null) {
             throw new BadRequestAlertException("A new photo cannot already have an ID", ENTITY_NAME, "idexists");
@@ -66,7 +67,7 @@ public class PhotoResource {
      */
     @PutMapping("/photos")
     @Timed
-    public ResponseEntity<Photo> updatePhoto(@RequestBody Photo photo) throws URISyntaxException {
+    public ResponseEntity<Photo> updatePhoto(@Valid @RequestBody Photo photo) throws URISyntaxException {
         log.debug("REST request to update Photo : {}", photo);
         if (photo.getId() == null) {
             return createPhoto(photo);

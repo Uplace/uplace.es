@@ -23,7 +23,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="description" type="varchar(255)">
@@ -31,14 +31,14 @@
             </column>
 
             <column name="photo" type="longblob">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="photo_content_type" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="thumbnail" type="bit">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="property_id" type="bigint">

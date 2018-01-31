@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -44,7 +45,7 @@ public class AgentResource {
      */
     @PostMapping("/agents")
     @Timed
-    public ResponseEntity<Agent> createAgent(@RequestBody Agent agent) throws URISyntaxException {
+    public ResponseEntity<Agent> createAgent(@Valid @RequestBody Agent agent) throws URISyntaxException {
         log.debug("REST request to save Agent : {}", agent);
         if (agent.getId() != null) {
             throw new BadRequestAlertException("A new agent cannot already have an ID", ENTITY_NAME, "idexists");
@@ -66,7 +67,7 @@ public class AgentResource {
      */
     @PutMapping("/agents")
     @Timed
-    public ResponseEntity<Agent> updateAgent(@RequestBody Agent agent) throws URISyntaxException {
+    public ResponseEntity<Agent> updateAgent(@Valid @RequestBody Agent agent) throws URISyntaxException {
         log.debug("REST request to update Agent : {}", agent);
         if (agent.getId() == null) {
             return createAgent(agent);
