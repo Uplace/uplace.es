@@ -5,6 +5,7 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Business;
 import com.arnaugarcia.uplace.repository.BusinessRepository;
 import com.arnaugarcia.uplace.service.BusinessService;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -33,9 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.arnaugarcia.uplace.domain.enumeration.BusinessType;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
+
 /**
  * Test class for the BusinessResource REST controller.
  *
@@ -106,10 +105,12 @@ public class BusinessResourceIntTest {
 
     private Business business;
 
+    private PropertyService propertyService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BusinessResource businessResource = new BusinessResource(businessService);
+        final BusinessResource businessResource = new BusinessResource(businessService, propertyService);
         this.restBusinessMockMvc = MockMvcBuilders.standaloneSetup(businessResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

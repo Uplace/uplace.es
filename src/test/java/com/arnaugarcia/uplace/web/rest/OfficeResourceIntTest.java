@@ -5,8 +5,8 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Office;
 import com.arnaugarcia.uplace.repository.OfficeRepository;
 import com.arnaugarcia.uplace.service.OfficeService;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.dto.OfficeCriteria;
 import com.arnaugarcia.uplace.service.OfficeQueryService;
 
 import org.junit.Before;
@@ -34,9 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
+
 /**
  * Test class for the OfficeResource REST controller.
  *
@@ -104,10 +102,12 @@ public class OfficeResourceIntTest {
 
     private Office office;
 
+    private PropertyService propertyService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OfficeResource officeResource = new OfficeResource(officeService, officeQueryService);
+        final OfficeResource officeResource = new OfficeResource(officeService, officeQueryService, propertyService);
         this.restOfficeMockMvc = MockMvcBuilders.standaloneSetup(officeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

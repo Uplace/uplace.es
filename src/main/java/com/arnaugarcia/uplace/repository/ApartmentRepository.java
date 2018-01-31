@@ -21,6 +21,12 @@ import java.util.List;
 @Repository
 public interface ApartmentRepository extends JpaRepository<Apartment, Long>, JpaSpecificationExecutor<Apartment>{
 
+    /**
+     * Query to get an apartment by ID
+     *
+     * @param reference of the apartment to search
+     * @return apartment if found or null if not
+     */
     @Query("SELECT p FROM Apartment p where p.reference = :reference")
     Apartment findByReference(@Param("reference") String reference);
 

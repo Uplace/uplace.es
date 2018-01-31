@@ -5,8 +5,8 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Parking;
 import com.arnaugarcia.uplace.repository.ParkingRepository;
 import com.arnaugarcia.uplace.service.ParkingService;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.dto.ParkingCriteria;
 import com.arnaugarcia.uplace.service.ParkingQueryService;
 
 import org.junit.Before;
@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.arnaugarcia.uplace.domain.enumeration.ParkingType;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
+
 /**
  * Test class for the ParkingResource REST controller.
  *
@@ -85,10 +85,12 @@ public class ParkingResourceIntTest {
 
     private Parking parking;
 
+    private PropertyService propertyService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ParkingResource parkingResource = new ParkingResource(parkingService, parkingQueryService);
+        final ParkingResource parkingResource = new ParkingResource(parkingService, parkingQueryService, propertyService);
         this.restParkingMockMvc = MockMvcBuilders.standaloneSetup(parkingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

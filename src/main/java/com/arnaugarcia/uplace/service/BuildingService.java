@@ -2,6 +2,8 @@ package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Building;
 import com.arnaugarcia.uplace.repository.BuildingRepository;
+import com.arnaugarcia.uplace.repository.PropertyRepository;
+import com.arnaugarcia.uplace.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,11 @@ public class BuildingService {
     private final Logger log = LoggerFactory.getLogger(BuildingService.class);
 
     private final BuildingRepository buildingRepository;
+    private final PropertyRepository propertyRepository;
 
-    public BuildingService(BuildingRepository buildingRepository) {
+    public BuildingService(BuildingRepository buildingRepository, PropertyRepository propertyRepository) {
         this.buildingRepository = buildingRepository;
+        this.propertyRepository = propertyRepository;
     }
 
     /**
@@ -66,5 +70,19 @@ public class BuildingService {
     public void delete(Long id) {
         log.debug("Request to delete Building : {}", id);
         buildingRepository.delete(id);
+    }
+
+    /**
+     * Create unique reference randomly.
+     *
+     * @return reference created
+     */
+    public String createReference() {
+        String reference;
+        do {
+            reference = RandomUtil.generateReference().toUpperCase();
+            log.debug("Generating reference: " + reference);
+        } while (propertyRepository.findByReference(reference) != null);
+        return reference;
     }
 }

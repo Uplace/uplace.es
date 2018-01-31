@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Business;
 import com.arnaugarcia.uplace.service.BusinessService;
@@ -29,9 +30,11 @@ public class BusinessResource {
     private static final String ENTITY_NAME = "business";
 
     private final BusinessService businessService;
+    private final PropertyService propertyService;
 
-    public BusinessResource(BusinessService businessService) {
+    public BusinessResource(BusinessService businessService, PropertyService propertyService) {
         this.businessService = businessService;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -48,6 +51,7 @@ public class BusinessResource {
         if (business.getId() != null) {
             throw new BadRequestAlertException("A new business cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        business.setReference(propertyService.createReference());
         Business result = businessService.save(business);
         return ResponseEntity.created(new URI("/api/businesses/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

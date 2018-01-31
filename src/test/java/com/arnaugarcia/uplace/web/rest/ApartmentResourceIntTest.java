@@ -5,8 +5,8 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
 import com.arnaugarcia.uplace.service.ApartmentService;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
 import com.arnaugarcia.uplace.service.ApartmentQueryService;
 
 import org.junit.Before;
@@ -34,14 +34,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
+
 /**
  * Test class for the ApartmentResource REST controller.
  *
@@ -121,10 +115,12 @@ public class ApartmentResourceIntTest {
 
     private Apartment apartment;
 
+    private PropertyService propertyService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ApartmentResource apartmentResource = new ApartmentResource(apartmentService, apartmentQueryService);
+        final ApartmentResource apartmentResource = new ApartmentResource(apartmentService, propertyService, apartmentQueryService);
         this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

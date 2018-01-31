@@ -5,8 +5,8 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.IndustrialPlant;
 import com.arnaugarcia.uplace.repository.IndustrialPlantRepository;
 import com.arnaugarcia.uplace.service.IndustrialPlantService;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.dto.IndustrialPlantCriteria;
 import com.arnaugarcia.uplace.service.IndustrialPlantQueryService;
 
 import org.junit.Before;
@@ -95,10 +95,12 @@ public class IndustrialPlantResourceIntTest {
 
     private IndustrialPlant industrialPlant;
 
+    private PropertyService propertyService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final IndustrialPlantResource industrialPlantResource = new IndustrialPlantResource(industrialPlantService, industrialPlantQueryService);
+        final IndustrialPlantResource industrialPlantResource = new IndustrialPlantResource(industrialPlantService, industrialPlantQueryService, propertyService);
         this.restIndustrialPlantMockMvc = MockMvcBuilders.standaloneSetup(industrialPlantResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

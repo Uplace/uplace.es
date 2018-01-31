@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.IndustrialPlant;
 import com.arnaugarcia.uplace.service.IndustrialPlantService;
@@ -33,10 +34,12 @@ public class IndustrialPlantResource {
     private final IndustrialPlantService industrialPlantService;
 
     private final IndustrialPlantQueryService industrialPlantQueryService;
+    private final PropertyService propertyService;
 
-    public IndustrialPlantResource(IndustrialPlantService industrialPlantService, IndustrialPlantQueryService industrialPlantQueryService) {
+    public IndustrialPlantResource(IndustrialPlantService industrialPlantService, IndustrialPlantQueryService industrialPlantQueryService, PropertyService propertyService) {
         this.industrialPlantService = industrialPlantService;
         this.industrialPlantQueryService = industrialPlantQueryService;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -53,6 +56,7 @@ public class IndustrialPlantResource {
         if (industrialPlant.getId() != null) {
             throw new BadRequestAlertException("A new industrialPlant cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        industrialPlant.setReference(propertyService.createReference());
         IndustrialPlant result = industrialPlantService.save(industrialPlant);
         return ResponseEntity.created(new URI("/api/industrial-plants/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

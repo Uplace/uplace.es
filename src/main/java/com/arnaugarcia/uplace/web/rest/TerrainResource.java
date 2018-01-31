@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Terrain;
 import com.arnaugarcia.uplace.service.TerrainService;
@@ -33,10 +34,12 @@ public class TerrainResource {
     private final TerrainService terrainService;
 
     private final TerrainQueryService terrainQueryService;
+    private final PropertyService propertyService;
 
-    public TerrainResource(TerrainService terrainService, TerrainQueryService terrainQueryService) {
+    public TerrainResource(TerrainService terrainService, TerrainQueryService terrainQueryService, PropertyService propertyService) {
         this.terrainService = terrainService;
         this.terrainQueryService = terrainQueryService;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -53,6 +56,7 @@ public class TerrainResource {
         if (terrain.getId() != null) {
             throw new BadRequestAlertException("A new terrain cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        terrain.setReference(propertyService.createReference());
         Terrain result = terrainService.save(terrain);
         return ResponseEntity.created(new URI("/api/terrains/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
