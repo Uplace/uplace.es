@@ -9,7 +9,6 @@ import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.service.ApartmentService;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
-import com.arnaugarcia.uplace.web.rest.impl.PhotoResourceImpl;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
