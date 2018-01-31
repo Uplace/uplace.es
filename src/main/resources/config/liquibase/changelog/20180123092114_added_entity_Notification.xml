@@ -43,7 +43,7 @@
             </column>
 
             <column name="up_read" type="bit">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="user_id" type="bigint">

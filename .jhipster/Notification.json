@@ -43,7 +43,10 @@
         },
         {
             "fieldName": "read",
-            "fieldType": "Boolean"
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20180123092114",

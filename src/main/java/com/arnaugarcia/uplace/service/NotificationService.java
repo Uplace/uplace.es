@@ -5,16 +5,21 @@ import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
 import com.arnaugarcia.uplace.repository.NotificationRepository;
 import com.arnaugarcia.uplace.repository.UserRepository;
+import com.arnaugarcia.uplace.security.AuthoritiesConstants;
 import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -33,9 +38,12 @@ public class NotificationService {
 
     private final UserRepository userRepository;
 
-    public NotificationService(NotificationRepository notificationRepository, UserRepository userRepository) {
+    private final UserService userService;
+
+    public NotificationService(NotificationRepository notificationRepository, UserRepository userRepository, UserService userService) {
         this.notificationRepository = notificationRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     /**
@@ -43,9 +51,21 @@ public class NotificationService {
      *
      * @param notification the entity to save
      * @return the persisted entity
+     *
      */
     public Notification saveNotification(Notification notification) {
         log.debug("Request to save Notification : {}", notification);
+
+        //Getting the current user
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+
+        //If the current user hasn't the ROLE_ADMIN sets by default the user for security reasons
+        if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            notification.setUser(user);
+        }
+
+        //Setting the type to notification
+        notification.setType(NotificationType.NOTIFICATION);
         return notificationRepository.save(notification);
     }
 
@@ -73,13 +93,24 @@ public class NotificationService {
 
         if (SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
             log.debug("Request to get a page of all notifications");
-            page = notificationRepository.findAll(pageable);
+            page = notificationRepository.findAllNotifications(pageable);
         } else {
-            log.debug("Request to get a page of Notifications");
-            page = notificationRepository.findByUserIsCurrentUserAndReadFalse(pageable);
+            log.debug("Request to get a page of Notifications by current User");
+            page = notificationRepository.findAllNotificationsByCurrentUser(pageable);
         }
 
         return page;
+    }
+
+    /**
+     * Get all the notifications.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Notification> findAllNotifications() {
+
+        return notificationRepository.findAll();
     }
 
     /**
@@ -94,7 +125,9 @@ public class NotificationService {
 
         Notification notification = notificationRepository.findOne(id);
 
-        Optional<String> username = SecurityUtils.getCurrentUserLogin();
+        return notification;
+
+        /*Optional<String> username = SecurityUtils.getCurrentUserLogin();
 
         Optional<User> user = Optional.empty();
 
@@ -106,9 +139,6 @@ public class NotificationService {
         if (notification == null) {
             throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, "badid");
 
-        } else if (!user.isPresent()) {
-            throw new BadRequestAlertException("No user was fou... WTF broh?", ENTITY_NOTIFICATION, "baduser");
-
         } else if (!notification.getType().equals(NotificationType.NOTIFICATION)) {
             throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, "badid");
         }
@@ -118,7 +148,7 @@ public class NotificationService {
             return notification;
         } else {
             throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "badid");
-        }
+        }*/
 
     }
 

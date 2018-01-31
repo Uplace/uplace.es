@@ -182,7 +182,7 @@ entity Notification {
     creation ZonedDateTime required,
     type NotificationType required,
     token String,
-    read Boolean
+    read Boolean required
 }
 
 enum NotificationType{

@@ -3,8 +3,10 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
 import com.arnaugarcia.uplace.repository.UserRepository;
+import com.arnaugarcia.uplace.security.AuthoritiesConstants;
 import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.arnaugarcia.uplace.service.NotificationService;
+import com.arnaugarcia.uplace.service.UserService;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Notification;
 
@@ -20,9 +22,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -36,6 +40,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.USER)
 public class NotificationResource {
 
     private final Logger log = LoggerFactory.getLogger(NotificationResource.class);
@@ -57,25 +62,12 @@ public class NotificationResource {
      */
     @PostMapping("/notifications")
     @Timed
-    public ResponseEntity<Notification> createNotification(@RequestBody Notification notification) throws URISyntaxException {
+    public ResponseEntity<Notification> createNotification(@Valid @RequestBody Notification notification) throws URISyntaxException {
         log.debug("REST request to save Notification : {}", notification);
-        /*if (notification.getId() != null) {
 
+        if (notification.getId() != null) {
             throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, "idexists");
-
-        } else if (!notification.getType().equals(NotificationType.NOTIFICATION) ){
-
-            throw new BadRequestAlertException("The notification must contains the type 'NOTIFICATION'", ENTITY_NAME, "badtype");
-
-        } else if (notification.getUser() == null && SecurityUtils.getCurrentUserLogin().isPresent()) {
-
-            Optional<User> result = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
-
-            result.ifPresent(user -> notification.setUser(user));
-
-        } else {
-            throw new BadRequestAlertException("Error getting the logged user", ENTITY_NAME, "baduser");
-        }*/
+        }
 
         notification.setCreation(ZonedDateTime.now());
         Notification result = notificationService.saveNotification(notification);
@@ -94,9 +86,9 @@ public class NotificationResource {
      * or with status 500 (Internal Server Error) if the notification couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PutMapping("/notifications")
+    @PutMapping("/notifications")
     @Timed
-    public ResponseEntity<Notification> updateNotification(@RequestBody Notification notification) throws URISyntaxException {
+    public ResponseEntity<Notification> updateNotification(@Valid @RequestBody Notification notification) throws URISyntaxException {
         log.debug("REST request to update Notification : {}", notification);
         if (notification.getId() == null) {
             return createNotification(notification);
@@ -105,7 +97,7 @@ public class NotificationResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, notification.getId().toString()))
             .body(result);
-    }*/
+    }
 
     /**
      * GET  /notifications : get all the notifications.

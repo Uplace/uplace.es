@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -46,7 +47,8 @@ public class Notification implements Serializable {
     @Column(name = "token")
     private String token;
 
-    @Column(name = "up_read")
+    @NotNull
+    @Column(name = "up_read", nullable = false)
     private Boolean read;
 
     @ManyToOne(optional = false)
