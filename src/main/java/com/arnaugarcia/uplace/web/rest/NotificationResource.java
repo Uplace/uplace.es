@@ -68,8 +68,9 @@ public class NotificationResource {
         if (notification.getId() != null) {
             throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, "idexists");
         }
-
+        //If is a new notification the date must be now
         notification.setCreation(ZonedDateTime.now());
+
         Notification result = notificationService.saveNotification(notification);
 
         return ResponseEntity.created(new URI("/api/notifications/" + result.getId()))
@@ -93,7 +94,9 @@ public class NotificationResource {
         if (notification.getId() == null) {
             return createNotification(notification);
         }
+
         Notification result = notificationService.saveNotification(notification);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, notification.getId().toString()))
             .body(result);
@@ -207,18 +210,18 @@ public class NotificationResource {
      * @param id the id of the notification to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-   /* @DeleteMapping("/notifications/{id}")
+    @DeleteMapping("/notifications/{id}")
     @Timed
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         log.debug("REST request to delete Notification : {}", id);
-        Notification notification = notificationRepository.findOne(id);
+        Notification notification = notificationService.findOneNotification(id);
         if (notification != null) {
-            notificationService.delete(notification);
+            notificationService.delete(id);
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
         } else {
             throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, "badid");
         }
-    }*/
+    }
 
     /*@DeleteMapping("/notifications/")
     @Timed

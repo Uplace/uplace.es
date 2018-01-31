@@ -125,30 +125,18 @@ public class NotificationService {
 
         Notification notification = notificationRepository.findOne(id);
 
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+
+        if (notification == null || !notification.getType().equals(NotificationType.NOTIFICATION)) {
+            throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, "badid");
+        }
+
+        // If the notification.user does not match and isn't admin... error
+        if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+        }
+
         return notification;
-
-        /*Optional<String> username = SecurityUtils.getCurrentUserLogin();
-
-        Optional<User> user = Optional.empty();
-
-        // If the user is logged
-        if (username.isPresent()) {
-             user = userRepository.findOneByLogin(username.get());
-        }
-
-        if (notification == null) {
-            throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, "badid");
-
-        } else if (!notification.getType().equals(NotificationType.NOTIFICATION)) {
-            throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, "badid");
-        }
-
-        // If the notification belong to the logged user
-        if (notification.getUser().equals(user.get())) {
-            return notification;
-        } else {
-            throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "badid");
-        }*/
 
     }
 
