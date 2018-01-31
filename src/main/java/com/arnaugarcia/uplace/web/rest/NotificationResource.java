@@ -87,7 +87,7 @@ public class NotificationResource {
      * or with status 500 (Internal Server Error) if the notification couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/notifications")
+    /*@PutMapping("/notifications")
     @Timed
     public ResponseEntity<Notification> updateNotification(@Valid @RequestBody Notification notification) throws URISyntaxException {
         log.debug("REST request to update Notification : {}", notification);
@@ -99,6 +99,27 @@ public class NotificationResource {
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, notification.getId().toString()))
+            .body(result);
+    }*/
+
+    /**
+     * PUT  /notifications : Updates notifications.
+     *
+     * @param notifications the notification to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated notification,
+     * or with status 400 (Bad Request) if the notification is not valid,
+     * or with status 500 (Internal Server Error) if the notification couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/notifications")
+    @Timed
+    public ResponseEntity<List<Notification>> updateNotifications(@Valid @RequestBody List<Notification> notifications) throws URISyntaxException {
+        log.debug("REST request to update Notifications : {}", notifications.size());
+
+        List<Notification> result = notificationService.updates(notifications);
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.toString()))
             .body(result);
     }
 
@@ -141,14 +162,14 @@ public class NotificationResource {
      * @return the ResponseEntity with status 200 (OK) and with body the notifications updated, or with status 404 (Not Found)
      */
 
-    @GetMapping("/notifications/read")
+    /*@PutMapping("/notifications/read")
     @Timed
-    public List<Notification> updateNotificationsAsRead(@RequestParam List<Notification> notifications) {
+    public List<Notification> markNotificationsAsRead(@RequestParam List<Notification> notificationsList) {
         log.debug("REST request to mark all the Notifications as read : {}");
-        List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
-        notifications.forEach((notification -> notification.setRead(true)));
-        return notificationService.save(notifications);
-    }
+
+        return notificationService.markAs(notificationsList, true);
+
+    }*/
 
     /**
      * GET  /notifications/unread
@@ -157,51 +178,10 @@ public class NotificationResource {
 
     /*@GetMapping("/notifications/unread")
     @Timed
-    public List<Notification> updateNotificationsAsUnRead() {
+    public List<Notification> markNotificationsAsUnRead(@RequestParam List<Notification> notificationsList) {
         log.debug("REST request to mark all the Notifications as unread : {}");
-        List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
-        notifications.forEach((notification -> notification.setRead(false)));
-        return notificationService.save(notifications);
-    }*/
 
-    /**
-     * GET  /notifications/:id/read : get the "id" notification.
-     *
-     * @param id the id of the notification to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
-     */
-    /*@GetMapping("/notifications/{id}/read")
-    @Timed
-    public ResponseEntity<Notification> updateNotificationAsRead(@PathVariable Long id) {
-        log.debug("REST request to get Notification : {}", id);
-        Notification notification = notificationRepository.findOne(id);
-        if (notification != null) {
-            notification.setRead(true);
-        } else {
-            throw new BadRequestAlertException("Notification don't exists", ENTITY_NAME, "notexists");
-        }
-        notification = notificationService.save(notification);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
-    }*/
-
-    /**
-     * GET  /notifications/:id/unread : get the "id" notification.
-     *
-     * @param id the id of the notification to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the notification, or with status 404 (Not Found)
-     */
-    /*@GetMapping("/notifications/{id}/unread")
-    @Timed
-    public ResponseEntity<Notification> updateNotificationAsUnRead(@PathVariable Long id) {
-        log.debug("REST request to get Notification : {}", id);
-        Notification notification = notificationRepository.findOne(id);
-        if (notification != null) {
-            notification.setRead(false);
-        } else {
-            throw new BadRequestAlertException("Notification don't exists", ENTITY_NAME, "notexists");
-        }
-        notification = notificationService.save(notification);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
+        return notificationService.markAs(notificationsList, false);
     }*/
 
     /**
@@ -226,19 +206,13 @@ public class NotificationResource {
 
     }
 
-    /*@DeleteMapping("/notifications/")
+    @DeleteMapping("/notifications/")
     @Timed
     public ResponseEntity<Void> deleteNotifications(@RequestBody List<Notification> notifications) {
         log.debug("REST request to delete notifications: {}", notifications.size());
-        List<Notification> result = new ArrayList<>();
-        notifications.forEach(notification -> {
-            if (notification.getId() != null) {
-                result.add(notification);
-            } else {
-                throw new BadRequestAlertException("Some notification doesn't have a valid ID or it's malformed", ENTITY_NAME, "badid");
-            }
-        });
-        notificationService.delete(result);
+
+        notificationService.deletes(notifications);
+
         return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "delete")).build();
-    }*/
+    }
 }

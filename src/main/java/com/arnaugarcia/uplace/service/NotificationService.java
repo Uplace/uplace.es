@@ -163,4 +163,47 @@ public class NotificationService {
 
         notificationRepository.delete(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<Notification> markAs(List<Notification> notifications, Boolean status) {
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+        notifications.forEach(notification -> {
+            if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+            } else {
+                notification.setRead(status);
+            }
+        });
+
+        return notificationRepository.save(notifications);
+    }
+
+    @Transactional()
+    public List<Notification> updates(List<Notification> notifications) {
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+
+        //if there are a notification that does not belongs to the user and isn't admin... error
+        notifications.forEach(notification -> {
+            if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+            }
+        });
+
+        return notificationRepository.save(notifications);
+    }
+
+
+    public void deletes(List<Notification> notificationList) {
+        log.debug("Request to delete a list of Notification : {}", notificationList.size());
+
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+
+        notificationList.forEach(notification -> {
+            if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+            }
+        });
+
+        notificationRepository.delete(notificationList);
+    }
 }
