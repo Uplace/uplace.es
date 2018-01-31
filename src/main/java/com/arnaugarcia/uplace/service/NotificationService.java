@@ -147,6 +147,20 @@ public class NotificationService {
      */
     public void delete(Long id) {
         log.debug("Request to delete Notification : {}", id);
+
+        Notification notification = notificationRepository.findOne(id);
+
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+
+        if (notification == null || !notification.getType().equals(NotificationType.NOTIFICATION)) {
+            throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, "badid");
+        }
+
+        // If the notification.user does not match and isn't admin... error
+        if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+        }
+
         notificationRepository.delete(id);
     }
 }

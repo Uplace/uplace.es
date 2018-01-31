@@ -141,14 +141,14 @@ public class NotificationResource {
      * @return the ResponseEntity with status 200 (OK) and with body the notifications updated, or with status 404 (Not Found)
      */
 
-    /*@GetMapping("/notifications/read")
+    @GetMapping("/notifications/read")
     @Timed
-    public List<Notification> updateNotificationsAsRead() {
+    public List<Notification> updateNotificationsAsRead(@RequestParam List<Notification> notifications) {
         log.debug("REST request to mark all the Notifications as read : {}");
         List<Notification> notifications = notificationRepository.findByUserIsCurrentUser();
         notifications.forEach((notification -> notification.setRead(true)));
         return notificationService.save(notifications);
-    }*/
+    }
 
     /**
      * GET  /notifications/unread
@@ -214,13 +214,16 @@ public class NotificationResource {
     @Timed
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         log.debug("REST request to delete Notification : {}", id);
+
         Notification notification = notificationService.findOneNotification(id);
+
         if (notification != null) {
             notificationService.delete(id);
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
         } else {
             throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, "badid");
         }
+
     }
 
     /*@DeleteMapping("/notifications/")
