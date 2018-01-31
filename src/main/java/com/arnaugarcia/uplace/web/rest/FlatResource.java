@@ -33,7 +33,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api")
-public class FlatResource implements PhotoResourceImpl {
+public class FlatResource {
 
     private final Logger log = LoggerFactory.getLogger(FlatResource.class);
 
