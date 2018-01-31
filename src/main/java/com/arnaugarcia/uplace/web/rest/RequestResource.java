@@ -130,29 +130,32 @@ public class RequestResource {
      * @param id the id of the notification to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    /*@DeleteMapping("/notifications/{id}")
+    @DeleteMapping("/requests/{id}")
     @Timed
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
-        log.debug("REST request to delete Notification : {}", id);
+        log.debug("REST request to delete Request : {}", id);
 
-        Notification notification = notificationService.findOneNotification(id);
+        Notification notification = notificationService.findOneByType(NotificationType.REQUEST, id);
 
         if (notification != null) {
+
             notificationService.delete(id);
+
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+
         } else {
             throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, "badid");
         }
 
-    }*/
+    }
 
-   /* @DeleteMapping("/notifications/")
+    @DeleteMapping("/requests/")
     @Timed
-    public ResponseEntity<Void> deleteNotifications(@RequestBody List<Notification> notifications) {
-        log.debug("REST request to delete notifications: {}", notifications.size());
+    public ResponseEntity<Void> deleteRequests(@RequestBody List<Notification> requests) {
+        log.debug("REST request to delete requests: {}", requests.size());
 
-        notificationService.deletes(notifications);
+        notificationService.deletes(requests);
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "delete")).build();
-    }*/
+    }
 }

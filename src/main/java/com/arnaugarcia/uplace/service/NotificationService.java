@@ -161,11 +161,7 @@ public class NotificationService {
         }
 
         // If the notification.user does not match and isn't admin... error
-        if (!notification.getUser().equals(user)
-
-            && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)
-
-            && notification.getType().equals(notificationType)) {
+        if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
             throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
         }
 
@@ -184,10 +180,6 @@ public class NotificationService {
         Notification notification = notificationRepository.findOne(id);
 
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
-
-        if (notification == null || !notification.getType().equals(NotificationType.NOTIFICATION)) {
-            throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, "badid");
-        }
 
         // If the notification.user does not match and isn't admin... error
         if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
@@ -228,9 +220,10 @@ public class NotificationService {
 
     public void deletes(List<Notification> notificationList) {
         log.debug("Request to delete a list of Notification : {}", notificationList.size());
-
+        // TODO: Check if the notification exists and is a notification
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
 
+        // Checks if the user is the correct user
         notificationList.forEach(notification -> {
             if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
                 throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");

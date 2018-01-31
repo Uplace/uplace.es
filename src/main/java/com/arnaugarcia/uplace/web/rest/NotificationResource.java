@@ -152,7 +152,7 @@ public class NotificationResource {
     public ResponseEntity<Notification> getNotification(@PathVariable Long id) {
         log.debug("REST request to get Notification : {}", id);
 
-        Notification notification = notificationService.findOneNotification(id);
+        Notification notification = notificationService.findOneByType(NotificationType.NOTIFICATION, id);
 
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notification));
     }
@@ -195,7 +195,7 @@ public class NotificationResource {
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         log.debug("REST request to delete Notification : {}", id);
 
-        Notification notification = notificationService.findOneNotification(id);
+        Notification notification = notificationService.findOneByType(NotificationType.NOTIFICATION, id);
 
         if (notification != null) {
             notificationService.delete(id);
