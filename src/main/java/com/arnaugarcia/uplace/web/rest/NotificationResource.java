@@ -134,7 +134,7 @@ public class NotificationResource {
     public ResponseEntity<List<Notification>> getAllNotifications(Pageable pageable) {
         log.debug("REST request to get a page of Notifications");
 
-        Page<Notification> page = notificationService.findAllNotifications(pageable);
+        Page<Notification> page = notificationService.findAllByType(NotificationType.NOTIFICATION, pageable);
 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/notifications");
 

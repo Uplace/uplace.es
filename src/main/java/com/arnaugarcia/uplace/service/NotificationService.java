@@ -32,6 +32,8 @@ public class NotificationService {
 
     private final static String ENTITY_NOTIFICATION = "NOTIFICATION";
 
+    private final static String ENTITY_REQUEST = "REQUEST";
+
     private final Logger log = LoggerFactory.getLogger(NotificationService.class);
 
     private final NotificationRepository notificationRepository;
@@ -77,29 +79,45 @@ public class NotificationService {
      */
     public Notification saveRequest(Notification request) {
         log.debug("Request to save Notification : {}", request);
+        //Getting the current user
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+
+        //If the current user hasn't the ROLE_ADMIN sets by default the user for security reasons
+        if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            request.setUser(user);
+        }
+
         request.setType(NotificationType.REQUEST);
         return notificationRepository.save(request);
     }
 
     /**
-     * Get all the notifications.
+     * Get all the requests.
      *
      * @param pageable the pagination information
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public Page<Notification> findAllNotifications(Pageable pageable) {
-        Page<Notification> page;
+    public Page<Notification> findAllByType(NotificationType notificationType, Pageable pageable) {
 
         if (SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
-            log.debug("Request to get a page of all notifications");
-            page = notificationRepository.findAllNotifications(pageable);
+            log.debug("Request to get a page of all Requests");
+            return notificationRepository.findAll(pageable);
         } else {
-            log.debug("Request to get a page of Notifications by current User");
-            page = notificationRepository.findAllNotificationsByCurrentUser(pageable);
+            switch (notificationType) {
+                case NOTIFICATION:
+                    log.debug("Request to get a page of Notifications by current User");
+                    return notificationRepository.findAllNotificationsByCurrentUser(pageable);
+                case REQUEST:
+                    log.debug("Request to get a page of Requests by current User");
+                    return notificationRepository.findAllRequestsByCurrentUser(pageable);
+                case ALERT:
+                    throw new BadRequestAlertException("Not yet implemented", ENTITY_REQUEST, "notimplemented");
+                    default:
+                        return null;
+            }
         }
 
-        return page;
     }
 
     /**
@@ -120,10 +138,21 @@ public class NotificationService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public Notification findOneNotification(Long id) {
+    public Notification findOneByType(NotificationType notificationType, Long id) {
         log.debug("Request to get Notification : {}", id);
 
-        Notification notification = notificationRepository.findOne(id);
+        Notification notification = null;
+
+        switch (notificationType) {
+            case NOTIFICATION:
+                notification = notificationRepository.findOneByType(NotificationType.NOTIFICATION, id);
+                break;
+            case REQUEST:
+                notification = notificationRepository.findOneByType(NotificationType.REQUEST, id);
+                break;
+            case ALERT:
+                throw new BadRequestAlertException("Not yet implemented", ENTITY_REQUEST, "notimplemented");
+        }
 
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
 
@@ -132,7 +161,11 @@ public class NotificationService {
         }
 
         // If the notification.user does not match and isn't admin... error
-        if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+        if (!notification.getUser().equals(user)
+
+            && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)
+
+            && notification.getType().equals(notificationType)) {
             throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
         }
 

@@ -2,6 +2,7 @@ package com.arnaugarcia.uplace.repository;
 
 import com.arnaugarcia.uplace.domain.Notification;
 import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +24,9 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Query("select notification from Notification notification where notification.user.login = ?#{principal.username}")
     List<Notification> findByUserIsCurrentUser();
 
+    @Query("select notification from Notification notification where notification.type = :notificationType and notification.id = :id")
+    Notification findOneByType(NotificationType notificationType, Long id);
+
     @Query("select notification from Notification notification where notification.user.login = ?#{principal.username}")
     Page<Notification> findByUserIsCurrentUserAndReadFalse(Pageable pageable);
 
@@ -33,6 +37,9 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     @Query("select notification from Notification notification where notification.user.login = ?#{principal.username} and notification.type = 'NOTIFICATION'")
     Page<Notification> findAllNotificationsByCurrentUser(Pageable pageable);
+
+    @Query("select notification from Notification notification where notification.user.login = ?#{principal.username} and notification.type = 'REQUEST'")
+    Page<Notification> findAllRequestsByCurrentUser(Pageable pageable);
 
     @Query("select notification from Notification notification where notification.type = 'NOTIFICATION'")
     Page<Notification> findAllNotifications(Pageable pageable);
