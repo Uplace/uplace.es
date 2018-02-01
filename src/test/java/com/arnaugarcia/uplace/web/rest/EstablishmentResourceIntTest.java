@@ -3,6 +3,7 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Establishment;
+import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.arnaugarcia.uplace.repository.EstablishmentRepository;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
@@ -47,6 +48,10 @@ public class EstablishmentResourceIntTest {
     private static final Double DEFAULT_PRICE = 0.0;
 
     private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.now();
+
+    private static final TransactionType DEFAULT_TRANSACCTION = TransactionType.RENT_BUY;
+
+    private static final String DEFAULT_REFERENCE = "AAAAAAA";
 
     private static final Integer DEFAULT_M_2_FACADE = 1;
     private static final Integer UPDATED_M_2_FACADE = 2;
@@ -104,7 +109,9 @@ public class EstablishmentResourceIntTest {
             .energyCertificate(DEFAULT_ENERGY_CERTIFICATE)
             .created(DEFAULT_CREATED)
             .title(DEFAULT_TITLE)
-            .price(DEFAULT_PRICE);
+            .price(DEFAULT_PRICE)
+            .reference(DEFAULT_REFERENCE)
+            .transaction(DEFAULT_TRANSACCTION);
         return establishment;
     }
 
