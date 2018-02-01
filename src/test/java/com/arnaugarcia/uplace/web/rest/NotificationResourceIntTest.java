@@ -273,13 +273,13 @@ public class NotificationResourceIntTest {
             .andExpect(jsonPath("$.read").value(DEFAULT_READ.booleanValue()));
     }*/
 
-    @Test
+    /*@Test
     @Transactional
     public void getNonExistingNotification() throws Exception {
         // Get the notification
         restNotificationMockMvc.perform(get("/api/notifications/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
-    }
+    }*/
 
     /*@Test
     @Transactional
