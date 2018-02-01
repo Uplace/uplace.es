@@ -7,8 +7,11 @@ public final class ErrorConstants {
     public static final String ERR_CONCURRENCY_FAILURE = "error.concurrencyFailure";
     public static final String ERR_VALIDATION = "error.validation";
     public static final String ERR_BAD_ID = "error.badid";
+    public static final String ERR_BAD_USER = "error.baduser";
+    public static final String ERR_BAD_REFERENCE = "error.badreference";
     public static final String ERR_ID_EXISTS = "error.idexists";
     public static final String ERR_BAD_TYPE = "error.badtype";
+    public static final String NOT_IMPLEMENTED = "error.notimplemented";
     public static final String PROBLEM_BASE_URL = "http://uplace.es/#/error";
     public static final URI DEFAULT_TYPE = URI.create(PROBLEM_BASE_URL + "/problem-with-message");
     public static final URI CONSTRAINT_VIOLATION_TYPE = URI.create(PROBLEM_BASE_URL + "/constraint-violation");
