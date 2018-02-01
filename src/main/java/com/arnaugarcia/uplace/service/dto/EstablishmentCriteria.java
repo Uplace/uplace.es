@@ -1,6 +1,8 @@
 package com.arnaugarcia.uplace.service.dto;
 
 import java.io.Serializable;
+import java.net.PortUnreachableException;
+
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.UseEstablishment;
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
@@ -25,7 +27,7 @@ import io.github.jhipster.service.filter.StringFilter;
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
-public class EstablishmentCriteria implements Serializable {
+public class EstablishmentCriteria extends PropertyCriteria implements Serializable {
     /**
      * Class for filtering Select
      */
