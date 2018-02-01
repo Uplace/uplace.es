@@ -32,7 +32,6 @@ public class IndustrialPlantCriteria extends PropertyCriteria implements Seriali
 
     private static final long serialVersionUID = 1L;
 
-
     private LongFilter id;
 
     private IntegerFilter solarSurface;
