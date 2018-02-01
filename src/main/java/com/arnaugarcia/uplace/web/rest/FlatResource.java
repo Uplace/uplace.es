@@ -9,6 +9,7 @@ import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.service.ApartmentService;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -61,7 +62,7 @@ public class FlatResource {
     public ResponseEntity<Property> createFlat(@RequestBody Apartment flat) throws URISyntaxException {
         log.debug("REST request to save a new Flat : {}", flat);
         if (flat.getId() != null) {
-            throw new BadRequestAlertException("A new flat cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new flat cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
         }
 
         flat.setType(ApartmentType.FLAT);
@@ -97,7 +98,7 @@ public class FlatResource {
         if (flat.getId() == null) {
             return createFlat(flat);
         } else if (!flat.getType().equals(ApartmentType.FLAT)) {
-            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to update a FLAT", ENTITY_NAME ,"badType");
+            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to update a FLAT", ENTITY_NAME , ErrorConstants.ERR_BAD_TYPE);
         }
         // Set updated to now()
         flat.setUpdated(ZonedDateTime.now());
@@ -132,7 +133,7 @@ public class FlatResource {
         log.debug("REST request to get all flats");
         Apartment apartment = apartmentService.findFlatByReference(reference);
         if (apartment == null || apartment.getManagers() == null) {
-            throw new BadRequestAlertException("The Flat with this reference doesn't exists or we have an error with our agents", ENTITY_NAME, "badagent");
+            throw new BadRequestAlertException("The Flat with this reference doesn't exists or we have an error with our agents", ENTITY_NAME, ErrorConstants.ERR_BAD_REFERENCE);
         }
         return apartment.getManagers();
     }
@@ -166,7 +167,7 @@ public class FlatResource {
         log.debug("REST request to get all flats");
         Apartment flat = this.apartmentService.findFlatByReference(reference);
         if (!flat.getType().equals(ApartmentType.FLAT)) {
-            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
+            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME, ErrorConstants.ERR_BAD_TYPE);
         }
 
         return flat.getPhotos();
@@ -201,7 +202,7 @@ public class FlatResource {
         Apartment apartment = apartmentService.findFlatByReference(reference);
         Photo photo = photoRepository.findOne(id);
         if (!apartment.getPhotos().contains(photo)) {
-            throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
+            throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, ErrorConstants.ERR_BAD_ID);
         }
         photoRepository.delete(id);
         return getPhotosOfFlat(reference);
@@ -220,7 +221,7 @@ public class FlatResource {
         log.debug("REST request to update Photo of a Flat : {}", reference);
         Apartment apartment = apartmentService.findFlatByReference(reference);
         if (!apartment.getPhotos().contains(photo)) {
-            throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, "badphoto");
+            throw new BadRequestAlertException("This id doesn't exists or don't belong to this Flat", ENTITY_NAME, ErrorConstants.ERR_BAD_ID);
         }
         photoRepository.save(photo);
         return getPhotosOfFlat(reference);
@@ -239,7 +240,7 @@ public class FlatResource {
         Apartment flat = apartmentService.findFlatByReference(reference);
 
         if (!flat.getType().equals(ApartmentType.FLAT)) {
-            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME,"badtype");
+            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME, ErrorConstants.ERR_BAD_TYPE);
         }
 
         photos.forEach((photo -> photo.setProperty(flat)));
@@ -260,7 +261,7 @@ public class FlatResource {
         log.debug("REST request to delete a Flat : {}", reference);
         Apartment apartment = apartmentService.findFlatByReference(reference);
         if (apartment.getId() == null) {
-            throw new BadRequestAlertException("The referenced Flat doesn't exists", ENTITY_NAME, "idnoexists");
+            throw new BadRequestAlertException("The referenced Flat doesn't exists", ENTITY_NAME, ErrorConstants.ERR_BAD_ID);
         }
         apartmentService.deleteByReference(reference);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, reference)).build();

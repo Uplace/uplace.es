@@ -8,6 +8,7 @@ import com.arnaugarcia.uplace.repository.UserRepository;
 import com.arnaugarcia.uplace.security.AuthoritiesConstants;
 import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -112,7 +113,7 @@ public class NotificationService {
                     log.debug("Request to get a page of Requests by current User");
                     return notificationRepository.findAllRequestsByCurrentUser(pageable);
                 case ALERT:
-                    throw new BadRequestAlertException("Not yet implemented", ENTITY_REQUEST, "notimplemented");
+                    throw new BadRequestAlertException("Not yet implemented", ENTITY_REQUEST, ErrorConstants.NOT_IMPLEMENTED);
                     default:
                         return null;
             }
@@ -151,18 +152,18 @@ public class NotificationService {
                 notification = notificationRepository.findOneByType(NotificationType.REQUEST, id);
                 break;
             case ALERT:
-                throw new BadRequestAlertException("Not yet implemented", ENTITY_REQUEST, "notimplemented");
+                throw new BadRequestAlertException("Not yet implemented", ENTITY_REQUEST, ErrorConstants.NOT_IMPLEMENTED);
         }
 
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
 
         if (notification == null || !notification.getType().equals(NotificationType.NOTIFICATION)) {
-            throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, "badid");
+            throw new BadRequestAlertException("No notification was found with this ID", ENTITY_NOTIFICATION, ErrorConstants.ERR_BAD_ID);
         }
 
         // If the notification.user does not match and isn't admin... error
         if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+            throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, ErrorConstants.ERR_BAD_USER);
         }
 
         return notification;
@@ -183,7 +184,7 @@ public class NotificationService {
 
         // If the notification.user does not match and isn't admin... error
         if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+            throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, ErrorConstants.ERR_BAD_USER);
         }
 
         notificationRepository.delete(id);
@@ -194,7 +195,7 @@ public class NotificationService {
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
         notifications.forEach(notification -> {
             if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, ErrorConstants.ERR_BAD_USER);
             } else {
                 notification.setRead(status);
             }
@@ -210,7 +211,7 @@ public class NotificationService {
         //if there are a notification that does not belongs to the user and isn't admin... error
         notifications.forEach(notification -> {
             if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, ErrorConstants.ERR_BAD_USER);
             }
         });
 
@@ -226,7 +227,7 @@ public class NotificationService {
         // Checks if the user is the correct user
         notificationList.forEach(notification -> {
             if (!notification.getUser().equals(user) && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, "baduser");
+                throw new BadRequestAlertException("This notification doesn't belongs to you :)", ENTITY_NOTIFICATION, ErrorConstants.ERR_BAD_USER);
             }
         });
 
