@@ -8,6 +8,7 @@
     "node_modules"
   ],
   "dependencies": {
+    "@angular-devkit/core": "^0.2.0",
     "@angular/common": "5.1.0",
     "@angular/compiler": "5.1.0",
     "@angular/core": "5.1.0",
@@ -88,7 +89,7 @@
   },
   "scripts": {
     "lint": "tslint --project tsconfig.json -e 'node_modules/**'",
-    "lint:fix": "yarn run lint -- --fix",
+    "lint:fix": "yarn run lint --fix",
     "ngc": "ngc -p tsconfig-aot.json",
     "cleanup": "rimraf target/{aot,www}",
     "clean-www": "rimraf target//www/app/{src,target/}",
@@ -97,10 +98,10 @@
     "build": "yarn run webpack:prod",
     "test": "yarn run lint && karma start src/test/javascript/karma.conf.js",
     "test:watch": "yarn test -- --watch",
-    "webpack:dev": "yarn run webpack-dev-server -- --config webpack/webpack.dev.js --progress --inline --hot --profile --port=9060 --watch-content-base",
-    "webpack:build:main": "yarn run webpack -- --config webpack/webpack.dev.js --progress --profile",
+    "webpack:dev": "yarn run webpack-dev-server --config webpack/webpack.dev.js --progress --inline --hot --profile --port=9060 --watch-content-base",
+    "webpack:build:main": "yarn run webpack --config webpack/webpack.dev.js --progress --profile",
     "webpack:build": "yarn run cleanup && yarn run webpack:build:main",
-    "webpack:prod:main": "yarn run webpack -- --config webpack/webpack.prod.js --progress --profile",
+    "webpack:prod:main": "yarn run webpack --config webpack/webpack.prod.js --progress --profile",
     "webpack:prod": "yarn run cleanup && yarn run webpack:prod:main && yarn run clean-www",
     "webpack:test": "yarn run test",
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
