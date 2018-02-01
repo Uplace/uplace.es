@@ -7,6 +7,7 @@ import com.arnaugarcia.uplace.security.AuthoritiesConstants;
 import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.arnaugarcia.uplace.service.NotificationService;
 import com.arnaugarcia.uplace.service.UserService;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Notification;
 
@@ -66,7 +67,7 @@ public class NotificationResource {
         log.debug("REST request to save Notification : {}", notification);
 
         if (notification.getId() != null) {
-            throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
         }
         //If is a new notification the date must be now
         notification.setCreation(ZonedDateTime.now());
@@ -201,7 +202,7 @@ public class NotificationResource {
             notificationService.delete(id);
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
         } else {
-            throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, "badid");
+            throw new BadRequestAlertException("The requested notification doesn't exists", ENTITY_NAME, ErrorConstants.ERR_BAD_ID);
         }
 
     }

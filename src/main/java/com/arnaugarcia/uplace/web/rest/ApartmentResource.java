@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.service.PropertyService;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.service.ApartmentService;
@@ -54,7 +55,7 @@ public class ApartmentResource {
     public ResponseEntity<Apartment> createApartment(@RequestBody Apartment apartment) throws URISyntaxException {
         log.debug("REST request to save Apartment : {}", apartment);
         if (apartment.getId() != null) {
-            throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
         }
         apartment.setReference(propertyService.createReference());
         Apartment result = apartmentService.save(apartment);
