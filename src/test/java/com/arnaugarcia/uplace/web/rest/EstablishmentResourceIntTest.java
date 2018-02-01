@@ -3,9 +3,11 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Establishment;
-import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.arnaugarcia.uplace.repository.EstablishmentRepository;
+import com.arnaugarcia.uplace.service.EstablishmentService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
+import com.arnaugarcia.uplace.service.dto.EstablishmentCriteria;
+import com.arnaugarcia.uplace.service.EstablishmentQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.arnaugarcia.uplace.web.rest.TestUtil.createFormattingConversionService;
@@ -43,16 +44,6 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 @SpringBootTest(classes = UplaceApp.class)
 public class EstablishmentResourceIntTest {
 
-    private static final String DEFAULT_TITLE = "TEST Apartment";
-
-    private static final Double DEFAULT_PRICE = 0.0;
-
-    private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.now();
-
-    private static final TransactionType DEFAULT_TRANSACCTION = TransactionType.RENT_BUY;
-
-    private static final String DEFAULT_REFERENCE = "AAAAAAA";
-
     private static final Integer DEFAULT_M_2_FACADE = 1;
     private static final Integer UPDATED_M_2_FACADE = 2;
 
@@ -67,6 +58,12 @@ public class EstablishmentResourceIntTest {
 
     @Autowired
     private EstablishmentRepository establishmentRepository;
+
+    @Autowired
+    private EstablishmentService establishmentService;
+
+    @Autowired
+    private EstablishmentQueryService establishmentQueryService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -87,7 +84,7 @@ public class EstablishmentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final EstablishmentResource establishmentResource = new EstablishmentResource(establishmentRepository);
+        final EstablishmentResource establishmentResource = new EstablishmentResource(establishmentService, establishmentQueryService);
         this.restEstablishmentMockMvc = MockMvcBuilders.standaloneSetup(establishmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -102,16 +99,11 @@ public class EstablishmentResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Establishment createEntity(EntityManager em) {
-        Establishment establishment = (Establishment) new Establishment()
+        Establishment establishment = new Establishment()
             .m2Facade(DEFAULT_M_2_FACADE)
             .bathroom(DEFAULT_BATHROOM)
             .use(DEFAULT_USE)
-            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE)
-            .created(DEFAULT_CREATED)
-            .title(DEFAULT_TITLE)
-            .price(DEFAULT_PRICE)
-            .reference(DEFAULT_REFERENCE)
-            .transaction(DEFAULT_TRANSACCTION);
+            .energyCertificate(DEFAULT_ENERGY_CERTIFICATE);
         return establishment;
     }
 
@@ -196,6 +188,214 @@ public class EstablishmentResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllEstablishmentsBym2FacadeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where m2Facade equals to DEFAULT_M_2_FACADE
+        defaultEstablishmentShouldBeFound("m2Facade.equals=" + DEFAULT_M_2_FACADE);
+
+        // Get all the establishmentList where m2Facade equals to UPDATED_M_2_FACADE
+        defaultEstablishmentShouldNotBeFound("m2Facade.equals=" + UPDATED_M_2_FACADE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsBym2FacadeIsInShouldWork() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where m2Facade in DEFAULT_M_2_FACADE or UPDATED_M_2_FACADE
+        defaultEstablishmentShouldBeFound("m2Facade.in=" + DEFAULT_M_2_FACADE + "," + UPDATED_M_2_FACADE);
+
+        // Get all the establishmentList where m2Facade equals to UPDATED_M_2_FACADE
+        defaultEstablishmentShouldNotBeFound("m2Facade.in=" + UPDATED_M_2_FACADE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsBym2FacadeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where m2Facade is not null
+        defaultEstablishmentShouldBeFound("m2Facade.specified=true");
+
+        // Get all the establishmentList where m2Facade is null
+        defaultEstablishmentShouldNotBeFound("m2Facade.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsBym2FacadeIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where m2Facade greater than or equals to DEFAULT_M_2_FACADE
+        defaultEstablishmentShouldBeFound("m2Facade.greaterOrEqualThan=" + DEFAULT_M_2_FACADE);
+
+        // Get all the establishmentList where m2Facade greater than or equals to UPDATED_M_2_FACADE
+        defaultEstablishmentShouldNotBeFound("m2Facade.greaterOrEqualThan=" + UPDATED_M_2_FACADE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsBym2FacadeIsLessThanSomething() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where m2Facade less than or equals to DEFAULT_M_2_FACADE
+        defaultEstablishmentShouldNotBeFound("m2Facade.lessThan=" + DEFAULT_M_2_FACADE);
+
+        // Get all the establishmentList where m2Facade less than or equals to UPDATED_M_2_FACADE
+        defaultEstablishmentShouldBeFound("m2Facade.lessThan=" + UPDATED_M_2_FACADE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByBathroomIsEqualToSomething() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where bathroom equals to DEFAULT_BATHROOM
+        defaultEstablishmentShouldBeFound("bathroom.equals=" + DEFAULT_BATHROOM);
+
+        // Get all the establishmentList where bathroom equals to UPDATED_BATHROOM
+        defaultEstablishmentShouldNotBeFound("bathroom.equals=" + UPDATED_BATHROOM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByBathroomIsInShouldWork() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where bathroom in DEFAULT_BATHROOM or UPDATED_BATHROOM
+        defaultEstablishmentShouldBeFound("bathroom.in=" + DEFAULT_BATHROOM + "," + UPDATED_BATHROOM);
+
+        // Get all the establishmentList where bathroom equals to UPDATED_BATHROOM
+        defaultEstablishmentShouldNotBeFound("bathroom.in=" + UPDATED_BATHROOM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByBathroomIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where bathroom is not null
+        defaultEstablishmentShouldBeFound("bathroom.specified=true");
+
+        // Get all the establishmentList where bathroom is null
+        defaultEstablishmentShouldNotBeFound("bathroom.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByUseIsEqualToSomething() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where use equals to DEFAULT_USE
+        defaultEstablishmentShouldBeFound("use.equals=" + DEFAULT_USE);
+
+        // Get all the establishmentList where use equals to UPDATED_USE
+        defaultEstablishmentShouldNotBeFound("use.equals=" + UPDATED_USE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByUseIsInShouldWork() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where use in DEFAULT_USE or UPDATED_USE
+        defaultEstablishmentShouldBeFound("use.in=" + DEFAULT_USE + "," + UPDATED_USE);
+
+        // Get all the establishmentList where use equals to UPDATED_USE
+        defaultEstablishmentShouldNotBeFound("use.in=" + UPDATED_USE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByUseIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where use is not null
+        defaultEstablishmentShouldBeFound("use.specified=true");
+
+        // Get all the establishmentList where use is null
+        defaultEstablishmentShouldNotBeFound("use.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByEnergyCertificateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where energyCertificate equals to DEFAULT_ENERGY_CERTIFICATE
+        defaultEstablishmentShouldBeFound("energyCertificate.equals=" + DEFAULT_ENERGY_CERTIFICATE);
+
+        // Get all the establishmentList where energyCertificate equals to UPDATED_ENERGY_CERTIFICATE
+        defaultEstablishmentShouldNotBeFound("energyCertificate.equals=" + UPDATED_ENERGY_CERTIFICATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByEnergyCertificateIsInShouldWork() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where energyCertificate in DEFAULT_ENERGY_CERTIFICATE or UPDATED_ENERGY_CERTIFICATE
+        defaultEstablishmentShouldBeFound("energyCertificate.in=" + DEFAULT_ENERGY_CERTIFICATE + "," + UPDATED_ENERGY_CERTIFICATE);
+
+        // Get all the establishmentList where energyCertificate equals to UPDATED_ENERGY_CERTIFICATE
+        defaultEstablishmentShouldNotBeFound("energyCertificate.in=" + UPDATED_ENERGY_CERTIFICATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllEstablishmentsByEnergyCertificateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        establishmentRepository.saveAndFlush(establishment);
+
+        // Get all the establishmentList where energyCertificate is not null
+        defaultEstablishmentShouldBeFound("energyCertificate.specified=true");
+
+        // Get all the establishmentList where energyCertificate is null
+        defaultEstablishmentShouldNotBeFound("energyCertificate.specified=false");
+    }
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultEstablishmentShouldBeFound(String filter) throws Exception {
+        restEstablishmentMockMvc.perform(get("/api/establishments?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(establishment.getId().intValue())))
+            .andExpect(jsonPath("$.[*].m2Facade").value(hasItem(DEFAULT_M_2_FACADE)))
+            .andExpect(jsonPath("$.[*].bathroom").value(hasItem(DEFAULT_BATHROOM.toString())))
+            .andExpect(jsonPath("$.[*].use").value(hasItem(DEFAULT_USE.toString())))
+            .andExpect(jsonPath("$.[*].energyCertificate").value(hasItem(DEFAULT_ENERGY_CERTIFICATE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultEstablishmentShouldNotBeFound(String filter) throws Exception {
+        restEstablishmentMockMvc.perform(get("/api/establishments?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
+
+    @Test
+    @Transactional
     public void getNonExistingEstablishment() throws Exception {
         // Get the establishment
         restEstablishmentMockMvc.perform(get("/api/establishments/{id}", Long.MAX_VALUE))
@@ -206,7 +406,8 @@ public class EstablishmentResourceIntTest {
     @Transactional
     public void updateEstablishment() throws Exception {
         // Initialize the database
-        establishmentRepository.saveAndFlush(establishment);
+        establishmentService.save(establishment);
+
         int databaseSizeBeforeUpdate = establishmentRepository.findAll().size();
 
         // Update the establishment
@@ -256,7 +457,8 @@ public class EstablishmentResourceIntTest {
     @Transactional
     public void deleteEstablishment() throws Exception {
         // Initialize the database
-        establishmentRepository.saveAndFlush(establishment);
+        establishmentService.save(establishment);
+
         int databaseSizeBeforeDelete = establishmentRepository.findAll().size();
 
         // Get the establishment

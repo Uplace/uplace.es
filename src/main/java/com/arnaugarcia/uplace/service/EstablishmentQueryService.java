@@ -13,67 +13,67 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.github.jhipster.service.QueryService;
 
-import com.arnaugarcia.uplace.domain.Parking;
+import com.arnaugarcia.uplace.domain.Establishment;
 import com.arnaugarcia.uplace.domain.*; // for static metamodels
-import com.arnaugarcia.uplace.repository.ParkingRepository;
-import com.arnaugarcia.uplace.service.dto.ParkingCriteria;
+import com.arnaugarcia.uplace.repository.EstablishmentRepository;
+import com.arnaugarcia.uplace.service.dto.EstablishmentCriteria;
 
-import com.arnaugarcia.uplace.domain.enumeration.ParkingType;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
-import com.arnaugarcia.uplace.domain.enumeration.Select;
+import com.arnaugarcia.uplace.domain.enumeration.UseEstablishment;
+import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 
 /**
- * Service for executing complex queries for Parking entities in the database.
- * The main input is a {@link ParkingCriteria} which get's converted to {@link Specifications},
+ * Service for executing complex queries for Establishment entities in the database.
+ * The main input is a {@link EstablishmentCriteria} which get's converted to {@link Specifications},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link Parking} or a {@link Page} of {@link Parking} which fulfills the criteria.
+ * It returns a {@link List} of {@link Establishment} or a {@link Page} of {@link Establishment} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
-public class ParkingQueryService extends QueryService<Parking> {
+public class EstablishmentQueryService extends QueryService<Establishment> {
 
-    private final Logger log = LoggerFactory.getLogger(ParkingQueryService.class);
+    private final Logger log = LoggerFactory.getLogger(EstablishmentQueryService.class);
 
 
-    private final ParkingRepository parkingRepository;
+    private final EstablishmentRepository establishmentRepository;
 
-    public ParkingQueryService(ParkingRepository parkingRepository) {
-        this.parkingRepository = parkingRepository;
+    public EstablishmentQueryService(EstablishmentRepository establishmentRepository) {
+        this.establishmentRepository = establishmentRepository;
     }
 
     /**
-     * Return a {@link List} of {@link Parking} which matches the criteria from the database
+     * Return a {@link List} of {@link Establishment} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<Parking> findByCriteria(ParkingCriteria criteria) {
+    public List<Establishment> findByCriteria(EstablishmentCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
-        final Specifications<Parking> specification = createSpecification(criteria);
-        return parkingRepository.findAll(specification);
+        final Specifications<Establishment> specification = createSpecification(criteria);
+        return establishmentRepository.findAll(specification);
     }
 
     /**
-     * Return a {@link Page} of {@link Parking} which matches the criteria from the database
+     * Return a {@link Page} of {@link Establishment} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<Parking> findByCriteria(ParkingCriteria criteria, Pageable page) {
+    public Page<Establishment> findByCriteria(EstablishmentCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
-        final Specifications<Parking> specification = createSpecification(criteria);
-        return parkingRepository.findAll(specification, page);
+        final Specifications<Establishment> specification = createSpecification(criteria);
+        return establishmentRepository.findAll(specification, page);
     }
 
     /**
-     * Function to convert ParkingCriteria to a {@link Specifications}
+     * Function to convert EstablishmentCriteria to a {@link Specifications}
      */
-    private Specifications<Parking> createSpecification(ParkingCriteria criteria) {
-        Specifications<Parking> specification = Specifications.where(null);
+    private Specifications<Establishment> createSpecification(EstablishmentCriteria criteria) {
+        Specifications<Establishment> specification = Specifications.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Parking_.id));
+                specification = specification.and(buildSpecification(criteria.getId(), Establishment_.id));
             }
             if (criteria.getTitle() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTitle(), Property_.title));
@@ -105,17 +105,17 @@ public class ParkingQueryService extends QueryService<Parking> {
             if (criteria.getVisible() != null) {
                 specification = specification.and(buildSpecification(criteria.getVisible(), Property_.visible));
             }
-            if (criteria.getSurface() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getSurface(), Property_.surface));
+            if (criteria.getm2Facade() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getm2Facade(), Establishment_.m2Facade));
             }
-            if (criteria.getParkingType() != null) {
-                specification = specification.and(buildSpecification(criteria.getParkingType(), Parking_.parkingType));
+            if (criteria.getBathroom() != null) {
+                specification = specification.and(buildSpecification(criteria.getBathroom(), Establishment_.bathroom));
             }
-            if (criteria.getNearTransport() != null) {
-                specification = specification.and(buildSpecification(criteria.getNearTransport(), Parking_.nearTransport));
+            if (criteria.getUse() != null) {
+                specification = specification.and(buildSpecification(criteria.getUse(), Establishment_.use));
             }
-            if (criteria.getSurveillance() != null) {
-                specification = specification.and(buildSpecification(criteria.getSurveillance(), Parking_.surveillance));
+            if (criteria.getEnergyCertificate() != null) {
+                specification = specification.and(buildSpecification(criteria.getEnergyCertificate(), Establishment_.energyCertificate));
             }
         }
         return specification;

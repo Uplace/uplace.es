@@ -16,17 +16,7 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
-import io.github.jhipster.service.filter.BooleanFilter;
-import io.github.jhipster.service.filter.DoubleFilter;
-import io.github.jhipster.service.filter.Filter;
-import io.github.jhipster.service.filter.FloatFilter;
-import io.github.jhipster.service.filter.IntegerFilter;
-import io.github.jhipster.service.filter.LongFilter;
-import io.github.jhipster.service.filter.StringFilter;
-
-
-
-
+import io.github.jhipster.service.filter.*;
 
 
 /**
@@ -37,7 +27,7 @@ import io.github.jhipster.service.filter.StringFilter;
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
-public class ApartmentCriteria implements Serializable {
+public class ApartmentCriteria extends PropertyCriteria implements Serializable {
     /**
      * Class for filtering Select
      */
@@ -53,11 +43,9 @@ public class ApartmentCriteria implements Serializable {
     /**
      * Class for filtering EnergyCertificate
      */
-    public static class EnergyCertificateFilter extends Filter<EnergyCertificate> {
-    }
+    public static class EnergyCertificateFilter extends Filter<EnergyCertificate> { }
 
     private static final long serialVersionUID = 1L;
-
 
     private LongFilter id;
 

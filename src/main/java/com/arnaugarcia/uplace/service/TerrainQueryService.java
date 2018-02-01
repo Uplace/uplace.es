@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.service;
 
 
+import com.arnaugarcia.uplace.domain.Property_;
 import com.arnaugarcia.uplace.domain.Terrain;
 import com.arnaugarcia.uplace.domain.Terrain_;
 import com.arnaugarcia.uplace.repository.TerrainRepository;
@@ -68,6 +69,39 @@ public class TerrainQueryService extends QueryService<Terrain> {
         if (criteria != null) {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), Terrain_.id));
+            }
+            if (criteria.getTitle() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getTitle(), Property_.title));
+            }
+            if (criteria.getPrice() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPrice(), Property_.price));
+            }
+            if (criteria.getCreated() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCreated(), Property_.created));
+            }
+            if (criteria.getUpdated() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
+            }
+            if (criteria.getReference() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
+            }
+            if (criteria.getPriceSell() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPriceSell(), Property_.priceSell));
+            }
+            if (criteria.getPriceRent() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPriceRent(), Property_.priceRent));
+            }
+            if (criteria.getYearConstruction() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getYearConstruction(), Property_.yearConstruction));
+            }
+            if (criteria.getNewCreation() != null) {
+                specification = specification.and(buildSpecification(criteria.getNewCreation(), Property_.newCreation));
+            }
+            if (criteria.getVisible() != null) {
+                specification = specification.and(buildSpecification(criteria.getVisible(), Property_.visible));
+            }
+            if (criteria.getSurface() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getSurface(), Property_.surface));
             }
             if (criteria.getm2Buildable() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getm2Buildable(), Terrain_.m2Buildable));

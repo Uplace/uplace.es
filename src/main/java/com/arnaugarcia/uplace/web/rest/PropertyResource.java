@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.domain.IndustrialPlant;
 import com.arnaugarcia.uplace.repository.*;
 import com.arnaugarcia.uplace.service.*;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
@@ -47,13 +48,25 @@ public class PropertyResource {
 
     private final TerrainService terrainService;
 
-    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService) {
+    private final BuildingService buildingService;
+
+    private final EstablishmentService establishmentService;
+
+    private final IndustrialPlantService industrialPlantService;
+
+    private final HotelService hotelService;
+
+    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService, BuildingService buildingService, EstablishmentService establishmentService, IndustrialPlantService industrialPlantService, HotelService hotelService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentService = apartmentService;
         this.parkingService = parkingService;
         this.businessService = businessService;
         this.officeService = officeService;
         this.terrainService = terrainService;
+        this.buildingService = buildingService;
+        this.establishmentService = establishmentService;
+        this.industrialPlantService = industrialPlantService;
+        this.hotelService = hotelService;
     }
 
     /**
@@ -124,6 +137,18 @@ public class PropertyResource {
 
         //Adds terrain to list
         properties.addAll(terrainService.findAll());
+
+        // Adds hotel to list
+        properties.addAll(hotelService.findAll());
+
+        //Adds building to list
+        properties.addAll(buildingService.findAll());
+
+        //Adds establishment to list
+        properties.addAll(establishmentService.findAll());
+
+        //Adds industrial plant to list
+        properties.addAll(industrialPlantService.findAll());
 
         return properties;
     }
