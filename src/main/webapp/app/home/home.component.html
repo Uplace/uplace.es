@@ -21,10 +21,10 @@
 <!--Page Content-->
 <div id="page-content">
     <!-- Map Canvas-->
-    <div class="map-canvas list-solid">
+    <div #map class="map-canvas list-solid results-collapsed" FilterShow>
         <!-- Map -->
         <div class="map">
-            <div class="toggle-navigation">
+            <div class="toggle-navigation" (click)="toggle()">
                 <div class="icon">
                     <div class="line"></div>
                     <div class="line"></div>

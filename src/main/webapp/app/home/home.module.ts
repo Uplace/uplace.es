@@ -10,6 +10,7 @@ import { WhyUsComponent } from './why-us/why-us.component';
 import { FeaturedComponent } from './featured/featured.component';
 import { RecentComponent } from './recent/recent.component';
 import {AgmCoreModule} from '@agm/core';
+import {FilterShowDirective} from './directives/filter-show.directive';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import {AgmCoreModule} from '@agm/core';
         WhyUsComponent,
         FeaturedComponent,
         RecentComponent,
+        FilterShowDirective
     ],
     entryComponents: [
     ],

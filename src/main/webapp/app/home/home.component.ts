@@ -19,20 +19,26 @@ export class HomeComponent implements OnInit {
     lng = 7.809007;
     @ViewChild(AgmMap)
     agmMap: AgmMap;
+    @ViewChild("map")
+        map;
+
+    isActive = false;
 
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager
-    ) {
-    }
+    ) { }
 
     ngOnInit() {
-        console.log(this.agmMap);
         this.principal.identity().then((account) => {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
+    }
+
+    toggle() {
+        this.isActive = !this.isActive;
     }
 
     registerAuthenticationSuccess() {
