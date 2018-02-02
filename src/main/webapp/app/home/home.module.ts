@@ -9,11 +9,15 @@ import { MapComponent } from './map/map.component';
 import { WhyUsComponent } from './why-us/why-us.component';
 import { FeaturedComponent } from './featured/featured.component';
 import { RecentComponent } from './recent/recent.component';
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
     imports: [
         UplaceSharedModule,
-        RouterModule.forChild([ HOME_ROUTE ])
+        RouterModule.forChild([ HOME_ROUTE ]),
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyA2cKil90Egaj6l1QY-h42Slh0UScns69Y'
+        })
     ],
     declarations: [
         HomeComponent,

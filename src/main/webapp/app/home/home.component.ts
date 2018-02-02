@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-
 import { Account, LoginModalService, Principal } from '../shared';
+import { AgmMap } from '@agm/core';
 
 @Component({
     selector: 'up-home',
@@ -15,6 +15,10 @@ import { Account, LoginModalService, Principal } from '../shared';
 export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
+    lat = 51.678418;
+    lng = 7.809007;
+    @ViewChild(AgmMap)
+    agmMap: AgmMap;
 
     constructor(
         private principal: Principal,
@@ -24,6 +28,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.agmMap);
         this.principal.identity().then((account) => {
             this.account = account;
         });

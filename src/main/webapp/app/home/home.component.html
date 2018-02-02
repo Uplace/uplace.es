@@ -32,7 +32,9 @@
                 </div>
             </div>
             <!--/.toggle-navigation-->
-            <div id="map" class="has-parallax"></div>
+            <agm-map [latitude]="lat" [longitude]="lng">
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            </agm-map>
         </div>
         <!-- end Map -->
         <!--Items List-->
