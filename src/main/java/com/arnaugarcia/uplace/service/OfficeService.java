@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -20,8 +21,11 @@ public class OfficeService {
 
     private final OfficeRepository officeRepository;
 
-    public OfficeService(OfficeRepository officeRepository) {
+    private final PropertyService propertyService;
+
+    public OfficeService(OfficeRepository officeRepository, PropertyService propertyService) {
         this.officeRepository = officeRepository;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -32,6 +36,15 @@ public class OfficeService {
      */
     public Office save(Office office) {
         log.debug("Request to save Office : {}", office);
+
+        office.setReference(propertyService.createReference());
+
+        // Si tiene id o no haces el created o no
+        if (office.getId() != null) { //Tiene id
+            office.setUpdated(ZonedDateTime.now());
+        } else { //No tiene id
+            office.setCreated(ZonedDateTime.now());
+        }
         return officeRepository.save(office);
     }
 

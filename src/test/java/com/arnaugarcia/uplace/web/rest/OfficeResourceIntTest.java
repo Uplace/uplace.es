@@ -107,12 +107,10 @@ public class OfficeResourceIntTest {
 
     private Office office;
 
-    private PropertyService propertyService;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OfficeResource officeResource = new OfficeResource(officeService, officeQueryService, propertyService);
+        final OfficeResource officeResource = new OfficeResource(officeService, officeQueryService);
         this.restOfficeMockMvc = MockMvcBuilders.standaloneSetup(officeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
