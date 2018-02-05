@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { Account, LoginModalService, Principal } from '../shared';
 import { AgmMap } from '@agm/core';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: 'up-home',
@@ -12,15 +13,18 @@ import { AgmMap } from '@agm/core';
     ]
 
 })
+
 export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
-    markers: {latitude: number, longitude: number}[] = [];
+    markers: any;
+
 
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private http: HttpClient
     ) { }
 
     ngOnInit() {
@@ -28,13 +32,10 @@ export class HomeComponent implements OnInit {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
-        this.markers.push(
-            {latitude: 51.673850, longitude: 7.815982},
-            {latitude: 51.673870, longitude: 7.815982},
-            {latitude: 51.673880, longitude: 7.815982},
-            {latitude: 51.673900, longitude: 7.815982},
-            {latitude: 51.673950, longitude: 7.815982}
-            )
+        this.http.get('http://uplace.es/content/data.json').subscribe((result) => {
+            this.markers = result;
+            console.log(result);
+        });
     }
 
     registerAuthenticationSuccess() {
