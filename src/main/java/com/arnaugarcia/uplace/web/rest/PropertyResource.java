@@ -38,6 +38,8 @@ public class PropertyResource {
 
     private final PropertyQueryService propertyQueryService;
 
+    private final PropertyService propertyService;
+
     private final ApartmentService apartmentService;
 
     private final ParkingService parkingService;
@@ -58,6 +60,7 @@ public class PropertyResource {
 
     public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService, BuildingService buildingService, EstablishmentService establishmentService, IndustrialPlantService industrialPlantService, HotelService hotelService) {
         this.propertyQueryService = propertyQueryService;
+        this.propertyService = propertyService;
         this.apartmentService = apartmentService;
         this.parkingService = parkingService;
         this.businessService = businessService;
@@ -76,18 +79,18 @@ public class PropertyResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PostMapping("/properties")
+    @PostMapping("/properties")
     @Timed
     public ResponseEntity<Property> createProperty(@Valid @RequestBody Property property) throws URISyntaxException {
         log.debug("REST request to save Property : {}", property);
         if (property.getId() != null) {
             throw new BadRequestAlertException("A new property cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Property result = propertyRepository.save(property);
+        Property result = propertyService.save(property);
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
-    }*/
+    }
 
     /**
      * PUT  /properties : Updates an existing property.
