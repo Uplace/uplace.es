@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -20,8 +21,11 @@ public class IndustrialPlantService {
 
     private final IndustrialPlantRepository industrialPlantRepository;
 
-    public IndustrialPlantService(IndustrialPlantRepository industrialPlantRepository) {
+    private final PropertyService propertyService;
+
+    public IndustrialPlantService(IndustrialPlantRepository industrialPlantRepository, PropertyService propertyService) {
         this.industrialPlantRepository = industrialPlantRepository;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -32,6 +36,15 @@ public class IndustrialPlantService {
      */
     public IndustrialPlant save(IndustrialPlant industrialPlant) {
         log.debug("Request to save IndustrialPlant : {}", industrialPlant);
+
+        industrialPlant.setReference(propertyService.createReference());
+
+        // Si tiene id o no haces el created o no
+        if (industrialPlant.getId() != null) { //Tiene id
+            industrialPlant.setUpdated(ZonedDateTime.now());
+        } else { //No tiene id
+            industrialPlant.setCreated(ZonedDateTime.now());
+        }
         return industrialPlantRepository.save(industrialPlant);
     }
 
