@@ -22,13 +22,11 @@ public class BuildingService {
     private final Logger log = LoggerFactory.getLogger(BuildingService.class);
 
     private final BuildingRepository buildingRepository;
-    private final PropertyRepository propertyRepository;
 
     private final PropertyService propertyService;
 
-    public BuildingService(BuildingRepository buildingRepository, PropertyRepository propertyRepository, PropertyService propertyService) {
+    public BuildingService(BuildingRepository buildingRepository, PropertyService propertyService) {
         this.buildingRepository = buildingRepository;
-        this.propertyRepository = propertyRepository;
         this.propertyService = propertyService;
     }
 
@@ -83,19 +81,5 @@ public class BuildingService {
     public void delete(Long id) {
         log.debug("Request to delete Building : {}", id);
         buildingRepository.delete(id);
-    }
-
-    /**
-     * Create unique reference randomly.
-     *
-     * @return reference created
-     */
-    public String createReference() {
-        String reference;
-        do {
-            reference = RandomUtil.generateReference().toUpperCase();
-            log.debug("Generating reference: " + reference);
-        } while (propertyRepository.findByReference(reference) != null);
-        return reference;
     }
 }

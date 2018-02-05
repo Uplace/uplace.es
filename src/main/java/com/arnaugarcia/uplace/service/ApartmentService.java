@@ -30,13 +30,11 @@ public class ApartmentService {
     private static final String ENTITY_FLAT = "FLAT";
 
     private final ApartmentRepository apartmentRepository;
-    private final PropertyRepository propertyRepository;
 
     private final PropertyService propertyService;
 
-    public ApartmentService(ApartmentRepository apartmentRepository, PropertyRepository propertyRepository, PropertyService propertyService) {
+    public ApartmentService(ApartmentRepository apartmentRepository, PropertyService propertyService) {
         this.apartmentRepository = apartmentRepository;
-        this.propertyRepository = propertyRepository;
         this.propertyService = propertyService;
     }
 
@@ -153,21 +151,6 @@ public class ApartmentService {
     public void deleteByReference(String reference) {
         log.debug("Request to delete Apartment : {}", reference);
         apartmentRepository.deleteByReference(reference);
-    }
-
-
-    /**
-     * Create unique reference randomly.
-     *
-     * @return reference created
-     */
-    public String createReference() {
-        String reference;
-        do {
-            reference = RandomUtil.generateReference().toUpperCase();
-            log.debug("Generating reference: " + reference);
-        } while (propertyRepository.findByReference(reference) != null);
-        return reference;
     }
 
 }

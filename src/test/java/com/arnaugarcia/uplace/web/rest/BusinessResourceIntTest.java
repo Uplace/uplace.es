@@ -110,12 +110,10 @@ public class BusinessResourceIntTest {
 
     private Business business;
 
-    private PropertyService propertyService;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BusinessResource businessResource = new BusinessResource(businessService, propertyService);
+        final BusinessResource businessResource = new BusinessResource(businessService);
         this.restBusinessMockMvc = MockMvcBuilders.standaloneSetup(businessResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
