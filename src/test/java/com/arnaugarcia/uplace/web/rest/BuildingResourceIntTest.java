@@ -98,12 +98,10 @@ public class BuildingResourceIntTest {
 
     private Building building;
 
-    private PropertyService propertyService;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BuildingResource buildingResource = new BuildingResource(buildingService, propertyService, buildingQueryService);
+        final BuildingResource buildingResource = new BuildingResource(buildingService, buildingQueryService);
         this.restBuildingMockMvc = MockMvcBuilders.standaloneSetup(buildingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

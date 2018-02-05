@@ -33,13 +33,11 @@ public class ApartmentResource {
     private static final String ENTITY_NAME = "apartment";
 
     private final ApartmentService apartmentService;
-    private final PropertyService propertyService;
 
     private final ApartmentQueryService apartmentQueryService;
 
-    public ApartmentResource(ApartmentService apartmentService, PropertyService propertyService, ApartmentQueryService apartmentQueryService) {
+    public ApartmentResource(ApartmentService apartmentService, ApartmentQueryService apartmentQueryService) {
         this.apartmentService = apartmentService;
-        this.propertyService = propertyService;
         this.apartmentQueryService = apartmentQueryService;
     }
 

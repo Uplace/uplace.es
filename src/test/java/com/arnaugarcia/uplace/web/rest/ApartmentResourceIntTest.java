@@ -120,12 +120,10 @@ public class ApartmentResourceIntTest {
 
     private Apartment apartment;
 
-    private PropertyService propertyService;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ApartmentResource apartmentResource = new ApartmentResource(apartmentService, propertyService, apartmentQueryService);
+        final ApartmentResource apartmentResource = new ApartmentResource(apartmentService, apartmentQueryService);
         this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

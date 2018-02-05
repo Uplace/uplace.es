@@ -32,13 +32,11 @@ public class BuildingResource {
     private static final String ENTITY_NAME = "building";
 
     private final BuildingService buildingService;
-    private final PropertyService propertyService;
 
     private final BuildingQueryService buildingQueryService;
 
-    public BuildingResource(BuildingService buildingService, PropertyService propertyService, BuildingQueryService buildingQueryService) {
+    public BuildingResource(BuildingService buildingService, BuildingQueryService buildingQueryService) {
         this.buildingService = buildingService;
-        this.propertyService = propertyService;
         this.buildingQueryService = buildingQueryService;
     }
 
@@ -56,7 +54,6 @@ public class BuildingResource {
         if (building.getId() != null) {
             throw new BadRequestAlertException("A new building cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        building.setReference(propertyService.createReference());
         Building result = buildingService.save(building);
         return ResponseEntity.created(new URI("/api/buildings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
