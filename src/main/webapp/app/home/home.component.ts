@@ -15,8 +15,7 @@ import { AgmMap } from '@agm/core';
 export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
-    lat = 51.678418;
-    lng = 7.809007;
+    markers: {latitude: number, longitude: number}[] = [];
 
     constructor(
         private principal: Principal,
@@ -29,6 +28,13 @@ export class HomeComponent implements OnInit {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
+        this.markers.push(
+            {latitude: 51.673850, longitude: 7.815982},
+            {latitude: 51.673870, longitude: 7.815982},
+            {latitude: 51.673880, longitude: 7.815982},
+            {latitude: 51.673900, longitude: 7.815982},
+            {latitude: 51.673950, longitude: 7.815982}
+            )
     }
 
     registerAuthenticationSuccess() {

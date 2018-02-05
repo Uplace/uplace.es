@@ -32,6 +32,11 @@
                 </div>
             </div>
             <!--/.toggle-navigation-->
+            <agm-map style="height: 300px" [latitude]="51.673858" [longitude]="7.815982">
+                <agm-marker-cluster imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
+                    <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+                </agm-marker-cluster>
+            </agm-map>
         </div>
         <!-- end Map -->
         <!--Items List-->
