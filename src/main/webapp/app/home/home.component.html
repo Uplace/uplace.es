@@ -21,10 +21,10 @@
 <!--Page Content-->
 <div id="page-content">
     <!-- Map Canvas-->
-    <div #map class="map-canvas list-solid results-collapsed" FilterShow>
+    <div #map class="map-canvas list-solid results-collapsed">
         <!-- Map -->
         <div class="map">
-            <div class="toggle-navigation" (click)="toggle()">
+            <div class="toggle-navigation">
                 <div class="icon">
                     <div class="line"></div>
                     <div class="line"></div>
@@ -32,9 +32,6 @@
                 </div>
             </div>
             <!--/.toggle-navigation-->
-            <agm-map [latitude]="lat" [longitude]="lng">
-                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-            </agm-map>
         </div>
         <!-- end Map -->
         <!--Items List-->

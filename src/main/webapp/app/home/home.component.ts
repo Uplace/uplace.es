@@ -17,12 +17,6 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
     lat = 51.678418;
     lng = 7.809007;
-    @ViewChild(AgmMap)
-    agmMap: AgmMap;
-    @ViewChild("map")
-        map;
-
-    isActive = false;
 
     constructor(
         private principal: Principal,
@@ -35,10 +29,6 @@ export class HomeComponent implements OnInit {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
-    }
-
-    toggle() {
-        this.isActive = !this.isActive;
     }
 
     registerAuthenticationSuccess() {
