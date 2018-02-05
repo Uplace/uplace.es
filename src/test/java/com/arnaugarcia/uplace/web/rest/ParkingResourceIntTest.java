@@ -90,12 +90,10 @@ public class ParkingResourceIntTest {
 
     private Parking parking;
 
-    private PropertyService propertyService;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ParkingResource parkingResource = new ParkingResource(parkingService, parkingQueryService, propertyService);
+        final ParkingResource parkingResource = new ParkingResource(parkingService, parkingQueryService);
         this.restParkingMockMvc = MockMvcBuilders.standaloneSetup(parkingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
