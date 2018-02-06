@@ -34,12 +34,10 @@ public class ParkingResource {
     private final ParkingService parkingService;
 
     private final ParkingQueryService parkingQueryService;
-    private final PropertyService propertyService;
 
-    public ParkingResource(ParkingService parkingService, ParkingQueryService parkingQueryService, PropertyService propertyService) {
+    public ParkingResource(ParkingService parkingService, ParkingQueryService parkingQueryService) {
         this.parkingService = parkingService;
         this.parkingQueryService = parkingQueryService;
-        this.propertyService = propertyService;
     }
 
     /**
@@ -56,7 +54,6 @@ public class ParkingResource {
         if (parking.getId() != null) {
             throw new BadRequestAlertException("A new parking cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        parking.setReference(propertyService.createReference());
         Parking result = parkingService.save(parking);
         return ResponseEntity.created(new URI("/api/parkings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

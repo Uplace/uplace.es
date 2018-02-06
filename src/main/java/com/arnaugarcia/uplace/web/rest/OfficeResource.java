@@ -34,12 +34,10 @@ public class OfficeResource {
     private final OfficeService officeService;
 
     private final OfficeQueryService officeQueryService;
-    private final PropertyService propertyService;
 
-    public OfficeResource(OfficeService officeService, OfficeQueryService officeQueryService, PropertyService propertyService) {
+    public OfficeResource(OfficeService officeService, OfficeQueryService officeQueryService) {
         this.officeService = officeService;
         this.officeQueryService = officeQueryService;
-        this.propertyService = propertyService;
     }
 
     /**
@@ -56,7 +54,6 @@ public class OfficeResource {
         if (office.getId() != null) {
             throw new BadRequestAlertException("A new office cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        office.setReference(propertyService.createReference());
         Office result = officeService.save(office);
         return ResponseEntity.created(new URI("/api/offices/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

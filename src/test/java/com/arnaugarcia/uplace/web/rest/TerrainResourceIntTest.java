@@ -86,12 +86,10 @@ public class TerrainResourceIntTest {
 
     private Terrain terrain;
 
-    private PropertyService propertyService;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TerrainResource terrainResource = new TerrainResource(terrainService, terrainQueryService, propertyService);
+        final TerrainResource terrainResource = new TerrainResource(terrainService, terrainQueryService);
         this.restTerrainMockMvc = MockMvcBuilders.standaloneSetup(terrainResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

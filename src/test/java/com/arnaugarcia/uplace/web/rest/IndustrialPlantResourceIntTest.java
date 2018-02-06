@@ -100,12 +100,10 @@ public class IndustrialPlantResourceIntTest {
 
     private IndustrialPlant industrialPlant;
 
-    private PropertyService propertyService;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final IndustrialPlantResource industrialPlantResource = new IndustrialPlantResource(industrialPlantService, industrialPlantQueryService, propertyService);
+        final IndustrialPlantResource industrialPlantResource = new IndustrialPlantResource(industrialPlantService, industrialPlantQueryService);
         this.restIndustrialPlantMockMvc = MockMvcBuilders.standaloneSetup(industrialPlantResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -29,11 +30,12 @@ public class ApartmentService {
     private static final String ENTITY_FLAT = "FLAT";
 
     private final ApartmentRepository apartmentRepository;
-    private final PropertyRepository propertyRepository;
 
-    public ApartmentService(ApartmentRepository apartmentRepository, PropertyRepository propertyRepository) {
+    private final PropertyService propertyService;
+
+    public ApartmentService(ApartmentRepository apartmentRepository, PropertyService propertyService) {
         this.apartmentRepository = apartmentRepository;
-        this.propertyRepository = propertyRepository;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -44,6 +46,16 @@ public class ApartmentService {
      */
     public Apartment save(Apartment apartment) {
         log.debug("Request to save Apartment : {}", apartment);
+
+        apartment.setReference(propertyService.createReference());
+
+        // Si tiene id o no haces el created o no
+        if (apartment.getId() != null) { //Tiene id
+            apartment.setUpdated(ZonedDateTime.now());
+        } else { //No tiene id
+            apartment.setCreated(ZonedDateTime.now());
+        }
+
         return apartmentRepository.save(apartment);
     }
 
@@ -139,21 +151,6 @@ public class ApartmentService {
     public void deleteByReference(String reference) {
         log.debug("Request to delete Apartment : {}", reference);
         apartmentRepository.deleteByReference(reference);
-    }
-
-
-    /**
-     * Create unique reference randomly.
-     *
-     * @return reference created
-     */
-    public String createReference() {
-        String reference;
-        do {
-            reference = RandomUtil.generateReference().toUpperCase();
-            log.debug("Generating reference: " + reference);
-        } while (propertyRepository.findByReference(reference) != null);
-        return reference;
     }
 
 }

@@ -33,13 +33,11 @@ public class ApartmentResource {
     private static final String ENTITY_NAME = "apartment";
 
     private final ApartmentService apartmentService;
-    private final PropertyService propertyService;
 
     private final ApartmentQueryService apartmentQueryService;
 
-    public ApartmentResource(ApartmentService apartmentService, PropertyService propertyService, ApartmentQueryService apartmentQueryService) {
+    public ApartmentResource(ApartmentService apartmentService, ApartmentQueryService apartmentQueryService) {
         this.apartmentService = apartmentService;
-        this.propertyService = propertyService;
         this.apartmentQueryService = apartmentQueryService;
     }
 
@@ -57,7 +55,6 @@ public class ApartmentResource {
         if (apartment.getId() != null) {
             throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
         }
-        apartment.setReference(propertyService.createReference());
         Apartment result = apartmentService.save(apartment);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

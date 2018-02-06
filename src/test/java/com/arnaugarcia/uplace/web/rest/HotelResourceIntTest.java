@@ -110,12 +110,10 @@ public class HotelResourceIntTest {
 
     private Hotel hotel;
 
-    private PropertyService propertyService;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final HotelResource hotelResource = new HotelResource(hotelService, hotelQueryService, propertyService);
+        final HotelResource hotelResource = new HotelResource(hotelService, hotelQueryService);
         this.restHotelMockMvc = MockMvcBuilders.standaloneSetup(hotelResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
