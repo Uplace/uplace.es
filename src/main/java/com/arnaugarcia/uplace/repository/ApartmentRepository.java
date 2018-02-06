@@ -35,5 +35,8 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Long>, Jpa
 
     List<Apartment> findByType(ApartmentType apartmentType);
 
+    @Query("SELECT p FROM Apartment p where p.reference = :reference and p.type = :type")
+    Apartment findByReferenceAndType(@Param("reference") String reference, @Param("type") ApartmentType type);
+
     void deleteByReference(String reference);
 }

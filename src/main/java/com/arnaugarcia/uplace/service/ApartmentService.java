@@ -45,7 +45,7 @@ public class ApartmentService {
      * @param apartment the entity to save
      * @return the persisted entity
      */
-    public Apartment save(Apartment apartment) {
+    /*public Apartment save(Apartment apartment) {
         log.debug("Request to save Apartment : {}", apartment);
 
         apartment.setReference(propertyService.createReference());
@@ -58,7 +58,7 @@ public class ApartmentService {
         }
 
         return apartmentRepository.save(apartment);
-    }
+    }*/
 
     /**
      * Get all the apartments.
@@ -74,23 +74,25 @@ public class ApartmentService {
     /**
      * Get all apartments by type.
      *
+     * @param apartmentType the type of the apartment
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Apartment> findByApartmentType(ApartmentType apartmentType) {
+    public List<Apartment> findAllByApartmentType(ApartmentType apartmentType) {
         log.debug("Request to get all Apartments by type and criteria");
         return apartmentRepository.findByType(apartmentType);
     }
 
     /**
-     * Get all the flats
+     * Get all apartments by type and reference.
      *
-     * @return the list of flats
+     * @param apartmentType the type of the Apartment
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public Page<Apartment> findAllFlats(Pageable pageable) {
-        log.debug("Request to get all flats");
-        return null;
+    public Apartment findByReference(ApartmentType apartmentType, String reference) {
+        log.debug("Request to get all Apartments by type and criteria");
+        return apartmentRepository.findByReferenceAndType(reference, apartmentType);
     }
 
     /**
@@ -98,7 +100,18 @@ public class ApartmentService {
      *
      * @return the list of flats
      */
-    public Photo findThumbnailByReference(String reference) {
+    /*@Transactional(readOnly = true)
+    public Page<Apartment> findAllFlats(Pageable pageable) {
+        log.debug("Request to get all flats");
+        return null;
+    }*/
+
+    /**
+     * Get all the flats
+     *
+     * @return the list of flats
+     */
+    /*public Photo findThumbnailByReference(String reference) {
         log.debug("Request to get all flats");
         Apartment apartment = apartmentRepository.findByReference(reference);
         if (apartment == null) {
@@ -112,7 +125,7 @@ public class ApartmentService {
             }
         }
         return thumbnail;
-    }
+    }*/
 
 
     /**
@@ -120,7 +133,7 @@ public class ApartmentService {
      *
      * @return the flat of with the requested reference
      */
-    @Transactional(readOnly = true)
+   /* @Transactional(readOnly = true)
     public Apartment findFlatByReference(String reference) {
         log.debug("Request to get all flats");
         Apartment apartment = apartmentRepository.findByReference(reference);
@@ -131,7 +144,7 @@ public class ApartmentService {
             throw new BadRequestAlertException("The type must be 'FLAT' in order to retrieve a FLAT", ENTITY_FLAT, "badtype");
         }
         return apartment;
-    }
+    }*/
 
     /**
      * Get one apartment by id.
@@ -139,30 +152,30 @@ public class ApartmentService {
      * @param id the id of the entity
      * @return the entity
      */
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Apartment findOne(Long id) {
         log.debug("Request to get Apartment : {}", id);
         return apartmentRepository.findOne(id);
-    }
+    }*/
 
     /**
      * Delete the apartment by id.
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    /*public void delete(Long id) {
         log.debug("Request to delete Apartment : {}", id);
         apartmentRepository.delete(id);
-    }
+    }*/
 
     /**
      * Delete the apartment by id.
      *
      * @param reference the reference of the apartment
      */
-    public void deleteByReference(String reference) {
+    /*public void deleteByReference(String reference) {
         log.debug("Request to delete Apartment : {}", reference);
         apartmentRepository.deleteByReference(reference);
-    }
+    }*/
 
 }

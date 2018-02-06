@@ -97,24 +97,33 @@ public class ApartmentResource {
     @GetMapping("/{apartmentType}")
     @Timed
     public ResponseEntity<List<Apartment>> getAllApartments(@PathVariable String apartmentType) {
-        log.debug("REST request to get " + apartmentType + " by criteria: {}", apartmentType);
-        List<Apartment> apartmentList = apartmentService.findByApartmentType(ApartmentType.fromTypeName(apartmentType));
+        log.debug("REST request to get " + apartmentType + ": {}", apartmentType);
+
+        // If the reference doesn't fit it will throw an Exception
+        ApartmentType apartmentTypeConverted = ApartmentType.fromTypeName(apartmentType);
+
+        List<Apartment> apartmentList = apartmentService.findAllByApartmentType(apartmentTypeConverted);
         return ResponseEntity.ok().body(apartmentList);
     }
 
     /**
-     * GET  /apartments/:id : get the "id" apartment.
+     * GET  /{apartmentType}/{reference} : get the apartment with the selected reference
      *
-     * @param id the id of the apartment to retrieve
+     * @param apartmentType the type of the apartment
+     * @param reference the reference of the apartment (must be unique on the DB)
      * @return the ResponseEntity with status 200 (OK) and with body the apartment, or with status 404 (Not Found)
+     * if the service found an Apartment with the same ID will return the first
      */
-    /*@GetMapping("/apartments/{id}")
+    @GetMapping("/{apartmentType}/{reference}")
     @Timed
-    public ResponseEntity<Apartment> getApartment(@PathVariable Long id) {
-        log.debug("REST request to get Apartment : {}", id);
-        Apartment apartment = apartmentService.findOne(id);
+    public ResponseEntity<Apartment> getApartment(@PathVariable String apartmentType, @PathVariable String reference) {
+        log.debug("REST request to get an " + apartmentType + " with the reference: {}", reference);
+
+        ApartmentType apartmentTypeConverted = ApartmentType.fromTypeName(apartmentType);
+
+        Apartment apartment = apartmentService.findByReference(apartmentTypeConverted, reference);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
-    }*/
+    }
 
     /**
      * DELETE  /apartments/:id : delete the "id" apartment.
