@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     markers: any;
     height: number;
     @ViewChild('map') map: AgmMap;
-    public customStyle: MapTypeStyle[];
+    customStyle: MapTypeStyle[];
 
     constructor(
         private principal: Principal,
