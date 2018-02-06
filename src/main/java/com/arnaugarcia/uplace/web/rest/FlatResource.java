@@ -37,7 +37,7 @@ public class FlatResource {
 
     private final Logger log = LoggerFactory.getLogger(FlatResource.class);
 
-    private static final String ENTITY_NAME = "flat";
+    private static final String ENTITY_NAME = "flats";
 
 
     private final PhotoRepository photoRepository;
@@ -65,12 +65,12 @@ public class FlatResource {
             throw new BadRequestAlertException("A new flat cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
         }
 
-        flat.setType(ApartmentType.FLAT);
+        flat.setType(ApartmentType.FLATS);
 
         //Set the created to now()
         flat.setCreated(ZonedDateTime.now());
 
-        flat.type(ApartmentType.FLAT);
+        flat.type(ApartmentType.FLATS);
         //Generate the random reference
         flat.setReference(RandomUtil.generateReference().toUpperCase());
         Apartment result = apartmentService.save(flat);
@@ -97,7 +97,7 @@ public class FlatResource {
         log.debug("REST request to update Flat : {}", flat);
         if (flat.getId() == null) {
             return createFlat(flat);
-        } else if (!flat.getType().equals(ApartmentType.FLAT)) {
+        } else if (!flat.getType().equals(ApartmentType.FLATS)) {
             throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to update a FLAT", ENTITY_NAME , ErrorConstants.ERR_BAD_TYPE);
         }
         // Set updated to now()
@@ -113,13 +113,13 @@ public class FlatResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of flats in body
      */
-    @GetMapping("/flats")
+   /* @GetMapping("/flats")
     @Timed
     @Transactional(readOnly = true)
     public Page<Apartment> getAllFlats(Pageable pageable) {
         log.debug("REST request to get all flats");
         return apartmentService.findAllFlats(pageable);
-    }
+    }*/
 
     /**
      * GET  /flats : get all the properties.
@@ -166,7 +166,7 @@ public class FlatResource {
     public Set<Photo> getPhotosOfFlat(@PathVariable String reference) {
         log.debug("REST request to get all flats");
         Apartment flat = this.apartmentService.findFlatByReference(reference);
-        if (!flat.getType().equals(ApartmentType.FLAT)) {
+        if (!flat.getType().equals(ApartmentType.FLATS)) {
             throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME, ErrorConstants.ERR_BAD_TYPE);
         }
 
@@ -239,8 +239,8 @@ public class FlatResource {
         log.debug("REST request to get all flats");
         Apartment flat = apartmentService.findFlatByReference(reference);
 
-        if (!flat.getType().equals(ApartmentType.FLAT)) {
-            throw new BadRequestAlertException("The propertyType must be 'FLAT' in order to add photos to FLAT",ENTITY_NAME, ErrorConstants.ERR_BAD_TYPE);
+        if (!flat.getType().equals(ApartmentType.FLATS)) {
+            throw new BadRequestAlertException("The propertyType must be 'FLATS' in order to add photos to FLATS",ENTITY_NAME, ErrorConstants.ERR_BAD_TYPE);
         }
 
         photos.forEach((photo -> photo.setProperty(flat)));

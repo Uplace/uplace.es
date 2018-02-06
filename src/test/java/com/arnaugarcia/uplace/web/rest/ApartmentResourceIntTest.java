@@ -77,8 +77,8 @@ public class ApartmentResourceIntTest {
     private static final Integer DEFAULT_SURFACE_SALOON = 1;
     private static final Integer UPDATED_SURFACE_SALOON = 2;
 
-    private static final ApartmentType DEFAULT_PROPERTY_TYPE = ApartmentType.HOUSE;
-    private static final ApartmentType UPDATED_PROPERTY_TYPE = ApartmentType.RURAL;
+    private static final ApartmentType DEFAULT_PROPERTY_TYPE = ApartmentType.HOUSES;
+    private static final ApartmentType UPDATED_PROPERTY_TYPE = ApartmentType.RURALS;
 
     private static final Select DEFAULT_OFFICE = Select.YES;
     private static final Select UPDATED_OFFICE = Select.NO;

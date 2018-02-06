@@ -7,12 +7,12 @@ export const enum Select {
 }
 
 export const enum ApartmentType {
-    'HOUSE',
-    'RURAL',
-    'FLAT',
-    'APARTMENT',
-    'TOWER',
-    'LOFT'
+    'HOUSES',
+    'RURALS',
+    'FLATS',
+    'APARTMENTS',
+    'TOWERS',
+    'LOFTS'
 }
 
 export const enum EnergyCertificate {

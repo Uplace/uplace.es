@@ -7,6 +7,7 @@ import com.arnaugarcia.uplace.repository.ApartmentRepository;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import org.hibernate.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -71,6 +72,17 @@ public class ApartmentService {
     }
 
     /**
+     * Get all apartments by type.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Apartment> findByApartmentType(ApartmentType apartmentType) {
+        log.debug("Request to get all Apartments by type and criteria");
+        return apartmentRepository.findByType(apartmentType);
+    }
+
+    /**
      * Get all the flats
      *
      * @return the list of flats
@@ -78,7 +90,7 @@ public class ApartmentService {
     @Transactional(readOnly = true)
     public Page<Apartment> findAllFlats(Pageable pageable) {
         log.debug("Request to get all flats");
-        return apartmentRepository.findAllByType(ApartmentType.FLAT, pageable);
+        return null;
     }
 
     /**
@@ -115,7 +127,7 @@ public class ApartmentService {
         ;
         if (apartment == null) {
             throw new BadRequestAlertException("Flat not found", ENTITY_FLAT, "badreference");
-        } else if (!apartment.getType().equals(ApartmentType.FLAT)) {
+        } else if (!apartment.getType().equals(ApartmentType.FLATS)) {
             throw new BadRequestAlertException("The type must be 'FLAT' in order to retrieve a FLAT", ENTITY_FLAT, "badtype");
         }
         return apartment;
