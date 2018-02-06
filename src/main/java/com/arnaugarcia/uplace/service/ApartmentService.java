@@ -1,23 +1,19 @@
 package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Apartment;
-import com.arnaugarcia.uplace.domain.Photo;
+import com.arnaugarcia.uplace.domain.Notification;
+import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
+import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
-import com.arnaugarcia.uplace.repository.PropertyRepository;
-import com.arnaugarcia.uplace.service.util.RandomUtil;
-import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
-import org.hibernate.Criteria;
+import com.arnaugarcia.uplace.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Service Implementation for managing Apartment.
@@ -34,31 +30,41 @@ public class ApartmentService {
 
     private final PropertyService propertyService;
 
-    public ApartmentService(ApartmentRepository apartmentRepository, PropertyService propertyService) {
+    private final NotificationService notificationService;
+
+    private final UserService userService;
+
+    public ApartmentService(ApartmentRepository apartmentRepository, PropertyService propertyService, NotificationService notificationService, UserService userService) {
         this.apartmentRepository = apartmentRepository;
         this.propertyService = propertyService;
+        this.notificationService = notificationService;
+        this.userService = userService;
     }
 
     /**
      * Save a apartment.
      *
+     * @param apartmentType the type of the Apartment
      * @param apartment the entity to save
      * @return the persisted entity
      */
-    /*public Apartment save(Apartment apartment) {
+    public Apartment save(ApartmentType apartmentType, Apartment apartment) {
         log.debug("Request to save Apartment : {}", apartment);
 
         apartment.setReference(propertyService.createReference());
-
+        apartment.setType(apartmentType);
         // Si tiene id o no haces el created o no
+
         if (apartment.getId() != null) { //Tiene id
             apartment.setUpdated(ZonedDateTime.now());
         } else { //No tiene id
             apartment.setCreated(ZonedDateTime.now());
         }
 
+
+        // TODO: send a notification to the user
         return apartmentRepository.save(apartment);
-    }*/
+    }
 
     /**
      * Get all the apartments.

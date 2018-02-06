@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -47,24 +48,26 @@ public class ApartmentResource {
     }
 
     /**
-     * POST  /apartments : Create a new apartment.
+     * POST  /{apartmentType} : Create a new apartment.
      *
-     * @param apartment the apartment to create
+     * @param apartment the entity of the apartment
+     * @param apartmentType the apartment to create
      * @return the ResponseEntity with status 201 (Created) and with body the new apartment, or with status 400 (Bad Request) if the apartment has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PostMapping("/{reference}")
+    @PostMapping("/{apartmentType}")
     @Timed
-    public ResponseEntity<Apartment> createApartment(@PathVariable ApartmentType apartmentType, @RequestBody Apartment apartment) throws URISyntaxException {
+    public ResponseEntity<Apartment> createApartment(@PathVariable ApartmentType apartmentType, @Valid @RequestBody Apartment apartment) throws URISyntaxException {
         log.debug("REST request to save Apartment : {}", apartment);
         if (apartment.getId() != null) {
             throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
         }
-        Apartment result = apartmentService.save(apartment);
+
+        Apartment result = apartmentService.save(apartmentType, apartment);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
-    }*/
+    }
 
     /**
      * PUT  /apartments : Updates an existing apartment.
