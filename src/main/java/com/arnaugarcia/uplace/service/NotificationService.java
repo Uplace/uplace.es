@@ -62,6 +62,9 @@ public class NotificationService {
         //Getting the current user
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
 
+        //If is a new notification the date must be now
+        notification.setCreation(ZonedDateTime.now());
+
         //If the current user hasn't the ROLE_ADMIN sets by default the user for security reasons
         if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
             notification.setUser(user);
@@ -83,6 +86,8 @@ public class NotificationService {
         //Getting the current user
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
 
+        //If is a new notification the date must be now
+        request.setCreation(ZonedDateTime.now());
         //If the current user hasn't the ROLE_ADMIN sets by default the user for security reasons
         if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
             request.setUser(user);
