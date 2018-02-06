@@ -129,16 +129,20 @@ public class ApartmentResource {
     }
 
     /**
-     * DELETE  /apartments/:id : delete the "id" apartment.
+     * DELETE  /:apartmentReference/:id : delete the apartment with the reference
      *
-     * @param id the id of the apartment to delete
+     * @param apartmentType the type of the apartment
+     * @param reference the reference of the apartment to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    /*@DeleteMapping("/apartments/{id}")
+    @DeleteMapping("/{apartmentType}/{reference}")
     @Timed
-    public ResponseEntity<Void> deleteApartment(@PathVariable Long id) {
-        log.debug("REST request to delete Apartment : {}", id);
-        apartmentService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }*/
+    public ResponseEntity<Void> deleteApartment(@PathVariable String apartmentType, @PathVariable  String reference) {
+        log.debug("REST request to delete " + apartmentType +" with reference " + reference + ": {}");
+
+        ApartmentType apartmentTypeConverted = ApartmentType.fromTypeName(apartmentType);
+
+        apartmentService.deleteByReference(apartmentTypeConverted, reference);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, reference)).build();
+    }
 }

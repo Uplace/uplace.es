@@ -7,6 +7,8 @@ import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
 import com.arnaugarcia.uplace.security.SecurityUtils;
+import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -175,13 +177,16 @@ public class ApartmentService {
     }*/
 
     /**
-     * Delete the apartment by id.
+     * Delete the apartment by reference.
      *
      * @param reference the reference of the apartment
      */
-    /*public void deleteByReference(String reference) {
-        log.debug("Request to delete Apartment : {}", reference);
+    public void deleteByReference(ApartmentType apartmentType, String reference) {
+        Apartment apartment = apartmentRepository.findByReferenceAndType(reference, apartmentType);
+        if (apartment == null){
+            throw new BadRequestAlertException("This " + apartmentType + "doesn't exists ", apartmentType.getTypeName(), ErrorConstants.ERR_BAD_REFERENCE);
+        }
         apartmentRepository.deleteByReference(reference);
-    }*/
+    }
 
 }

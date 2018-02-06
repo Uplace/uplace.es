@@ -98,26 +98,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/api/flats/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/flats").permitAll()
             .antMatchers(HttpMethod.POST, "/api/flats").authenticated()
+            .antMatchers(HttpMethod.PUT, "/api/flats/**").authenticated()
+            .antMatchers(HttpMethod.DELETE, "/api/flats/**").authenticated()
+
 
             // HOUSES
-            .antMatchers(HttpMethod.GET, "/api/houses/**").permitAll()
+            /*.antMatchers(HttpMethod.GET, "/api/houses/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/houses").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/houses").authenticated()
+            .antMatchers(HttpMethod.POST, "/api/houses").authenticated()*/
 
             // RURALS
-            .antMatchers(HttpMethod.GET, "/api/rurals/**").permitAll()
+            /*.antMatchers(HttpMethod.GET, "/api/rurals/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/rurals").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/rurals").authenticated()
+            .antMatchers(HttpMethod.POST, "/api/rurals").authenticated()*/
 
             // TOWERS
-            .antMatchers(HttpMethod.GET, "/api/towers/**").permitAll()
+            /*.antMatchers(HttpMethod.GET, "/api/towers/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/towers").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/towers").authenticated()
+            .antMatchers(HttpMethod.POST, "/api/towers").authenticated()*/
 
             // LOFTS
-            .antMatchers(HttpMethod.GET, "/api/lofts/**").permitAll()
+            /*.antMatchers(HttpMethod.GET, "/api/lofts/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/lofts").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/lofts").authenticated()
+            .antMatchers(HttpMethod.POST, "/api/lofts").authenticated()*/
 
             .antMatchers(HttpMethod.GET, "/api/properties").permitAll()
             .antMatchers(HttpMethod.GET, "/api/agents").permitAll()
