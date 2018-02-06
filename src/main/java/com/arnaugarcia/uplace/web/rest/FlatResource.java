@@ -51,38 +51,6 @@ public class FlatResource {
     }
 
     /**
-     * POST  /flats : Create a new flat.
-     *
-     * @param flat the flat to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    /*@PostMapping("/flats")
-    @Timed
-    public ResponseEntity<Property> createFlat(@RequestBody Apartment flat) throws URISyntaxException {
-        log.debug("REST request to save a new Flat : {}", flat);
-        if (flat.getId() != null) {
-            throw new BadRequestAlertException("A new flat cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
-        }
-
-        flat.setType(ApartmentType.FLATS);
-
-        //Set the created to now()
-        flat.setCreated(ZonedDateTime.now());
-
-        flat.type(ApartmentType.FLATS);
-        //Generate the random reference
-        flat.setReference(RandomUtil.generateReference().toUpperCase());
-        Apartment result = apartmentService.save(flat);
-
-        apartmentService.save(result);
-
-        return ResponseEntity.created(new URI("/api/flat/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }*/
-
-    /**
      * PUT  /flats : Updates an existing flat.
      *
      * @param flat the flat to update
@@ -174,21 +142,6 @@ public class FlatResource {
     }*/
 
     /**
-     * GET  /flats/:reference : get the "id" property.
-     *
-     * @param reference the reference of the property to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
-     */
-    /*@GetMapping("/flats/{reference}")
-    @Timed
-    @Transactional(readOnly = true)
-    public ResponseEntity<Property> getFlat(@PathVariable String reference) {
-        log.debug("REST request to get Property : {}", reference);
-        Apartment apartment = apartmentService.findFlatByReference(reference);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(apartment));
-    }*/
-
-    /**
      * GET  /flats/:reference : get the "reference" flat.
      *
      * @param reference the reference of the flat to retrieve
@@ -248,22 +201,4 @@ public class FlatResource {
         return photoRepository.save(photos);
     }*/
 
-    /**
-     * DELETE  /flats/:reference : delete the "reference" flat.
-     *
-     * @param reference the reference of the flat to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    /*@DeleteMapping("/flats/{reference}")
-    @Timed
-    @Transactional
-    public ResponseEntity<Void> deleteProperty(@PathVariable String reference) {
-        log.debug("REST request to delete a Flat : {}", reference);
-        Apartment apartment = apartmentService.findFlatByReference(reference);
-        if (apartment.getId() == null) {
-            throw new BadRequestAlertException("The referenced Flat doesn't exists", ENTITY_NAME, ErrorConstants.ERR_BAD_ID);
-        }
-        apartmentService.deleteByReference(reference);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, reference)).build();
-    }*/
 }

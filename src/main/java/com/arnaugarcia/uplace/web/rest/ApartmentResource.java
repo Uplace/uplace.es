@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +48,14 @@ public class ApartmentResource {
         this.apartmentQueryService = apartmentQueryService;
     }
 
+    // TODO: GET BY CRITERIA
+    // TODO: FIND ALL (ADMIN MODE)
+    // TODO: ??PAGEABLE??
+    // TODO: GET AGENTS
+    // TODO: GET PHOTOS
+    // TODO: POST AND PUT PHOTOS
+    // TODO: THUMBNAIL BY DTO? OR endpoint
+
     /**
      * POST  /{apartmentType} : Create a new apartment.
      *
@@ -62,7 +71,9 @@ public class ApartmentResource {
         if (apartment.getId() != null) {
             throw new BadRequestAlertException("A new apartment cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
         }
-
+        // MAKE A UPDATE SERVICE AND CREATE por que el
+        // id si no existe sigue siendo valido y crea el apartment (control)
+        // no pasar referencia
         Apartment result = apartmentService.save(apartmentType, apartment);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -70,29 +81,33 @@ public class ApartmentResource {
     }
 
     /**
-     * PUT  /apartments : Updates an existing apartment.
+     * PUT  /:apartmentType : Updates an existing apartment.
      *
+     * @param apartmentType the type of the apartment to update
      * @param apartment the apartment to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated apartment,
      * or with status 400 (Bad Request) if the apartment is not valid,
      * or with status 500 (Internal Server Error) if the apartment couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PutMapping("/apartments")
+    @PutMapping("/{apartmentType}/{reference}")
     @Timed
-    public ResponseEntity<Apartment> updateApartment(@RequestBody Apartment apartment) throws URISyntaxException {
+    public ResponseEntity<Apartment> updateApartment(@PathVariable String apartmentType, @PathVariable String reference,  @RequestBody Apartment apartment) throws URISyntaxException {
         log.debug("REST request to update Apartment : {}", apartment);
+        ApartmentType apartmentTypeConverted = ApartmentType.fromTypeName(apartmentType);
+
         if (apartment.getId() == null) {
-            return createApartment(apartment);
+            return createApartment(apartmentTypeConverted, apartment);
         }
-        Apartment result = apartmentService.save(apartment);
+
+        Apartment result = apartmentService.save(apartmentTypeConverted, apartment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, apartment.getId().toString()))
             .body(result);
-    }*/
+    }
 
     /**
-     * GET  /{apartmentType} : get all the apartments.
+     * GET  /:apartmentType : get all the apartments.
      *
      * @param apartmentType the type of the apartment
      * @return the ResponseEntity with status 200 (OK) and the list of apartments in body
