@@ -1,22 +1,21 @@
 package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Apartment;
-import com.arnaugarcia.uplace.domain.Photo;
+import com.arnaugarcia.uplace.domain.Notification;
+import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
+import com.arnaugarcia.uplace.domain.enumeration.NotificationType;
 import com.arnaugarcia.uplace.repository.ApartmentRepository;
-import com.arnaugarcia.uplace.repository.PropertyRepository;
-import com.arnaugarcia.uplace.service.util.RandomUtil;
+import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Service Implementation for managing Apartment.
@@ -33,29 +32,39 @@ public class ApartmentService {
 
     private final PropertyService propertyService;
 
-    public ApartmentService(ApartmentRepository apartmentRepository, PropertyService propertyService) {
+    private final NotificationService notificationService;
+
+    private final UserService userService;
+
+    public ApartmentService(ApartmentRepository apartmentRepository, PropertyService propertyService, NotificationService notificationService, UserService userService) {
         this.apartmentRepository = apartmentRepository;
         this.propertyService = propertyService;
+        this.notificationService = notificationService;
+        this.userService = userService;
     }
 
     /**
      * Save a apartment.
      *
+     * @param apartmentType the type of the Apartment
      * @param apartment the entity to save
      * @return the persisted entity
      */
-    public Apartment save(Apartment apartment) {
+    public Apartment save(ApartmentType apartmentType, Apartment apartment) {
         log.debug("Request to save Apartment : {}", apartment);
 
         apartment.setReference(propertyService.createReference());
-
+        apartment.setType(apartmentType);
         // Si tiene id o no haces el created o no
+
         if (apartment.getId() != null) { //Tiene id
             apartment.setUpdated(ZonedDateTime.now());
         } else { //No tiene id
             apartment.setCreated(ZonedDateTime.now());
         }
 
+
+        // TODO: send a notification to the user
         return apartmentRepository.save(apartment);
     }
 
@@ -71,14 +80,27 @@ public class ApartmentService {
     }
 
     /**
-     * Get all the flats
+     * Get all apartments by type.
      *
-     * @return the list of flats
+     * @param apartmentType the type of the apartment
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public Page<Apartment> findAllFlats(Pageable pageable) {
-        log.debug("Request to get all flats");
-        return apartmentRepository.findAllByType(ApartmentType.FLAT, pageable);
+    public List<Apartment> findAllByApartmentType(ApartmentType apartmentType) {
+        log.debug("Request to get all Apartments by type and criteria");
+        return apartmentRepository.findByType(apartmentType);
+    }
+
+    /**
+     * Get all apartments by type and reference.
+     *
+     * @param apartmentType the type of the Apartment
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public Apartment findByReference(ApartmentType apartmentType, String reference) {
+        log.debug("Request to get all Apartments by type and criteria");
+        return apartmentRepository.findByReferenceAndType(reference, apartmentType);
     }
 
     /**
@@ -86,7 +108,18 @@ public class ApartmentService {
      *
      * @return the list of flats
      */
-    public Photo findThumbnailByReference(String reference) {
+    /*@Transactional(readOnly = true)
+    public Page<Apartment> findAllFlats(Pageable pageable) {
+        log.debug("Request to get all flats");
+        return null;
+    }*/
+
+    /**
+     * Get all the flats
+     *
+     * @return the list of flats
+     */
+    /*public Photo findThumbnailByReference(String reference) {
         log.debug("Request to get all flats");
         Apartment apartment = apartmentRepository.findByReference(reference);
         if (apartment == null) {
@@ -100,7 +133,7 @@ public class ApartmentService {
             }
         }
         return thumbnail;
-    }
+    }*/
 
 
     /**
@@ -108,18 +141,18 @@ public class ApartmentService {
      *
      * @return the flat of with the requested reference
      */
-    @Transactional(readOnly = true)
+   /* @Transactional(readOnly = true)
     public Apartment findFlatByReference(String reference) {
         log.debug("Request to get all flats");
         Apartment apartment = apartmentRepository.findByReference(reference);
         ;
         if (apartment == null) {
             throw new BadRequestAlertException("Flat not found", ENTITY_FLAT, "badreference");
-        } else if (!apartment.getType().equals(ApartmentType.FLAT)) {
+        } else if (!apartment.getType().equals(ApartmentType.FLATS)) {
             throw new BadRequestAlertException("The type must be 'FLAT' in order to retrieve a FLAT", ENTITY_FLAT, "badtype");
         }
         return apartment;
-    }
+    }*/
 
     /**
      * Get one apartment by id.
@@ -127,29 +160,32 @@ public class ApartmentService {
      * @param id the id of the entity
      * @return the entity
      */
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Apartment findOne(Long id) {
         log.debug("Request to get Apartment : {}", id);
         return apartmentRepository.findOne(id);
-    }
+    }*/
 
     /**
      * Delete the apartment by id.
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    /*public void delete(Long id) {
         log.debug("Request to delete Apartment : {}", id);
         apartmentRepository.delete(id);
-    }
+    }*/
 
     /**
-     * Delete the apartment by id.
+     * Delete the apartment by reference.
      *
      * @param reference the reference of the apartment
      */
-    public void deleteByReference(String reference) {
-        log.debug("Request to delete Apartment : {}", reference);
+    public void deleteByReference(ApartmentType apartmentType, String reference) {
+        Apartment apartment = apartmentRepository.findByReferenceAndType(reference, apartmentType);
+        if (apartment == null){
+            throw new BadRequestAlertException("This " + apartmentType + "doesn't exists ", apartmentType.getTypeName(), ErrorConstants.ERR_BAD_REFERENCE);
+        }
         apartmentRepository.deleteByReference(reference);
     }
 

@@ -98,12 +98,12 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.apartment.type" for="field_type">Type</label>
             <select class="form-control" name="type" [(ngModel)]="apartment.type" id="field_type"  required>
-                <option value="HOUSE">{{'uplaceApp.ApartmentType.HOUSE' | translate}}</option>
-                <option value="RURAL">{{'uplaceApp.ApartmentType.RURAL' | translate}}</option>
-                <option value="FLAT">{{'uplaceApp.ApartmentType.FLAT' | translate}}</option>
-                <option value="APARTMENT">{{'uplaceApp.ApartmentType.APARTMENT' | translate}}</option>
-                <option value="TOWER">{{'uplaceApp.ApartmentType.TOWER' | translate}}</option>
-                <option value="LOFT">{{'uplaceApp.ApartmentType.LOFT' | translate}}</option>
+                <option value="HOUSES">{{'uplaceApp.ApartmentType.HOUSES' | translate}}</option>
+                <option value="RURALS">{{'uplaceApp.ApartmentType.RURALS' | translate}}</option>
+                <option value="FLATS">{{'uplaceApp.ApartmentType.FLATS' | translate}}</option>
+                <option value="APARTMENTS">{{'uplaceApp.ApartmentType.APARTMENTS' | translate}}</option>
+                <option value="TOWERS">{{'uplaceApp.ApartmentType.TOWERS' | translate}}</option>
+                <option value="LOFTS">{{'uplaceApp.ApartmentType.LOFTS' | translate}}</option>
             </select>
             <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
                 <small class="form-text text-danger"

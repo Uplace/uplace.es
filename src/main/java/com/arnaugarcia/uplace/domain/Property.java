@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.Objects;
 
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
+import org.hibernate.annotations.Fetch;
 
 /**
  * A Property.
@@ -77,12 +78,11 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
+    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "property_manager",
                joinColumns = @JoinColumn(name="properties_id", referencedColumnName="id"),

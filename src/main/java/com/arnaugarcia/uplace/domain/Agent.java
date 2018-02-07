@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -45,6 +46,7 @@ public class Agent implements Serializable {
     @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     @ManyToMany(mappedBy = "managers")
