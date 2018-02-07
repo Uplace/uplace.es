@@ -1,6 +1,14 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "property",
+            "otherEntityName": "property",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "location"
+        }
+    ],
     "fields": [
         {
             "fieldName": "latitude",
@@ -15,7 +23,15 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "urlGmaps",
+            "fieldName": "fullAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hide",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "urlGMaps",
             "fieldType": "String"
         }
     ],

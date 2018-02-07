@@ -56,6 +56,12 @@
         <dd>
             <span>{{property.surface}}</span>
         </dd>
+        <dt><span jhiTranslate="uplaceApp.property.location">Location</span></dt>
+        <dd>
+            <div *ngIf="property.location">
+                <a [routerLink]="['/location', property.location?.id]">{{property.location?.id}}</a>
+            </div>
+        </dd>
         <dt><span jhiTranslate="uplaceApp.property.manager">Manager</span></dt>
         <dd>
             <span *ngFor="let manager of property.managers; let last = last">

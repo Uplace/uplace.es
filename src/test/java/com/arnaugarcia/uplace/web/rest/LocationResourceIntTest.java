@@ -41,14 +41,20 @@ public class LocationResourceIntTest {
     private static final String DEFAULT_LATITUDE = "AAAAAAAAAA";
     private static final String UPDATED_LATITUDE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CP = "AAAAAAAAAA";
-    private static final String UPDATED_CP = "BBBBBBBBBB";
+    private static final String DEFAULT_POSTAL_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_POSTAL_CODE = "BBBBBBBBBB";
 
     private static final String DEFAULT_LONGITUDE = "AAAAAAAAAA";
     private static final String UPDATED_LONGITUDE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_URL_GMAPS = "AAAAAAAAAA";
-    private static final String UPDATED_URL_GMAPS = "BBBBBBBBBB";
+    private static final String DEFAULT_FULL_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_FULL_ADDRESS = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_HIDE = false;
+    private static final Boolean UPDATED_HIDE = true;
+
+    private static final String DEFAULT_URL_G_MAPS = "AAAAAAAAAA";
+    private static final String UPDATED_URL_G_MAPS = "BBBBBBBBBB";
 
     @Autowired
     private LocationRepository locationRepository;
@@ -89,9 +95,11 @@ public class LocationResourceIntTest {
     public static Location createEntity(EntityManager em) {
         Location location = new Location()
             .latitude(DEFAULT_LATITUDE)
-            .postalCode(DEFAULT_CP)
+            .postalCode(DEFAULT_POSTAL_CODE)
             .longitude(DEFAULT_LONGITUDE)
-            .urlGmaps(DEFAULT_URL_GMAPS);
+            .fullAddress(DEFAULT_FULL_ADDRESS)
+            .hide(DEFAULT_HIDE)
+            .urlGMaps(DEFAULT_URL_G_MAPS);
         return location;
     }
 
@@ -116,9 +124,11 @@ public class LocationResourceIntTest {
         assertThat(locationList).hasSize(databaseSizeBeforeCreate + 1);
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
-        assertThat(testLocation.getPostalCode()).isEqualTo(DEFAULT_CP);
+        assertThat(testLocation.getPostalCode()).isEqualTo(DEFAULT_POSTAL_CODE);
         assertThat(testLocation.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
-        assertThat(testLocation.getUrlGmaps()).isEqualTo(DEFAULT_URL_GMAPS);
+        assertThat(testLocation.getFullAddress()).isEqualTo(DEFAULT_FULL_ADDRESS);
+        assertThat(testLocation.isHide()).isEqualTo(DEFAULT_HIDE);
+        assertThat(testLocation.getUrlGMaps()).isEqualTo(DEFAULT_URL_G_MAPS);
     }
 
     @Test
@@ -152,9 +162,11 @@ public class LocationResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(location.getId().intValue())))
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.toString())))
-            .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_CP.toString())))
+            .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE.toString())))
             .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.toString())))
-            .andExpect(jsonPath("$.[*].urlGmaps").value(hasItem(DEFAULT_URL_GMAPS.toString())));
+            .andExpect(jsonPath("$.[*].fullAddress").value(hasItem(DEFAULT_FULL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].hide").value(hasItem(DEFAULT_HIDE.booleanValue())))
+            .andExpect(jsonPath("$.[*].urlGMaps").value(hasItem(DEFAULT_URL_G_MAPS.toString())));
     }
 
     @Test
@@ -169,9 +181,11 @@ public class LocationResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(location.getId().intValue()))
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.toString()))
-            .andExpect(jsonPath("$.postalCode").value(DEFAULT_CP.toString()))
+            .andExpect(jsonPath("$.postalCode").value(DEFAULT_POSTAL_CODE.toString()))
             .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.toString()))
-            .andExpect(jsonPath("$.urlGmaps").value(DEFAULT_URL_GMAPS.toString()));
+            .andExpect(jsonPath("$.fullAddress").value(DEFAULT_FULL_ADDRESS.toString()))
+            .andExpect(jsonPath("$.hide").value(DEFAULT_HIDE.booleanValue()))
+            .andExpect(jsonPath("$.urlGMaps").value(DEFAULT_URL_G_MAPS.toString()));
     }
 
     @Test
@@ -195,9 +209,11 @@ public class LocationResourceIntTest {
         em.detach(updatedLocation);
         updatedLocation
             .latitude(UPDATED_LATITUDE)
-            .postalCode(UPDATED_CP)
+            .postalCode(UPDATED_POSTAL_CODE)
             .longitude(UPDATED_LONGITUDE)
-            .urlGmaps(UPDATED_URL_GMAPS);
+            .fullAddress(UPDATED_FULL_ADDRESS)
+            .hide(UPDATED_HIDE)
+            .urlGMaps(UPDATED_URL_G_MAPS);
 
         restLocationMockMvc.perform(put("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -209,9 +225,11 @@ public class LocationResourceIntTest {
         assertThat(locationList).hasSize(databaseSizeBeforeUpdate);
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getLatitude()).isEqualTo(UPDATED_LATITUDE);
-        assertThat(testLocation.getPostalCode()).isEqualTo(UPDATED_CP);
+        assertThat(testLocation.getPostalCode()).isEqualTo(UPDATED_POSTAL_CODE);
         assertThat(testLocation.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
-        assertThat(testLocation.getUrlGmaps()).isEqualTo(UPDATED_URL_GMAPS);
+        assertThat(testLocation.getFullAddress()).isEqualTo(UPDATED_FULL_ADDRESS);
+        assertThat(testLocation.isHide()).isEqualTo(UPDATED_HIDE);
+        assertThat(testLocation.getUrlGMaps()).isEqualTo(UPDATED_URL_G_MAPS);
     }
 
     @Test

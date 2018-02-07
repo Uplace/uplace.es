@@ -135,6 +135,13 @@
         </div>
 
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.location" for="field_location">Location</label>
+            <select class="form-control" id="field_location" name="location" [(ngModel)]="property.location">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="locationOption.id === property.location?.id ? property.location : locationOption" *ngFor="let locationOption of locations; trackBy: trackLocationById">{{locationOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label jhiTranslate="uplaceApp.property.manager" for="field_manager">Manager</label>
             <select class="form-control" id="field_manager" multiple name="manager" [(ngModel)]="property.managers">
                 <option [ngValue]="getSelected(property.managers, agentOption)" *ngFor="let agentOption of agents; trackBy: trackAgentById">{{agentOption.firstName}}</option>

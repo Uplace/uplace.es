@@ -23,6 +23,7 @@ export class Property implements BaseEntity {
         public newCreation?: boolean,
         public visible?: boolean,
         public surface?: number,
+        public location?: BaseEntity,
         public photos?: BaseEntity[],
         public managers?: BaseEntity[],
     ) {

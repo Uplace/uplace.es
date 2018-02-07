@@ -12,7 +12,7 @@ entity Property {
     yearConstruction Integer min(500),
     newCreation Boolean,
     visible Boolean,
-    surface Integer,
+    surface Integer
     // CATEGORY
 
 }
@@ -26,7 +26,7 @@ enum TransactionType {
 }
 
 enum ApartmentType {
-	HOUSE, RURAL, FLAT, APARTMENT, TOWER, LOFT
+    HOUSES, RURALS, FLATS, APARTMENTS, TOWERS, LOFTS
 }
 
 enum Select {
@@ -158,7 +158,9 @@ entity Location {
 	latitude String,
     postalCode String,
     longitude String,
-    urlGmaps String
+    fullAddress String,
+    hide Boolean,
+    urlGMaps String
 
 }
 
@@ -212,11 +214,12 @@ relationship ManyToMany {
 }
 
 relationship OneToOne {
-    Agent{user(login) required} to User{agent(firstName) required}
+    Agent{user(login) required} to User{agent(firstName) required},
+    Property{location(id)} to Location{property(reference)}
 }
 
 paginate Notification with pagination
 
-service Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, IndustrialPlant with serviceClass
+service Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, Establishment, IndustrialPlant with serviceClass
 
-filter Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, IndustrialPlant
+filter Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, Establishment, IndustrialPlant
