@@ -35,41 +35,13 @@ public class PropertyResource {
 
     private static final String ENTITY_NAME = "property";
 
-
     private final PropertyQueryService propertyQueryService;
 
     private final PropertyService propertyService;
 
-    private final ApartmentService apartmentService;
-
-    private final ParkingService parkingService;
-
-    private final BusinessService businessService;
-
-    private final OfficeService officeService;
-
-    private final TerrainService terrainService;
-
-    private final BuildingService buildingService;
-
-    private final EstablishmentService establishmentService;
-
-    private final IndustrialPlantService industrialPlantService;
-
-    private final HotelService hotelService;
-
     public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService, BuildingService buildingService, EstablishmentService establishmentService, IndustrialPlantService industrialPlantService, HotelService hotelService) {
         this.propertyQueryService = propertyQueryService;
         this.propertyService = propertyService;
-        this.apartmentService = apartmentService;
-        this.parkingService = parkingService;
-        this.businessService = businessService;
-        this.officeService = officeService;
-        this.terrainService = terrainService;
-        this.buildingService = buildingService;
-        this.establishmentService = establishmentService;
-        this.industrialPlantService = industrialPlantService;
-        this.hotelService = hotelService;
     }
 
     /**
@@ -79,7 +51,7 @@ public class PropertyResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/properties")
+    /*@PostMapping("/properties")
     @Timed
     public ResponseEntity<Property> createProperty(@Valid @RequestBody Property property) throws URISyntaxException {
         log.debug("REST request to save Property : {}", property);
@@ -90,7 +62,7 @@ public class PropertyResource {
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
-    }
+    }*/
 
     /**
      * PUT  /properties : Updates an existing property.
@@ -123,37 +95,8 @@ public class PropertyResource {
     @Timed
     @Transactional(readOnly = true)
     public List<Property> getAllProperties() {
-        List<Property> properties = new ArrayList<>();
         log.debug("REST request to get all Properties");
-
-        //Add all apartments(FLATS, HOUSES, TOWERS, ETC...)
-        properties.addAll(apartmentService.findAll());
-
-        //Adds business to list
-        properties.addAll(businessService.findAll());
-
-        //Adds offices to list
-        properties.addAll(officeService.findAll());
-
-        //Adds parking to list
-        properties.addAll(parkingService.findAll());
-
-        //Adds terrain to list
-        properties.addAll(terrainService.findAll());
-
-        // Adds hotel to list
-        properties.addAll(hotelService.findAll());
-
-        //Adds building to list
-        properties.addAll(buildingService.findAll());
-
-        //Adds establishment to list
-        properties.addAll(establishmentService.findAll());
-
-        //Adds industrial plant to list
-        properties.addAll(industrialPlantService.findAll());
-
-        return properties;
+        return propertyService.findAll();
     }
 
     @GetMapping("/properties/criteria")
@@ -165,32 +108,4 @@ public class PropertyResource {
         return ResponseEntity.ok().body(entityList);
     }
 
-
-    /**
-     * GET  /properties/:id : get the "id" property.
-     *
-     * @param id the id of the property to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
-     */
-    /*@GetMapping("/properties/{id}")
-    @Timed
-    public ResponseEntity<Property> getProperty(@PathVariable Long id) {
-        log.debug("REST request to get Property : {}", id);
-        Property property = propertyRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(property));
-    }*/
-
-    /**
-     * DELETE  /properties/:id : delete the "id" property.
-     *
-     * @param id the id of the property to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    /*@DeleteMapping("/properties/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
-        log.debug("REST request to delete Property : {}", id);
-        propertyRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }*/
 }
