@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -77,6 +78,10 @@ public class Property implements Serializable {
 
     @Column(name = "surface")
     private Integer surface;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Location location;
 
     @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -265,6 +270,19 @@ public class Property implements Serializable {
 
     public void setSurface(Integer surface) {
         this.surface = surface;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public Property location(Location location) {
+        this.location = location;
+        return this;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Set<Photo> getPhotos() {

@@ -28,6 +28,7 @@
             "newCreation": "New Creation",
             "visible": "Visible",
             "surface": "Surface",
+            "location": "Location",
             "photo": "Photo",
             "manager": "Manager"
         }

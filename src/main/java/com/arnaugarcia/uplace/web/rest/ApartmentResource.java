@@ -45,9 +45,6 @@ public class ApartmentResource {
         this.apartmentQueryService = apartmentQueryService;
     }
 
-    // TODO: POST AND PUT PHOTOS
-    // TODO: THUMBNAIL BY DTO? OR endpoint
-
     /**
      * POST  /{apartmentType} : Create a new apartment.
      *

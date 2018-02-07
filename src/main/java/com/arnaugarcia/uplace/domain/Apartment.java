@@ -10,6 +10,7 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A Apartment.

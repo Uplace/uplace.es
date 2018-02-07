@@ -17,6 +17,8 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing Location.
@@ -80,11 +82,20 @@ public class LocationResource {
     /**
      * GET  /locations : get all the locations.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of locations in body
      */
     @GetMapping("/locations")
     @Timed
-    public List<Location> getAllLocations() {
+//    public List<Location> getAllLocations(@RequestParam(required = false) String filter) {
+    public List<Location> getAllLocations(@RequestParam(required = false) String filter) {
+            /*if ("property-is-null".equals(filter)) {
+            log.debug("REST request to get all Locations where property is null");
+            return StreamSupport
+                .stream(locationRepository.findAll().spliterator(), false)
+                .filter(location -> location.getProperty() == null)
+                .collect(Collectors.toList());
+        }*/
         log.debug("REST request to get all Locations");
         return locationRepository.findAll();
         }

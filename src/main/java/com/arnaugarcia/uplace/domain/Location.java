@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,8 +32,18 @@ public class Location implements Serializable {
     @Column(name = "longitude")
     private String longitude;
 
-    @Column(name = "url_gmaps")
-    private String urlGmaps;
+    @Column(name = "full_address")
+    private String fullAddress;
+
+    @Column(name = "hide")
+    private Boolean hide;
+
+    @Column(name = "url_g_maps")
+    private String urlGMaps;
+
+    @OneToOne(mappedBy = "location")
+    @JsonIgnore
+    private Property property;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -82,17 +93,56 @@ public class Location implements Serializable {
         this.longitude = longitude;
     }
 
-    public String getUrlGmaps() {
-        return urlGmaps;
+    public String getFullAddress() {
+        return fullAddress;
     }
 
-    public Location urlGmaps(String urlGmaps) {
-        this.urlGmaps = urlGmaps;
+    public Location fullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
         return this;
     }
 
-    public void setUrlGmaps(String urlGmaps) {
-        this.urlGmaps = urlGmaps;
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+
+    public Boolean isHide() {
+        return hide;
+    }
+
+    public Location hide(Boolean hide) {
+        this.hide = hide;
+        return this;
+    }
+
+    public void setHide(Boolean hide) {
+        this.hide = hide;
+    }
+
+    public String getUrlGMaps() {
+        return urlGMaps;
+    }
+
+    public Location urlGMaps(String urlGMaps) {
+        this.urlGMaps = urlGMaps;
+        return this;
+    }
+
+    public void setUrlGMaps(String urlGMaps) {
+        this.urlGMaps = urlGMaps;
+    }
+
+    public Property getProperty() {
+        return property;
+    }
+
+    public Location property(Property property) {
+        this.property = property;
+        return this;
+    }
+
+    public void setProperty(Property property) {
+        this.property = property;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -123,7 +173,9 @@ public class Location implements Serializable {
             ", latitude='" + getLatitude() + "'" +
             ", postalCode='" + getPostalCode() + "'" +
             ", longitude='" + getLongitude() + "'" +
-            ", urlGmaps='" + getUrlGmaps() + "'" +
+            ", fullAddress='" + getFullAddress() + "'" +
+            ", hide='" + isHide() + "'" +
+            ", urlGMaps='" + getUrlGMaps() + "'" +
             "}";
     }
 }
