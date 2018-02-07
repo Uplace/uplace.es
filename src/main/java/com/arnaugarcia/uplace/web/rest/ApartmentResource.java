@@ -1,8 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
-import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Apartment;
@@ -12,13 +10,11 @@ import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
 import com.arnaugarcia.uplace.service.ApartmentQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.hibernate.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +24,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * REST controller for managing Apartment.
@@ -50,11 +45,6 @@ public class ApartmentResource {
         this.apartmentQueryService = apartmentQueryService;
     }
 
-    // TODO: FIND ALL (ADMIN MODE)
-    // TODO: FIX CRITERIA INHERITANCE
-    // TODO: ??PAGEABLE??
-    // TODO: GET AGENTS
-    // TODO: GET PHOTOS
     // TODO: POST AND PUT PHOTOS
     // TODO: THUMBNAIL BY DTO? OR endpoint
 
@@ -136,10 +126,10 @@ public class ApartmentResource {
     @GetMapping("/apartments")
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<Apartment>> getAllApartmentsByCriteria(ApartmentCriteria apartmentCriteria) {
+    public ResponseEntity<Page<Apartment>> getAllApartmentsByCriteria(ApartmentCriteria apartmentCriteria, Pageable pageable) {
         log.debug("REST request to get apartments with criteria: {}", apartmentCriteria.toString());
 
-        List<Apartment> apartmentList = apartmentQueryService.findByCriteria(apartmentCriteria);
+        Page<Apartment> apartmentList = apartmentQueryService.findByCriteria(apartmentCriteria, pageable);
         return ResponseEntity.ok().body(apartmentList);
     }
 

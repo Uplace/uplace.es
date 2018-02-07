@@ -59,24 +59,12 @@ public class ApartmentQueryService extends QueryService<Apartment> {
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<Apartment> findByCriteria(ApartmentCriteria criteria) {
+    public Page<Apartment> findByCriteria(ApartmentCriteria criteria, Pageable pageable) {
         log.debug("find by criteria : {}", criteria);
         final Specifications<Apartment> specification = createSpecification(criteria);
-        return apartmentRepository.findAll(specification);
+        return apartmentRepository.findAll(specification, pageable);
     }
 
-    /**
-     * Return a {@link Page} of {@link Apartment} which matches the criteria from the database
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @param page The page, which should be returned.
-     * @return the matching entities.
-     */
-    @Transactional(readOnly = true)
-    public Page<Apartment> findByCriteria(ApartmentCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
-        final Specifications<Apartment> specification = createSpecification(criteria);
-        return apartmentRepository.findAll(specification, page);
-    }
 
     /**
      * Function to convert ApartmentCriteria to a {@link Specifications}
