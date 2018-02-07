@@ -50,8 +50,8 @@ public class ApartmentResource {
         this.apartmentQueryService = apartmentQueryService;
     }
 
-    // TODO: GET BY CRITERIA
     // TODO: FIND ALL (ADMIN MODE)
+    // TODO: FIX CRITERIA INHERITANCE
     // TODO: ??PAGEABLE??
     // TODO: GET AGENTS
     // TODO: GET PHOTOS
