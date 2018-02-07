@@ -90,9 +90,9 @@ public class ApartmentResource {
      * or with status 500 (Internal Server Error) if the apartment couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/{apartmentType}/{reference}")
+    @PutMapping("/{apartmentType}")
     @Timed
-    public ResponseEntity<Apartment> updateApartment(@PathVariable String apartmentType, @PathVariable String reference,  @RequestBody Apartment apartment) throws URISyntaxException {
+    public ResponseEntity<Apartment> updateApartment(@PathVariable String apartmentType, @RequestBody Apartment apartment) throws URISyntaxException {
         log.debug("REST request to update Apartment : {}", apartment);
         ApartmentType apartmentTypeConverted = ApartmentType.fromTypeName(apartmentType);
 
@@ -114,6 +114,7 @@ public class ApartmentResource {
      */
     @GetMapping("/{apartmentType}")
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<List<Apartment>> getAllApartments(@PathVariable String apartmentType) {
         log.debug("REST request to get " + apartmentType + ": {}", apartmentType);
 
