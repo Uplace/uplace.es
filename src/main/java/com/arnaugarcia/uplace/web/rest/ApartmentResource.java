@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
@@ -27,6 +28,7 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing Apartment.
@@ -126,6 +128,22 @@ public class ApartmentResource {
     }
 
     /**
+     * GET  /:apartmentType : get all the apartments.
+     *
+     * @param apartmentCriteria the criterias which the requested entities should match
+     * @return the ResponseEntity with status 200 (OK) and the list of apartments in body
+     */
+    @GetMapping("/apartments")
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<Apartment>> getAllApartmentsByCriteria(ApartmentCriteria apartmentCriteria) {
+        log.debug("REST request to get apartments with criteria: {}", apartmentCriteria.toString());
+
+        List<Apartment> apartmentList = apartmentQueryService.findByCriteria(apartmentCriteria);
+        return ResponseEntity.ok().body(apartmentList);
+    }
+
+    /**
      * GET  /{apartmentType}/{reference} : get the apartment with the selected reference
      *
      * @param apartmentType the type of the apartment
@@ -161,4 +179,5 @@ public class ApartmentResource {
         apartmentService.deleteByReference(apartmentTypeConverted, reference);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, reference)).build();
     }
+
 }
