@@ -1,6 +1,8 @@
 package com.arnaugarcia.uplace.repository;
 
 import com.arnaugarcia.uplace.domain.Property;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -27,5 +29,8 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
      */
     @Query("SELECT p FROM Property p where p.reference = :reference")
     Property findByReference(@Param("reference") String reference);
+
+    @Query("SELECT p FROM Property p ORDER BY p.created DESC")
+    Page<Property> findLastProperties(Pageable pageable);
 
 }
