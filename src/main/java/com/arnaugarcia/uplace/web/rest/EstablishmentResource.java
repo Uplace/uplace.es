@@ -2,10 +2,11 @@ package com.arnaugarcia.uplace.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Establishment;
-
-import com.arnaugarcia.uplace.repository.EstablishmentRepository;
+import com.arnaugarcia.uplace.service.EstablishmentService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
+import com.arnaugarcia.uplace.service.dto.EstablishmentCriteria;
+import com.arnaugarcia.uplace.service.EstablishmentQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,13 @@ public class EstablishmentResource {
 
     private static final String ENTITY_NAME = "establishment";
 
-    private final EstablishmentRepository establishmentRepository;
+    private final EstablishmentService establishmentService;
 
-    public EstablishmentResource(EstablishmentRepository establishmentRepository) {
-        this.establishmentRepository = establishmentRepository;
+    private final EstablishmentQueryService establishmentQueryService;
+
+    public EstablishmentResource(EstablishmentService establishmentService, EstablishmentQueryService establishmentQueryService) {
+        this.establishmentService = establishmentService;
+        this.establishmentQueryService = establishmentQueryService;
     }
 
     /**
@@ -49,7 +53,7 @@ public class EstablishmentResource {
         if (establishment.getId() != null) {
             throw new BadRequestAlertException("A new establishment cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Establishment result = establishmentRepository.save(establishment);
+        Establishment result = establishmentService.save(establishment);
         return ResponseEntity.created(new URI("/api/establishments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,7 +75,7 @@ public class EstablishmentResource {
         if (establishment.getId() == null) {
             return createEstablishment(establishment);
         }
-        Establishment result = establishmentRepository.save(establishment);
+        Establishment result = establishmentService.save(establishment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, establishment.getId().toString()))
             .body(result);
@@ -80,14 +84,16 @@ public class EstablishmentResource {
     /**
      * GET  /establishments : get all the establishments.
      *
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of establishments in body
      */
     @GetMapping("/establishments")
     @Timed
-    public List<Establishment> getAllEstablishments() {
-        log.debug("REST request to get all Establishments");
-        return establishmentRepository.findAll();
-        }
+    public ResponseEntity<List<Establishment>> getAllEstablishments(EstablishmentCriteria criteria) {
+        log.debug("REST request to get Establishments by criteria: {}", criteria);
+        List<Establishment> entityList = establishmentQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
 
     /**
      * GET  /establishments/:id : get the "id" establishment.
@@ -99,7 +105,7 @@ public class EstablishmentResource {
     @Timed
     public ResponseEntity<Establishment> getEstablishment(@PathVariable Long id) {
         log.debug("REST request to get Establishment : {}", id);
-        Establishment establishment = establishmentRepository.findOne(id);
+        Establishment establishment = establishmentService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(establishment));
     }
 
@@ -113,7 +119,7 @@ public class EstablishmentResource {
     @Timed
     public ResponseEntity<Void> deleteEstablishment(@PathVariable Long id) {
         log.debug("REST request to delete Establishment : {}", id);
-        establishmentRepository.delete(id);
+        establishmentService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

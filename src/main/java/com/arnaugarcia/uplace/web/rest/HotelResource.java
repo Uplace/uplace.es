@@ -34,12 +34,10 @@ public class HotelResource {
     private final HotelService hotelService;
 
     private final HotelQueryService hotelQueryService;
-    private final PropertyService propertyService;
 
-    public HotelResource(HotelService hotelService, HotelQueryService hotelQueryService, PropertyService propertyService) {
+    public HotelResource(HotelService hotelService, HotelQueryService hotelQueryService) {
         this.hotelService = hotelService;
         this.hotelQueryService = hotelQueryService;
-        this.propertyService = propertyService;
     }
 
     /**
@@ -56,7 +54,6 @@ public class HotelResource {
         if (hotel.getId() != null) {
             throw new BadRequestAlertException("A new hotel cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        hotel.setReference(propertyService.createReference());
         Hotel result = hotelService.save(hotel);
         return ResponseEntity.created(new URI("/api/hotels/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

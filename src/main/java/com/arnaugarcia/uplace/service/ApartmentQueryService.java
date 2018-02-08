@@ -59,24 +59,12 @@ public class ApartmentQueryService extends QueryService<Apartment> {
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<Apartment> findByCriteria(ApartmentCriteria criteria) {
+    public Page<Apartment> findByCriteria(ApartmentCriteria criteria, Pageable pageable) {
         log.debug("find by criteria : {}", criteria);
         final Specifications<Apartment> specification = createSpecification(criteria);
-        return apartmentRepository.findAll(specification);
+        return apartmentRepository.findAll(specification, pageable);
     }
 
-    /**
-     * Return a {@link Page} of {@link Apartment} which matches the criteria from the database
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @param page The page, which should be returned.
-     * @return the matching entities.
-     */
-    @Transactional(readOnly = true)
-    public Page<Apartment> findByCriteria(ApartmentCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
-        final Specifications<Apartment> specification = createSpecification(criteria);
-        return apartmentRepository.findAll(specification, page);
-    }
 
     /**
      * Function to convert ApartmentCriteria to a {@link Specifications}
@@ -86,6 +74,39 @@ public class ApartmentQueryService extends QueryService<Apartment> {
         if (criteria != null) {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), Apartment_.id));
+            }
+            if (criteria.getTitle() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getTitle(), Property_.title));
+            }
+            if (criteria.getPrice() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPrice(), Property_.price));
+            }
+            if (criteria.getCreated() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCreated(), Property_.created));
+            }
+            if (criteria.getUpdated() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
+            }
+            if (criteria.getReference() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
+            }
+            if (criteria.getPriceSell() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPriceSell(), Property_.priceSell));
+            }
+            if (criteria.getPriceRent() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPriceRent(), Property_.priceRent));
+            }
+            if (criteria.getYearConstruction() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getYearConstruction(), Property_.yearConstruction));
+            }
+            if (criteria.getNewCreation() != null) {
+                specification = specification.and(buildSpecification(criteria.getNewCreation(), Property_.newCreation));
+            }
+            if (criteria.getVisible() != null) {
+                specification = specification.and(buildSpecification(criteria.getVisible(), Property_.visible));
+            }
+            if (criteria.getSurface() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getSurface(), Property_.surface));
             }
             if (criteria.getNumberBedrooms() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getNumberBedrooms(), Apartment_.numberBedrooms));

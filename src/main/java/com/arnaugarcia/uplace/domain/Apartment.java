@@ -1,8 +1,4 @@
 package com.arnaugarcia.uplace.domain;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -14,6 +10,7 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
 
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A Apartment.

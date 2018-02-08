@@ -24,7 +24,7 @@ import io.github.jhipster.service.filter.StringFilter;
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
-public class BuildingCriteria implements Serializable {
+public class BuildingCriteria extends PropertyCriteria implements Serializable {
     /**
      * Class for filtering BuildingType
      */

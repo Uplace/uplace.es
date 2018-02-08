@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -20,8 +21,11 @@ public class ParkingService {
 
     private final ParkingRepository parkingRepository;
 
-    public ParkingService(ParkingRepository parkingRepository) {
+    private final PropertyService propertyService;
+
+    public ParkingService(ParkingRepository parkingRepository, PropertyService propertyService) {
         this.parkingRepository = parkingRepository;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -32,6 +36,15 @@ public class ParkingService {
      */
     public Parking save(Parking parking) {
         log.debug("Request to save Parking : {}", parking);
+
+        parking.setReference(propertyService.createReference());
+
+        // Si tiene id o no haces el created o no
+        if (parking.getId() != null) { //Tiene id
+            parking.setUpdated(ZonedDateTime.now());
+        } else { //No tiene id
+            parking.setCreated(ZonedDateTime.now());
+        }
         return parkingRepository.save(parking);
     }
 

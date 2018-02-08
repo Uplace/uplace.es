@@ -8,6 +8,7 @@ import { UplaceTestModule } from '../../../test.module';
 import { LocationDialogComponent } from '../../../../../../main/webapp/app/entities/location/location-dialog.component';
 import { LocationService } from '../../../../../../main/webapp/app/entities/location/location.service';
 import { Location } from '../../../../../../main/webapp/app/entities/location/location.model';
+import { PropertyService } from '../../../../../../main/webapp/app/entities/property';
 
 describe('Component Tests', () => {
 
@@ -23,6 +24,7 @@ describe('Component Tests', () => {
                 imports: [UplaceTestModule],
                 declarations: [LocationDialogComponent],
                 providers: [
+                    PropertyService,
                     LocationService
                 ]
             })

@@ -5,8 +5,11 @@ import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -82,5 +85,11 @@ public class PropertyService {
             log.debug("Generating reference: " + reference);
         } while (propertyRepository.findByReference(reference) != null);
         return reference;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Property> getLastProperties(@PathVariable Integer size) {
+        PageRequest limit = new PageRequest(0, size);
+        return propertyRepository.findLastProperties(limit).getContent();
     }
 }

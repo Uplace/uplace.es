@@ -110,6 +110,18 @@ public class PropertyResourceIntTest {
     private TerrainService terrainService;
 
     @Autowired
+    private BuildingService buildingService;
+
+    @Autowired
+    private EstablishmentService establishmentService;
+
+    @Autowired
+    private IndustrialPlantService industrialPlantService;
+
+    @Autowired
+    private HotelService hotelService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -128,7 +140,7 @@ public class PropertyResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService, apartmentService, parkingService, businessService, officeService, terrainService);
+        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService, apartmentService, parkingService, businessService, officeService, terrainService, buildingService, establishmentService, industrialPlantService, hotelService);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

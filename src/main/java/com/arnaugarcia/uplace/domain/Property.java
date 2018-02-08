@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.Objects;
 
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
+import org.hibernate.annotations.Fetch;
 
 /**
  * A Property.
@@ -77,12 +79,15 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Location location;
+
+    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "property_manager",
                joinColumns = @JoinColumn(name="properties_id", referencedColumnName="id"),
@@ -265,6 +270,19 @@ public class Property implements Serializable {
 
     public void setSurface(Integer surface) {
         this.surface = surface;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public Property location(Location location) {
+        this.location = location;
+        return this;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Set<Photo> getPhotos() {

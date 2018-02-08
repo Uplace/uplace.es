@@ -69,8 +69,6 @@ public class NotificationResource {
         if (notification.getId() != null) {
             throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, ErrorConstants.ERR_ID_EXISTS);
         }
-        //If is a new notification the date must be now
-        notification.setCreation(ZonedDateTime.now());
 
         Notification result = notificationService.saveNotification(notification);
 

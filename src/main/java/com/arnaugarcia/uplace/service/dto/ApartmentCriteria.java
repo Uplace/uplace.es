@@ -16,17 +16,7 @@ import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
-import io.github.jhipster.service.filter.BooleanFilter;
-import io.github.jhipster.service.filter.DoubleFilter;
-import io.github.jhipster.service.filter.Filter;
-import io.github.jhipster.service.filter.FloatFilter;
-import io.github.jhipster.service.filter.IntegerFilter;
-import io.github.jhipster.service.filter.LongFilter;
-import io.github.jhipster.service.filter.StringFilter;
-
-
-
-
+import io.github.jhipster.service.filter.*;
 
 
 /**
@@ -37,7 +27,7 @@ import io.github.jhipster.service.filter.StringFilter;
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
-public class ApartmentCriteria implements Serializable {
+public class ApartmentCriteria extends PropertyCriteria implements Serializable {
     /**
      * Class for filtering Select
      */
@@ -53,13 +43,37 @@ public class ApartmentCriteria implements Serializable {
     /**
      * Class for filtering EnergyCertificate
      */
-    public static class EnergyCertificateFilter extends Filter<EnergyCertificate> {
-    }
+    public static class EnergyCertificateFilter extends Filter<EnergyCertificate> { }
 
     private static final long serialVersionUID = 1L;
 
-
     private LongFilter id;
+
+    private StringFilter title;
+
+    private DoubleFilter price;
+
+    private ZonedDateTimeFilter created;
+
+    private ZonedDateTimeFilter updated;
+
+    private StringFilter reference;
+
+    private DoubleFilter priceSell;
+
+    private DoubleFilter priceRent;
+
+    private IntegerFilter yearConstruction;
+
+    private BooleanFilter newCreation;
+
+    private BooleanFilter visible;
+
+    private IntegerFilter surface;
+
+    private LongFilter photoId;
+
+    private LongFilter managerId;
 
     private IntegerFilter numberBedrooms;
 
@@ -114,6 +128,152 @@ public class ApartmentCriteria implements Serializable {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    @Override
+    public StringFilter getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(StringFilter title) {
+        this.title = title;
+    }
+
+    @Override
+    public DoubleFilter getPrice() {
+        return price;
+    }
+
+    @Override
+    public void setPrice(DoubleFilter price) {
+        this.price = price;
+    }
+
+    @Override
+    public ZonedDateTimeFilter getCreated() {
+        return created;
+    }
+
+    @Override
+    public void setCreated(ZonedDateTimeFilter created) {
+        this.created = created;
+    }
+
+    @Override
+    public ZonedDateTimeFilter getUpdated() {
+        return updated;
+    }
+
+    @Override
+    public void setUpdated(ZonedDateTimeFilter updated) {
+        this.updated = updated;
+    }
+
+    @Override
+    public StringFilter getReference() {
+        return reference;
+    }
+
+    @Override
+    public void setReference(StringFilter reference) {
+        this.reference = reference;
+    }
+
+    @Override
+    public DoubleFilter getPriceSell() {
+        return priceSell;
+    }
+
+    @Override
+    public void setPriceSell(DoubleFilter priceSell) {
+        this.priceSell = priceSell;
+    }
+
+    @Override
+    public DoubleFilter getPriceRent() {
+        return priceRent;
+    }
+
+    @Override
+    public void setPriceRent(DoubleFilter priceRent) {
+        this.priceRent = priceRent;
+    }
+
+    @Override
+    public IntegerFilter getYearConstruction() {
+        return yearConstruction;
+    }
+
+    @Override
+    public void setYearConstruction(IntegerFilter yearConstruction) {
+        this.yearConstruction = yearConstruction;
+    }
+
+    @Override
+    public BooleanFilter getNewCreation() {
+        return newCreation;
+    }
+
+    @Override
+    public void setNewCreation(BooleanFilter newCreation) {
+        this.newCreation = newCreation;
+    }
+
+    @Override
+    public BooleanFilter getVisible() {
+        return visible;
+    }
+
+    @Override
+    public void setVisible(BooleanFilter visible) {
+        this.visible = visible;
+    }
+
+    @Override
+    public IntegerFilter getSurface() {
+        return surface;
+    }
+
+    @Override
+    public void setSurface(IntegerFilter surface) {
+        this.surface = surface;
+    }
+
+    @Override
+    public LongFilter getPhotoId() {
+        return photoId;
+    }
+
+    @Override
+    public void setPhotoId(LongFilter photoId) {
+        this.photoId = photoId;
+    }
+
+    @Override
+    public LongFilter getManagerId() {
+        return managerId;
+    }
+
+    @Override
+    public void setManagerId(LongFilter managerId) {
+        this.managerId = managerId;
+    }
+
+    public IntegerFilter getM2Edified() {
+        return m2Edified;
+    }
+
+    public void setM2Edified(IntegerFilter m2Edified) {
+        this.m2Edified = m2Edified;
+    }
+
+    public IntegerFilter getM2Usable() {
+        return m2Usable;
+    }
+
+    public void setM2Usable(IntegerFilter m2Usable) {
+        this.m2Usable = m2Usable;
     }
 
     public IntegerFilter getNumberBedrooms() {

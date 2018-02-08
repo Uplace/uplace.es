@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.domain.IndustrialPlant;
 import com.arnaugarcia.uplace.repository.*;
 import com.arnaugarcia.uplace.service.*;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
@@ -34,26 +35,13 @@ public class PropertyResource {
 
     private static final String ENTITY_NAME = "property";
 
-
     private final PropertyQueryService propertyQueryService;
 
-    private final ApartmentService apartmentService;
+    private final PropertyService propertyService;
 
-    private final ParkingService parkingService;
-
-    private final BusinessService businessService;
-
-    private final OfficeService officeService;
-
-    private final TerrainService terrainService;
-
-    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService) {
+    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService, BuildingService buildingService, EstablishmentService establishmentService, IndustrialPlantService industrialPlantService, HotelService hotelService) {
         this.propertyQueryService = propertyQueryService;
-        this.apartmentService = apartmentService;
-        this.parkingService = parkingService;
-        this.businessService = businessService;
-        this.officeService = officeService;
-        this.terrainService = terrainService;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -70,7 +58,7 @@ public class PropertyResource {
         if (property.getId() != null) {
             throw new BadRequestAlertException("A new property cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Property result = propertyRepository.save(property);
+        Property result = propertyService.save(property);
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -105,64 +93,24 @@ public class PropertyResource {
      */
     @GetMapping("/properties")
     @Timed
-    @Transactional(readOnly = true)
     public List<Property> getAllProperties() {
-        List<Property> properties = new ArrayList<>();
         log.debug("REST request to get all Properties");
-
-        //Add all apartments(FLATS, HOUSES, TOWERS, ETC...)
-        properties.addAll(apartmentService.findAll());
-
-        //Adds business to list
-        properties.addAll(businessService.findAll());
-
-        //Adds offices to list
-        properties.addAll(officeService.findAll());
-
-        //Adds parking to list
-        properties.addAll(parkingService.findAll());
-
-        //Adds terrain to list
-        properties.addAll(terrainService.findAll());
-
-        return properties;
+        return propertyService.findAll();
     }
 
     @GetMapping("/properties/criteria")
     @Timed
-    @Transactional(readOnly = true)
     public ResponseEntity<List<Property>> getAllPropertiesCriteria(PropertyCriteria criteria) {
         log.debug("REST request to get Properties by criteria: {}", criteria);
         List<Property> entityList = propertyQueryService.findByCriteria(criteria);
         return ResponseEntity.ok().body(entityList);
     }
 
-
-    /**
-     * GET  /properties/:id : get the "id" property.
-     *
-     * @param id the id of the property to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the property, or with status 404 (Not Found)
-     */
-    /*@GetMapping("/properties/{id}")
+    @GetMapping("/properties/last/{size}")
     @Timed
-    public ResponseEntity<Property> getProperty(@PathVariable Long id) {
-        log.debug("REST request to get Property : {}", id);
-        Property property = propertyRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(property));
-    }*/
+    public List<Property> getLastProperties(@PathVariable Integer size) {
+        log.debug("Request to get last " + size + " Properties");
+        return propertyService.getLastProperties(size);
+    }
 
-    /**
-     * DELETE  /properties/:id : delete the "id" property.
-     *
-     * @param id the id of the property to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    /*@DeleteMapping("/properties/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
-        log.debug("REST request to delete Property : {}", id);
-        propertyRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }*/
 }

@@ -8,6 +8,7 @@ import { UplaceTestModule } from '../../../test.module';
 import { PropertyDialogComponent } from '../../../../../../main/webapp/app/entities/property/property-dialog.component';
 import { PropertyService } from '../../../../../../main/webapp/app/entities/property/property.service';
 import { Property } from '../../../../../../main/webapp/app/entities/property/property.model';
+import { LocationService } from '../../../../../../main/webapp/app/entities/location';
 import { AgentService } from '../../../../../../main/webapp/app/entities/agent';
 
 describe('Component Tests', () => {
@@ -24,6 +25,7 @@ describe('Component Tests', () => {
                 imports: [UplaceTestModule],
                 declarations: [PropertyDialogComponent],
                 providers: [
+                    LocationService,
                     AgentService,
                     PropertyService
                 ]

@@ -6,7 +6,11 @@ export class Location implements BaseEntity {
         public latitude?: string,
         public postalCode?: string,
         public longitude?: string,
-        public urlGmaps?: string,
+        public fullAddress?: string,
+        public hide?: boolean,
+        public urlGMaps?: string,
+        public property?: BaseEntity,
     ) {
+        this.hide = false;
     }
 }

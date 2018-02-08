@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -21,11 +22,12 @@ public class BuildingService {
     private final Logger log = LoggerFactory.getLogger(BuildingService.class);
 
     private final BuildingRepository buildingRepository;
-    private final PropertyRepository propertyRepository;
 
-    public BuildingService(BuildingRepository buildingRepository, PropertyRepository propertyRepository) {
+    private final PropertyService propertyService;
+
+    public BuildingService(BuildingRepository buildingRepository, PropertyService propertyService) {
         this.buildingRepository = buildingRepository;
-        this.propertyRepository = propertyRepository;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -36,6 +38,15 @@ public class BuildingService {
      */
     public Building save(Building building) {
         log.debug("Request to save Building : {}", building);
+
+        building.setReference(propertyService.createReference());
+
+        // Si tiene id o no haces el created o no
+        if (building.getId() != null) { //Tiene id
+            building.setUpdated(ZonedDateTime.now());
+        } else { //No tiene id
+            building.setCreated(ZonedDateTime.now());
+        }
         return buildingRepository.save(building);
     }
 
@@ -70,19 +81,5 @@ public class BuildingService {
     public void delete(Long id) {
         log.debug("Request to delete Building : {}", id);
         buildingRepository.delete(id);
-    }
-
-    /**
-     * Create unique reference randomly.
-     *
-     * @return reference created
-     */
-    public String createReference() {
-        String reference;
-        do {
-            reference = RandomUtil.generateReference().toUpperCase();
-            log.debug("Generating reference: " + reference);
-        } while (propertyRepository.findByReference(reference) != null);
-        return reference;
     }
 }

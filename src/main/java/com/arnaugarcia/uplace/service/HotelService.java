@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -20,8 +21,11 @@ public class HotelService {
 
     private final HotelRepository hotelRepository;
 
-    public HotelService(HotelRepository hotelRepository) {
+    private final PropertyService propertyService;
+
+    public HotelService(HotelRepository hotelRepository, PropertyService propertyService) {
         this.hotelRepository = hotelRepository;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -32,6 +36,15 @@ public class HotelService {
      */
     public Hotel save(Hotel hotel) {
         log.debug("Request to save Hotel : {}", hotel);
+
+        hotel.setReference(propertyService.createReference());
+
+        // Si tiene id o no haces el created o no
+        if (hotel.getId() != null) { //Tiene id
+            hotel.setUpdated(ZonedDateTime.now());
+        } else { //No tiene id
+            hotel.setCreated(ZonedDateTime.now());
+        }
         return hotelRepository.save(hotel);
     }
 
