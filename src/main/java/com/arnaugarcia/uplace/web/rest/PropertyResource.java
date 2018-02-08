@@ -93,7 +93,6 @@ public class PropertyResource {
      */
     @GetMapping("/properties")
     @Timed
-    @Transactional(readOnly = true)
     public List<Property> getAllProperties() {
         log.debug("REST request to get all Properties");
         return propertyService.findAll();
@@ -101,11 +100,17 @@ public class PropertyResource {
 
     @GetMapping("/properties/criteria")
     @Timed
-    @Transactional(readOnly = true)
     public ResponseEntity<List<Property>> getAllPropertiesCriteria(PropertyCriteria criteria) {
         log.debug("REST request to get Properties by criteria: {}", criteria);
         List<Property> entityList = propertyQueryService.findByCriteria(criteria);
         return ResponseEntity.ok().body(entityList);
+    }
+
+    @GetMapping("/properties/last/{size}")
+    @Timed
+    public List<Property> getLastProperties(@PathVariable Integer size) {
+        log.debug("Request to get last " + size + " Properties");
+        return propertyService.getLastProperties(size);
     }
 
 }
