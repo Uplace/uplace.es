@@ -3,13 +3,12 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Account, LoginModalService, Principal } from '../shared';
+import {MarkerService} from "../entities/marker/marker.service";
+import {MarkerModel} from "../entities/marker/marker.model";
 
 @Component({
     selector: 'up-home',
-    templateUrl: './home.component.html',
-    styleUrls: [
-        'home.css'
-    ]
+    templateUrl: './home.component.html'
 
 })
 export class HomeComponent implements OnInit {
@@ -19,7 +18,8 @@ export class HomeComponent implements OnInit {
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private markerService: MarkerService
     ) {
     }
 
@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
+        this.markerService.findAll().subscribe((marker: MarkerModel) => {
+            console.log(marker);
+        });
     }
 
     registerAuthenticationSuccess() {

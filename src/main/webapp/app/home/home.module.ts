@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { UplaceSharedModule } from '../shared';
 
 import { HOME_ROUTE, HomeComponent } from './';
+import {MarkerService} from "../entities/marker/marker.service";
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import { HOME_ROUTE, HomeComponent } from './';
     entryComponents: [
     ],
     providers: [
+        MarkerService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
