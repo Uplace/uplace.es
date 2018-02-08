@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.repository;
 
 import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.service.dto.MarkerDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -32,5 +33,14 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
 
     @Query("SELECT p FROM Property p ORDER BY p.created DESC")
     Page<Property> findLastProperties(Pageable pageable);
+
+    /**
+     * Query to get the markers of all Properties
+     *
+     * @return a List of markers
+     */
+    // TODO : AND p.location.hide != null
+    @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.location.latitude, p.location.longitude) FROM Property p WHERE p.location is not null and p.visible = true")
+    List<MarkerDTO> findAllMarkers();
 
 }
