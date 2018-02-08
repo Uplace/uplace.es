@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
         this.registerAuthenticationSuccess();
         this.markerService.findAll().subscribe((marker: MarkerModel) => {
             console.log(marker);
+        }, error => {
+            console.log("No backend connection was found");
         });
     }
 
