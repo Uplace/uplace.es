@@ -15,7 +15,7 @@
 </div>
 -->
 <div class="hero-section has-background">
-    <agm-map #map *ngIf="markers.length > 0 && latitude && longitude" style="height: 800px" [latitude]="latitude" [longitude]="longitude" [styles]="customStyle" [draggable]="true" [gestureHandling]="'greedy'">
+    <agm-map #map style="height: 700px" [latitude]="latitude" [longitude]="longitude" [draggable]="true" [gestureHandling]="'greedy'">
         <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
     </agm-map>
     <div class="wrapper">
@@ -79,7 +79,7 @@
     </div>
     <!--end vertical-aligned-elements-->
 
-    <div class="slider">
+    <!--<div class="slider">
         <div class="owl-carousel opacity-40" data-owl-nav="0" data-owl-dots="0" data-owl-autoplay="1" data-owl-fadeout="1" data-owl-loop="1">
             <div class="image">
                 <div class="bg-transfer"><img src="../../content/images/vendor/background-05.jpg" alt=""></div>
@@ -91,12 +91,12 @@
                 <div class="bg-transfer"><img src="../../content/images/vendor/background-03.jpg" alt=""></div>
             </div>
         </div>
-        <!--end owl-carousel-->
+        &lt;!&ndash;end owl-carousel&ndash;&gt;
         <div class="background-wrapper">
             <div class="background-color background-color-black"></div>
         </div>
-        <!--end background-wrapper-->
-    </div>
+        &lt;!&ndash;end background-wrapper&ndash;&gt;
+    </div>-->
     <!--end slider-->
 </div>
 <!--end hero-section-->

@@ -155,9 +155,9 @@ entity Terrain {
 }
 
 entity Location {
-	latitude String,
+	latitude Double,
     postalCode String,
-    longitude String,
+    longitude Double,
     fullAddress String,
     hide Boolean,
     urlGMaps String

@@ -12,7 +12,7 @@
     "fields": [
         {
             "fieldName": "latitude",
-            "fieldType": "String"
+            "fieldType": "Double"
         },
         {
             "fieldName": "postalCode",
@@ -20,7 +20,7 @@
         },
         {
             "fieldName": "longitude",
-            "fieldType": "String"
+            "fieldType": "Double"
         },
         {
             "fieldName": "fullAddress",

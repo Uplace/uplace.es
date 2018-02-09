@@ -5,7 +5,7 @@ import { Account, LoginModalService, Principal } from '../shared';
 import {HttpClient} from '@angular/common/http';
 import {AgmMap, MapTypeStyle} from '@agm/core';
 import {MarkerModel} from '../entities/marker/marker.model';
-import {MarkerService} from "../entities/marker/marker.service";
+import {MarkerService} from '../entities/marker/marker.service';
 
 @Component({
     selector: 'up-home',
@@ -24,10 +24,10 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     markers: MarkerModel[] = [];
-    @ViewChild("map") map: AgmMap;
+    @ViewChild('map') map: AgmMap;
     customStyle: MapTypeStyle[];
-    latitude;
-    longitude;
+    latitude = 40.712775;
+    longitude = -74.005973;
 
     constructor(
         private principal: Principal,
@@ -39,19 +39,15 @@ export class HomeComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-
         this.getUserLocation();
         this.principal.identity().then((account) => {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
 
-        //this.map.mapReady.subscribe(() => {
-            this.markersService.query().subscribe((result) => {
-                this.markers = result.json;
-               // this.map.triggerResize();
-            });
-        // });
+        this.markersService.query().subscribe((result) => {
+            this.markers = result.json;
+        });
 
         this.customStyle = [{
             'featureType': 'administrative',

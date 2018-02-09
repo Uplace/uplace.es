@@ -3,9 +3,9 @@ import { BaseEntity } from './../../shared';
 export class Location implements BaseEntity {
     constructor(
         public id?: number,
-        public latitude?: string,
+        public latitude?: number,
         public postalCode?: string,
-        public longitude?: string,
+        public longitude?: number,
         public fullAddress?: string,
         public hide?: boolean,
         public urlGMaps?: string,
