@@ -7,7 +7,6 @@ import { UplaceAgentModule } from './agent/agent.module';
 import { UplaceParkingModule } from './parking/parking.module';
 import { UplaceTerrainModule } from './terrain/terrain.module';
 import { UplaceLocationModule } from './location/location.module';
-import { UplaceGalleryModule } from './gallery/gallery.module';
 import { UplacePhotoModule } from './photo/photo.module';
 import { UplaceBusinessModule } from './business/business.module';
 import { UplaceNotificationModule } from './notification/notification.module';
@@ -26,7 +25,6 @@ import { UplaceEstablishmentModule } from './establishment/establishment.module'
         UplaceParkingModule,
         UplaceTerrainModule,
         UplaceLocationModule,
-        UplaceGalleryModule,
         UplacePhotoModule,
         UplaceBusinessModule,
         UplaceNotificationModule,

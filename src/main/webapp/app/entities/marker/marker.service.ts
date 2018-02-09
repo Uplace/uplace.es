@@ -1,42 +1,41 @@
-import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
-
-import { Gallery } from './gallery.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import {MarkerModel} from "./marker.model";
+import {Injectable} from "@angular/core";
 
 @Injectable()
-export class GalleryService {
+export class MarkerService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/galleries';
+    private resourceUrl =  SERVER_API_URL + 'api/markers';
 
     constructor(private http: Http) { }
 
-    create(gallery: Gallery): Observable<Gallery> {
-        const copy = this.convert(gallery);
+    /*create(location: Location): Observable<Location> {
+        const copy = this.convert(location);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
-    }
+    }*/
 
-    update(gallery: Gallery): Observable<Gallery> {
-        const copy = this.convert(gallery);
+    /*update(location: Location): Observable<Location> {
+        const copy = this.convert(location);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
-    }
+    }*/
 
-    find(id: number): Observable<Gallery> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+    findAll(): Observable<MarkerModel> {
+        return this.http.get(`${this.resourceUrl}`).map((res: Response) => {
             const jsonResponse = res.json();
+            console.log(jsonResponse);
             return this.convertItemFromServer(jsonResponse);
         });
     }
 
-    query(req?: any): Observable<ResponseWrapper> {
+    /*query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
             .map((res: Response) => this.convertResponse(res));
@@ -44,30 +43,30 @@ export class GalleryService {
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
+    }*/
 
-    private convertResponse(res: Response): ResponseWrapper {
+    /*private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         const result = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             result.push(this.convertItemFromServer(jsonResponse[i]));
         }
         return new ResponseWrapper(res.headers, result, res.status);
-    }
+    }*/
 
     /**
-     * Convert a returned JSON object to Gallery.
+     * Convert a returned JSON object to Location.
      */
-    private convertItemFromServer(json: any): Gallery {
-        const entity: Gallery = Object.assign(new Gallery(), json);
+    private convertItemFromServer(json: any): MarkerModel {
+        const entity: MarkerModel = Object.assign(new MarkerModel(), json);
         return entity;
     }
 
     /**
-     * Convert a Gallery to a JSON which can be sent to the server.
+     * Convert a Location to a JSON which can be sent to the server.
      */
-    private convert(gallery: Gallery): Gallery {
-        const copy: Gallery = Object.assign({}, gallery);
+    /*private convert(location: Location): Location {
+        const copy: Location = Object.assign({}, location);
         return copy;
-    }
+    }*/
 }
