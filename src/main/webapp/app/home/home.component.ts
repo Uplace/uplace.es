@@ -2,8 +2,10 @@ import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angu
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { Account, LoginModalService, Principal } from '../shared';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 import {AgmMap, MapTypeStyle} from '@agm/core';
+import {MarkerModel} from '../entities/marker/marker.model';
+import {MarkerService} from "../entities/marker/marker.service";
 
 @Component({
     selector: 'up-home',
@@ -11,37 +13,85 @@ import {AgmMap, MapTypeStyle} from '@agm/core';
     styleUrls: [
         'home.css'
     ],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        MarkerService
+    ]
 
 })
 
 export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
-    markers: any;
-    height: number;
-    @ViewChild('map') map: AgmMap;
+    markers: MarkerModel[] = [];
+    @ViewChild("map") map: AgmMap;
     customStyle: MapTypeStyle[];
+    latitude;
+    longitude;
 
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
         private http: HttpClient,
-        private elementRef: ElementRef
+        private elementRef: ElementRef,
+        private markersService: MarkerService
     ) { }
 
     ngOnInit() {
+
+        this.getUserLocation();
         this.principal.identity().then((account) => {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
-        this.http.get('http://localhost:8080/api/markers').subscribe((result) => {
-            this.markers = result;
-            console.log(result);
-        });
-        this.customStyle = [ {"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"},{"lightness":20}]},{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"on"},{"lightness":10}]},{"featureType":"road.local","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"road.local","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":50}]},{"featureType":"water","elementType":"all","stylers":[{"hue":"#a1cdfc"},{"saturation":30},{"lightness":49}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"hue":"#f49935"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#fad959"}]}, {featureType:'road.highway',elementType:'all',stylers:[{hue:'#dddbd7'},{saturation:-92},{lightness:60},{visibility:'on'}]}, {featureType:'landscape.natural',elementType:'all',stylers:[{hue:'#c8c6c3'},{saturation:-71},{lightness:-18},{visibility:'on'}]},  {featureType:'poi',elementType:'all',stylers:[{hue:'#d9d5cd'},{saturation:-70},{lightness:20},{visibility:'on'}]} ];
 
+        //this.map.mapReady.subscribe(() => {
+            this.markersService.query().subscribe((result) => {
+                this.markers = result.json;
+               // this.map.triggerResize();
+            });
+        // });
+
+        this.customStyle = [{
+            'featureType': 'administrative',
+            'elementType': 'labels.text.fill',
+            'stylers': [{'color': '#c6c6c6'}]
+        }, {'featureType': 'landscape', 'elementType': 'all', 'stylers': [{'color': '#f2f2f2'}]}, {
+            'featureType': 'poi',
+            'elementType': 'all',
+            'stylers': [{'visibility': 'off'}]
+        }, {
+            'featureType': 'road',
+            'elementType': 'all',
+            'stylers': [{'saturation': -100}, {'lightness': 45}]
+        }, {
+            'featureType': 'road.highway',
+            'elementType': 'all',
+            'stylers': [{'visibility': 'simplified'}]
+        }, {
+            'featureType': 'road.highway',
+            'elementType': 'geometry.fill',
+            'stylers': [{'color': '#ffffff'}]
+        }, {
+            'featureType': 'road.arterial',
+            'elementType': 'labels.icon',
+            'stylers': [{'visibility': 'off'}]
+        }, {
+            'featureType': 'transit',
+            'elementType': 'all',
+            'stylers': [{'visibility': 'off'}]
+        }, {'featureType': 'water', 'elementType': 'all', 'stylers': [{'color': '#dde6e8'}, {'visibility': 'on'}]}]
+    }
+
+    private getUserLocation() {
+        /// locate the user
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                this.latitude = position.coords.latitude;
+                this.longitude = position.coords.longitude;
+            });
+        }
     }
 
     registerAuthenticationSuccess() {

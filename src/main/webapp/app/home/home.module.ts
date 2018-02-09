@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { UplaceSharedModule } from '../shared';
 import { HOME_ROUTE, HomeComponent } from './';
 import {AgmCoreModule} from '@agm/core';
-import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+import {AgmJsMarkerClustererModule, ClusterManager} from '@agm/js-marker-clusterer';
 
 @NgModule({
     imports: [
@@ -20,6 +20,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
     entryComponents: [
     ],
     providers: [
+        ClusterManager
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

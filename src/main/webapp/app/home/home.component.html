@@ -14,11 +14,9 @@
     </div>
 </div>
 -->
-<div class="hero-section has-background full-screen">
-    <agm-map style="height: 800px" [latitude]="51.673858" [longitude]="7.815982">
-        <agm-marker-cluster imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
-            <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
-        </agm-marker-cluster>
+<div class="hero-section has-background">
+    <agm-map #map *ngIf="markers.length > 0 && latitude && longitude" style="height: 800px" [latitude]="latitude" [longitude]="longitude" [styles]="customStyle" [draggable]="true" [gestureHandling]="'greedy'">
+        <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
     </agm-map>
     <div class="wrapper">
         <div class="inner">
