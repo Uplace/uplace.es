@@ -1,31 +1,3 @@
-<div class="wrapper">
-    <div class="brand">
-        <a href="#"><img src="../../../content/img/logo-real-estate.png" alt="logo"></a>
-    </div>
-    <nav class="navigation-items">
-        <div class="wrapper">
-            <ul class="main-navigation navigation-top-header"></ul>
-            <ul class="user-area">
-                <li><a href="#">Sign In</a></li>
-                <li><a href="#"><strong>Register</strong></a></li>
-            </ul>
-            <a href="#" class="submit-item">
-                <div class="content"><span>Submit Your Item</span></div>
-                <div class="icon">
-                    <i class="fa fa-plus"></i>
-                </div>
-            </a>
-            <div class="toggle-navigation">
-                <div class="icon">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-            </div>
-        </div>
-    </nav>
-</div>
-<!--
 <nav class="navbar navbar-dark navbar-expand-md jh-navbar">
     <div class="jh-logo-container float-left">
         <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
@@ -46,7 +18,7 @@
                     </span>
                 </a>
             </li>
-            &lt;!&ndash; jhipster-needle-add-element-to-menu - JHipster will add new menu items here &ndash;&gt;
+            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
@@ -106,12 +78,6 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" routerLink="gallery" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span jhiTranslate="global.menu.entities.gallery">Gallery</span>
-                        </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" routerLink="photo" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.photo">Photo</span>
@@ -153,7 +119,7 @@
                             <span jhiTranslate="global.menu.entities.establishment">Establishment</span>
                         </a>
                     </li>
-                    &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
+                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
             <li *upHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -206,7 +172,7 @@
                             <span jhiTranslate="global.menu.admin.apidocs">API</span>
                         </a>
                     </li>
-                    &lt;!&ndash; jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here &ndash;&gt;
+                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                 </ul>
             </li>
             <li ngbDropdown class="nav-item dropdown pointer" *ngIf="languages">
@@ -270,4 +236,3 @@
         </ul>
     </div>
 </nav>
--->

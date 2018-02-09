@@ -2,12 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UplaceSharedModule } from '../shared';
 import { HOME_ROUTE, HomeComponent } from './';
-import { FilterComponent } from './filter/filter.component';
-import { MapComponent } from './map/map.component';
-import { WhyUsComponent } from './why-us/why-us.component';
-import { FeaturedComponent } from './featured/featured.component';
-import { RecentComponent } from './recent/recent.component';
-import {FilterShowDirective} from './directives/filter-show.directive';
 import {AgmCoreModule} from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
@@ -21,13 +15,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
         AgmJsMarkerClustererModule
     ],
     declarations: [
-        HomeComponent,
-        FilterComponent,
-        MapComponent,
-        WhyUsComponent,
-        FeaturedComponent,
-        RecentComponent,
-        FilterShowDirective
+        HomeComponent
     ],
     entryComponents: [
     ],
