@@ -22,7 +22,10 @@
             "content/css/vendor.css",
             "content/css/global.css"
         ],
-        "scripts": []
+        "scripts": [
+            "content/js/maps.js",
+            "content/js/custom.js"
+        ]
     }],
     "lint": [{
             "project": "../../../tsconfig.json"

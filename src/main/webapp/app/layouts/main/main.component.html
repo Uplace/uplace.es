@@ -1,11 +1,18 @@
 <up-page-ribbon></up-page-ribbon>
-<div>
-    <router-outlet name="navbar"></router-outlet>
-</div>
-<div class="container-fluid">
-    <div class="card jh-card">
+<div class="page-wrapper">
+    <!-- Navbar -->
+    <header id="page-header">
+        <router-outlet name="navbar"></router-outlet>
+    </header>
+
+    <!-- Content -->
+
+    <div id="page-content">
         <router-outlet></router-outlet>
-        <router-outlet name="popup"></router-outlet>
     </div>
-    <up-footer></up-footer>
+
+    <router-outlet name="popup"></router-outlet>
+
+    <!-- Footer -->
+    <up-footer id="page-footer"></up-footer>
 </div>
