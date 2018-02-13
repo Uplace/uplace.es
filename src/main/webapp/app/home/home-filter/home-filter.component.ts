@@ -208,7 +208,7 @@ export class HomeFilterComponent implements OnInit {
   ];
 
   filterBedrooms = 0;
-  filterbathrooms = 0;
+  filterBathrooms = 0;
 
   public ngxValue: any[] = [];
 

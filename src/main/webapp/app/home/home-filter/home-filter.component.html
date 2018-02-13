@@ -167,11 +167,11 @@
           <label for="bathrooms">Bathrooms</label>
           <div class="input-group counter">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button"><i class="fa fa-minus"></i></button>
+              <button class="btn btn-default" type="button" (click)="decrement(filterBathrooms)"><i class="fa fa-minus"></i></button>
             </span>
-            <input type="text" class="form-control" id="bathrooms" name="bathrooms" [(ngModel)]="filterBedrooms" placeholder="Any">
+            <input type="text" class="form-control" id="bathrooms" name="bathrooms" [(ngModel)]="filterBathrooms" placeholder="Any">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+              <button class="btn btn-default" type="button" (click)="increment(filterBathrooms)"><i class="fa fa-plus"></i></button>
             </span>
           </div><!-- /input-group -->
         </div>
