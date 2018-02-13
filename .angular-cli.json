@@ -20,7 +20,8 @@
         "mobile": false,
         "styles": [
             "content/css/vendor.css",
-            "content/css/global.css"
+            "content/css/global.css",
+            "content/css/styles.css"
         ],
         "scripts": []
     }],
