@@ -1,3 +1,16 @@
+@import "~nouislider/distribute/nouislider.min.css";
+.map-canvas .results.grid li {
+    margin-left: 0;
+}
+
 agm-map {
-    height: 300px;
+    height: 815px;
+}
+
+.items-list .inner .results {
+    height: 547px;
+}
+
+.items-list {
+    overflow-y: scroll;
 }

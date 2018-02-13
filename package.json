@@ -31,6 +31,7 @@
     "ngx-infinite-scroll": "0.5.1",
     "ngx-select-ex": "^3.3.10",
     "ngx-webstorage": "2.0.1",
+    "nouislider": "^11.0.3",
     "reflect-metadata": "0.1.10",
     "rxjs": "5.5.5",
     "swagger-ui": "2.2.10",

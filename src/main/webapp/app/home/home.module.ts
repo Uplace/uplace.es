@@ -15,8 +15,8 @@ import {HomeMapComponent} from "./home-map/home-map.component";
 import {HomeFilterComponent} from "./home-filter/home-filter.component";
 import {HomeFilterItemComponent} from "./home-filter-item/home-filter-item.component";
 import {HomeFeaturedComponent} from "./sections/home-featured/home-featured.component";
-import {NouisliderModule} from "ng2-nouislider";
-import {NgxSelectModule} from "ngx-select-ex";
+import { NouisliderModule } from 'ng2-nouislider';
+import { NgxSelectModule } from 'ngx-select-ex';
 
 @NgModule({
     imports: [
