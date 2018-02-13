@@ -1,18 +1,24 @@
 <up-page-ribbon></up-page-ribbon>
-<div class="page-wrapper">
+<div id="outer-wrapper">
+
+    <div id="inner-wrapper">
     <!-- Navbar -->
-    <header id="page-header">
-        <router-outlet name="navbar"></router-outlet>
-    </header>
+         <div class="header">
+             <router-outlet name="navbar"></router-outlet>
+         </div>
 
-    <!-- Content -->
+        <!-- Content -->
 
-    <div id="page-content">
-        <router-outlet></router-outlet>
+        <div id="page-canvas">
+            <router-outlet></router-outlet>
+        </div>
+
+        <router-outlet name="popup"></router-outlet>
+
+        <!-- Footer -->
+        <footer id="page-footer">
+            <up-footer></up-footer>
+        </footer>
+
     </div>
-
-    <router-outlet name="popup"></router-outlet>
-
-    <!-- Footer -->
-    <up-footer id="page-footer"></up-footer>
 </div>

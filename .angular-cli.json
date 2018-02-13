@@ -19,6 +19,7 @@
         "prefix": "up",
         "mobile": false,
         "styles": [
+            "assets/fonts/font-awesome.css",
             "content/css/vendor.css",
             "content/css/global.css"
         ],

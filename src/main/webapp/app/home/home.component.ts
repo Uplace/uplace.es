@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {AgmMap, MapTypeStyle} from '@agm/core';
 import {MarkerModel} from '../entities/marker/marker.model';
 import {MarkerService} from '../entities/marker/marker.service';
+import {HomeService} from "./home.service";
 
 @Component({
     selector: 'up-home',
@@ -14,20 +15,20 @@ import {MarkerService} from '../entities/marker/marker.service';
         'home.css'
     ],
     encapsulation: ViewEncapsulation.None,
-    providers: [
-        MarkerService
-    ]
+    providers: [MarkerService]
 
 })
 
 export class HomeComponent implements OnInit {
+
     account: Account;
     modalRef: NgbModalRef;
     markers: MarkerModel[] = [];
-    @ViewChild('map') map: AgmMap;
-    customStyle: MapTypeStyle[];
-    latitude = 40.712775;
-    longitude = -74.005973;
+
+    filterOpen;
+
+    horizontalResults = false;
+
 
     constructor(
         private principal: Principal,
@@ -35,11 +36,12 @@ export class HomeComponent implements OnInit {
         private eventManager: JhiEventManager,
         private http: HttpClient,
         private elementRef: ElementRef,
-        private markersService: MarkerService
+        private markersService: MarkerService,
+        private homeService: HomeService
     ) { }
 
-    ngOnInit() {
-        this.getUserLocation();
+    ngOnInit(): void {
+        // this.getUserLocation();
         this.principal.identity().then((account) => {
             this.account = account;
         });
@@ -49,38 +51,12 @@ export class HomeComponent implements OnInit {
             this.markers = result.json;
         });
 
-        this.customStyle = [{
-            'featureType': 'administrative',
-            'elementType': 'labels.text.fill',
-            'stylers': [{'color': '#c6c6c6'}]
-        }, {'featureType': 'landscape', 'elementType': 'all', 'stylers': [{'color': '#f2f2f2'}]}, {
-            'featureType': 'poi',
-            'elementType': 'all',
-            'stylers': [{'visibility': 'off'}]
-        }, {
-            'featureType': 'road',
-            'elementType': 'all',
-            'stylers': [{'saturation': -100}, {'lightness': 45}]
-        }, {
-            'featureType': 'road.highway',
-            'elementType': 'all',
-            'stylers': [{'visibility': 'simplified'}]
-        }, {
-            'featureType': 'road.highway',
-            'elementType': 'geometry.fill',
-            'stylers': [{'color': '#ffffff'}]
-        }, {
-            'featureType': 'road.arterial',
-            'elementType': 'labels.icon',
-            'stylers': [{'visibility': 'off'}]
-        }, {
-            'featureType': 'transit',
-            'elementType': 'all',
-            'stylers': [{'visibility': 'off'}]
-        }, {'featureType': 'water', 'elementType': 'all', 'stylers': [{'color': '#dde6e8'}, {'visibility': 'on'}]}]
+        this.homeService.change.subscribe((isOpen: boolean) => {
+            this.filterOpen = isOpen;
+        });
     }
 
-    private getUserLocation() {
+    /*private getUserLocation() {
         /// locate the user
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
@@ -88,7 +64,7 @@ export class HomeComponent implements OnInit {
                 this.longitude = position.coords.longitude;
             });
         }
-    }
+    }*/
 
     registerAuthenticationSuccess() {
         this.eventManager.subscribe('authenticationSuccess', (message) => {
@@ -96,6 +72,10 @@ export class HomeComponent implements OnInit {
                 this.account = account;
             });
         });
+    }
+
+    toggleOrientationHorizontal(value: boolean) {
+        this.horizontalResults = value;
     }
 
     isAuthenticated() {

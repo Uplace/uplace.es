@@ -1,0 +1,13 @@
+<div class="map">
+  <div class="toggle-navigation">
+    <div class="icon" (click)="onShowFilter()">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+  </div>
+  <!--/.toggle-navigation-->
+  <div id="map" class="has-parallax">
+    <agm-map [latitude]="latitude" [longitude]="longitude" [styles]="mapStyles"></agm-map>
+  </div>
+</div>
