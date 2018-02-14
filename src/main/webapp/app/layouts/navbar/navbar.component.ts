@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
@@ -13,7 +13,8 @@ import { VERSION } from '../../app.constants';
     templateUrl: './navbar.component.html',
     styleUrls: [
         'navbar.css'
-    ]
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit {
     inProduction: boolean;
