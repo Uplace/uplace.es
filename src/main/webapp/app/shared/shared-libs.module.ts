@@ -6,6 +6,7 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieModule } from 'ngx-cookie';
 import {AgmCoreModule} from "@agm/core";
+import {AgmJsMarkerClustererModule} from "@agm/js-marker-clusterer";
 
 @NgModule({
     imports: [
@@ -22,6 +23,8 @@ import {AgmCoreModule} from "@agm/core";
             apiKey: 'AIzaSyA2cKil90Egaj6l1QY-h42Slh0UScns69Y',
             libraries: ['places']
         }),
+        AgmJsMarkerClustererModule
+
     ],
     exports: [
         FormsModule,
@@ -29,7 +32,8 @@ import {AgmCoreModule} from "@agm/core";
         NgbModule,
         NgJhipsterModule,
         InfiniteScrollModule,
-        AgmCoreModule
+        AgmCoreModule,
+        AgmJsMarkerClustererModule
     ]
 })
 export class UplaceSharedLibsModule {}

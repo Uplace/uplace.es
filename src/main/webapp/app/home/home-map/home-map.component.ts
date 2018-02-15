@@ -1,14 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
+import {MarkerService} from "../../entities/marker/marker.service";
+import {MarkerModel} from "../../entities/marker/marker.model";
 
 @Component({
   selector: 'up-home-map',
-  templateUrl: './home-map.component.html'
+  templateUrl: './home-map.component.html',
+    providers: [MarkerService]
 })
 export class HomeMapComponent implements OnInit {
 
     latitude = 51.678418;
     longitude = 7.809007;
+    markers: MarkerModel[] = [];
 
     @ViewChild(AgmMap) agmMap: AgmMap;
 
@@ -39,9 +43,26 @@ export class HomeMapComponent implements OnInit {
             'stylers': [{'color': '#dde6e8'}, {'visibility': 'on'}]}
     ];
 
-  constructor() { }
+  constructor(
+      private markersService: MarkerService
+  ) { }
 
   ngOnInit() {
+      this.getUserLocation();
+
+      this.markersService.query().subscribe((result) => {
+          this.markers = result.json;
+      });
   }
+
+    private getUserLocation() {
+        /// locate the user
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                this.latitude = position.coords.latitude;
+                this.longitude = position.coords.longitude;
+            });
+        }
+    }
 
 }
