@@ -25,6 +25,8 @@ import {
     ErrorComponent
 } from './layouts';
 
+import { AgmCoreModule } from '@agm/core';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -36,6 +38,9 @@ import {
         UplaceAccountModule,
         UplaceEntityModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyA2cKil90Egaj6l1QY-h42Slh0UScns69Y'
+        })
     ],
     declarations: [
         UpMainComponent,

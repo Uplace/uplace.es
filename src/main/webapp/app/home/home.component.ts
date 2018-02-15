@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { Account, LoginModalService, Principal } from '../shared';
@@ -6,15 +6,10 @@ import {HttpClient} from '@angular/common/http';
 import {AgmMap, MapTypeStyle} from '@agm/core';
 import {MarkerModel} from '../entities/marker/marker.model';
 import {MarkerService} from '../entities/marker/marker.service';
-import {HomeService} from "./home.service";
 
 @Component({
     selector: 'up-home',
     templateUrl: './home.component.html',
-    styleUrls: [
-        'home.css'
-    ],
-    encapsulation: ViewEncapsulation.None,
     providers: [MarkerService]
 
 })
@@ -36,8 +31,7 @@ export class HomeComponent implements OnInit {
         private eventManager: JhiEventManager,
         private http: HttpClient,
         private elementRef: ElementRef,
-        private markersService: MarkerService,
-        private homeService: HomeService
+        private markersService: MarkerService
     ) { }
 
     ngOnInit(): void {
@@ -51,9 +45,6 @@ export class HomeComponent implements OnInit {
             this.markers = result.json;
         });
 
-        this.homeService.change.subscribe((isOpen: boolean) => {
-            this.filterOpen = isOpen;
-        });
     }
 
     /*private getUserLocation() {
