@@ -24,13 +24,13 @@ public class Location implements Serializable {
     private Long id;
 
     @Column(name = "latitude")
-    private String latitude;
+    private Double latitude;
 
     @Column(name = "postal_code")
     private String postalCode;
 
     @Column(name = "longitude")
-    private String longitude;
+    private Double longitude;
 
     @Column(name = "full_address")
     private String fullAddress;
@@ -54,16 +54,16 @@ public class Location implements Serializable {
         this.id = id;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public Location latitude(String latitude) {
+    public Location latitude(Double latitude) {
         this.latitude = latitude;
         return this;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
@@ -80,16 +80,16 @@ public class Location implements Serializable {
         this.postalCode = postalCode;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public Location longitude(String longitude) {
+    public Location longitude(Double longitude) {
         this.longitude = longitude;
         return this;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -170,9 +170,9 @@ public class Location implements Serializable {
     public String toString() {
         return "Location{" +
             "id=" + getId() +
-            ", latitude='" + getLatitude() + "'" +
+            ", latitude=" + getLatitude() +
             ", postalCode='" + getPostalCode() + "'" +
-            ", longitude='" + getLongitude() + "'" +
+            ", longitude=" + getLongitude() +
             ", fullAddress='" + getFullAddress() + "'" +
             ", hide='" + isHide() + "'" +
             ", urlGMaps='" + getUrlGMaps() + "'" +

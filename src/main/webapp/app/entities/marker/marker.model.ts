@@ -1,9 +1,9 @@
 
 export class MarkerModel {
     constructor(
-        public propertyreference?: string,
-        public latitude?: string,
-        public longitude?: string
+        public propertyReference?: string,
+        public latitude?: number,
+        public longitude?: number
     ) {
     }
 }

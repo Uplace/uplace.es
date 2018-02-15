@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path d="M63,86 C45.8791728,86 32,72.1208272 32,55 C32,37.8791728 45.8791728,24 63,24 C80.1208272,24 94,37.8791728 94,55 C94,72.1208272 80.1208272,86 63,86 Z M63,74 C73.4934102,74 82,65.4934102 82,55 C82,44.5065898 73.4934102,36 63,36 C52.5065898,36 44,44.5065898 44,55 C44,65.4934102 52.5065898,74 63,74 Z" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="62" height="62" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <path d="M63,98 C39.2517558,98 20,78.7482442 20,55 C20,31.2517558 39.2517558,12 63,12 C86.7482442,12 106,31.2517558 106,55 C106,78.7482442 86.7482442,98 63,98 Z M63,74 C73.4934102,74 82,65.4934102 82,55 C82,44.5065898 73.4934102,36 63,36 C52.5065898,36 44,44.5065898 44,55 C44,65.4934102 52.5065898,74 63,74 Z" id="path-3"></path>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="86" height="86" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo">
+            <polygon id="Triangle-4" fill="#323232" transform="translate(64.505493, 118.500000) rotate(180.000000) translate(-64.505493, -118.500000) " points="64.5109863 109 73.0675049 128 55.9434814 128"></polygon>
+            <path d="M63,110 C32.6243388,110 8,85.3756612 8,55 C8,24.6243388 32.6243388,0 63,0 C93.3756612,0 118,24.6243388 118,55 C118,85.3756612 93.3756612,110 63,110 Z M63,74 C73.4934102,74 82,65.4934102 82,55 C82,44.5065898 73.4934102,36 63,36 C52.5065898,36 44,44.5065898 44,55 C44,65.4934102 52.5065898,74 63,74 Z" id="logo-background" fill="#323232"></path>
+            <use id="Combined-Shape" stroke-opacity="0.4" stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="24" xlink:href="#path-1"></use>
+            <use id="Combined-Shape" stroke-opacity="0.2" stroke="#FFFFFF" mask="url(#mask-4)" stroke-width="24" xlink:href="#path-3"></use>
+        </g>
+    </g>
+</svg>

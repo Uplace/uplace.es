@@ -70,7 +70,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.OPTIONS, "/**")
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**");
     }
@@ -100,6 +99,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, "/api/flats").authenticated()
             .antMatchers(HttpMethod.PUT, "/api/flats/**").authenticated()
             .antMatchers(HttpMethod.DELETE, "/api/flats/**").authenticated()
+            .antMatchers(HttpMethod.GET, "/api/markers").permitAll()
 
 
             // HOUSES

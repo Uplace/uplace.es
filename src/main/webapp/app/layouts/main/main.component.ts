@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 
 import { JhiLanguageHelper } from '../../shared';
 
 @Component({
     selector: 'up-main',
-    templateUrl: './main.component.html'
+    templateUrl: './main.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class UpMainComponent implements OnInit {
 

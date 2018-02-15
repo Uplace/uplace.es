@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class MarkerDTO implements Serializable {
 
     private String propertyReference;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
 
-    public MarkerDTO(String propertyReference, String latitude, String longitude) {
+    public MarkerDTO(String propertyReference, Double latitude, Double longitude) {
         this.propertyReference = propertyReference;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -22,19 +22,19 @@ public class MarkerDTO implements Serializable {
         this.propertyReference = propertyReference;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -42,8 +42,8 @@ public class MarkerDTO implements Serializable {
     public String toString() {
         return "MarkerDTO{" +
             "propertyReference='" + propertyReference + '\'' +
-            ", latitude='" + latitude + '\'' +
-            ", longitude='" + longitude + '\'' +
+            ", latitude=" + latitude +
+            ", longitude=" + longitude +
             '}';
     }
 }
