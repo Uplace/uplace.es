@@ -25,9 +25,6 @@ import {
     ErrorComponent
 } from './layouts';
 
-import { AgmCoreModule } from '@agm/core';
-import {SlickModule} from "ngx-slick";
-
 @NgModule({
     imports: [
         BrowserModule,

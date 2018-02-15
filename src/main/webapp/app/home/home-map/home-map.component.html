@@ -1,0 +1,107 @@
+<div class="map-wrapper mb80">
+    <div class="map">
+        <div class="map-inner">
+            <div class="map-object">
+                <agm-map style="height: 740px" [latitude]="latitude" [longitude]="longitude" [styles]="mapStyles">
+                    <agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
+                        <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+                    </agm-marker-cluster>
+                </agm-map>
+                <div class="container">
+                    <div class="map-toolbar map-toolbar-top-right">
+                        <div class="map-toolbar-group">
+                            <div id="map-toolbar-action-zoom-in" class="map-toolbar-group-item"><i class="fa fa-plus"></i></div>
+                            <!-- /.map-toolbar-group-item -->
+                            <div id="map-toolbar-action-zoom-out" class="map-toolbar-group-item"><i class="fa fa-minus"></i></div>
+                            <!-- /.map-toolbar-group-item -->
+                        </div>
+                        <!-- /.map-toolbar-group -->
+                        <div class="map-toolbar-group">
+                            <div id="map-toolbar-action-current-position" class="map-toolbar-group-item"><i class="fa fa-location-arrow"></i></div>
+                            <!-- /.map-toolbar-group-item -->
+                            <div id="map-toolbar-action-fullscreen" class="map-toolbar-group-item"><i class="fa fa-arrows-alt"></i></div>
+                            <!-- /.map-toolbar-group-item -->
+                        </div>
+                        <!-- /.map-toolbar-group -->
+                        <div class="map-toolbar-group">
+                            <div id="map-toolbar-action-roadmap" class="map-toolbar-group-item">Roadmap</div>
+                            <!-- /.map-toolbar-group-item -->
+                            <div id="map-toolbar-action-satellite" class="map-toolbar-group-item">Satellite</div>
+                            <!-- /.map-toolbar-group-item -->
+                            <div id="map-toolbar-action-terrain" class="map-toolbar-group-item">Terrain</div>
+                            <!-- /.map-toolbar-group-item -->
+                            <div id="map-toolbar-action-hybrid" class="map-toolbar-group-item">Hybrid</div>
+                            <!-- /.map-toolbar-group-item -->
+                        </div>
+                        <!-- /.map-toolbar-group -->
+                    </div>
+                    <!-- /.map-toolbar -->
+                </div>
+                <!-- /.container -->
+                <div class="map-filter-horizontal-wrapper">
+                    <div class="container">
+                        <div class="map-filter-horizontal">
+                            <form action="?" method="post">
+                                <div class="row">
+                                    <div class="col-sm-3 form-group">
+                                        <input type="text" class="form-control form-control-no-border" placeholder="Search by keyword ...">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="col-sm-3 form-group">
+                                        <select class="form-control form-control-no-border">
+                                            <option>Location</option>
+                                            <option>Chicago</option>
+                                            <option>San Francisco</option>
+                                            <option>Seattle</option>
+                                            <option>New York</option>
+                                            <option>Washington</option>
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="col-sm-3 form-group">
+                                        <select class="form-control form-control-no-border">
+                                            <option>Category</option>
+                                            <option>Chicago</option>
+                                            <option>San Francisco</option>
+                                            <option>Seattle</option>
+                                            <option>New York</option>
+                                            <option>Washington</option>
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="col-sm-3 form-group">
+                                        <input type="number" class="form-control form-control-no-border" placeholder="Bedrooms">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="col-sm-3 form-group">
+                                        <input type="number" class="form-control form-control-no-border" placeholder="Bathrooms">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="col-sm-3 form-group">
+                                        <input type="text" class="form-control form-control-no-border" placeholder="Price from">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="col-sm-3 form-group">
+                                        <input type="text" class="form-control form-control-no-border" placeholder="Price to">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="col-sm-3">
+                                        <button type="submit" class="btn btn-block">Filter Listings</button>
+                                    </div>
+                                    <!-- /.col-->
+                                </div>
+                                <!-- /.row -->
+                            </form>
+                        </div>
+                        <!-- /.map-filter -->
+                    </div>
+                    <!-- /.container -->
+                </div>
+                <!-- /.map-filter-wrapper -->
+            </div>
+            <!-- /#map-object -->
+        </div>
+        <!-- /.map-inner -->
+    </div>
+    <!-- /.map -->
+</div>

@@ -19,10 +19,16 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     markers: MarkerModel[] = [];
+    latitude: number;
+    longitude: number;
 
-    filterOpen;
-
-    horizontalResults = false;
+    slides = [
+        {img: "http://placehold.it/350x150/000000"},
+        {img: "http://placehold.it/350x150/111111"},
+        {img: "http://placehold.it/350x150/333333"},
+        {img: "http://placehold.it/350x150/666666"}
+    ];
+    slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
 
 
     constructor(
@@ -35,7 +41,7 @@ export class HomeComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        // this.getUserLocation();
+        this.getUserLocation();
         this.principal.identity().then((account) => {
             this.account = account;
         });
@@ -47,7 +53,7 @@ export class HomeComponent implements OnInit {
 
     }
 
-    /*private getUserLocation() {
+    private getUserLocation() {
         /// locate the user
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
@@ -55,7 +61,7 @@ export class HomeComponent implements OnInit {
                 this.longitude = position.coords.longitude;
             });
         }
-    }*/
+    }
 
     registerAuthenticationSuccess() {
         this.eventManager.subscribe('authenticationSuccess', (message) => {
@@ -63,10 +69,6 @@ export class HomeComponent implements OnInit {
                 this.account = account;
             });
         });
-    }
-
-    toggleOrientationHorizontal(value: boolean) {
-        this.horizontalResults = value;
     }
 
     isAuthenticated() {
