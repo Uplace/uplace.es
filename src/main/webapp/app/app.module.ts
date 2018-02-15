@@ -26,6 +26,7 @@ import {
 } from './layouts';
 
 import { AgmCoreModule } from '@agm/core';
+import {SlickModule} from "ngx-slick";
 
 @NgModule({
     imports: [
@@ -38,9 +39,6 @@ import { AgmCoreModule } from '@agm/core';
         UplaceAccountModule,
         UplaceEntityModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
-        AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyA2cKil90Egaj6l1QY-h42Slh0UScns69Y'
-        })
     ],
     declarations: [
         UpMainComponent,

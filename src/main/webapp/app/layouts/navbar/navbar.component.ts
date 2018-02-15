@@ -11,9 +11,6 @@ import { VERSION } from '../../app.constants';
 @Component({
     selector: 'up-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: [
-        'navbar.css'
-    ],
     encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit {

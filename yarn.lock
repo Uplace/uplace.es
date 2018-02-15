@@ -5303,6 +5303,10 @@ ngx-select-ex@^3.3.10:
   dependencies:
     tslib "^1.7.1"
 
+ngx-slick@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/ngx-slick/-/ngx-slick-0.1.3.tgz#72f541c82534978c03ebe56e821fdd0d071c2d58"
+
 ngx-webstorage@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ngx-webstorage/-/ngx-webstorage-2.0.1.tgz#232446262241e8fd0d794a03821c0b5e28459295"
