@@ -1,8 +1,8 @@
 <div class="map-wrapper mb80">
-    <div class="map">
+    <div class="map" style="height: 740px">
         <div class="map-inner">
             <div class="map-object">
-                <agm-map style="height: 740px" [latitude]="latitude" [longitude]="longitude" [styles]="mapStyles">
+                <agm-map style="height: 740px" [latitude]="latitude" [longitude]="longitude" [styles]="mapStyles" [mapTypeId]="mapType">
                     <agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
                         <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
                     </agm-marker-cluster>
@@ -24,13 +24,13 @@
                         </div>
                         <!-- /.map-toolbar-group -->
                         <div class="map-toolbar-group">
-                            <div id="map-toolbar-action-roadmap" class="map-toolbar-group-item">Roadmap</div>
+                            <div id="map-toolbar-action-roadmap" class="map-toolbar-group-item" (click)="mapType = 'roadmap'">Roadmap</div>
                             <!-- /.map-toolbar-group-item -->
-                            <div id="map-toolbar-action-satellite" class="map-toolbar-group-item">Satellite</div>
+                            <div id="map-toolbar-action-satellite" class="map-toolbar-group-item" (click)="mapType = 'satellite'">Satellite</div>
                             <!-- /.map-toolbar-group-item -->
-                            <div id="map-toolbar-action-terrain" class="map-toolbar-group-item">Terrain</div>
+                            <div id="map-toolbar-action-terrain" class="map-toolbar-group-item" (click)="mapType = 'terrain'">Terrain</div>
                             <!-- /.map-toolbar-group-item -->
-                            <div id="map-toolbar-action-hybrid" class="map-toolbar-group-item">Hybrid</div>
+                            <div id="map-toolbar-action-hybrid" class="map-toolbar-group-item" (click)="mapType = 'hybrid'">Hybrid</div>
                             <!-- /.map-toolbar-group-item -->
                         </div>
                         <!-- /.map-toolbar-group -->

@@ -7702,14 +7702,11 @@ h4.infobox-address {
 .map-toolbar {
     background-color: #323232;
     border-radius: 2px;
-    bottom: 15px;
+    bottom: 690px;
     padding: 8px 2px;
     position: absolute;
-    right: 15px; }
-
-.map-toolbar-top-right {
-    bottom: auto;
-    top: 15px; }
+    right: 15px;
+}
 
 .map-toolbar-group {
     float: left;

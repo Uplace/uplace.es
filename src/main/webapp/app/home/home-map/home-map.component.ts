@@ -10,9 +10,10 @@ import {MarkerModel} from "../../entities/marker/marker.model";
 })
 export class HomeMapComponent implements OnInit {
 
-    latitude = 51.678418;
-    longitude = 7.809007;
+    latitude = 41.3850639;
+    longitude = 2.1734035;
     markers: MarkerModel[] = [];
+    mapType: string = 'roadmap'; // "roadmap" | "hybrid" | "satellite" | "terrain" | string
 
     @ViewChild(AgmMap) agmMap: AgmMap;
 
@@ -56,11 +57,12 @@ export class HomeMapComponent implements OnInit {
   }
 
     private getUserLocation() {
-        /// locate the user
+        // locate the user
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
                 this.latitude = position.coords.latitude;
                 this.longitude = position.coords.longitude;
+                console.log('Location of user found!');
             });
         }
     }
