@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
 import {MarkerService} from "../../entities/marker/marker.service";
 import {MarkerModel} from "../../entities/marker/marker.model";
+import {JhiAlert, JhiAlertService} from "ng-jhipster";
 
 @Component({
   selector: 'up-home-map',
@@ -13,7 +14,9 @@ export class HomeMapComponent implements OnInit {
     latitude = 41.3850639;
     longitude = 2.1734035;
     markers: MarkerModel[] = [];
-    mapType: string = 'roadmap'; // "roadmap" | "hybrid" | "satellite" | "terrain" | string
+    mapType: "roadmap" | "hybrid" | "satellite" | "terrain" = 'roadmap';
+    mapZoom: number = 14;
+    mapFullScreen: boolean = false;
 
     @ViewChild(AgmMap) agmMap: AgmMap;
 
@@ -45,7 +48,8 @@ export class HomeMapComponent implements OnInit {
     ];
 
   constructor(
-      private markersService: MarkerService
+      private markersService: MarkerService,
+      private alertService: JhiAlertService
   ) { }
 
   ngOnInit() {
@@ -56,14 +60,17 @@ export class HomeMapComponent implements OnInit {
       });
   }
 
-    private getUserLocation() {
+    getUserLocation() {
         // locate the user
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
                 this.latitude = position.coords.latitude;
                 this.longitude = position.coords.longitude;
+                this.agmMap.triggerResize().then(() =>  (this.agmMap as any)._mapsWrapper.setCenter({lat: this.latitude, lng: this.longitude}));
                 console.log('Location of user found!');
             });
+        } else {
+            this.alertService.error('Cannot find your location :(');
         }
     }
 
