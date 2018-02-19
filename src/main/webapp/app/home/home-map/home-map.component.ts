@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
 import {MarkerService} from "../../entities/marker/marker.service";
-import {MarkerModel} from "../../entities/marker/marker.model";
-import {JhiAlert, JhiAlertService} from "ng-jhipster";
+import {JhiAlertService} from "ng-jhipster";
 
 @Component({
   selector: 'up-home-map',
@@ -11,12 +10,16 @@ import {JhiAlert, JhiAlertService} from "ng-jhipster";
 })
 export class HomeMapComponent implements OnInit {
 
-    latitude = 41.3850639;
-    longitude = 2.1734035;
-    markers: MarkerModel[] = [];
+    latitude = 47.6098;
+    longitude = -122.2247;
     mapType: "roadmap" | "hybrid" | "satellite" | "terrain" = 'roadmap';
     mapZoom: number = 14;
     mapFullScreen: boolean = false;
+
+    markers: any[] = [];
+    map: any;
+    bound: any;
+    zoom: number = 13;
 
     @ViewChild(AgmMap) agmMap: AgmMap;
 
@@ -53,7 +56,8 @@ export class HomeMapComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-      this.getUserLocation();
+
+     // this.getUserLocation();
 
       this.markersService.query().subscribe((result) => {
           this.markers = result.json;

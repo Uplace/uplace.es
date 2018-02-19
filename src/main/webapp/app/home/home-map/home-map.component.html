@@ -3,9 +3,10 @@
         <div class="map-inner">
             <div class="map-object">
                 <agm-map style="height: 740px" [latitude]="latitude" [mapTypeControl]="false" [streetViewControl]="false" [longitude]="longitude" [styles]="mapStyles" [mapTypeId]="mapType" [zoom]="mapZoom" [disableDefaultUI]="true">
-                    <agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
-                        <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
-                    </agm-marker-cluster>
+                    <inner-map></inner-map>
+                    <!--<agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
+                        <agm-marker class="marker" *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+                    </agm-marker-cluster>-->
                 </agm-map>
                 <div class="container">
                     <div class="map-toolbar map-toolbar-top-right">
