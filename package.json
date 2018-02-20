@@ -23,7 +23,6 @@
     "core-js": "2.4.1",
     "font-awesome": "4.7.0",
     "jquery": "^3.2.1",
-    "js-marker-clusterer": "^1.0.0",
     "ng-jhipster": "0.3.6",
     "ng2-nouislider": "^1.7.7",
     "ngx-cookie": "2.0.1",
@@ -41,8 +40,6 @@
     "zone.js": "0.8.16"
   },
   "devDependencies": {
-    "@agm/core": "^1.0.0-beta.2",
-    "@agm/js-marker-clusterer": "^1.0.0-beta.2",
     "@angular/cli": "1.6.0",
     "@angular/compiler-cli": "5.1.0",
     "@ngtools/webpack": "1.8.5",
