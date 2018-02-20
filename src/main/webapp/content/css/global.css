@@ -6921,7 +6921,7 @@ input[type=radio]::-ms-expand {
     box-shadow: 0 0 3px rgba(50, 50, 50, 0.2);
     height: 60px;
     position: relative;
-    z-index: 99999; }
+    z-index: 9998; }
 .header-wrapper.header-transparent {
     background-color: transparent;
     box-shadow: none;

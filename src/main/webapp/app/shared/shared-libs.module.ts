@@ -5,7 +5,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieModule } from 'ngx-cookie';
-import {HttpClientModule} from "@angular/common/http";
+import {AgmCoreModule} from "@agm/core";
+import {AgmJsMarkerClustererModule} from "@agm/js-marker-clusterer";
 
 @NgModule({
     imports: [
@@ -18,7 +19,11 @@ import {HttpClientModule} from "@angular/common/http";
         }),
         InfiniteScrollModule,
         CookieModule.forRoot(),
-        HttpClientModule
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyA2cKil90Egaj6l1QY-h42Slh0UScns69Y',
+            libraries: ['places']
+        }),
+        AgmJsMarkerClustererModule
 
     ],
     exports: [
@@ -27,7 +32,8 @@ import {HttpClientModule} from "@angular/common/http";
         NgbModule,
         NgJhipsterModule,
         InfiniteScrollModule,
-        HttpClientModule
+        AgmCoreModule,
+        AgmJsMarkerClustererModule
     ]
 })
 export class UplaceSharedLibsModule {}

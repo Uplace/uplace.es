@@ -22,11 +22,7 @@
             "content/css/vendor.css",
             "content/css/global.css"
         ],
-        "scripts": [
-            "content/js/google-map-infobox.min.js",
-            "content/js/google-map-markerclusterer.js",
-            "content/js/google-map-richmarker.min.js"
-        ]
+        "scripts": []
     }],
     "lint": [{
             "project": "../../../tsconfig.json"
