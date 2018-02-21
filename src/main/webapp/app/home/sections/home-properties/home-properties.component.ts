@@ -16,7 +16,7 @@ export class HomePropertiesComponent implements OnInit {
     propertiesRentBuy: any[] = [];
     propertiesTransfer: any[] = [];
 
-    tabShow: TransactionType = TransactionType.RENT_BUY;
+    tabShow: TransactionType;
     TransactionType = TransactionType;
 
     constructor(private propertyService: PropertyService,
