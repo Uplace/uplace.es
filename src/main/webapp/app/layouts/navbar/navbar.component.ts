@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
@@ -30,7 +30,8 @@ export class NavbarComponent implements OnInit {
         private principal: Principal,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private renderer: Renderer2
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -52,7 +53,12 @@ export class NavbarComponent implements OnInit {
     }
 
     collapseNavbar() {
-        this.isNavbarCollapsed = true;
+        if (this.isNavbarCollapsed) {
+            this.renderer.addClass(document.body, 'navigation-open');
+        } else {
+            this.renderer.removeClass(document.body, 'navigation-open');
+        }
+        this.isNavbarCollapsed = !this.isNavbarCollapsed;
     }
 
     isAuthenticated() {
