@@ -1,10 +1,10 @@
 import { BaseEntity } from './../../shared';
 
-export const enum TransactionType {
-    'RENT',
-    'BUY',
-    'TRANSFER',
-    'RENT_BUY'
+export enum TransactionType {
+    RENT = 1,
+    BUY = 2,
+    TRANSFER = 4,
+    RENT_BUY = 3
 }
 
 export class Property implements BaseEntity {
@@ -14,6 +14,7 @@ export class Property implements BaseEntity {
         public price?: number,
         public created?: any,
         public updated?: any,
+        public propertyType?: string,
         public description?: any,
         public transaction?: TransactionType,
         public reference?: string,

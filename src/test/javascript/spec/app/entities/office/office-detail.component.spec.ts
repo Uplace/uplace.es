@@ -36,7 +36,7 @@ describe('Component Tests', () => {
             it('Should call load all on init', () => {
                 // GIVEN
 
-                spyOn(service, 'find').and.returnValue(Observable.of(new Office(123)));
+                spyOn(service, 'find').and.returnValue(Observable.of(new Office()));
 
                 // WHEN
                 comp.ngOnInit();

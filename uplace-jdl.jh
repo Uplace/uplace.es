@@ -220,6 +220,6 @@ relationship OneToOne {
 
 paginate Notification with pagination
 
-service Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, Establishment, IndustrialPlant with serviceClass
+service Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, Establishment, IndustrialPlant, Property with serviceClass
 
-filter Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, Establishment, IndustrialPlant
+filter Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, Establishment, IndustrialPlant, Property

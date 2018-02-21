@@ -33,13 +33,11 @@ public class PropertyResource {
 
     private final Logger log = LoggerFactory.getLogger(PropertyResource.class);
 
-    private static final String ENTITY_NAME = "property";
-
     private final PropertyQueryService propertyQueryService;
 
     private final PropertyService propertyService;
 
-    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService, ApartmentService apartmentService, ParkingService parkingService, BusinessService businessService, OfficeService officeService, TerrainService terrainService, BuildingService buildingService, EstablishmentService establishmentService, IndustrialPlantService industrialPlantService, HotelService hotelService) {
+    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService) {
         this.propertyQueryService = propertyQueryService;
         this.propertyService = propertyService;
     }

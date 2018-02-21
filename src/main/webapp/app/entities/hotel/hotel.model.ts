@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import {Property} from "../property";
 
 export const enum Select {
     'YES',
@@ -17,9 +17,8 @@ export const enum EnergyCertificate {
     'UNDEFINED'
 }
 
-export class Hotel implements BaseEntity {
+export class Hotel extends Property {
     constructor(
-        public id?: number,
         public solarSurface?: number,
         public m2Edified?: number,
         public numberRooms?: number,
@@ -31,5 +30,6 @@ export class Hotel implements BaseEntity {
         public floorsBR?: number,
         public energyCertificate?: EnergyCertificate,
     ) {
+        super();
     }
 }

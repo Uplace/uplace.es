@@ -2,6 +2,7 @@ package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
+import com.arnaugarcia.uplace.service.dto.PropertyDTO;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,4 +93,5 @@ public class PropertyService {
         PageRequest limit = new PageRequest(0, size);
         return propertyRepository.findLastProperties(limit).getContent();
     }
+
 }
