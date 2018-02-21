@@ -158,6 +158,7 @@ entity Location {
 	latitude Double,
     postalCode String,
     longitude Double,
+    city String,
     fullAddress String,
     hide Boolean,
     urlGMaps String
