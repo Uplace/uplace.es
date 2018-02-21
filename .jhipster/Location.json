@@ -23,6 +23,10 @@
             "fieldType": "Double"
         },
         {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "fullAddress",
             "fieldType": "String"
         },

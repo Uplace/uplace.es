@@ -32,6 +32,9 @@ public class Location implements Serializable {
     @Column(name = "longitude")
     private Double longitude;
 
+    @Column(name = "city")
+    private String city;
+
     @Column(name = "full_address")
     private String fullAddress;
 
@@ -91,6 +94,19 @@ public class Location implements Serializable {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public Location city(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getFullAddress() {
@@ -173,6 +189,7 @@ public class Location implements Serializable {
             ", latitude=" + getLatitude() +
             ", postalCode='" + getPostalCode() + "'" +
             ", longitude=" + getLongitude() +
+            ", city='" + getCity() + "'" +
             ", fullAddress='" + getFullAddress() + "'" +
             ", hide='" + isHide() + "'" +
             ", urlGMaps='" + getUrlGMaps() + "'" +

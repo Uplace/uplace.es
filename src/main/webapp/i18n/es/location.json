@@ -18,6 +18,7 @@
             "latitude": "Latitude",
             "postalCode": "Postal Code",
             "longitude": "Longitude",
+            "city": "City",
             "fullAddress": "Full Address",
             "hide": "Hide",
             "urlGMaps": "Url G Maps",
