@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
+
+import java.net.PortUnreachableException;
 import java.util.List;
 
 /**
@@ -23,10 +25,10 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
     Property findOneWithEagerRelationships(@Param("id") Long id);
 
     /**
-     * Query to get a building by reference
+     * Query to get a property by reference
      *
-     * @param reference of the building to search
-     * @return building if found or null if not
+     * @param reference of the property to search
+     * @return property if found or null if not
      */
     @Query("SELECT p FROM Property p where p.reference = :reference")
     Property findByReference(@Param("reference") String reference);

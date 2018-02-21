@@ -1,103 +1,93 @@
-package com.arnaugarcia.uplace.domain;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
+package com.arnaugarcia.uplace.service.dto;
+import com.arnaugarcia.uplace.domain.Agent;
+import com.arnaugarcia.uplace.domain.Location;
+import com.arnaugarcia.uplace.domain.Photo;
+import com.arnaugarcia.uplace.domain.Property;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
-
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
-import org.hibernate.annotations.Fetch;
 
 /**
  * A Property.
  */
-@Entity
-@Table(name = "property")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn()
-public class Property implements Serializable {
+public class PropertyDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "title", nullable = false)
     private String title;
 
-    @NotNull
-    @Column(name = "price", nullable = false)
     private Double price;
 
-    @NotNull
-    @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
-    @Column(name = "updated")
     private ZonedDateTime updated;
 
-    @Column(name = "dtype", insertable = false, updatable = false)
-    private String propertyType;
-
-    @Lob
-    @Column(name = "description")
     private String description;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "up_transaction", nullable = false)
     private TransactionType transaction;
 
-    @NotNull
-    @Column(name = "reference", nullable = false)
+    private String propertyType;
+
     private String reference;
 
-    @Column(name = "price_sell")
     private Double priceSell;
 
-    @Column(name = "price_rent")
     private Double priceRent;
 
-    @Min(value = 500)
-    @Column(name = "year_construction")
     private Integer yearConstruction;
 
-    @Column(name = "new_creation")
     private Boolean newCreation;
 
-    @Column(name = "visible")
     private Boolean visible;
 
-    @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne
-    @JoinColumn(unique = true)
     private Location location;
 
-    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "property_manager",
-               joinColumns = @JoinColumn(name="properties_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public PropertyDTO(Long id, String title, Double price, ZonedDateTime created, ZonedDateTime updated, String description, TransactionType transaction, String propertyType, String reference, Double priceSell, Double priceRent, Integer yearConstruction, Boolean newCreation, Boolean visible, Integer surface, Location location, Set<Photo> photos, Set<Agent> managers) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.created = created;
+        this.updated = updated;
+        this.description = description;
+        this.transaction = transaction;
+        this.propertyType = propertyType;
+        this.reference = reference;
+        this.priceSell = priceSell;
+        this.priceRent = priceRent;
+        this.yearConstruction = yearConstruction;
+        this.newCreation = newCreation;
+        this.visible = visible;
+        this.surface = surface;
+        this.location = location;
+        this.photos = photos;
+        this.managers = managers;
+    }
+
+    public String getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
+    }
+
+    public Boolean getNewCreation() {
+        return newCreation;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
     public Long getId() {
         return id;
     }
@@ -110,7 +100,7 @@ public class Property implements Serializable {
         return title;
     }
 
-    public Property title(String title) {
+    public PropertyDTO title(String title) {
         this.title = title;
         return this;
     }
@@ -123,7 +113,7 @@ public class Property implements Serializable {
         return price;
     }
 
-    public Property price(Double price) {
+    public PropertyDTO price(Double price) {
         this.price = price;
         return this;
     }
@@ -136,7 +126,7 @@ public class Property implements Serializable {
         return created;
     }
 
-    public Property created(ZonedDateTime created) {
+    public PropertyDTO created(ZonedDateTime created) {
         this.created = created;
         return this;
     }
@@ -149,13 +139,9 @@ public class Property implements Serializable {
         return updated;
     }
 
-    public Property updated(ZonedDateTime updated) {
+    public PropertyDTO updated(ZonedDateTime updated) {
         this.updated = updated;
         return this;
-    }
-
-    public String getPropertyType() {
-        return propertyType;
     }
 
     public void setUpdated(ZonedDateTime updated) {
@@ -166,7 +152,7 @@ public class Property implements Serializable {
         return description;
     }
 
-    public Property description(String description) {
+    public PropertyDTO description(String description) {
         this.description = description;
         return this;
     }
@@ -179,7 +165,7 @@ public class Property implements Serializable {
         return transaction;
     }
 
-    public Property transaction(TransactionType transaction) {
+    public PropertyDTO transaction(TransactionType transaction) {
         this.transaction = transaction;
         return this;
     }
@@ -192,7 +178,7 @@ public class Property implements Serializable {
         return reference;
     }
 
-    public Property reference(String reference) {
+    public PropertyDTO reference(String reference) {
         this.reference = reference;
         return this;
     }
@@ -205,7 +191,7 @@ public class Property implements Serializable {
         return priceSell;
     }
 
-    public Property priceSell(Double priceSell) {
+    public PropertyDTO priceSell(Double priceSell) {
         this.priceSell = priceSell;
         return this;
     }
@@ -218,7 +204,7 @@ public class Property implements Serializable {
         return priceRent;
     }
 
-    public Property priceRent(Double priceRent) {
+    public PropertyDTO priceRent(Double priceRent) {
         this.priceRent = priceRent;
         return this;
     }
@@ -231,7 +217,7 @@ public class Property implements Serializable {
         return yearConstruction;
     }
 
-    public Property yearConstruction(Integer yearConstruction) {
+    public PropertyDTO yearConstruction(Integer yearConstruction) {
         this.yearConstruction = yearConstruction;
         return this;
     }
@@ -244,7 +230,7 @@ public class Property implements Serializable {
         return newCreation;
     }
 
-    public Property newCreation(Boolean newCreation) {
+    public PropertyDTO newCreation(Boolean newCreation) {
         this.newCreation = newCreation;
         return this;
     }
@@ -257,7 +243,7 @@ public class Property implements Serializable {
         return visible;
     }
 
-    public Property visible(Boolean visible) {
+    public PropertyDTO visible(Boolean visible) {
         this.visible = visible;
         return this;
     }
@@ -270,7 +256,7 @@ public class Property implements Serializable {
         return surface;
     }
 
-    public Property surface(Integer surface) {
+    public PropertyDTO surface(Integer surface) {
         this.surface = surface;
         return this;
     }
@@ -283,7 +269,7 @@ public class Property implements Serializable {
         return location;
     }
 
-    public Property location(Location location) {
+    public PropertyDTO location(Location location) {
         this.location = location;
         return this;
     }
@@ -296,52 +282,19 @@ public class Property implements Serializable {
         return photos;
     }
 
-    public Property photos(Set<Photo> photos) {
+    public PropertyDTO photos(Set<Photo> photos) {
         this.photos = photos;
         return this;
-    }
-
-    public Property addPhoto(Photo photo) {
-        this.photos.add(photo);
-        photo.setProperty(this);
-        return this;
-    }
-
-    public Property removePhoto(Photo photo) {
-        this.photos.remove(photo);
-        photo.setProperty(null);
-        return this;
-    }
-
-    public void setPhotos(Set<Photo> photos) {
-        this.photos = photos;
     }
 
     public Set<Agent> getManagers() {
         return managers;
     }
 
-    public Property managers(Set<Agent> agents) {
+    public PropertyDTO managers(Set<Agent> agents) {
         this.managers = agents;
         return this;
     }
-
-    public Property addManager(Agent agent) {
-        this.managers.add(agent);
-        agent.getProperties().add(this);
-        return this;
-    }
-
-    public Property removeManager(Agent agent) {
-        this.managers.remove(agent);
-        agent.getProperties().remove(this);
-        return this;
-    }
-
-    public void setManagers(Set<Agent> agents) {
-        this.managers = agents;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
