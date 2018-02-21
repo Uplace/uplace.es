@@ -1,14 +1,14 @@
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
-import {MarkerModel} from "./marker.model";
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import {createRequestOption, ResponseWrapper} from '../../shared';
+import {FilterModel} from './filter.model';
 
 @Injectable()
-export class MarkerService {
+export class FilterService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/markers';
+    private resourceUrl =  SERVER_API_URL + 'api/filters';
 
     constructor(private http: Http) { }
 
@@ -28,7 +28,7 @@ export class MarkerService {
         });
     }*/
 
-    findAll(): Observable<MarkerModel> {
+    findAll(): Observable<FilterModel> {
         return this.http.get(`${this.resourceUrl}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
@@ -36,8 +36,7 @@ export class MarkerService {
     }
 
     query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourceUrl)
             .map((res: Response) => this.convertResponse(res));
     }
 
@@ -47,18 +46,15 @@ export class MarkerService {
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
+        this.convertItemFromServer(jsonResponse);
+        return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
     /**
      * Convert a returned JSON object to Location.
      */
-    private convertItemFromServer(json: any): MarkerModel {
-        const entity: MarkerModel = Object.assign(new MarkerModel(), json);
+    private convertItemFromServer(json: any): FilterModel {
+        const entity: FilterModel = Object.assign(new FilterModel(), json);
         return entity;
     }
 

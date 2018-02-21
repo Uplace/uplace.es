@@ -1,21 +1,18 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
-
-import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
-import org.hibernate.annotations.Fetch;
+import java.util.Set;
 
 /**
  * A Property.
@@ -47,6 +44,7 @@ public class Property implements Serializable {
     @Column(name = "updated")
     private ZonedDateTime updated;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "dtype", insertable = false, updatable = false)
     private String propertyType;
 

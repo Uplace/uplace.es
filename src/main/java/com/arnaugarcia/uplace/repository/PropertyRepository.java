@@ -4,12 +4,12 @@ import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.service.dto.MarkerDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
-import org.springframework.data.repository.query.Param;
-
-import java.net.PortUnreachableException;
 import java.util.List;
 
 /**
@@ -44,5 +44,21 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
     // TODO : AND p.location.hide != null
     @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.location.latitude, p.location.longitude) FROM Property p WHERE p.location is not null and p.visible = true")
     List<MarkerDTO> findAllMarkers();
+
+    /**
+     * Query to get the prices of all Properties
+     *
+     * @return a List of integer
+     */
+    @Query("select property.price from Property property")
+    List<Double> findAllPrices();
+
+    /**
+     * Query to get the types of all Properties
+     *
+     * @return a List of strings
+     */
+    @Query("select distinct property.propertyType from Property property")
+    List<String> findAllTypes();
 
 }

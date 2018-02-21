@@ -50,22 +50,14 @@
                                     <div class="col-sm-3 form-group">
                                         <select class="form-control form-control-no-border">
                                             <option>Location</option>
-                                            <option>Chicago</option>
-                                            <option>San Francisco</option>
-                                            <option>Seattle</option>
-                                            <option>New York</option>
-                                            <option>Washington</option>
+                                            <option *ngFor="let city of filters.cities">{{city}}</option>
                                         </select>
                                     </div>
                                     <!-- /.form-group -->
                                     <div class="col-sm-3 form-group">
                                         <select class="form-control form-control-no-border">
                                             <option>Category</option>
-                                            <option>Chicago</option>
-                                            <option>San Francisco</option>
-                                            <option>Seattle</option>
-                                            <option>New York</option>
-                                            <option>Washington</option>
+                                            <option *ngFor="let type of filters.typeProperties">{{type}}</option>
                                         </select>
                                     </div>
                                     <!-- /.form-group -->
