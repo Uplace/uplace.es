@@ -14,7 +14,7 @@ export class HomeMapComponent implements OnInit {
     latitude = 47.5883;
     longitude = -122.303;
     markers: MarkerModel[] = [];
-    mapType: "roadmap" | "hybrid" | "satellite" | "terrain" = 'roadmap';
+    mapType: 'roadmap' | 'hybrid' | 'satellite' | 'terrain' = 'roadmap';
     mapZoom: number = 14;
     mapFullScreen: boolean = false;
 
@@ -49,7 +49,8 @@ export class HomeMapComponent implements OnInit {
 
     constructor(
         private markersService: MarkerService,
-        private alertService: JhiAlertService
+        private alertService: JhiAlertService,
+
     ) { }
 
     ngOnInit() {
