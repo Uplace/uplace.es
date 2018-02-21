@@ -2,17 +2,21 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
 import {MarkerService} from "../../entities/marker/marker.service";
 import {MarkerModel} from "../../entities/marker/marker.model";
+import {JhiAlert, JhiAlertService} from "ng-jhipster";
 
 @Component({
-  selector: 'up-home-map',
-  templateUrl: './home-map.component.html',
+    selector: 'up-home-map',
+    templateUrl: './home-map.component.html',
     providers: [MarkerService]
 })
 export class HomeMapComponent implements OnInit {
 
-    latitude = 51.678418;
-    longitude = 7.809007;
+    latitude = 47.5883;
+    longitude = -122.303;
     markers: MarkerModel[] = [];
+    mapType: "roadmap" | "hybrid" | "satellite" | "terrain" = 'roadmap';
+    mapZoom: number = 14;
+    mapFullScreen: boolean = false;
 
     @ViewChild(AgmMap) agmMap: AgmMap;
 
@@ -43,25 +47,30 @@ export class HomeMapComponent implements OnInit {
             'stylers': [{'color': '#dde6e8'}, {'visibility': 'on'}]}
     ];
 
-  constructor(
-      private markersService: MarkerService
-  ) { }
+    constructor(
+        private markersService: MarkerService,
+        private alertService: JhiAlertService
+    ) { }
 
-  ngOnInit() {
-      this.getUserLocation();
+    ngOnInit() {
+        // this.getUserLocation();
 
-      this.markersService.query().subscribe((result) => {
-          this.markers = result.json;
-      });
-  }
+        this.markersService.query().subscribe((result) => {
+            this.markers = result.json;
+        });
+    }
 
-    private getUserLocation() {
-        /// locate the user
+    getUserLocation() {
+        // locate the user
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
                 this.latitude = position.coords.latitude;
                 this.longitude = position.coords.longitude;
+                this.agmMap.triggerResize().then(() =>  (this.agmMap as any)._mapsWrapper.setCenter({lat: this.latitude, lng: this.longitude}));
+                console.log('Location of user found!');
             });
+        } else {
+            this.alertService.error('Cannot find your location :(');
         }
     }
 

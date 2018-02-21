@@ -11,6 +11,7 @@
         "skipLibCheck": true,
         "suppressImplicitAnyIndexErrors": true,
         "outDir": "target/www/app",
+        "allowJs": true,
         "lib": ["es6", "dom"],
         "typeRoots": [
             "node_modules/@types"

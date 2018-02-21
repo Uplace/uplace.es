@@ -23,7 +23,7 @@ import {HomePartnersComponent} from "./sections/home-partners/home-partners.comp
         HomeCategoriesComponent,
         HomeCarouselComponent,
         HomePricingComponent,
-        HomePartnersComponent,
+        HomePartnersComponent
     ],
     entryComponents: [
     ],
