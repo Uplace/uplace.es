@@ -53,4 +53,12 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
     @Query("select property.price from Property property")
     List<Double> findAllPrices();
 
+    /**
+     * Query to get the types of all Properties
+     *
+     * @return a List of strings
+     */
+    @Query("select distinct property.propertyType from Property property")
+    List<String> findAllTypes();
+
 }

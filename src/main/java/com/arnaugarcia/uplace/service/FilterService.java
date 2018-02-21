@@ -31,12 +31,18 @@ public class FilterService {
     public FilterDTO getFilters() {
 
         List<String> cities = locationRepository.findAllCities();
+
         List<Integer> prices = propertyRepository.findAllPrices().parallelStream().map(number -> {
             return (number.intValue() + 5000) / 10000 * 10000;
         }).collect(Collectors.toList());
+
         Integer maxPrice = Collections.max(prices);
+
         Integer minPrice = Collections.min(prices);
-        FilterDTO filterDTO = new FilterDTO(cities, prices, maxPrice, minPrice);
+
+        List<String> types = propertyRepository.findAllTypes();
+
+        FilterDTO filterDTO = new FilterDTO(cities, prices, maxPrice, minPrice, types);
         return filterDTO;
     }
 }

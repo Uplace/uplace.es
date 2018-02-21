@@ -1,13 +1,12 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.service.PropertyService;
-import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.IndustrialPlant;
+import com.arnaugarcia.uplace.service.IndustrialPlantQueryService;
 import com.arnaugarcia.uplace.service.IndustrialPlantService;
+import com.arnaugarcia.uplace.service.dto.IndustrialPlantCriteria;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import com.arnaugarcia.uplace.service.dto.IndustrialPlantCriteria;
-import com.arnaugarcia.uplace.service.IndustrialPlantQueryService;
+import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 

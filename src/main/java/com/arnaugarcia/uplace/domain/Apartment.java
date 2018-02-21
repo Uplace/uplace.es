@@ -1,16 +1,11 @@
 package com.arnaugarcia.uplace.domain;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.util.Objects;
-
+import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
+import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 
-import com.arnaugarcia.uplace.domain.enumeration.ApartmentType;
-
-import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A Apartment.
@@ -70,7 +65,6 @@ public class Apartment extends Property implements Serializable {
     @Column(name = "surface_saloon")
     private Integer surfaceSaloon;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "up_type", nullable = false)
     private ApartmentType type;
