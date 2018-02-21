@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import {Property} from "../property";
 
 export const enum TerrainType {
     'RESIDENTIAL',
@@ -7,9 +7,8 @@ export const enum TerrainType {
     'INDUSTRIAL'
 }
 
-export class Terrain implements BaseEntity {
+export class Terrain extends Property {
     constructor(
-        public id?: number,
         public m2Buildable?: number,
         public buildable?: boolean,
         public buildableDepth?: number,
@@ -18,6 +17,7 @@ export class Terrain implements BaseEntity {
         public constructionCoefficient?: number,
         public type?: TerrainType,
     ) {
+        super();
         this.buildable = false;
     }
 }

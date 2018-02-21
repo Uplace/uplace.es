@@ -14,6 +14,7 @@ export class Property implements BaseEntity {
         public price?: number,
         public created?: any,
         public updated?: any,
+        public propertyType?: string,
         public description?: any,
         public transaction?: TransactionType,
         public reference?: string,
