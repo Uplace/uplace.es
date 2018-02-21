@@ -36,8 +36,7 @@ export class FilterService {
     }
 
     query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourceUrl)
             .map((res: Response) => this.convertResponse(res));
     }
 
@@ -47,11 +46,8 @@ export class FilterService {
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
+        this.convertItemFromServer(jsonResponse);
+        return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
     /**

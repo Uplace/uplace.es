@@ -1,13 +1,13 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {FilterService} from './filter.service';
+import {MarkerService} from './marker.service';
 
 @NgModule({
     imports: [],
     declarations: [],
     entryComponents: [],
     providers: [
-        FilterService
+        MarkerService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class UplaceFilterModule {}
+export class UplaceMarkerModule {}
