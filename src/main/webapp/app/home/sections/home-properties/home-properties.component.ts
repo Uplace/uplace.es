@@ -58,7 +58,7 @@ export class HomePropertiesComponent implements OnInit {
         this.jhiAlertService.error(error.message, null, null);
     }
 
-    changeTab(type: TransactionType) {
+    changeTab(type?: TransactionType) {
         this.tabShow = type;
     }
 

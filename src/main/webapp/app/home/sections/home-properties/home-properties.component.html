@@ -3,7 +3,7 @@
         <h2>Search for the <strong>best properties</strong></h2>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" [class.active]="!tabShow" (click)="changeTab('')">All</a>
+                <a class="nav-link" [class.active]="!tabShow" (click)="changeTab()">All</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [class.active]="tabShow === TransactionType.RENT" (click)="changeTab(TransactionType.RENT)">For Rent</a>
