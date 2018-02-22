@@ -29,6 +29,9 @@ properties: Property[];
         this.propertyService.query().subscribe(
             (res: HttpResponse<Property[]>) => {
                 this.properties = res.body;
+                if (this.properties.length === 0) {
+                    this.jhiAlertService.info('No Properties has been loaded');
+                }
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );

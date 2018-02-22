@@ -8,18 +8,18 @@ import { PropertyDeletePopupComponent } from './property-delete-dialog.component
 
 export const propertyRoute: Routes = [
     {
-        path: 'property',
+        path: 'properties',
         component: PropertyComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: [],
             pageTitle: 'uplaceApp.property.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
-        path: 'property/:id',
+        path: 'property/:reference',
         component: PropertyDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: [],
             pageTitle: 'uplaceApp.property.home.title'
         },
         canActivate: [UserRouteAccessService]

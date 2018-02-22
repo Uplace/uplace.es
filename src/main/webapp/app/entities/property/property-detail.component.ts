@@ -27,13 +27,13 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['id']);
+            this.load(params['reference']);
         });
         this.registerChangeInProperties();
     }
 
-    load(id) {
-        this.propertyService.find(id)
+    load(reference) {
+        this.propertyService.find(reference)
             .subscribe((propertyResponse: HttpResponse<Property>) => {
                 this.property = propertyResponse.body;
             });

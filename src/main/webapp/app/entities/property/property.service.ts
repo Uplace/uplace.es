@@ -28,9 +28,9 @@ export class PropertyService {
         return this.http.put<Property>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
-
-    find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Property>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+    
+    find(reference: string): Observable<EntityResponseType> {
+        return this.http.get<any>(`${this.resourceUrl}/${reference}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 

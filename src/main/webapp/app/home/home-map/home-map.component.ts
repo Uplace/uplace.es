@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
 import {MarkerService} from "../../entities/marker/marker.service";
 import {Marker} from "../../entities/marker/marker.model";
-import {JhiAlert, JhiAlertService} from "ng-jhipster";
+import {JhiAlertService} from "ng-jhipster";
 import {FilterService} from '../../entities/filter/filter.service';
 import {Filter} from '../../entities/filter/filter.model';
 import {HttpResponse} from "@angular/common/http";

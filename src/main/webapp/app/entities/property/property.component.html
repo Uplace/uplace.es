@@ -1,4 +1,225 @@
-<div>
+<div class="main-wrapper">
+    <div class="main">
+        <div class="main-inner">
+            <div class="page-title">
+                <div class="container-fluid">
+                    <h1>Listings Grid
+                    </h1>
+                    <div class="page-title-actions">
+                        <div class="switcher">
+                            <strong>Currency</strong>
+                            <ul>
+                                <li class="active"><a href="#">USD</a></li>
+                                <li><a href="#">EUR</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.page-title-actions -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.page-title -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 sidebar-wrapper-col">
+                        <div class="sidebar">
+                            <div class="filter">
+                                <h2>Search criteria</h2>
+                                <div class="form-group">
+                                    <label>Keyword</label>
+                                    <input type="text" class="form-control" placeholder="Search by keyword ...">
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <select class="form-control">
+                                        <option>Location</option>
+                                        <option>Chicago</option>
+                                        <option>San Francisco</option>
+                                        <option>Seattle</option>
+                                        <option>New York</option>
+                                        <option>Washington</option>
+                                    </select>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label>Price Slider</label>
+                                    <div id="slider" class="price-slider"></div>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label>Amenities</label>
+                                    <select class="form-control">
+                                        <option>Air conditioning</option>
+                                        <option>Balcony</option>
+                                        <option>Bedding</option>
+                                        <option>Cable TV</option>
+                                        <option>Cleaning after exit</option>
+                                        <option>Cofee pot</option>
+                                        <option>Computer</option>
+                                        <option>Cot</option>
+                                        <option>Dishwasher</option>
+                                    </select>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="row">
+                                    <div class="form-group col-xl-6">
+                                        <label>Price From</label>
+                                        <input type="text" class="form-control" placeholder="Min. price">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="form-group col-xl-6">
+                                        <label>Price To</label>
+                                        <input type="text" class="form-control" placeholder="Max. price">
+                                    </div>
+                                    <!-- /.form-group -->
+                                </div>
+                                <!-- /.row -->
+                                <h2>Category</h2>
+                                <div class="checkbox">
+                                    <label><input type="radio" name="form-property-type" value="rent"> Property <span class="label">78</span></label>
+                                </div>
+                                <!-- /.checkbox -->
+                                <div class="checkbox">
+                                    <label><input type="radio" name="form-property-type" value="sale"> Restaurant <span class="label">54</span></label>
+                                </div>
+                                <!-- /.checkbox -->
+                                <div class="checkbox">
+                                    <label><input type="radio" name="form-property-type" value="sale"> Travel <span class="label">50</span></label>
+                                </div>
+                                <!-- /.checkbox -->
+                                <div class="checkbox">
+                                    <label><input type="radio" name="form-property-type" value="lease"> Food &amp; Drink <span class="label">32</span></label>
+                                </div>
+                                <!-- /.checkbox -->
+                                <div class="checkbox">
+                                    <label><input type="radio" name="form-property-type" value="lease"> Events <span class="label">53</span></label>
+                                </div>
+                                <!-- /.checkbox -->
+                                <h2>Attributes</h2>
+                                <div class="checkbox">
+                                    <label><input type="checkbox"> Reduced <span class="label">93</span></label>
+                                </div>
+                                <!-- /.checkbox -->
+                                <div class="checkbox">
+                                    <label><input type="checkbox"> Featured <span class="label">54</span></label>
+                                </div>
+                                <!-- /.checkbox -->
+                                <div class="checkbox">
+                                    <label><input type="checkbox"> Verified <span class="label">22</span></label>
+                                </div>
+                                <!-- /.checkbox -->
+                                <div class="form-group-btn form-group-btn-placeholder-gap">
+                                    <button type="submit" class="btn btn-primary btn-block">Search</button>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.filter -->
+                        </div>
+                        <!-- /.sidebar -->
+                    </div>
+                    <!-- /.col-* -->
+                    <div class="col-sm-8 col-md-9">
+                        <div class="content">
+                            <up-alert></up-alert>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-3" *ngFor="let property of properties">
+                                    <div class="listing-box">
+                                        <div class="listing-box-inner">
+                                            <a [routerLink]="'/property/' + property.reference" class="listing-box-image">
+                                                <span class="listing-box-image-content" [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span><!-- /.listing-box-image-content -->
+                                                <span class="listing-box-category tag">{{property.propertyType}}</span>
+                                                <span class="listing-box-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </span>
+                                            </a><!-- /.listing-box-image -->
+                                            <div class="listing-box-content">
+                                                <h2><a [routerLink]="'/property/' + property.reference">{{property.title}}</a></h2>
+                                                <h3 *ngIf="property.location && property.location.fullAddress && property.location.city">{{property.location.fullAddress}}, {{property.location.city}}</h3>
+                                                <div class="actions">
+                                                    <div class="actions-button">
+                                                        <span></span>
+                                                        <span></span>
+                                                        <span></span>
+                                                    </div>
+                                                    <!-- /.actions-button -->
+                                                    <ul class="actions-list">
+                                                        <li><a href="#">Add to compare</a></li>
+                                                        <li><a href="#">Add to favorites</a></li>
+                                                        <li><a href="#">Report listing</a></li>
+                                                    </ul>
+                                                    <!-- /.actions-list -->
+                                                </div>
+                                                <!-- /.actions -->
+                                            </div>
+                                            <!-- /.listing-box-content -->
+                                            <div class="listing-box-attributes">
+                                                <dl [ngSwitch]="property.propertyType">
+                                                <ng-container *ngSwitchCase="'IndustrialPlant'">
+                                                    <dt>Surface</dt>
+                                                    <dd>{{property.surface}}</dd>
+                                                    <dt>M2 Offices</dt>
+                                                    <dd>{{property.m2Offices}}</dd>
+                                                    <dt>Number docks</dt>
+                                                    <dd>{{property.numberDocks}}</dd>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'Apartment'">
+                                                    <dt>Surface</dt>
+                                                    <dd>{{property.surface}}</dd>
+                                                    <dt>Shared pool</dt>
+                                                    <dd>{{property.sharedPool}}</dd>
+                                                    <dt>Balcony</dt>
+                                                    <dd>{{property.balcony}}</dd>
+                                                </ng-container>
+                                                </dl>
+                                            </div>
+                                            <!-- /.listing-box-attributes -->
+                                            <div class="listing-box-attributes-icons">
+                                                <ul>
+                                                    <li><i class="fa fa-arrows"></i> <span>182sqft</span></li>
+                                                    <li><i class="fa fa-shower"></i> <span>2</span></li>
+                                                    <li><i class="fa fa-car"></i> <span>1</span></li>
+                                                </ul>
+                                            </div>
+                                            <!-- /.listing-box-attributes -->
+                                        </div>
+                                        <!-- /.listing-box-inner -->
+                                    </div>
+                                    <!-- /.listing-box -->
+                                </div>
+                                <!-- /.col-* -->
+                            </div>
+                            <!-- /.row -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <ul class="pagination pull-right">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /.col-* -->
+                            </div>
+                        </div>
+                        <!-- /.content -->
+                    </div>
+                    <!-- /.col-* -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.main-inner -->
+    </div>
+    <!-- /.main -->
+</div>
+<!--<div>
     <h2>
         <span jhiTranslate="uplaceApp.property.home.title">Properties</span>
         <button class="btn btn-primary float-right jh-create-entity create-property" [routerLink]="['/', { outlets: { popup: ['property-new'] } }]">
@@ -16,7 +237,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="uplaceApp.property.title">Title</span></th>
             <th><span jhiTranslate="uplaceApp.property.price">Price</span></th>
             <th><span jhiTranslate="uplaceApp.property.created">Created</span></th>
@@ -37,7 +257,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let property of properties ;trackBy: trackId">
-                <td><a [routerLink]="['../property', property.id ]">{{property.id}}</a></td>
+                <td><a [routerLink]="['../property', property.reference ]">{{property.reference}}</a></td>
                 <td>{{property.title}}</td>
                 <td>{{property.price}}</td>
                 <td>{{property.created | date:'medium'}}</td>
@@ -64,13 +284,13 @@
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../property', property.id ]"
+                                [routerLink]="['../property', property.reference ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.reference + '/edit'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-primary btn-sm">
@@ -78,7 +298,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.reference + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
@@ -91,4 +311,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</div>-->

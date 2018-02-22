@@ -30,7 +30,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
      * @param reference of the property to search
      * @return property if found or null if not
      */
-    @Query("SELECT p FROM Property p where p.reference = :reference")
+    @Query("SELECT p FROM Property p left join fetch p.managers where p.reference = :reference")
     Property findByReference(@Param("reference") String reference);
 
     @Query("SELECT p FROM Property p ORDER BY p.created DESC")
