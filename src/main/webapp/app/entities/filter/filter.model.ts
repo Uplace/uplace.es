@@ -1,5 +1,5 @@
 
-export class FilterModel {
+export class Filter {
     constructor(
         public cities?: string[],
         public pricesRange?: number[],

@@ -1,6 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { Property } from './property.model';
 import { PropertyService } from './property.service';
@@ -27,14 +28,16 @@ export class PropertyPopupService {
             }
 
             if (id) {
-                this.propertyService.find(id).subscribe((property) => {
-                    property.created = this.datePipe
-                        .transform(property.created, 'yyyy-MM-ddTHH:mm:ss');
-                    property.updated = this.datePipe
-                        .transform(property.updated, 'yyyy-MM-ddTHH:mm:ss');
-                    this.ngbModalRef = this.propertyModalRef(component, property);
-                    resolve(this.ngbModalRef);
-                });
+                this.propertyService.find(id)
+                    .subscribe((propertyResponse: HttpResponse<Property>) => {
+                        const property: Property = propertyResponse.body;
+                        property.created = this.datePipe
+                            .transform(property.created, 'yyyy-MM-ddTHH:mm:ss');
+                        property.updated = this.datePipe
+                            .transform(property.updated, 'yyyy-MM-ddTHH:mm:ss');
+                        this.ngbModalRef = this.propertyModalRef(component, property);
+                        resolve(this.ngbModalRef);
+                    });
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {

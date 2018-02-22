@@ -1,6 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { Parking } from './parking.model';
 import { ParkingService } from './parking.service';
 
@@ -25,10 +26,12 @@ export class ParkingPopupService {
             }
 
             if (id) {
-                this.parkingService.find(id).subscribe((parking) => {
-                    this.ngbModalRef = this.parkingModalRef(component, parking);
-                    resolve(this.ngbModalRef);
-                });
+                this.parkingService.find(id)
+                    .subscribe((parkingResponse: HttpResponse<Parking>) => {
+                        const parking: Parking = parkingResponse.body;
+                        this.ngbModalRef = this.parkingModalRef(component, parking);
+                        resolve(this.ngbModalRef);
+                    });
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {

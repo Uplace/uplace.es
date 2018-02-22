@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Location } from './location.model';
 import { LocationService } from './location.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-location',
@@ -25,10 +26,10 @@ locations: Location[];
 
     loadAll() {
         this.locationService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.locations = res.json;
+            (res: HttpResponse<Location[]>) => {
+                this.locations = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

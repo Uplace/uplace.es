@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
 import {MarkerService} from "../../entities/marker/marker.service";
-import {MarkerModel} from "../../entities/marker/marker.model";
+import {Marker} from "../../entities/marker/marker.model";
 import {JhiAlert, JhiAlertService} from "ng-jhipster";
 import {FilterService} from '../../entities/filter/filter.service';
-import {FilterModel} from '../../entities/filter/filter.model';
+import {Filter} from '../../entities/filter/filter.model';
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
     selector: 'up-home-map',
@@ -15,8 +16,8 @@ export class HomeMapComponent implements OnInit {
 
     latitude = 47.5883;
     longitude = -122.303;
-    markers: MarkerModel[] = [];
-    filters: FilterModel = {};
+    markers: Marker[] = [];
+    filters: Filter = {};
     mapType: 'roadmap' | 'hybrid' | 'satellite' | 'terrain' = 'roadmap';
     mapZoom: number = 14;
     mapFullScreen: boolean = false;
@@ -59,13 +60,28 @@ export class HomeMapComponent implements OnInit {
     ngOnInit() {
         // this.getUserLocation();
 
-        this.markersService.query().subscribe((result) => {
+        this.markersService.query().subscribe(
+            (res: HttpResponse<Marker[]>) => {
+                this.markers = res.body;
+            }
+        );
+        this.filterService.query().subscribe(
+            (res: HttpResponse<Filter>) => {
+                this.filters = res.body;
+                console.log(this.filters);
+            }
+        );
+
+        /**
+         * Update for Angular 4.3
+         * */
+        /*this.markersService.query().subscribe((result) => {
             this.markers = result.json;
         });
 
         this.filterService.query().subscribe((filter) => {
             this.filters = filter.json;
-        });
+        });*/
     }
 
     getUserLocation() {

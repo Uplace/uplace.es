@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Office } from './office.model';
 import { OfficeService } from './office.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-office',
@@ -25,10 +26,10 @@ offices: Office[];
 
     loadAll() {
         this.officeService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.offices = res.json;
+            (res: HttpResponse<Office[]>) => {
+                this.offices = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

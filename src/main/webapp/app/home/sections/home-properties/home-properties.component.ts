@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ResponseWrapper} from "../../../shared";
-import {PropertyService, TransactionType} from "../../../entities/property";
+import {Property, PropertyService, TransactionType} from "../../../entities/property";
 import {JhiAlertService} from "ng-jhipster";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
     selector: 'up-home-properties',
@@ -24,34 +24,31 @@ export class HomePropertiesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.propertyService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.properties = res.json;
-                this.properties.forEach((property) => {
+        this.propertyService.query().subscribe((res: HttpResponse<Property[]>) => {
+            this.properties = res.body;
+            this.properties.forEach((property) => {
 
-                    switch (property.transaction) {
+                switch (property.transaction) {
 
-                        case TransactionType[TransactionType.TRANSFER]:
-                            this.propertiesTransfer.push(property);
-                            break;
+                    case TransactionType[TransactionType.TRANSFER]:
+                        this.propertiesTransfer.push(property);
+                        break;
 
-                        case TransactionType[TransactionType.RENT]:
-                            this.propertiesRent.push(property);
-                            break;
+                    case TransactionType[TransactionType.RENT]:
+                        this.propertiesRent.push(property);
+                        break;
 
-                        case TransactionType[TransactionType.BUY]:
-                            this.propertiesBuy.push(property);
-                            break;
+                    case TransactionType[TransactionType.BUY]:
+                        this.propertiesBuy.push(property);
+                        break;
 
-                        case TransactionType[TransactionType.RENT_BUY]:
-                            this.propertiesRentBuy.push(property);
-                            break;
+                    case TransactionType[TransactionType.RENT_BUY]:
+                        this.propertiesRentBuy.push(property);
+                        break;
 
-                    }
-                });
-            },
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
+                }
+            });
+        })
     }
 
     private onError(error) {

@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Agent } from './agent.model';
 import { AgentService } from './agent.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-agent',
@@ -26,10 +27,10 @@ agents: Agent[];
 
     loadAll() {
         this.agentService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.agents = res.json;
+            (res: HttpResponse<Agent[]>) => {
+                this.agents = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

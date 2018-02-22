@@ -1,6 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { Photo } from './photo.model';
 import { PhotoService } from './photo.service';
 
@@ -25,10 +26,12 @@ export class PhotoPopupService {
             }
 
             if (id) {
-                this.photoService.find(id).subscribe((photo) => {
-                    this.ngbModalRef = this.photoModalRef(component, photo);
-                    resolve(this.ngbModalRef);
-                });
+                this.photoService.find(id)
+                    .subscribe((photoResponse: HttpResponse<Photo>) => {
+                        const photo: Photo = photoResponse.body;
+                        this.ngbModalRef = this.photoModalRef(component, photo);
+                        resolve(this.ngbModalRef);
+                    });
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {

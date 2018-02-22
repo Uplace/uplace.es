@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IndustrialPlant } from './industrial-plant.model';
 import { IndustrialPlantService } from './industrial-plant.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-industrial-plant',
@@ -25,10 +26,10 @@ industrialPlants: IndustrialPlant[];
 
     loadAll() {
         this.industrialPlantService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.industrialPlants = res.json;
+            (res: HttpResponse<IndustrialPlant[]>) => {
+                this.industrialPlants = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

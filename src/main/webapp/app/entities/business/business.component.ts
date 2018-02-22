@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Business } from './business.model';
 import { BusinessService } from './business.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-business',
@@ -25,10 +26,10 @@ businesses: Business[];
 
     loadAll() {
         this.businessService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.businesses = res.json;
+            (res: HttpResponse<Business[]>) => {
+                this.businesses = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

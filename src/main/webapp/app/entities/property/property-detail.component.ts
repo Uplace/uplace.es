@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 
@@ -32,9 +33,10 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.propertyService.find(id).subscribe((property) => {
-            this.property = property;
-        });
+        this.propertyService.find(id)
+            .subscribe((propertyResponse: HttpResponse<Property>) => {
+                this.property = propertyResponse.body;
+            });
     }
     byteSize(field) {
         return this.dataUtils.byteSize(field);

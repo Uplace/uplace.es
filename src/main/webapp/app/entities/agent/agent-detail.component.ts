@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 
@@ -32,9 +33,10 @@ export class AgentDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.agentService.find(id).subscribe((agent) => {
-            this.agent = agent;
-        });
+        this.agentService.find(id)
+            .subscribe((agentResponse: HttpResponse<Agent>) => {
+                this.agent = agentResponse.body;
+            });
     }
     byteSize(field) {
         return this.dataUtils.byteSize(field);

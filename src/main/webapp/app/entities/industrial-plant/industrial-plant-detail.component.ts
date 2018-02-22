@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -31,9 +32,10 @@ export class IndustrialPlantDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.industrialPlantService.find(id).subscribe((industrialPlant) => {
-            this.industrialPlant = industrialPlant;
-        });
+        this.industrialPlantService.find(id)
+            .subscribe((industrialPlantResponse: HttpResponse<IndustrialPlant>) => {
+                this.industrialPlant = industrialPlantResponse.body;
+            });
     }
     previousState() {
         window.history.back();

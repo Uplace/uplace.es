@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +11,6 @@ import { AgentPopupService } from './agent-popup.service';
 import { AgentService } from './agent.service';
 import { User, UserService } from '../../shared';
 import { Property, PropertyService } from '../property';
-import { ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'up-agent-dialog',
@@ -41,9 +40,9 @@ export class AgentDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.userService.query()
-            .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: HttpResponse<User[]>) => { this.users = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.propertyService.query()
-            .subscribe((res: ResponseWrapper) => { this.properties = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: HttpResponse<Property[]>) => { this.properties = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     byteSize(field) {
@@ -77,9 +76,9 @@ export class AgentDialogComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Agent>) {
-        result.subscribe((res: Agent) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Agent>>) {
+        result.subscribe((res: HttpResponse<Agent>) =>
+            this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Agent) {

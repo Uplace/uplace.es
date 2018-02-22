@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Apartment } from './apartment.model';
 import { ApartmentService } from './apartment.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-apartment',
@@ -25,10 +26,10 @@ apartments: Apartment[];
 
     loadAll() {
         this.apartmentService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.apartments = res.json;
+            (res: HttpResponse<Apartment[]>) => {
+                this.apartments = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

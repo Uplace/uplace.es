@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Establishment } from './establishment.model';
 import { EstablishmentService } from './establishment.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-establishment',
@@ -25,10 +26,10 @@ establishments: Establishment[];
 
     loadAll() {
         this.establishmentService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.establishments = res.json;
+            (res: HttpResponse<Establishment[]>) => {
+                this.establishments = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

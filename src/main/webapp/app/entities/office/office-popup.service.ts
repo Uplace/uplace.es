@@ -1,6 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { Office } from './office.model';
 import { OfficeService } from './office.service';
 
@@ -25,10 +26,12 @@ export class OfficePopupService {
             }
 
             if (id) {
-                this.officeService.find(id).subscribe((office) => {
-                    this.ngbModalRef = this.officeModalRef(component, office);
-                    resolve(this.ngbModalRef);
-                });
+                this.officeService.find(id)
+                    .subscribe((officeResponse: HttpResponse<Office>) => {
+                        const office: Office = officeResponse.body;
+                        this.ngbModalRef = this.officeModalRef(component, office);
+                        resolve(this.ngbModalRef);
+                    });
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {

@@ -1,66 +1,67 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
 
 import { Business } from './business.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<Business>;
 
 @Injectable()
 export class BusinessService {
 
     private resourceUrl =  SERVER_API_URL + 'api/businesses';
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
-    create(business: Business): Observable<Business> {
+    create(business: Business): Observable<EntityResponseType> {
         const copy = this.convert(business);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+        return this.http.post<Business>(this.resourceUrl, copy, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    update(business: Business): Observable<Business> {
+    update(business: Business): Observable<EntityResponseType> {
         const copy = this.convert(business);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+        return this.http.put<Business>(this.resourceUrl, copy, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    find(id: number): Observable<Business> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+    find(id: number): Observable<EntityResponseType> {
+        return this.http.get<Business>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+            .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<ResponseWrapper> {
+    query(req?: any): Observable<HttpResponse<Business[]>> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
+        return this.http.get<Business[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<Business[]>) => this.convertArrayResponse(res));
     }
 
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
+    delete(id: number): Observable<HttpResponse<any>> {
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
+    private convertResponse(res: EntityResponseType): EntityResponseType {
+        const body: Business = this.convertItemFromServer(res.body);
+        return res.clone({body});
+    }
+
+    private convertArrayResponse(res: HttpResponse<Business[]>): HttpResponse<Business[]> {
+        const jsonResponse: Business[] = res.body;
+        const body: Business[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
+            body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return new ResponseWrapper(res.headers, result, res.status);
+        return res.clone({body});
     }
 
     /**
      * Convert a returned JSON object to Business.
      */
-    private convertItemFromServer(json: any): Business {
-        const entity: Business = Object.assign(new Business(), json);
-        return entity;
+    private convertItemFromServer(business: Business): Business {
+        const copy: Business = Object.assign({}, business);
+        return copy;
     }
 
     /**

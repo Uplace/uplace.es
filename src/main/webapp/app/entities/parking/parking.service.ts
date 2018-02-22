@@ -1,66 +1,67 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
 
 import { Parking } from './parking.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<Parking>;
 
 @Injectable()
 export class ParkingService {
 
     private resourceUrl =  SERVER_API_URL + 'api/parkings';
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
-    create(parking: Parking): Observable<Parking> {
+    create(parking: Parking): Observable<EntityResponseType> {
         const copy = this.convert(parking);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+        return this.http.post<Parking>(this.resourceUrl, copy, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    update(parking: Parking): Observable<Parking> {
+    update(parking: Parking): Observable<EntityResponseType> {
         const copy = this.convert(parking);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+        return this.http.put<Parking>(this.resourceUrl, copy, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    find(id: number): Observable<Parking> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+    find(id: number): Observable<EntityResponseType> {
+        return this.http.get<Parking>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+            .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<ResponseWrapper> {
+    query(req?: any): Observable<HttpResponse<Parking[]>> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
+        return this.http.get<Parking[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<Parking[]>) => this.convertArrayResponse(res));
     }
 
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
+    delete(id: number): Observable<HttpResponse<any>> {
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
+    private convertResponse(res: EntityResponseType): EntityResponseType {
+        const body: Parking = this.convertItemFromServer(res.body);
+        return res.clone({body});
+    }
+
+    private convertArrayResponse(res: HttpResponse<Parking[]>): HttpResponse<Parking[]> {
+        const jsonResponse: Parking[] = res.body;
+        const body: Parking[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
+            body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return new ResponseWrapper(res.headers, result, res.status);
+        return res.clone({body});
     }
 
     /**
      * Convert a returned JSON object to Parking.
      */
-    private convertItemFromServer(json: any): Parking {
-        const entity: Parking = Object.assign(new Parking(), json);
-        return entity;
+    private convertItemFromServer(parking: Parking): Parking {
+        const copy: Parking = Object.assign({}, parking);
+        return copy;
     }
 
     /**

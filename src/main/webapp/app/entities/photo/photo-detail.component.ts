@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 
@@ -32,9 +33,10 @@ export class PhotoDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.photoService.find(id).subscribe((photo) => {
-            this.photo = photo;
-        });
+        this.photoService.find(id)
+            .subscribe((photoResponse: HttpResponse<Photo>) => {
+                this.photo = photoResponse.body;
+            });
     }
     byteSize(field) {
         return this.dataUtils.byteSize(field);
