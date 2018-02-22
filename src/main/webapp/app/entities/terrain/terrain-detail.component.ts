@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -31,9 +32,10 @@ export class TerrainDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.terrainService.find(id).subscribe((terrain) => {
-            this.terrain = terrain;
-        });
+        this.terrainService.find(id)
+            .subscribe((terrainResponse: HttpResponse<Terrain>) => {
+                this.terrain = terrainResponse.body;
+            });
     }
     previousState() {
         window.history.back();

@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Property } from './property.model';
 import { PropertyService } from './property.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-property',
@@ -26,10 +27,10 @@ properties: Property[];
 
     loadAll() {
         this.propertyService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.properties = res.json;
+            (res: HttpResponse<Property[]>) => {
+                this.properties = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

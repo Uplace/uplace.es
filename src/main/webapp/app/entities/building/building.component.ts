@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Building } from './building.model';
 import { BuildingService } from './building.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-building',
@@ -25,10 +26,10 @@ buildings: Building[];
 
     loadAll() {
         this.buildingService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.buildings = res.json;
+            (res: HttpResponse<Building[]>) => {
+                this.buildings = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

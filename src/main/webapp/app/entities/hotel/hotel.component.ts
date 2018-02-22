@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Hotel } from './hotel.model';
 import { HotelService } from './hotel.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-hotel',
@@ -25,10 +26,10 @@ hotels: Hotel[];
 
     loadAll() {
         this.hotelService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.hotels = res.json;
+            (res: HttpResponse<Hotel[]>) => {
+                this.hotels = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

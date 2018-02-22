@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Parking } from './parking.model';
 import { ParkingService } from './parking.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-parking',
@@ -25,10 +26,10 @@ parkings: Parking[];
 
     loadAll() {
         this.parkingService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.parkings = res.json;
+            (res: HttpResponse<Parking[]>) => {
+                this.parkings = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

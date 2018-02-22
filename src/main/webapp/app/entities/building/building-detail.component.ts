@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -31,9 +32,10 @@ export class BuildingDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.buildingService.find(id).subscribe((building) => {
-            this.building = building;
-        });
+        this.buildingService.find(id)
+            .subscribe((buildingResponse: HttpResponse<Building>) => {
+                this.building = buildingResponse.body;
+            });
     }
     previousState() {
         window.history.back();

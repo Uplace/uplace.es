@@ -1,6 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { Terrain } from './terrain.model';
 import { TerrainService } from './terrain.service';
 
@@ -25,10 +26,12 @@ export class TerrainPopupService {
             }
 
             if (id) {
-                this.terrainService.find(id).subscribe((terrain) => {
-                    this.ngbModalRef = this.terrainModalRef(component, terrain);
-                    resolve(this.ngbModalRef);
-                });
+                this.terrainService.find(id)
+                    .subscribe((terrainResponse: HttpResponse<Terrain>) => {
+                        const terrain: Terrain = terrainResponse.body;
+                        this.ngbModalRef = this.terrainModalRef(component, terrain);
+                        resolve(this.ngbModalRef);
+                    });
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {
