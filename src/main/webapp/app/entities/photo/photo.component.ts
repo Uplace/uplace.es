@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Photo } from './photo.model';
 import { PhotoService } from './photo.service';
-import { Principal, ResponseWrapper } from '../../shared';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'up-photo',
@@ -26,10 +27,10 @@ photos: Photo[];
 
     loadAll() {
         this.photoService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.photos = res.json;
+            (res: HttpResponse<Photo[]>) => {
+                this.photos = res.body;
             },
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     ngOnInit() {

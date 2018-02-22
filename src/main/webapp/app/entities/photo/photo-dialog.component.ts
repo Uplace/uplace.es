@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +10,6 @@ import { Photo } from './photo.model';
 import { PhotoPopupService } from './photo-popup.service';
 import { PhotoService } from './photo.service';
 import { Property, PropertyService } from '../property';
-import { ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'up-photo-dialog',
@@ -37,7 +36,7 @@ export class PhotoDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.propertyService.query()
-            .subscribe((res: ResponseWrapper) => { this.properties = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: HttpResponse<Property[]>) => { this.properties = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     byteSize(field) {
@@ -71,9 +70,9 @@ export class PhotoDialogComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Photo>) {
-        result.subscribe((res: Photo) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Photo>>) {
+        result.subscribe((res: HttpResponse<Photo>) =>
+            this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Photo) {

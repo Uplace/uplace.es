@@ -44,7 +44,7 @@ describe('Component Tests', () => {
                     fakeAsync(() => {
                         // GIVEN
                         const entity = new Office();
-                        spyOn(service, 'update').and.returnValue(Observable.of(entity));
+                        spyOn(service, 'update').and.returnValue(Observable.of(new HttpResponse({body: entity})));
                         comp.office = entity;
                         // WHEN
                         comp.save();
@@ -64,7 +64,7 @@ describe('Component Tests', () => {
                     fakeAsync(() => {
                         // GIVEN
                         const entity = new Office();
-                        spyOn(service, 'create').and.returnValue(Observable.of(entity));
+                        spyOn(service, 'create').and.returnValue(Observable.of(new HttpResponse({body: entity})));
                         comp.office = entity;
                         // WHEN
                         comp.save();

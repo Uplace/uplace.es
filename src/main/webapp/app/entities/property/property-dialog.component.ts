@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +11,6 @@ import { PropertyPopupService } from './property-popup.service';
 import { PropertyService } from './property.service';
 import { Location, LocationService } from '../location';
 import { Agent, AgentService } from '../agent';
-import { ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'up-property-dialog',
@@ -41,19 +40,19 @@ export class PropertyDialogComponent implements OnInit {
         this.isSaving = false;
         this.locationService
             .query({filter: 'property(reference)-is-null'})
-            .subscribe((res: ResponseWrapper) => {
+            .subscribe((res: HttpResponse<Location[]>) => {
                 if (!this.property.location || !this.property.location.id) {
-                    this.locations = res.json;
+                    this.locations = res.body;
                 } else {
                     this.locationService
                         .find(this.property.location.id)
-                        .subscribe((subRes: Location) => {
-                            this.locations = [subRes].concat(res.json);
-                        }, (subRes: ResponseWrapper) => this.onError(subRes.json));
+                        .subscribe((subRes: HttpResponse<Location>) => {
+                            this.locations = [subRes.body].concat(res.body);
+                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
                 }
-            }, (res: ResponseWrapper) => this.onError(res.json));
+            }, (res: HttpErrorResponse) => this.onError(res.message));
         this.agentService.query()
-            .subscribe((res: ResponseWrapper) => { this.agents = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: HttpResponse<Agent[]>) => { this.agents = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     byteSize(field) {
@@ -83,9 +82,9 @@ export class PropertyDialogComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Property>) {
-        result.subscribe((res: Property) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Property>>) {
+        result.subscribe((res: HttpResponse<Property>) =>
+            this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Property) {

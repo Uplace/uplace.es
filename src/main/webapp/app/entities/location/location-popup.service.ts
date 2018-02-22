@@ -1,6 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { Location } from './location.model';
 import { LocationService } from './location.service';
 
@@ -25,10 +26,12 @@ export class LocationPopupService {
             }
 
             if (id) {
-                this.locationService.find(id).subscribe((location) => {
-                    this.ngbModalRef = this.locationModalRef(component, location);
-                    resolve(this.ngbModalRef);
-                });
+                this.locationService.find(id)
+                    .subscribe((locationResponse: HttpResponse<Location>) => {
+                        const location: Location = locationResponse.body;
+                        this.ngbModalRef = this.locationModalRef(component, location);
+                        resolve(this.ngbModalRef);
+                    });
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {

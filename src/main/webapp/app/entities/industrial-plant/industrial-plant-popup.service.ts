@@ -1,6 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { IndustrialPlant } from './industrial-plant.model';
 import { IndustrialPlantService } from './industrial-plant.service';
 
@@ -25,10 +26,12 @@ export class IndustrialPlantPopupService {
             }
 
             if (id) {
-                this.industrialPlantService.find(id).subscribe((industrialPlant) => {
-                    this.ngbModalRef = this.industrialPlantModalRef(component, industrialPlant);
-                    resolve(this.ngbModalRef);
-                });
+                this.industrialPlantService.find(id)
+                    .subscribe((industrialPlantResponse: HttpResponse<IndustrialPlant>) => {
+                        const industrialPlant: IndustrialPlant = industrialPlantResponse.body;
+                        this.ngbModalRef = this.industrialPlantModalRef(component, industrialPlant);
+                        resolve(this.ngbModalRef);
+                    });
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {
