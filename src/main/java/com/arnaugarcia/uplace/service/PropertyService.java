@@ -64,6 +64,18 @@ public class PropertyService {
     }
 
     /**
+     * Get one property by reference.
+     *
+     * @param reference the reference of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Property findOne(String reference) {
+        log.debug("Request to get Property : {}", reference);
+        return propertyRepository.findByReference(reference);
+    }
+
+    /**
      * Delete the property by id.
      *
      * @param id the id of the entity

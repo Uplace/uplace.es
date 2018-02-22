@@ -32,8 +32,8 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
         this.registerChangeInProperties();
     }
 
-    load(id) {
-        this.propertyService.find(id)
+    load(reference) {
+        this.propertyService.find(reference)
             .subscribe((propertyResponse: HttpResponse<Property>) => {
                 this.property = propertyResponse.body;
             });

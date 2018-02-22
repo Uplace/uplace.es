@@ -96,6 +96,18 @@ public class PropertyResource {
         return propertyService.findAll();
     }
 
+    /**
+     * GET  /properties/{reference} : get the property by reference
+     *
+     * @return the ResponseEntity with status 200 (OK) and the property in body
+     */
+    @GetMapping("/properties/{reference}")
+    @Timed
+    public Property getAllProperties(@PathVariable String reference) {
+        log.debug("REST request to get all Properties");
+        return propertyService.findOne(reference);
+    }
+
     @GetMapping("/properties/criteria")
     @Timed
     public ResponseEntity<List<Property>> getAllPropertiesCriteria(PropertyCriteria criteria) {
