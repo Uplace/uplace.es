@@ -27,7 +27,7 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['id']);
+            this.load(params['reference']);
         });
         this.registerChangeInProperties();
     }
