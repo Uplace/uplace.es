@@ -1,0 +1,50 @@
+
+<div *ngIf="notification">
+    <h2><span jhiTranslate="uplaceApp.notification.detail.title">Notification</span> {{notification.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.notification.title">Title</span></dt>
+        <dd>
+            <span>{{notification.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.notification.content">Content</span></dt>
+        <dd>
+            <span>{{notification.content}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.notification.creation">Creation</span></dt>
+        <dd>
+            <span>{{notification.creation | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.notification.type">Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.NotificationType.' + notification.type}}">{{notification.type}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.notification.token">Token</span></dt>
+        <dd>
+            <span>{{notification.token}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.notification.read">Read</span></dt>
+        <dd>
+            <span>{{notification.read}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.notification.user">User</span></dt>
+        <dd>
+            {{notification.user?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'notification/'+ notification.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

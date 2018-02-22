@@ -1,0 +1,38 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "type",
+            "fieldType": "BuildingType",
+            "fieldValues": "RESIDENTIAL,HOTEL,INDUSTRIAL"
+        },
+        {
+            "fieldName": "solarSurface",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "m2Edified",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "floorsSR",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "floorsBR",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "energyCertificate",
+            "fieldType": "EnergyCertificate",
+            "fieldValues": "A,B,C,D,E,F,G,UNDEFINED"
+        }
+    ],
+    "changelogDate": "20180129130240",
+    "entityTableName": "building",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true
+}

@@ -1,0 +1,24 @@
+{
+    "uplaceApp": {
+        "establishment" : {
+            "home": {
+                "title": "Establishments",
+                "createLabel": "Crear nuevo Establishment",
+                "createOrEditLabel": "Crear o editar Establishment"
+            },
+            "created": "Un nuevo Establishment ha sido creado con el identificador {{ param }}",
+            "updated": "Un Establishment ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Establishment ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Establishment {{ id }}?"
+            },
+            "detail": {
+                "title": "Establishment"
+            },
+            "m2Facade": "M 2 Facade",
+            "bathroom": "Bathroom",
+            "use": "Use",
+            "energyCertificate": "Energy Certificate"
+        }
+    }
+}

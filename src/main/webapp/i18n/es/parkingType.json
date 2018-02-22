@@ -1,0 +1,10 @@
+{
+    "uplaceApp": {
+        "ParkingType" : {
+            "null": "",
+            "CAR": "CAR",
+            "MOTO": "MOTO",
+            "OTHER": "OTHER"
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "uplaceApp": {
+        "industrialPlant" : {
+            "home": {
+                "title": "Industrial Plants",
+                "createLabel": "Create a new Industrial Plant",
+                "createOrEditLabel": "Create or edit a Industrial Plant"
+            },
+            "created": "A new Industrial Plant is created with identifier {{ param }}",
+            "updated": "A Industrial Plant is updated with identifier {{ param }}",
+            "deleted": "A Industrial Plant is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Industrial Plant {{ id }}?"
+            },
+            "detail": {
+                "title": "Industrial Plant"
+            },
+            "solarSurface": "Solar Surface",
+            "numberRooms": "Number Rooms",
+            "m2Offices": "M 2 Offices",
+            "m2Storage": "M 2 Storage",
+            "heightFree": "Height Free",
+            "numberDocks": "Number Docks",
+            "energyCertificate": "Energy Certificate"
+        }
+    }
+}

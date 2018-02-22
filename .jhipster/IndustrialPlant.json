@@ -1,0 +1,41 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "solarSurface",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "numberRooms",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "m2Offices",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "m2Storage",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "heightFree",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "numberDocks",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "energyCertificate",
+            "fieldType": "EnergyCertificate",
+            "fieldValues": "A,B,C,D,E,F,G,UNDEFINED"
+        }
+    ],
+    "changelogDate": "20180129130242",
+    "entityTableName": "industrial_plant",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true
+}

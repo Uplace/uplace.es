@@ -1,0 +1,42 @@
+{
+    "uplaceApp": {
+        "apartment" : {
+            "home": {
+                "title": "Apartments",
+                "createLabel": "Crear nuevo Apartment",
+                "createOrEditLabel": "Crear o editar Apartment"
+            },
+            "created": "Un nuevo Apartment ha sido creado con el identificador {{ param }}",
+            "updated": "Un Apartment ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Apartment ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Apartment {{ id }}?"
+            },
+            "detail": {
+                "title": "Apartment"
+            },
+            "numberBedrooms": "Number Bedrooms",
+            "numberBathrooms": "Number Bathrooms",
+            "m2Edified": "M 2 Edified",
+            "m2Usable": "M 2 Usable",
+            "height": "Height",
+            "elevator": "Elevator",
+            "ac": "Ac",
+            "heat": "Heat",
+            "parking": "Parking",
+            "terrace": "Terrace",
+            "balcony": "Balcony",
+            "surfaceTerrace": "Surface Terrace",
+            "surfaceSaloon": "Surface Saloon",
+            "type": "Type",
+            "office": "Office",
+            "kitchenOffice": "Kitchen Office",
+            "storage": "Storage",
+            "sharedPool": "Shared Pool",
+            "nearTransport": "Near Transport",
+            "reformed": "Reformed",
+            "energyCertificate": "Energy Certificate",
+            "certificateHabitability": "Certificate Habitability"
+        }
+    }
+}

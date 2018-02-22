@@ -1,0 +1,31 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "m2Facade",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "bathroom",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "use",
+            "fieldType": "UseEstablishment",
+            "fieldValues": "RESTAURANT,PUB,SHOP,OTHER"
+        },
+        {
+            "fieldName": "energyCertificate",
+            "fieldType": "EnergyCertificate",
+            "fieldValues": "A,B,C,D,E,F,G,UNDEFINED"
+        }
+    ],
+    "changelogDate": "20180129130243",
+    "entityTableName": "establishment",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true
+}

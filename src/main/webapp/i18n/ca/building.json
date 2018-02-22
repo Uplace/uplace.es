@@ -1,0 +1,26 @@
+{
+    "uplaceApp": {
+        "building" : {
+            "home": {
+                "title": "Buildings",
+                "createLabel": "Create a new Building",
+                "createOrEditLabel": "Create or edit a Building"
+            },
+            "created": "A new Building is created with identifier {{ param }}",
+            "updated": "A Building is updated with identifier {{ param }}",
+            "deleted": "A Building is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Building {{ id }}?"
+            },
+            "detail": {
+                "title": "Building"
+            },
+            "type": "Type",
+            "solarSurface": "Solar Surface",
+            "m2Edified": "M 2 Edified",
+            "floorsSR": "Floors SR",
+            "floorsBR": "Floors BR",
+            "energyCertificate": "Energy Certificate"
+        }
+    }
+}

@@ -1,0 +1,50 @@
+
+<div *ngIf="location">
+    <h2><span jhiTranslate="uplaceApp.location.detail.title">Location</span> {{location.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.location.latitude">Latitude</span></dt>
+        <dd>
+            <span>{{location.latitude}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.location.postalCode">Postal Code</span></dt>
+        <dd>
+            <span>{{location.postalCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.location.longitude">Longitude</span></dt>
+        <dd>
+            <span>{{location.longitude}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.location.city">City</span></dt>
+        <dd>
+            <span>{{location.city}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.location.fullAddress">Full Address</span></dt>
+        <dd>
+            <span>{{location.fullAddress}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.location.hide">Hide</span></dt>
+        <dd>
+            <span>{{location.hide}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.location.urlGMaps">Url G Maps</span></dt>
+        <dd>
+            <span>{{location.urlGMaps}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'location/'+ location.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

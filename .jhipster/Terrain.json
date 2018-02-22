@@ -1,0 +1,41 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "m2Buildable",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "buildable",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "buildableDepth",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "floorsSR",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "floorsBR",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "constructionCoefficient",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "TerrainType",
+            "fieldValues": "RESIDENTIAL,URBAN,RUSTIC,INDUSTRIAL"
+        }
+    ],
+    "changelogDate": "20180117115521",
+    "entityTableName": "terrain",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true
+}

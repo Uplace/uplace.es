@@ -1,0 +1,11 @@
+{
+    "uplaceApp": {
+        "UseEstablishment" : {
+            "null": "",
+            "RESTAURANT": "RESTAURANT",
+            "PUB": "PUB",
+            "SHOP": "SHOP",
+            "OTHER": "OTHER"
+        }
+    }
+}

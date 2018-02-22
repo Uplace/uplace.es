@@ -1,0 +1,64 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTerrainLabel" jhiTranslate="uplaceApp.terrain.home.createOrEditLabel">Create or edit a Terrain</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <up-alert-error></up-alert-error>
+        <div class="form-group" [hidden]="!terrain.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="terrain.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.m2Buildable" for="field_m2Buildable">M 2 Buildable</label>
+            <input type="number" class="form-control" name="m2Buildable" id="field_m2Buildable"
+                [(ngModel)]="terrain.m2Buildable" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.buildable" for="field_buildable">Buildable</label>
+            <input type="checkbox" class="form-control" name="buildable" id="field_buildable"
+                [(ngModel)]="terrain.buildable" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.buildableDepth" for="field_buildableDepth">Buildable Depth</label>
+            <input type="number" class="form-control" name="buildableDepth" id="field_buildableDepth"
+                [(ngModel)]="terrain.buildableDepth" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.floorsSR" for="field_floorsSR">Floors SR</label>
+            <input type="number" class="form-control" name="floorsSR" id="field_floorsSR"
+                [(ngModel)]="terrain.floorsSR" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.floorsBR" for="field_floorsBR">Floors BR</label>
+            <input type="number" class="form-control" name="floorsBR" id="field_floorsBR"
+                [(ngModel)]="terrain.floorsBR" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.constructionCoefficient" for="field_constructionCoefficient">Construction Coefficient</label>
+            <input type="number" class="form-control" name="constructionCoefficient" id="field_constructionCoefficient"
+                [(ngModel)]="terrain.constructionCoefficient" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.type" for="field_type">Type</label>
+            <select class="form-control" name="type" [(ngModel)]="terrain.type" id="field_type" >
+                <option value="RESIDENTIAL">{{'uplaceApp.TerrainType.RESIDENTIAL' | translate}}</option>
+                <option value="URBAN">{{'uplaceApp.TerrainType.URBAN' | translate}}</option>
+                <option value="RUSTIC">{{'uplaceApp.TerrainType.RUSTIC' | translate}}</option>
+                <option value="INDUSTRIAL">{{'uplaceApp.TerrainType.INDUSTRIAL' | translate}}</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

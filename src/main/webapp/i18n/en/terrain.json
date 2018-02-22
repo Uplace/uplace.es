@@ -1,0 +1,27 @@
+{
+    "uplaceApp": {
+        "terrain" : {
+            "home": {
+                "title": "Terrains",
+                "createLabel": "Create a new Terrain",
+                "createOrEditLabel": "Create or edit a Terrain"
+            },
+            "created": "A new Terrain is created with identifier {{ param }}",
+            "updated": "A Terrain is updated with identifier {{ param }}",
+            "deleted": "A Terrain is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Terrain {{ id }}?"
+            },
+            "detail": {
+                "title": "Terrain"
+            },
+            "m2Buildable": "M 2 Buildable",
+            "buildable": "Buildable",
+            "buildableDepth": "Buildable Depth",
+            "floorsSR": "Floors SR",
+            "floorsBR": "Floors BR",
+            "constructionCoefficient": "Construction Coefficient",
+            "type": "Type"
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "uplaceApp": {
+        "ApartmentType" : {
+            "null": "",
+            "HOUSES": "HOUSES",
+            "RURALS": "RURALS",
+            "FLATS": "FLATS",
+            "APARTMENTS": "APARTMENTS",
+            "TOWERS": "TOWERS",
+            "LOFTS": "LOFTS"
+        }
+    }
+}
