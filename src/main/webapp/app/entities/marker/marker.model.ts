@@ -1,5 +1,5 @@
 
-export class MarkerModel {
+export class Marker {
     constructor(
         public propertyReference?: string,
         public latitude?: number,
