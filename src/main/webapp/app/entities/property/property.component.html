@@ -37,7 +37,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let property of properties ;trackBy: trackId">
-                <td><a [routerLink]="['../property', property.id ]">{{property.id}}</a></td>
+                <td><a [routerLink]="['../property', property.reference ]">{{property.reference}}</a></td>
                 <td>{{property.title}}</td>
                 <td>{{property.price}}</td>
                 <td>{{property.created | date:'medium'}}</td>
@@ -64,13 +64,13 @@
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../property', property.id ]"
+                                [routerLink]="['../property', property.reference ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.reference + '/edit'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-primary btn-sm">
@@ -78,7 +78,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.reference + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
