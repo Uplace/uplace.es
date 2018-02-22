@@ -66,7 +66,7 @@ public class Apartment extends Property implements Serializable {
     private Integer surfaceSaloon;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "up_type", nullable = false)
+    @Column(name = "up_type")
     private ApartmentType type;
 
     @Enumerated(EnumType.STRING)

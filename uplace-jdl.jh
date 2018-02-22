@@ -55,7 +55,7 @@ entity Apartment {
     balcony Select,
     surfaceTerrace Integer,
     surfaceSaloon Integer,
-	type ApartmentType required,
+	type ApartmentType,
     office Select,
     kitchenOffice Select,
     storage Select,

@@ -97,7 +97,7 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.apartment.type" for="field_type">Type</label>
-            <select class="form-control" name="type" [(ngModel)]="apartment.type" id="field_type"  required>
+            <select class="form-control" name="type" [(ngModel)]="apartment.type" id="field_type" >
                 <option value="HOUSES">{{'uplaceApp.ApartmentType.HOUSES' | translate}}</option>
                 <option value="RURALS">{{'uplaceApp.ApartmentType.RURALS' | translate}}</option>
                 <option value="FLATS">{{'uplaceApp.ApartmentType.FLATS' | translate}}</option>
@@ -105,12 +105,6 @@
                 <option value="TOWERS">{{'uplaceApp.ApartmentType.TOWERS' | translate}}</option>
                 <option value="LOFTS">{{'uplaceApp.ApartmentType.LOFTS' | translate}}</option>
             </select>
-            <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-            </div>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.apartment.office" for="field_office">Office</label>

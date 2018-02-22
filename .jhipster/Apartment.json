@@ -63,10 +63,7 @@
         {
             "fieldName": "type",
             "fieldType": "ApartmentType",
-            "fieldValues": "HOUSES,RURALS,FLATS,APARTMENTS,TOWERS,LOFTS",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldValues": "HOUSES,RURALS,FLATS,APARTMENTS,TOWERS,LOFTS"
         },
         {
             "fieldName": "office",
