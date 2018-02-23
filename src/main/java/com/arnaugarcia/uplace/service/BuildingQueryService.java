@@ -3,6 +3,7 @@ package com.arnaugarcia.uplace.service;
 
 import java.util.List;
 
+import com.arnaugarcia.uplace.repository.PropertyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,6 @@ import io.github.jhipster.service.QueryService;
 
 import com.arnaugarcia.uplace.domain.Building;
 import com.arnaugarcia.uplace.domain.*; // for static metamodels
-import com.arnaugarcia.uplace.repository.BuildingRepository;
 import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
 
 import com.arnaugarcia.uplace.service.dto.BuildingDTO;
@@ -36,12 +36,12 @@ public class BuildingQueryService extends QueryService<Building> {
     private final Logger log = LoggerFactory.getLogger(BuildingQueryService.class);
 
 
-    private final BuildingRepository buildingRepository;
+    private final PropertyRepository propertyRepository;
 
     private final BuildingMapper buildingMapper;
 
-    public BuildingQueryService(BuildingRepository buildingRepository, BuildingMapper buildingMapper) {
-        this.buildingRepository = buildingRepository;
+    public BuildingQueryService(PropertyRepository propertyRepository, BuildingMapper buildingMapper) {
+        this.propertyRepository = propertyRepository;
         this.buildingMapper = buildingMapper;
     }
 
@@ -54,7 +54,8 @@ public class BuildingQueryService extends QueryService<Building> {
     public List<BuildingDTO> findByCriteria(BuildingCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specifications<Building> specification = createSpecification(criteria);
-        return buildingMapper.toDto(buildingRepository.findAll(specification));
+        return null;
+        // return buildingMapper.toDto(propertyRepository.findAll(specification));
     }
 
     /**
@@ -67,8 +68,9 @@ public class BuildingQueryService extends QueryService<Building> {
     public Page<BuildingDTO> findByCriteria(BuildingCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specifications<Building> specification = createSpecification(criteria);
-        final Page<Building> result = buildingRepository.findAll(specification, page);
-        return result.map(buildingMapper::toDto);
+        // final Page<Building> result = propertyRepository.findAll(specification, page);
+        // return result.map(buildingMapper::toDto);
+        return null;
     }
 
     /**
