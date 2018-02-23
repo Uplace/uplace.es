@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.service.dto;
 
 import java.io.Serializable;
+import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
@@ -23,8 +24,14 @@ import io.github.jhipster.service.filter.ZonedDateTimeFilter;
  * fix type specific filters.
  */
 public class PropertyCriteria implements Serializable {
+    /**
+     * Class for filtering TransactionType
+     */
+    public static class TransactionTypeFilter extends Filter<TransactionType> {
+    }
 
     private static final long serialVersionUID = 1L;
+
 
     private LongFilter id;
 
@@ -35,6 +42,8 @@ public class PropertyCriteria implements Serializable {
     private ZonedDateTimeFilter created;
 
     private ZonedDateTimeFilter updated;
+
+    private TransactionTypeFilter transaction;
 
     private StringFilter reference;
 
@@ -49,6 +58,8 @@ public class PropertyCriteria implements Serializable {
     private BooleanFilter visible;
 
     private IntegerFilter surface;
+
+    private LongFilter locationId;
 
     private LongFilter photoId;
 
@@ -95,6 +106,14 @@ public class PropertyCriteria implements Serializable {
 
     public void setUpdated(ZonedDateTimeFilter updated) {
         this.updated = updated;
+    }
+
+    public TransactionTypeFilter getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(TransactionTypeFilter transaction) {
+        this.transaction = transaction;
     }
 
     public StringFilter getReference() {
@@ -153,6 +172,14 @@ public class PropertyCriteria implements Serializable {
         this.surface = surface;
     }
 
+    public LongFilter getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(LongFilter locationId) {
+        this.locationId = locationId;
+    }
+
     public LongFilter getPhotoId() {
         return photoId;
     }
@@ -177,6 +204,7 @@ public class PropertyCriteria implements Serializable {
                 (price != null ? "price=" + price + ", " : "") +
                 (created != null ? "created=" + created + ", " : "") +
                 (updated != null ? "updated=" + updated + ", " : "") +
+                (transaction != null ? "transaction=" + transaction + ", " : "") +
                 (reference != null ? "reference=" + reference + ", " : "") +
                 (priceSell != null ? "priceSell=" + priceSell + ", " : "") +
                 (priceRent != null ? "priceRent=" + priceRent + ", " : "") +
@@ -184,6 +212,7 @@ public class PropertyCriteria implements Serializable {
                 (newCreation != null ? "newCreation=" + newCreation + ", " : "") +
                 (visible != null ? "visible=" + visible + ", " : "") +
                 (surface != null ? "surface=" + surface + ", " : "") +
+                (locationId != null ? "locationId=" + locationId + ", " : "") +
                 (photoId != null ? "photoId=" + photoId + ", " : "") +
                 (managerId != null ? "managerId=" + managerId + ", " : "") +
             "}";

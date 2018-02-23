@@ -39,7 +39,7 @@
     "changelogDate": "20180117115525",
     "javadoc": "PHOTO",
     "entityTableName": "photo",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": false

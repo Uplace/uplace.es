@@ -19,12 +19,15 @@ import com.arnaugarcia.uplace.domain.*; // for static metamodels
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 
+import com.arnaugarcia.uplace.service.dto.PropertyDTO;
+import com.arnaugarcia.uplace.service.mapper.PropertyMapper;
+import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 
 /**
  * Service for executing complex queries for Property entities in the database.
  * The main input is a {@link PropertyCriteria} which get's converted to {@link Specifications},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link Property} or a {@link Page} of {@link Property} which fulfills the criteria.
+ * It returns a {@link List} of {@link PropertyDTO} or a {@link Page} of {@link PropertyDTO} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
@@ -35,33 +38,37 @@ public class PropertyQueryService extends QueryService<Property> {
 
     private final PropertyRepository propertyRepository;
 
-    public PropertyQueryService(PropertyRepository propertyRepository) {
+    private final PropertyMapper propertyMapper;
+
+    public PropertyQueryService(PropertyRepository propertyRepository, PropertyMapper propertyMapper) {
         this.propertyRepository = propertyRepository;
+        this.propertyMapper = propertyMapper;
     }
 
     /**
-     * Return a {@link List} of {@link Property} which matches the criteria from the database
+     * Return a {@link List} of {@link PropertyDTO} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<Property> findByCriteria(PropertyCriteria criteria) {
+    public List<PropertyDTO> findByCriteria(PropertyCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specifications<Property> specification = createSpecification(criteria);
-        return propertyRepository.findAll(specification);
+        return propertyMapper.toDto(propertyRepository.findAll(specification));
     }
 
     /**
-     * Return a {@link Page} of {@link Property} which matches the criteria from the database
+     * Return a {@link Page} of {@link PropertyDTO} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<Property> findByCriteria(PropertyCriteria criteria, Pageable page) {
+    public Page<PropertyDTO> findByCriteria(PropertyCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specifications<Property> specification = createSpecification(criteria);
-        return propertyRepository.findAll(specification, page);
+        final Page<Property> result = propertyRepository.findAll(specification, page);
+        return result.map(propertyMapper::toDto);
     }
 
     /**
@@ -85,6 +92,9 @@ public class PropertyQueryService extends QueryService<Property> {
             if (criteria.getUpdated() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
             }
+            if (criteria.getTransaction() != null) {
+                specification = specification.and(buildSpecification(criteria.getTransaction(), Property_.transaction));
+            }
             if (criteria.getReference() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
             }
@@ -105,6 +115,9 @@ public class PropertyQueryService extends QueryService<Property> {
             }
             if (criteria.getSurface() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getSurface(), Property_.surface));
+            }
+            if (criteria.getLocationId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getLocationId(), Property_.location, Location_.id));
             }
             if (criteria.getPhotoId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getPhotoId(), Property_.photos, Photo_.id));

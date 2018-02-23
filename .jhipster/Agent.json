@@ -39,8 +39,8 @@
     ],
     "changelogDate": "20180117115519",
     "entityTableName": "agent",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

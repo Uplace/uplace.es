@@ -12,6 +12,8 @@ import org.mapstruct.*;
 public interface LocationMapper extends EntityMapper<LocationDTO, Location> {
 
 
+    @Mapping(target = "property", ignore = true)
+    Location toEntity(LocationDTO locationDTO);
 
     default Location fromId(Long id) {
         if (id == null) {

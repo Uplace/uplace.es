@@ -5,10 +5,12 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.repository.AgentRepository;
+import com.arnaugarcia.uplace.service.AgentService;
+import com.arnaugarcia.uplace.service.dto.AgentDTO;
+import com.arnaugarcia.uplace.service.mapper.AgentMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -39,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
-@Ignore  public class AgentResourceIntTest {
+public class AgentResourceIntTest {
 
     private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
@@ -57,6 +59,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     @Autowired
     private AgentRepository agentRepository;
+
+    @Autowired
+    private AgentMapper agentMapper;
+
+    @Autowired
+    private AgentService agentService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -77,7 +85,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AgentResource agentResource = new AgentResource(agentRepository);
+        final AgentResource agentResource = new AgentResource(agentService);
         this.restAgentMockMvc = MockMvcBuilders.standaloneSetup(agentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -117,9 +125,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         int databaseSizeBeforeCreate = agentRepository.findAll().size();
 
         // Create the Agent
+        AgentDTO agentDTO = agentMapper.toDto(agent);
         restAgentMockMvc.perform(post("/api/agents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(agent)))
+            .content(TestUtil.convertObjectToJsonBytes(agentDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Agent in the database
@@ -140,11 +149,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
         // Create the Agent with an existing ID
         agent.setId(1L);
+        AgentDTO agentDTO = agentMapper.toDto(agent);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restAgentMockMvc.perform(post("/api/agents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(agent)))
+            .content(TestUtil.convertObjectToJsonBytes(agentDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Agent in the database
@@ -213,10 +223,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             .phone(UPDATED_PHONE)
             .photo(UPDATED_PHOTO)
             .photoContentType(UPDATED_PHOTO_CONTENT_TYPE);
+        AgentDTO agentDTO = agentMapper.toDto(updatedAgent);
 
         restAgentMockMvc.perform(put("/api/agents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedAgent)))
+            .content(TestUtil.convertObjectToJsonBytes(agentDTO)))
             .andExpect(status().isOk());
 
         // Validate the Agent in the database
@@ -236,11 +247,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         int databaseSizeBeforeUpdate = agentRepository.findAll().size();
 
         // Create the Agent
+        AgentDTO agentDTO = agentMapper.toDto(agent);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restAgentMockMvc.perform(put("/api/agents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(agent)))
+            .content(TestUtil.convertObjectToJsonBytes(agentDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Agent in the database
@@ -278,5 +290,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         assertThat(agent1).isNotEqualTo(agent2);
         agent1.setId(null);
         assertThat(agent1).isNotEqualTo(agent2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(AgentDTO.class);
+        AgentDTO agentDTO1 = new AgentDTO();
+        agentDTO1.setId(1L);
+        AgentDTO agentDTO2 = new AgentDTO();
+        assertThat(agentDTO1).isNotEqualTo(agentDTO2);
+        agentDTO2.setId(agentDTO1.getId());
+        assertThat(agentDTO1).isEqualTo(agentDTO2);
+        agentDTO2.setId(2L);
+        assertThat(agentDTO1).isNotEqualTo(agentDTO2);
+        agentDTO1.setId(null);
+        assertThat(agentDTO1).isNotEqualTo(agentDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(agentMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(agentMapper.fromId(null)).isNull();
     }
 }

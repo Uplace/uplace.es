@@ -35,7 +35,8 @@ import java.util.Set;
     @JsonSubTypes.Type(value = Parking.class, name = "Parking"),
     @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
 })
-public abstract class Property implements Serializable {
+// TODO: Make Property abstract
+public class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -31,7 +31,7 @@
     ],
     "changelogDate": "20180129130240",
     "entityTableName": "building",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceClass",
     "jpaMetamodelFiltering": true

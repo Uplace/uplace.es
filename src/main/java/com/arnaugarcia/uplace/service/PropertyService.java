@@ -3,6 +3,8 @@ package com.arnaugarcia.uplace.service;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.PropertyDTO;
+import com.arnaugarcia.uplace.service.mapper.AgentMapper;
+import com.arnaugarcia.uplace.service.mapper.PropertyMapper;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,20 +27,25 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
 
-    public PropertyService(PropertyRepository propertyRepository) {
+    private final PropertyMapper propertyMapper;
+
+    public PropertyService(PropertyRepository propertyRepository, PropertyMapper propertyMapper) {
         this.propertyRepository = propertyRepository;
+        this.propertyMapper = propertyMapper;
     }
 
     /**
      * Save a property.
      *
-     * @param property the entity to save
+     * @param propertyDTO the entity to save
      * @return the persisted entity
      */
-    public Property save(Property property) {
-        log.debug("Request to save Property : {}", property);
+    public PropertyDTO save(PropertyDTO propertyDTO) {
+        log.debug("Request to save Property : {}", propertyDTO);
+        Property property = propertyMapper.toEntity(propertyDTO);
         property.setReference(this.createReference());
-        return propertyRepository.save(property);
+        property = propertyRepository.save(property);
+        return propertyMapper.toDto(property);
     }
 
     /**

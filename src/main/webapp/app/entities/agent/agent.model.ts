@@ -1,4 +1,4 @@
-import { BaseEntity, User } from './../../shared';
+import { BaseEntity } from './../../shared';
 
 export class Agent implements BaseEntity {
     constructor(
@@ -8,7 +8,7 @@ export class Agent implements BaseEntity {
         public phone?: string,
         public photoContentType?: string,
         public photo?: any,
-        public user?: User,
+        public userId?: number,
         public properties?: BaseEntity[],
     ) {
     }

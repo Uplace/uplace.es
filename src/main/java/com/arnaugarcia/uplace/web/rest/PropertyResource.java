@@ -5,6 +5,8 @@ import com.arnaugarcia.uplace.domain.Terrain;
 import com.arnaugarcia.uplace.repository.*;
 import com.arnaugarcia.uplace.service.*;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
+import com.arnaugarcia.uplace.service.dto.PropertyDTO;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Property;
 
@@ -46,22 +48,22 @@ public class PropertyResource {
     /**
      * POST  /properties : Create a new property.
      *
-     * @param property the property to create
+     * @param propertyDTO the property to create
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/properties")
     @Timed
-    public ResponseEntity<Property> createProperty(@Valid @RequestBody Property property) throws URISyntaxException {
-        log.debug("REST request to save Property : {}", property);
+    public ResponseEntity<PropertyDTO> createProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
+        log.debug("REST request to save Property : {}", propertyDTO);
 
-        if (property.getId() != null) {
-            throw new BadRequestAlertException("A new property cannot already have an ID", property.getPropertyType(), "idexists");
+        if (propertyDTO.getReference() != null) {
+            throw new BadRequestAlertException("A new property cannot already have a Reference", propertyDTO.getReference(), ErrorConstants.ERR_BAD_REFERENCE);
         }
 
-        Property result = propertyService.save(property);
-        return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(property.getPropertyType(), result.getId().toString()))
+        PropertyDTO result = propertyService.save(propertyDTO);
+        return ResponseEntity.created(new URI("/api/properties/" + result.getReference()))
+            .headers(HeaderUtil.createEntityCreationAlert(propertyDTO.getReference(), result.getId().toString()))
             .body(result);
     }
 
@@ -113,9 +115,9 @@ public class PropertyResource {
 
     @GetMapping("/properties/criteria")
     @Timed
-    public ResponseEntity<List<Property>> getAllPropertiesCriteria(PropertyCriteria criteria) {
+    public ResponseEntity<List<PropertyDTO>> getAllPropertiesCriteria(PropertyCriteria criteria) {
         log.debug("REST request to get Properties by criteria: {}", criteria);
-        List<Property> entityList = propertyQueryService.findByCriteria(criteria);
+        List<PropertyDTO> entityList = propertyQueryService.findByCriteria(criteria);
         return ResponseEntity.ok().body(entityList);
     }
 

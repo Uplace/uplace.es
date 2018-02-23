@@ -2,6 +2,8 @@ package com.arnaugarcia.uplace.service.dto;
 
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -11,13 +13,19 @@ public class LocationDTO implements Serializable {
 
     private Long id;
 
-    private String latitude;
+    private Double latitude;
 
-    private String cp;
+    private String postalCode;
 
-    private String longitude;
+    private Double longitude;
 
-    private String urlGmaps;
+    private String city;
+
+    private String fullAddress;
+
+    private Boolean hide;
+
+    private String urlGMaps;
 
     public Long getId() {
         return id;
@@ -27,36 +35,60 @@ public class LocationDTO implements Serializable {
         this.id = id;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getCp() {
-        return cp;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setCp(String cp) {
-        this.cp = cp;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public String getUrlGmaps() {
-        return urlGmaps;
+    public String getCity() {
+        return city;
     }
 
-    public void setUrlGmaps(String urlGmaps) {
-        this.urlGmaps = urlGmaps;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+
+    public Boolean isHide() {
+        return hide;
+    }
+
+    public void setHide(Boolean hide) {
+        this.hide = hide;
+    }
+
+    public String getUrlGMaps() {
+        return urlGMaps;
+    }
+
+    public void setUrlGMaps(String urlGMaps) {
+        this.urlGMaps = urlGMaps;
     }
 
     @Override
@@ -84,10 +116,13 @@ public class LocationDTO implements Serializable {
     public String toString() {
         return "LocationDTO{" +
             "id=" + getId() +
-            ", latitude='" + getLatitude() + "'" +
-            ", cp='" + getCp() + "'" +
-            ", longitude='" + getLongitude() + "'" +
-            ", urlGmaps='" + getUrlGmaps() + "'" +
+            ", latitude=" + getLatitude() +
+            ", postalCode='" + getPostalCode() + "'" +
+            ", longitude=" + getLongitude() +
+            ", city='" + getCity() + "'" +
+            ", fullAddress='" + getFullAddress() + "'" +
+            ", hide='" + isHide() + "'" +
+            ", urlGMaps='" + getUrlGMaps() + "'" +
             "}";
     }
 }

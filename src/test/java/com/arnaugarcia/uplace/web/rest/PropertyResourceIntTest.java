@@ -3,15 +3,19 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.domain.Location;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
-import com.arnaugarcia.uplace.service.*;
+import com.arnaugarcia.uplace.service.PropertyService;
+import com.arnaugarcia.uplace.service.dto.PropertyDTO;
+import com.arnaugarcia.uplace.service.mapper.PropertyMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
+import com.arnaugarcia.uplace.service.PropertyQueryService;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -40,6 +44,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 /**
  * Test class for the PropertyResource REST controller.
  *
@@ -47,6 +52,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
+@Ignore
 public class PropertyResourceIntTest {
 
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
@@ -63,6 +69,9 @@ public class PropertyResourceIntTest {
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final TransactionType DEFAULT_TRANSACTION = TransactionType.RENT;
+    private static final TransactionType UPDATED_TRANSACTION = TransactionType.BUY;
 
     private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
     private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
@@ -86,11 +95,16 @@ public class PropertyResourceIntTest {
     private static final Integer UPDATED_SURFACE = 2;
 
     @Autowired
+    private PropertyRepository propertyRepository;
+
+    @Autowired
+    private PropertyMapper propertyMapper;
+
+    @Autowired
     private PropertyService propertyService;
 
     @Autowired
     private PropertyQueryService propertyQueryService;
-
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -108,21 +122,16 @@ public class PropertyResourceIntTest {
 
     private Property property;
 
-    @Before
+    /*@Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService);
+        final PropertyResource propertyResource = new PropertyResource(propertyService, propertyQueryService);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
-    }
-
-    @Test
-    public void test() {
-        System.out.println("Soy un guarro - Arnau Garcia");
-    }
+    }*/
 
     /**
      * Create an entity for this test.
@@ -130,13 +139,14 @@ public class PropertyResourceIntTest {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    /*public static Property createEntity(EntityManager em) {
+    public static Property createEntity(EntityManager em) {
         Property property = new Property()
             .title(DEFAULT_TITLE)
             .price(DEFAULT_PRICE)
             .created(DEFAULT_CREATED)
             .updated(DEFAULT_UPDATED)
             .description(DEFAULT_DESCRIPTION)
+            .transaction(DEFAULT_TRANSACTION)
             .reference(DEFAULT_REFERENCE)
             .priceSell(DEFAULT_PRICE_SELL)
             .priceRent(DEFAULT_PRICE_RENT)
@@ -145,22 +155,23 @@ public class PropertyResourceIntTest {
             .visible(DEFAULT_VISIBLE)
             .surface(DEFAULT_SURFACE);
         return property;
-    }*/
+    }
 
-   /* @Before
+    @Before
     public void initTest() {
         property = createEntity(em);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void createProperty() throws Exception {
         int databaseSizeBeforeCreate = propertyRepository.findAll().size();
 
         // Create the Property
+        PropertyDTO propertyDTO = propertyMapper.toDto(property);
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(property)))
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Property in the database
@@ -172,6 +183,7 @@ public class PropertyResourceIntTest {
         assertThat(testProperty.getCreated()).isEqualTo(DEFAULT_CREATED);
         assertThat(testProperty.getUpdated()).isEqualTo(DEFAULT_UPDATED);
         assertThat(testProperty.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testProperty.getTransaction()).isEqualTo(DEFAULT_TRANSACTION);
         assertThat(testProperty.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testProperty.getPriceSell()).isEqualTo(DEFAULT_PRICE_SELL);
         assertThat(testProperty.getPriceRent()).isEqualTo(DEFAULT_PRICE_RENT);
@@ -188,11 +200,12 @@ public class PropertyResourceIntTest {
 
         // Create the Property with an existing ID
         property.setId(1L);
+        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(property)))
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Property in the database
@@ -208,10 +221,11 @@ public class PropertyResourceIntTest {
         property.setTitle(null);
 
         // Create the Property, which fails.
+        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(property)))
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isBadRequest());
 
         List<Property> propertyList = propertyRepository.findAll();
@@ -226,10 +240,11 @@ public class PropertyResourceIntTest {
         property.setPrice(null);
 
         // Create the Property, which fails.
+        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(property)))
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isBadRequest());
 
         List<Property> propertyList = propertyRepository.findAll();
@@ -244,10 +259,49 @@ public class PropertyResourceIntTest {
         property.setCreated(null);
 
         // Create the Property, which fails.
+        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         restPropertyMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(property)))
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Property> propertyList = propertyRepository.findAll();
+        assertThat(propertyList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTransactionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = propertyRepository.findAll().size();
+        // set the field null
+        property.setTransaction(null);
+
+        // Create the Property, which fails.
+        PropertyDTO propertyDTO = propertyMapper.toDto(property);
+
+        restPropertyMockMvc.perform(post("/api/properties")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Property> propertyList = propertyRepository.findAll();
+        assertThat(propertyList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkReferenceIsRequired() throws Exception {
+        int databaseSizeBeforeTest = propertyRepository.findAll().size();
+        // set the field null
+        property.setReference(null);
+
+        // Create the Property, which fails.
+        PropertyDTO propertyDTO = propertyMapper.toDto(property);
+
+        restPropertyMockMvc.perform(post("/api/properties")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isBadRequest());
 
         List<Property> propertyList = propertyRepository.findAll();
@@ -270,6 +324,7 @@ public class PropertyResourceIntTest {
             .andExpect(jsonPath("$.[*].created").value(hasItem(sameInstant(DEFAULT_CREATED))))
             .andExpect(jsonPath("$.[*].updated").value(hasItem(sameInstant(DEFAULT_UPDATED))))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].transaction").value(hasItem(DEFAULT_TRANSACTION.toString())))
             .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].priceSell").value(hasItem(DEFAULT_PRICE_SELL.doubleValue())))
             .andExpect(jsonPath("$.[*].priceRent").value(hasItem(DEFAULT_PRICE_RENT.doubleValue())))
@@ -295,6 +350,7 @@ public class PropertyResourceIntTest {
             .andExpect(jsonPath("$.created").value(sameInstant(DEFAULT_CREATED)))
             .andExpect(jsonPath("$.updated").value(sameInstant(DEFAULT_UPDATED)))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.transaction").value(DEFAULT_TRANSACTION.toString()))
             .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
             .andExpect(jsonPath("$.priceSell").value(DEFAULT_PRICE_SELL.doubleValue()))
             .andExpect(jsonPath("$.priceRent").value(DEFAULT_PRICE_RENT.doubleValue()))
@@ -446,9 +502,9 @@ public class PropertyResourceIntTest {
         // Get all the propertyList where created less than or equals to UPDATED_CREATED
         defaultPropertyShouldBeFound("created.lessThan=" + UPDATED_CREATED);
     }
-*/
 
-    /*@Test
+
+    @Test
     @Transactional
     public void getAllPropertiesByUpdatedIsEqualToSomething() throws Exception {
         // Initialize the database
@@ -459,9 +515,9 @@ public class PropertyResourceIntTest {
 
         // Get all the propertyList where updated equals to UPDATED_UPDATED
         defaultPropertyShouldNotBeFound("updated.equals=" + UPDATED_UPDATED);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void getAllPropertiesByUpdatedIsInShouldWork() throws Exception {
         // Initialize the database
@@ -472,9 +528,9 @@ public class PropertyResourceIntTest {
 
         // Get all the propertyList where updated equals to UPDATED_UPDATED
         defaultPropertyShouldNotBeFound("updated.in=" + UPDATED_UPDATED);
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void getAllPropertiesByUpdatedIsNullOrNotNull() throws Exception {
         // Initialize the database
@@ -485,9 +541,9 @@ public class PropertyResourceIntTest {
 
         // Get all the propertyList where updated is null
         defaultPropertyShouldNotBeFound("updated.specified=false");
-    }*/
+    }
 
-    /*@Test
+    @Test
     @Transactional
     public void getAllPropertiesByUpdatedIsGreaterThanOrEqualToSomething() throws Exception {
         // Initialize the database
@@ -511,10 +567,49 @@ public class PropertyResourceIntTest {
 
         // Get all the propertyList where updated less than or equals to UPDATED_UPDATED
         defaultPropertyShouldBeFound("updated.lessThan=" + UPDATED_UPDATED);
-    }*/
+    }
 
 
-    /*@Test
+    @Test
+    @Transactional
+    public void getAllPropertiesByTransactionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where transaction equals to DEFAULT_TRANSACTION
+        defaultPropertyShouldBeFound("transaction.equals=" + DEFAULT_TRANSACTION);
+
+        // Get all the propertyList where transaction equals to UPDATED_TRANSACTION
+        defaultPropertyShouldNotBeFound("transaction.equals=" + UPDATED_TRANSACTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByTransactionIsInShouldWork() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where transaction in DEFAULT_TRANSACTION or UPDATED_TRANSACTION
+        defaultPropertyShouldBeFound("transaction.in=" + DEFAULT_TRANSACTION + "," + UPDATED_TRANSACTION);
+
+        // Get all the propertyList where transaction equals to UPDATED_TRANSACTION
+        defaultPropertyShouldNotBeFound("transaction.in=" + UPDATED_TRANSACTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPropertiesByTransactionIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        propertyRepository.saveAndFlush(property);
+
+        // Get all the propertyList where transaction is not null
+        defaultPropertyShouldBeFound("transaction.specified=true");
+
+        // Get all the propertyList where transaction is null
+        defaultPropertyShouldNotBeFound("transaction.specified=false");
+    }
+
+    @Test
     @Transactional
     public void getAllPropertiesByReferenceIsEqualToSomething() throws Exception {
         // Initialize the database
@@ -843,6 +938,25 @@ public class PropertyResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllPropertiesByLocationIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Location location = LocationResourceIntTest.createEntity(em);
+        em.persist(location);
+        em.flush();
+        property.setLocation(location);
+        propertyRepository.saveAndFlush(property);
+        Long locationId = location.getId();
+
+        // Get all the propertyList where location equals to locationId
+        defaultPropertyShouldBeFound("locationId.equals=" + locationId);
+
+        // Get all the propertyList where location equals to locationId + 1
+        defaultPropertyShouldNotBeFound("locationId.equals=" + (locationId + 1));
+    }
+
+
+    @Test
+    @Transactional
     public void getAllPropertiesByPhotoIsEqualToSomething() throws Exception {
         // Initialize the database
         Photo photo = PhotoResourceIntTest.createEntity(em);
@@ -876,7 +990,7 @@ public class PropertyResourceIntTest {
 
         // Get all the propertyList where manager equals to managerId + 1
         defaultPropertyShouldNotBeFound("managerId.equals=" + (managerId + 1));
-    }*/
+    }
 
     /**
      * Executes the search, and checks that the default entity is returned
@@ -891,6 +1005,7 @@ public class PropertyResourceIntTest {
             .andExpect(jsonPath("$.[*].created").value(hasItem(sameInstant(DEFAULT_CREATED))))
             .andExpect(jsonPath("$.[*].updated").value(hasItem(sameInstant(DEFAULT_UPDATED))))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].transaction").value(hasItem(DEFAULT_TRANSACTION.toString())))
             .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].priceSell").value(hasItem(DEFAULT_PRICE_SELL.doubleValue())))
             .andExpect(jsonPath("$.[*].priceRent").value(hasItem(DEFAULT_PRICE_RENT.doubleValue())))
@@ -912,7 +1027,7 @@ public class PropertyResourceIntTest {
     }
 
 
-    /*@Test
+    @Test
     @Transactional
     public void getNonExistingProperty() throws Exception {
         // Get the property
@@ -924,8 +1039,7 @@ public class PropertyResourceIntTest {
     @Transactional
     public void updateProperty() throws Exception {
         // Initialize the database
-        propertyService.save(property);
-
+        propertyRepository.saveAndFlush(property);
         int databaseSizeBeforeUpdate = propertyRepository.findAll().size();
 
         // Update the property
@@ -938,6 +1052,7 @@ public class PropertyResourceIntTest {
             .created(UPDATED_CREATED)
             .updated(UPDATED_UPDATED)
             .description(UPDATED_DESCRIPTION)
+            .transaction(UPDATED_TRANSACTION)
             .reference(UPDATED_REFERENCE)
             .priceSell(UPDATED_PRICE_SELL)
             .priceRent(UPDATED_PRICE_RENT)
@@ -945,10 +1060,11 @@ public class PropertyResourceIntTest {
             .newCreation(UPDATED_NEW_CREATION)
             .visible(UPDATED_VISIBLE)
             .surface(UPDATED_SURFACE);
+        PropertyDTO propertyDTO = propertyMapper.toDto(updatedProperty);
 
         restPropertyMockMvc.perform(put("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedProperty)))
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isOk());
 
         // Validate the Property in the database
@@ -960,6 +1076,7 @@ public class PropertyResourceIntTest {
         assertThat(testProperty.getCreated()).isEqualTo(UPDATED_CREATED);
         assertThat(testProperty.getUpdated()).isEqualTo(UPDATED_UPDATED);
         assertThat(testProperty.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testProperty.getTransaction()).isEqualTo(UPDATED_TRANSACTION);
         assertThat(testProperty.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testProperty.getPriceSell()).isEqualTo(UPDATED_PRICE_SELL);
         assertThat(testProperty.getPriceRent()).isEqualTo(UPDATED_PRICE_RENT);
@@ -975,11 +1092,12 @@ public class PropertyResourceIntTest {
         int databaseSizeBeforeUpdate = propertyRepository.findAll().size();
 
         // Create the Property
+        PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restPropertyMockMvc.perform(put("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(property)))
+            .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Property in the database
@@ -991,8 +1109,7 @@ public class PropertyResourceIntTest {
     @Transactional
     public void deleteProperty() throws Exception {
         // Initialize the database
-        propertyService.save(property);
-
+        propertyRepository.saveAndFlush(property);
         int databaseSizeBeforeDelete = propertyRepository.findAll().size();
 
         // Get the property
@@ -1003,9 +1120,9 @@ public class PropertyResourceIntTest {
         // Validate the database is empty
         List<Property> propertyList = propertyRepository.findAll();
         assertThat(propertyList).hasSize(databaseSizeBeforeDelete - 1);
-    }*/
+    }
 
-   /* @Test
+    @Test
     @Transactional
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Property.class);
@@ -1018,5 +1135,28 @@ public class PropertyResourceIntTest {
         assertThat(property1).isNotEqualTo(property2);
         property1.setId(null);
         assertThat(property1).isNotEqualTo(property2);
-    }*/
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(PropertyDTO.class);
+        PropertyDTO propertyDTO1 = new PropertyDTO();
+        propertyDTO1.setId(1L);
+        PropertyDTO propertyDTO2 = new PropertyDTO();
+        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2);
+        propertyDTO2.setId(propertyDTO1.getId());
+        assertThat(propertyDTO1).isEqualTo(propertyDTO2);
+        propertyDTO2.setId(2L);
+        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2);
+        propertyDTO1.setId(null);
+        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(propertyMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(propertyMapper.fromId(null)).isNull();
+    }
 }
