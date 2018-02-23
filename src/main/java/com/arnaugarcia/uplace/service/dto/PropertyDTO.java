@@ -8,11 +8,27 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 import javax.persistence.Lob;
+
+import com.arnaugarcia.uplace.domain.*;
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * A DTO for the Property entity.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Apartment.class, name = "Apartment"),
+    @JsonSubTypes.Type(value = BuildingDTO.class, name = "Building"),
+    @JsonSubTypes.Type(value = Business.class, name = "Business"),
+    @JsonSubTypes.Type(value = Establishment.class, name = "Establishment"),
+    @JsonSubTypes.Type(value = Hotel.class, name = "Hotel"),
+    @JsonSubTypes.Type(value = IndustrialPlant.class, name = "IndustrialPlant"),
+    @JsonSubTypes.Type(value = Office.class, name = "Office"),
+    @JsonSubTypes.Type(value = Parking.class, name = "Parking"),
+    @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
+})
 public class PropertyDTO implements Serializable {
 
     private Long id;
@@ -34,7 +50,8 @@ public class PropertyDTO implements Serializable {
     @NotNull
     private TransactionType transaction;
 
-    @NotNull
+    private String propertyType;
+
     private String reference;
 
     private Double priceSell;
@@ -110,6 +127,14 @@ public class PropertyDTO implements Serializable {
         this.transaction = transaction;
     }
 
+    public String getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
+    }
+
     public String getReference() {
         return reference;
     }
@@ -142,7 +167,7 @@ public class PropertyDTO implements Serializable {
         this.yearConstruction = yearConstruction;
     }
 
-    public Boolean isNewCreation() {
+    public Boolean getNewCreation() {
         return newCreation;
     }
 
@@ -150,7 +175,7 @@ public class PropertyDTO implements Serializable {
         this.newCreation = newCreation;
     }
 
-    public Boolean isVisible() {
+    public Boolean getVisible() {
         return visible;
     }
 
@@ -178,8 +203,8 @@ public class PropertyDTO implements Serializable {
         return managers;
     }
 
-    public void setManagers(Set<AgentDTO> agents) {
-        this.managers = agents;
+    public void setManagers(Set<AgentDTO> managers) {
+        this.managers = managers;
     }
 
     @Override
@@ -217,8 +242,8 @@ public class PropertyDTO implements Serializable {
             ", priceSell=" + getPriceSell() +
             ", priceRent=" + getPriceRent() +
             ", yearConstruction=" + getYearConstruction() +
-            ", newCreation='" + isNewCreation() + "'" +
-            ", visible='" + isVisible() + "'" +
+            ", newCreation='" + getNewCreation() + "'" +
+            ", visible='" + getVisible() + "'" +
             ", surface=" + getSurface() +
             "}";
     }

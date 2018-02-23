@@ -39,7 +39,6 @@ public class BuildingCriteria extends PropertyCriteria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     private LongFilter id;
 
     private BuildingTypeFilter type;

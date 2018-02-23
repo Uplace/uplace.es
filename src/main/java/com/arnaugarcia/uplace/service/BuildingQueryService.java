@@ -18,6 +18,8 @@ import com.arnaugarcia.uplace.domain.*; // for static metamodels
 import com.arnaugarcia.uplace.repository.BuildingRepository;
 import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
 
+import com.arnaugarcia.uplace.service.dto.BuildingDTO;
+import com.arnaugarcia.uplace.service.mapper.BuildingMapper;
 import com.arnaugarcia.uplace.domain.enumeration.BuildingType;
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
 
@@ -25,7 +27,7 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
  * Service for executing complex queries for Building entities in the database.
  * The main input is a {@link BuildingCriteria} which get's converted to {@link Specifications},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link Building} or a {@link Page} of {@link Building} which fulfills the criteria.
+ * It returns a {@link List} of {@link BuildingDTO} or a {@link Page} of {@link BuildingDTO} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
@@ -36,33 +38,37 @@ public class BuildingQueryService extends QueryService<Building> {
 
     private final BuildingRepository buildingRepository;
 
-    public BuildingQueryService(BuildingRepository buildingRepository) {
+    private final BuildingMapper buildingMapper;
+
+    public BuildingQueryService(BuildingRepository buildingRepository, BuildingMapper buildingMapper) {
         this.buildingRepository = buildingRepository;
+        this.buildingMapper = buildingMapper;
     }
 
     /**
-     * Return a {@link List} of {@link Building} which matches the criteria from the database
+     * Return a {@link List} of {@link BuildingDTO} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<Building> findByCriteria(BuildingCriteria criteria) {
+    public List<BuildingDTO> findByCriteria(BuildingCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specifications<Building> specification = createSpecification(criteria);
-        return buildingRepository.findAll(specification);
+        return buildingMapper.toDto(buildingRepository.findAll(specification));
     }
 
     /**
-     * Return a {@link Page} of {@link Building} which matches the criteria from the database
+     * Return a {@link Page} of {@link BuildingDTO} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<Building> findByCriteria(BuildingCriteria criteria, Pageable page) {
+    public Page<BuildingDTO> findByCriteria(BuildingCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specifications<Building> specification = createSpecification(criteria);
-        return buildingRepository.findAll(specification, page);
+        final Page<Building> result = buildingRepository.findAll(specification, page);
+        return result.map(buildingMapper::toDto);
     }
 
     /**
@@ -73,39 +79,6 @@ public class BuildingQueryService extends QueryService<Building> {
         if (criteria != null) {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), Building_.id));
-            }
-            if (criteria.getTitle() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getTitle(), Property_.title));
-            }
-            if (criteria.getPrice() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPrice(), Property_.price));
-            }
-            if (criteria.getCreated() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreated(), Property_.created));
-            }
-            if (criteria.getUpdated() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
-            }
-            if (criteria.getReference() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
-            }
-            if (criteria.getPriceSell() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPriceSell(), Property_.priceSell));
-            }
-            if (criteria.getPriceRent() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPriceRent(), Property_.priceRent));
-            }
-            if (criteria.getYearConstruction() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getYearConstruction(), Property_.yearConstruction));
-            }
-            if (criteria.getNewCreation() != null) {
-                specification = specification.and(buildSpecification(criteria.getNewCreation(), Property_.newCreation));
-            }
-            if (criteria.getVisible() != null) {
-                specification = specification.and(buildSpecification(criteria.getVisible(), Property_.visible));
-            }
-            if (criteria.getSurface() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getSurface(), Property_.surface));
             }
             if (criteria.getType() != null) {
                 specification = specification.and(buildSpecification(criteria.getType(), Building_.type));
