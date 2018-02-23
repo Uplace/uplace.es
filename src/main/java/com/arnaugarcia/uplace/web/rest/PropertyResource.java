@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.domain.IndustrialPlant;
+import com.arnaugarcia.uplace.domain.Terrain;
 import com.arnaugarcia.uplace.repository.*;
 import com.arnaugarcia.uplace.service.*;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
@@ -49,18 +50,21 @@ public class PropertyResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PostMapping("/properties")
+    @PostMapping("/properties")
     @Timed
     public ResponseEntity<Property> createProperty(@Valid @RequestBody Property property) throws URISyntaxException {
         log.debug("REST request to save Property : {}", property);
+        if (property instanceof Terrain) {
+            System.out.println("Is a Terrain");
+        }
         if (property.getId() != null) {
-            throw new BadRequestAlertException("A new property cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new property cannot already have an ID", property.getPropertyType(), "idexists");
         }
         Property result = propertyService.save(property);
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(property.getPropertyType(), result.getId().toString()))
             .body(result);
-    }*/
+    }
 
     /**
      * PUT  /properties : Updates an existing property.

@@ -2,6 +2,8 @@ package com.arnaugarcia.uplace.domain;
 
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +23,12 @@ import java.util.Set;
 @Table(name = "property")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn()
-public class Property implements Serializable {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Parking.class, name = "Parking"),
+    @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
+})
+public abstract class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,7 +51,6 @@ public class Property implements Serializable {
     @Column(name = "updated")
     private ZonedDateTime updated;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "dtype", insertable = false, updatable = false)
     private String propertyType;
 
