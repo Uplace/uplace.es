@@ -54,12 +54,11 @@ public class PropertyResource {
     @Timed
     public ResponseEntity<Property> createProperty(@Valid @RequestBody Property property) throws URISyntaxException {
         log.debug("REST request to save Property : {}", property);
-        if (property instanceof Terrain) {
-            System.out.println("Is a Terrain");
-        }
+
         if (property.getId() != null) {
             throw new BadRequestAlertException("A new property cannot already have an ID", property.getPropertyType(), "idexists");
         }
+
         Property result = propertyService.save(property);
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(property.getPropertyType(), result.getId().toString()))

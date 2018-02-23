@@ -25,6 +25,13 @@ import java.util.Set;
 @DiscriminatorColumn()
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType")
 @JsonSubTypes({
+    @JsonSubTypes.Type(value = Apartment.class, name = "Apartment"),
+    @JsonSubTypes.Type(value = Building.class, name = "Building"),
+    @JsonSubTypes.Type(value = Business.class, name = "Business"),
+    @JsonSubTypes.Type(value = Establishment.class, name = "Establishment"),
+    @JsonSubTypes.Type(value = Hotel.class, name = "Hotel"),
+    @JsonSubTypes.Type(value = IndustrialPlant.class, name = "IndustrialPlant"),
+    @JsonSubTypes.Type(value = Office.class, name = "Office"),
     @JsonSubTypes.Type(value = Parking.class, name = "Parking"),
     @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
 })

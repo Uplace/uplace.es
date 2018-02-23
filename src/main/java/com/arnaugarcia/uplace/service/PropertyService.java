@@ -37,6 +37,7 @@ public class PropertyService {
      */
     public Property save(Property property) {
         log.debug("Request to save Property : {}", property);
+        property.setReference(this.createReference());
         return propertyRepository.save(property);
     }
 
