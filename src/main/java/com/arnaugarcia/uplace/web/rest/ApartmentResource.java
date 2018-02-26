@@ -28,8 +28,8 @@ import java.util.Optional;
 /**
  * REST controller for managing Apartment.
  */
-@RestController
-@RequestMapping("/api")
+/*@RestController
+@RequestMapping("/api")*/
 public class ApartmentResource {
 
     private final Logger log = LoggerFactory.getLogger(ApartmentResource.class);

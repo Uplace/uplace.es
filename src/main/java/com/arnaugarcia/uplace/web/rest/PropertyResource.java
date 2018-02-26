@@ -15,6 +15,8 @@ import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -96,9 +98,10 @@ public class PropertyResource {
      */
     @GetMapping("/properties")
     @Timed
-    public List<Property> getAllProperties() {
+    public ResponseEntity<Page<PropertyDTO>> getAllProperties(PropertyCriteria criteria, Pageable pageable) {
         log.debug("REST request to get all Properties");
-        return propertyService.findAll();
+        Page<PropertyDTO> entityList = propertyQueryService.findByCriteria(criteria, pageable);
+        return ResponseEntity.ok().body(entityList);
     }
 
     /**
@@ -111,14 +114,6 @@ public class PropertyResource {
     public Property getAllProperties(@PathVariable String reference) {
         log.debug("REST request to get all Properties");
         return propertyService.findOne(reference);
-    }
-
-    @GetMapping("/properties/criteria")
-    @Timed
-    public ResponseEntity<List<PropertyDTO>> getAllPropertiesCriteria(PropertyCriteria criteria) {
-        log.debug("REST request to get Properties by criteria: {}", criteria);
-        List<PropertyDTO> entityList = propertyQueryService.findByCriteria(criteria);
-        return ResponseEntity.ok().body(entityList);
     }
 
     @GetMapping("/properties/last/{size}")

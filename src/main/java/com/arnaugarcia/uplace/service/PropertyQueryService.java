@@ -125,6 +125,7 @@ public class PropertyQueryService extends QueryService<Property> {
             if (criteria.getManagerId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getManagerId(), Property_.managers, Agent_.id));
             }
+
         }
         return specification;
     }

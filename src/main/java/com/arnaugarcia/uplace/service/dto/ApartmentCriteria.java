@@ -246,11 +246,6 @@ public class ApartmentCriteria extends PropertyCriteria implements Serializable 
     }
 
     @Override
-    public void setPhotoId(LongFilter photoId) {
-        this.photoId = photoId;
-    }
-
-    @Override
     public LongFilter getManagerId() {
         return managerId;
     }
