@@ -72,24 +72,24 @@ public class PropertyResource {
     /**
      * PUT  /properties : Updates an existing property.
      *
-     * @param property the property to update
+     * @param propertyDTO the property to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated property,
      * or with status 400 (Bad Request) if the property is not valid,
      * or with status 500 (Internal Server Error) if the property couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PutMapping("/properties")
+    @PutMapping("/properties")
     @Timed
-    public ResponseEntity<Property> updateProperty(@Valid @RequestBody Property property) throws URISyntaxException {
-        log.debug("REST request to update Property : {}", property);
-        if (property.getId() == null) {
-            return createProperty(property);
+    public ResponseEntity<PropertyDTO> updateProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
+        log.debug("REST request to update Property : {}", propertyDTO);
+        if (propertyDTO.getId() == null) {
+            return createProperty(propertyDTO);
         }
-        Property result = propertyRepository.save(property);
+        PropertyDTO result = propertyService.save(propertyDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, property.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(propertyDTO.getPropertyType(), propertyDTO.getReference()))
             .body(result);
-    }*/
+    }
 
     /**
      * GET  /properties : get all the properties.
