@@ -16,6 +16,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,7 @@ public class PropertyResource<T extends Property> {
 
     private final PropertyQueryService propertyQueryService;
 
-    private final PropertyRepository propertyRepository;
+    private final PropertyRepository<T> propertyRepository;
 
     public PropertyResource(PropertyQueryService propertyQueryService, PropertyRepository propertyRepository) {
         this.propertyQueryService = propertyQueryService;
@@ -98,9 +99,10 @@ public class PropertyResource<T extends Property> {
      */
     @GetMapping("/properties")
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<List<T>> getAllProperties() {
         log.debug("REST request to get all Properties");
-        List<T> entityList = propertyRepository.findAll();
+        List<T> entityList = propertyRepository.findAllWithEagerRelationships();
         return ResponseEntity.ok().body(entityList);
     }
 
@@ -109,18 +111,18 @@ public class PropertyResource<T extends Property> {
      *
      * @return the ResponseEntity with status 200 (OK) and the property in body
      */
-    /*@GetMapping("/properties/{reference}")
+   /* @GetMapping("/properties/{reference}")
     @Timed
-    public Property getAllProperties(@PathVariable String reference) {
+    public T getAllProperties(@PathVariable String reference) {
         log.debug("REST request to get all Properties");
-        return propertyService.findOne(reference);
-    }
+        return propertyRepository.findOne(Long.valueOf("1"));
+    }*/
 
-    @GetMapping("/properties/last/{size}")
+   /* @GetMapping("/properties/last/{size}")
     @Timed
-    public List<Property> getLastProperties(@PathVariable Integer size) {
+    public Page<T> getLastProperties(@PathVariable Integer size) {
         log.debug("Request to get last " + size + " Properties");
-        return propertyService.getLastProperties(size);
+        return propertyRepository.findAll(new PageRequest(0, 5));
     }*/
 
 }
