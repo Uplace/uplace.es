@@ -16,8 +16,8 @@ public class FilterResource {
         this.filterService = filterService;
     }
 
-    @GetMapping("/filters")
+    /*@GetMapping("/filters")
     public FilterDTO getFilters() {
         return filterService.getFilters();
-    }
+    }*/
 }

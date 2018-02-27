@@ -40,24 +40,24 @@ public class PropertyService {
      * @param propertyDTO the entity to save
      * @return the persisted entity
      */
-    public PropertyDTO save(PropertyDTO propertyDTO) {
+    /*public PropertyDTO save(PropertyDTO propertyDTO) {
         log.debug("Request to save Property : {}", propertyDTO);
         Property property = propertyMapper.toEntity(propertyDTO);
         property.setReference(this.createReference());
         property = propertyRepository.save(property);
         return propertyMapper.toDto(property);
-    }
+    }*/
 
     /**
      * Get all the properties.
      *
      * @return the list of entities
      */
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public List<Property> findAll() {
         log.debug("Request to get all Properties");
         return propertyRepository.findAllWithEagerRelationships();
-    }
+    }*/
 
     /**
      * Get one property by id.

@@ -28,7 +28,7 @@ public class FilterService {
         this.locationRepository = locationRepository;
     }
 
-    public FilterDTO getFilters() {
+    /*public FilterDTO getFilters() {
 
         List<String> cities = locationRepository.findAllCities();
 
@@ -44,5 +44,5 @@ public class FilterService {
 
         FilterDTO filterDTO = new FilterDTO(cities, prices, maxPrice, minPrice, types);
         return filterDTO;
-    }
+    }*/
 }

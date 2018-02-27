@@ -34,17 +34,17 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class PropertyResource {
+public class PropertyResource<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyResource.class);
 
     private final PropertyQueryService propertyQueryService;
 
-    private final PropertyService propertyService;
+    private final PropertyRepository propertyRepository;
 
-    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService) {
+    public PropertyResource(PropertyQueryService propertyQueryService, PropertyRepository propertyRepository) {
         this.propertyQueryService = propertyQueryService;
-        this.propertyService = propertyService;
+        this.propertyRepository = propertyRepository;
     }
 
     /**
@@ -54,20 +54,20 @@ public class PropertyResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/properties")
+    /*@PostMapping("/properties")
     @Timed
-    public ResponseEntity<PropertyDTO> createProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
+    public ResponseEntity<T> createProperty(@Valid @RequestBody T propertyDTO) throws URISyntaxException {
         log.debug("REST request to save Property : {}", propertyDTO);
 
         if (propertyDTO.getReference() != null) {
             throw new BadRequestAlertException("A new property cannot already have a Reference", propertyDTO.getReference(), ErrorConstants.ERR_BAD_REFERENCE);
         }
 
-        PropertyDTO result = propertyService.save(propertyDTO);
+        T result = propertyRepository.save(propertyDTO);
         return ResponseEntity.created(new URI("/api/properties/" + result.getReference()))
             .headers(HeaderUtil.createEntityCreationAlert(propertyDTO.getReference(), result.getId().toString()))
             .body(result);
-    }
+    }*/
 
     /**
      * PUT  /properties : Updates an existing property.
@@ -78,7 +78,7 @@ public class PropertyResource {
      * or with status 500 (Internal Server Error) if the property couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/properties")
+    /*@PutMapping("/properties")
     @Timed
     public ResponseEntity<PropertyDTO> updateProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
         log.debug("REST request to update Property : {}", propertyDTO);
@@ -89,7 +89,7 @@ public class PropertyResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(propertyDTO.getPropertyType(), propertyDTO.getReference()))
             .body(result);
-    }
+    }*/
 
     /**
      * GET  /properties : get all the properties.
@@ -98,9 +98,9 @@ public class PropertyResource {
      */
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<Page<PropertyDTO>> getAllProperties(PropertyCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<T>> getAllProperties() {
         log.debug("REST request to get all Properties");
-        Page<PropertyDTO> entityList = propertyQueryService.findByCriteria(criteria, pageable);
+        List<T> entityList = propertyRepository.findAll();
         return ResponseEntity.ok().body(entityList);
     }
 
@@ -109,7 +109,7 @@ public class PropertyResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the property in body
      */
-    @GetMapping("/properties/{reference}")
+    /*@GetMapping("/properties/{reference}")
     @Timed
     public Property getAllProperties(@PathVariable String reference) {
         log.debug("REST request to get all Properties");
@@ -121,6 +121,6 @@ public class PropertyResource {
     public List<Property> getLastProperties(@PathVariable Integer size) {
         log.debug("Request to get last " + size + " Properties");
         return propertyService.getLastProperties(size);
-    }
+    }*/
 
 }
