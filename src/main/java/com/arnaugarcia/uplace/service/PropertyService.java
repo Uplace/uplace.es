@@ -21,15 +21,15 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class PropertyService {
+public class PropertyService<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyService.class);
 
-    private final PropertyRepository propertyRepository;
+    private final PropertyRepository<T> propertyRepository;
 
     private final PropertyMapper propertyMapper;
 
-    public PropertyService(PropertyRepository propertyRepository, PropertyMapper propertyMapper) {
+    public PropertyService(PropertyRepository<T> propertyRepository, PropertyMapper propertyMapper) {
         this.propertyRepository = propertyRepository;
         this.propertyMapper = propertyMapper;
     }
@@ -53,11 +53,11 @@ public class PropertyService {
      *
      * @return the list of entities
      */
-    /*@Transactional(readOnly = true)
-    public List<Property> findAll() {
+    @Transactional(readOnly = true)
+    public List<T> findAll() {
         log.debug("Request to get all Properties");
         return propertyRepository.findAllWithEagerRelationships();
-    }*/
+    }
 
     /**
      * Get one property by id.
@@ -65,11 +65,11 @@ public class PropertyService {
      * @param id the id of the entity
      * @return the entity
      */
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Property findOne(Long id) {
         log.debug("Request to get Property : {}", id);
         return propertyRepository.findOneWithEagerRelationships(id);
-    }
+    }*/
 
     /**
      * Get one property by reference.
@@ -77,21 +77,21 @@ public class PropertyService {
      * @param reference the reference of the entity
      * @return the entity
      */
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Property findOne(String reference) {
         log.debug("Request to get Property : {}", reference);
         return propertyRepository.findByReference(reference);
-    }
+    }*/
 
     /**
      * Delete the property by id.
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+   /* public void delete(Long id) {
         log.debug("Request to delete Property : {}", id);
         propertyRepository.delete(id);
-    }
+    }*/
 
 
     /**
@@ -108,10 +108,10 @@ public class PropertyService {
         return reference;
     }
 
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public List<Property> getLastProperties(@PathVariable Integer size) {
         PageRequest limit = new PageRequest(0, size);
         return propertyRepository.findLastProperties(limit).getContent();
-    }
+    }*/
 
 }

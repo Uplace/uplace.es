@@ -22,7 +22,7 @@ import java.util.Set;
 @Entity
 @Table(name = "property")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn()
+@DiscriminatorColumn
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Apartment.class, name = "Apartment"),

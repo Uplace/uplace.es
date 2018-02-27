@@ -41,11 +41,11 @@ public class PropertyResource<T extends Property> {
 
     private final PropertyQueryService propertyQueryService;
 
-    private final PropertyRepository<T> propertyRepository;
+    private final PropertyService<T> propertyService;
 
-    public PropertyResource(PropertyQueryService propertyQueryService, PropertyRepository propertyRepository) {
+    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService<T> propertyService) {
         this.propertyQueryService = propertyQueryService;
-        this.propertyRepository = propertyRepository;
+        this.propertyService = propertyService;
     }
 
     /**
@@ -102,7 +102,7 @@ public class PropertyResource<T extends Property> {
     @Transactional(readOnly = true)
     public ResponseEntity<List<T>> getAllProperties() {
         log.debug("REST request to get all Properties");
-        List<T> entityList = propertyRepository.findAllWithEagerRelationships();
+        List<T> entityList = propertyService.findAll();
         return ResponseEntity.ok().body(entityList);
     }
 
