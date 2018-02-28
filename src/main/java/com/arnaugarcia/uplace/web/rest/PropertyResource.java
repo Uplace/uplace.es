@@ -51,7 +51,7 @@ public class PropertyResource<T extends Property> {
     /**
      * POST  /properties : Create a new property.
      *
-     * @param T the property to create
+     * @param property the property to create
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
