@@ -59,7 +59,6 @@ public class Property implements Serializable {
     @Column(name = "updated")
     private ZonedDateTime updated;
 
-    @NotNull
     @Column(name = "dtype", insertable = false, updatable = false, nullable = false)
     private String propertyType;
 
@@ -72,7 +71,6 @@ public class Property implements Serializable {
     @Column(name = "up_transaction", nullable = false)
     private TransactionType transaction;
 
-    @NotNull
     @Column(name = "reference", nullable = false)
     private String reference;
 

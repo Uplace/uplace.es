@@ -64,6 +64,7 @@ public class PropertyResource<T extends Property> {
             throw new BadRequestAlertException("A new property cannot already have a Reference", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
 
+        // TODO: Implement DTOS in order to validate Entity
         T result = propertyService.save(property);
         return ResponseEntity.created(new URI("/api/properties/" + result.getReference()))
             .headers(HeaderUtil.createEntityCreationAlert(property.getReference(), result.getId().toString()))
@@ -131,13 +132,5 @@ public class PropertyResource<T extends Property> {
         }
         propertyService.delete(property.getId());
     }
-
-
-   /* @GetMapping("/properties/last/{size}")
-    @Timed
-    public Page<T> getLastProperties(@PathVariable Integer size) {
-        log.debug("Request to get last " + size + " Properties");
-        return propertyRepository.findAll(new PageRequest(0, 5));
-    }*/
 
 }
