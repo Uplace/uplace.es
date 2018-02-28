@@ -126,11 +126,7 @@ public class PropertyResource<T extends Property> {
     @Timed
     public void removeProperty(@PathVariable String reference) {
         log.debug("REST request to delete a property by reference");
-        T property = propertyService.findOne(reference);
-        if (property == null) {
-            throw new BadRequestAlertException("Reference not found", "PROPERTY",ErrorConstants.ERR_BAD_REFERENCE);
-        }
-        propertyService.delete(property.getId());
+        propertyService.delete(reference);
     }
 
 }

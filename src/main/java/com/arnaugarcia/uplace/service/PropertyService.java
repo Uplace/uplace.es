@@ -2,19 +2,15 @@ package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
-import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
-import com.arnaugarcia.uplace.service.dto.PropertyDTO;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
+import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
 
 /**
  * Service Implementation for managing Property.
@@ -79,13 +75,17 @@ public class PropertyService<T extends Property> {
     }
 
     /**
-     * Delete the property by id.
+     * Delete the property by reference.
      *
-     * @param id the id of the entity
+     * @param reference the reference of the entity
      */
-    public void delete(Long id) {
-        log.debug("Request to delete Property : {}", id);
-        propertyRepository.delete(id);
+    public void delete(String reference) {
+        log.debug("Request to delete Property : {}", reference);
+        T property = propertyRepository.findByReference(reference);
+        if (property == null) {
+            throw new BadRequestAlertException("Reference not found", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
+        }
+        propertyRepository.delete(property.getId());
     }
 
 
