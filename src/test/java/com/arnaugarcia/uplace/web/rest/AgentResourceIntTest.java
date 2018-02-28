@@ -6,8 +6,6 @@ import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.repository.AgentRepository;
 import com.arnaugarcia.uplace.service.AgentService;
-import com.arnaugarcia.uplace.service.dto.AgentDTO;
-import com.arnaugarcia.uplace.service.mapper.AgentMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -59,9 +57,6 @@ public class AgentResourceIntTest {
 
     @Autowired
     private AgentRepository agentRepository;
-
-    @Autowired
-    private AgentMapper agentMapper;
 
     @Autowired
     private AgentService agentService;
@@ -125,10 +120,9 @@ public class AgentResourceIntTest {
         int databaseSizeBeforeCreate = agentRepository.findAll().size();
 
         // Create the Agent
-        AgentDTO agentDTO = agentMapper.toDto(agent);
         restAgentMockMvc.perform(post("/api/agents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(agentDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(agent)))
             .andExpect(status().isCreated());
 
         // Validate the Agent in the database
@@ -149,12 +143,11 @@ public class AgentResourceIntTest {
 
         // Create the Agent with an existing ID
         agent.setId(1L);
-        AgentDTO agentDTO = agentMapper.toDto(agent);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restAgentMockMvc.perform(post("/api/agents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(agentDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(agent)))
             .andExpect(status().isBadRequest());
 
         // Validate the Agent in the database
@@ -210,7 +203,8 @@ public class AgentResourceIntTest {
     @Transactional
     public void updateAgent() throws Exception {
         // Initialize the database
-        agentRepository.saveAndFlush(agent);
+        agentService.save(agent);
+
         int databaseSizeBeforeUpdate = agentRepository.findAll().size();
 
         // Update the agent
@@ -223,11 +217,10 @@ public class AgentResourceIntTest {
             .phone(UPDATED_PHONE)
             .photo(UPDATED_PHOTO)
             .photoContentType(UPDATED_PHOTO_CONTENT_TYPE);
-        AgentDTO agentDTO = agentMapper.toDto(updatedAgent);
 
         restAgentMockMvc.perform(put("/api/agents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(agentDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedAgent)))
             .andExpect(status().isOk());
 
         // Validate the Agent in the database
@@ -247,12 +240,11 @@ public class AgentResourceIntTest {
         int databaseSizeBeforeUpdate = agentRepository.findAll().size();
 
         // Create the Agent
-        AgentDTO agentDTO = agentMapper.toDto(agent);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restAgentMockMvc.perform(put("/api/agents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(agentDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(agent)))
             .andExpect(status().isCreated());
 
         // Validate the Agent in the database
@@ -264,7 +256,8 @@ public class AgentResourceIntTest {
     @Transactional
     public void deleteAgent() throws Exception {
         // Initialize the database
-        agentRepository.saveAndFlush(agent);
+        agentService.save(agent);
+
         int databaseSizeBeforeDelete = agentRepository.findAll().size();
 
         // Get the agent
@@ -290,28 +283,5 @@ public class AgentResourceIntTest {
         assertThat(agent1).isNotEqualTo(agent2);
         agent1.setId(null);
         assertThat(agent1).isNotEqualTo(agent2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(AgentDTO.class);
-        AgentDTO agentDTO1 = new AgentDTO();
-        agentDTO1.setId(1L);
-        AgentDTO agentDTO2 = new AgentDTO();
-        assertThat(agentDTO1).isNotEqualTo(agentDTO2);
-        agentDTO2.setId(agentDTO1.getId());
-        assertThat(agentDTO1).isEqualTo(agentDTO2);
-        agentDTO2.setId(2L);
-        assertThat(agentDTO1).isNotEqualTo(agentDTO2);
-        agentDTO1.setId(null);
-        assertThat(agentDTO1).isNotEqualTo(agentDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(agentMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(agentMapper.fromId(null)).isNull();
     }
 }

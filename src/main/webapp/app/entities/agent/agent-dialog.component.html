@@ -47,9 +47,9 @@
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.agent.user" for="field_user">User</label>
-            <select class="form-control" id="field_user" name="user" [(ngModel)]="agent.userId"  required>
+            <select class="form-control" id="field_user" name="user" [(ngModel)]="agent.user"  required>
                 <option *ngIf="!editForm.value.user" [ngValue]="null" selected></option>
-                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                <option [ngValue]="userOption.id === agent.user?.id ? agent.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
             </select>
         </div>
         <div [hidden]="!(editForm.controls.user?.dirty && editForm.controls.user?.invalid)">

@@ -3,8 +3,6 @@ package com.arnaugarcia.uplace.service;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.PropertyDTO;
-import com.arnaugarcia.uplace.service.mapper.AgentMapper;
-import com.arnaugarcia.uplace.service.mapper.PropertyMapper;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +26,8 @@ public class PropertyService<T extends Property> {
 
     private final PropertyRepository<T> propertyRepository;
 
-    private final PropertyMapper propertyMapper;
-
-    public PropertyService(PropertyRepository<T> propertyRepository, PropertyMapper propertyMapper) {
+    public PropertyService(PropertyRepository<T> propertyRepository) {
         this.propertyRepository = propertyRepository;
-        this.propertyMapper = propertyMapper;
     }
 
     /**

@@ -50,6 +50,7 @@ public class PropertyDTO implements Serializable {
     @NotNull
     private TransactionType transaction;
 
+    @NotNull
     private String propertyType;
 
     private String reference;

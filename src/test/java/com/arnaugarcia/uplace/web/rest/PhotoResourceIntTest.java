@@ -5,7 +5,6 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.service.dto.PhotoDTO;
-import com.arnaugarcia.uplace.service.mapper.PhotoMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -59,9 +58,6 @@ public class PhotoResourceIntTest {
     private PhotoRepository photoRepository;
 
     @Autowired
-    private PhotoMapper photoMapper;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -80,7 +76,7 @@ public class PhotoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PhotoResource photoResource = new PhotoResource(photoRepository, photoMapper);
+        final PhotoResource photoResource = new PhotoResource(photoRepository);
         this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

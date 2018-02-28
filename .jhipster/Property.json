@@ -101,7 +101,7 @@
     ],
     "changelogDate": "20180117115516",
     "entityTableName": "property",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceClass",
     "jpaMetamodelFiltering": true

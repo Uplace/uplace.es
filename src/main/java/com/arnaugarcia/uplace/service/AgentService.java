@@ -2,16 +2,12 @@ package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.repository.AgentRepository;
-import com.arnaugarcia.uplace.service.dto.AgentDTO;
-import com.arnaugarcia.uplace.service.mapper.AgentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Agent.
@@ -24,24 +20,19 @@ public class AgentService {
 
     private final AgentRepository agentRepository;
 
-    private final AgentMapper agentMapper;
-
-    public AgentService(AgentRepository agentRepository, AgentMapper agentMapper) {
+    public AgentService(AgentRepository agentRepository) {
         this.agentRepository = agentRepository;
-        this.agentMapper = agentMapper;
     }
 
     /**
      * Save a agent.
      *
-     * @param agentDTO the entity to save
+     * @param agent the entity to save
      * @return the persisted entity
      */
-    public AgentDTO save(AgentDTO agentDTO) {
-        log.debug("Request to save Agent : {}", agentDTO);
-        Agent agent = agentMapper.toEntity(agentDTO);
-        agent = agentRepository.save(agent);
-        return agentMapper.toDto(agent);
+    public Agent save(Agent agent) {
+        log.debug("Request to save Agent : {}", agent);
+        return agentRepository.save(agent);
     }
 
     /**
@@ -50,11 +41,9 @@ public class AgentService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<AgentDTO> findAll() {
+    public List<Agent> findAll() {
         log.debug("Request to get all Agents");
-        return agentRepository.findAll().stream()
-            .map(agentMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return agentRepository.findAll();
     }
 
     /**
@@ -64,10 +53,9 @@ public class AgentService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public AgentDTO findOne(Long id) {
+    public Agent findOne(Long id) {
         log.debug("Request to get Agent : {}", id);
-        Agent agent = agentRepository.findOne(id);
-        return agentMapper.toDto(agent);
+        return agentRepository.findOne(id);
     }
 
     /**

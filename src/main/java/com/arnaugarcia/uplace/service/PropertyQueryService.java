@@ -20,8 +20,6 @@ import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 
 import com.arnaugarcia.uplace.service.dto.PropertyDTO;
-import com.arnaugarcia.uplace.service.mapper.PropertyMapper;
-import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 
 /**
  * Service for executing complex queries for Property entities in the database.
@@ -38,11 +36,8 @@ public class PropertyQueryService extends QueryService<Property> {
 
     private final PropertyRepository propertyRepository;
 
-    private final PropertyMapper propertyMapper;
-
-    public PropertyQueryService(PropertyRepository propertyRepository, PropertyMapper propertyMapper) {
+    public PropertyQueryService(PropertyRepository propertyRepository) {
         this.propertyRepository = propertyRepository;
-        this.propertyMapper = propertyMapper;
     }
 
     /**
@@ -54,7 +49,7 @@ public class PropertyQueryService extends QueryService<Property> {
     public List<PropertyDTO> findByCriteria(PropertyCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specifications<Property> specification = createSpecification(criteria);
-        return propertyMapper.toDto(propertyRepository.findAll(specification));
+        return propertyRepository.findAll(specification);
     }
 
     /**
@@ -67,8 +62,7 @@ public class PropertyQueryService extends QueryService<Property> {
     public Page<PropertyDTO> findByCriteria(PropertyCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specifications<Property> specification = createSpecification(criteria);
-        final Page<Property> result = propertyRepository.findAll(specification, page);
-        return result.map(propertyMapper::toDto);
+        return propertyRepository.findAll(specification, page);
     }
 
     /**
