@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,16 +38,14 @@ public class PropertyService<T extends Property> {
     /**
      * Save a property.
      *
-     * @param propertyDTO the entity to save
+     * @param property the entity to save
      * @return the persisted entity
      */
-    /*public PropertyDTO save(PropertyDTO propertyDTO) {
-        log.debug("Request to save Property : {}", propertyDTO);
-        Property property = propertyMapper.toEntity(propertyDTO);
+    public T save(T property) {
+        log.debug("Request to save Property : {}", property);
         property.setReference(this.createReference());
-        property = propertyRepository.save(property);
-        return propertyMapper.toDto(property);
-    }*/
+        return  propertyRepository.save(property);
+    }
 
     /**
      * Get all the properties.
@@ -54,9 +53,9 @@ public class PropertyService<T extends Property> {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<T> findAll() {
+    public Page<T> findAll(Pageable pageable) {
         log.debug("Request to get all Properties");
-        return propertyRepository.findAllWithEagerRelationships();
+        return propertyRepository.findAll(pageable);
     }
 
     /**
@@ -77,21 +76,21 @@ public class PropertyService<T extends Property> {
      * @param reference the reference of the entity
      * @return the entity
      */
-    /*@Transactional(readOnly = true)
-    public Property findOne(String reference) {
+    @Transactional(readOnly = true)
+    public T findOne(String reference) {
         log.debug("Request to get Property : {}", reference);
         return propertyRepository.findByReference(reference);
-    }*/
+    }
 
     /**
      * Delete the property by id.
      *
      * @param id the id of the entity
      */
-   /* public void delete(Long id) {
+    public void delete(Long id) {
         log.debug("Request to delete Property : {}", id);
         propertyRepository.delete(id);
-    }*/
+    }
 
 
     /**

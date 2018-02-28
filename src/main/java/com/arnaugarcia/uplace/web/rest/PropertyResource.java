@@ -51,46 +51,46 @@ public class PropertyResource<T extends Property> {
     /**
      * POST  /properties : Create a new property.
      *
-     * @param propertyDTO the property to create
+     * @param T the property to create
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PostMapping("/properties")
+    @PostMapping("/properties")
     @Timed
-    public ResponseEntity<T> createProperty(@Valid @RequestBody T propertyDTO) throws URISyntaxException {
-        log.debug("REST request to save Property : {}", propertyDTO);
+    public ResponseEntity<T> createProperty(@Valid @RequestBody T property) throws URISyntaxException {
+        log.debug("REST request to save Property : {}", property);
 
-        if (propertyDTO.getReference() != null) {
-            throw new BadRequestAlertException("A new property cannot already have a Reference", propertyDTO.getReference(), ErrorConstants.ERR_BAD_REFERENCE);
+        if (property.getReference() != null) {
+            throw new BadRequestAlertException("A new property cannot already have a Reference", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
 
-        T result = propertyRepository.save(propertyDTO);
+        T result = propertyService.save(property);
         return ResponseEntity.created(new URI("/api/properties/" + result.getReference()))
-            .headers(HeaderUtil.createEntityCreationAlert(propertyDTO.getReference(), result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(property.getReference(), result.getId().toString()))
             .body(result);
-    }*/
+    }
 
     /**
      * PUT  /properties : Updates an existing property.
      *
-     * @param propertyDTO the property to update
+     * @param property the property to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated property,
      * or with status 400 (Bad Request) if the property is not valid,
      * or with status 500 (Internal Server Error) if the property couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PutMapping("/properties")
+    @PutMapping("/properties")
     @Timed
-    public ResponseEntity<PropertyDTO> updateProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
-        log.debug("REST request to update Property : {}", propertyDTO);
-        if (propertyDTO.getId() == null) {
-            return createProperty(propertyDTO);
+    public ResponseEntity<T> updateProperty(@Valid @RequestBody T property) throws URISyntaxException {
+        log.debug("REST request to update Property : {}", property);
+        if (property.getId() == null) {
+            return createProperty(property);
         }
-        PropertyDTO result = propertyService.save(propertyDTO);
+        T result = propertyService.save(property);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(propertyDTO.getPropertyType(), propertyDTO.getReference()))
+            .headers(HeaderUtil.createEntityUpdateAlert(property.getPropertyType(), property.getReference()))
             .body(result);
-    }*/
+    }
 
     /**
      * GET  /properties : get all the properties.
@@ -99,10 +99,9 @@ public class PropertyResource<T extends Property> {
      */
     @GetMapping("/properties")
     @Timed
-    @Transactional(readOnly = true)
-    public ResponseEntity<List<T>> getAllProperties() {
+    public ResponseEntity<Page<T>> getAllProperties(Pageable pageable) {
         log.debug("REST request to get all Properties");
-        List<T> entityList = propertyService.findAll();
+        Page<T> entityList = propertyService.findAll(pageable);
         return ResponseEntity.ok().body(entityList);
     }
 
@@ -111,12 +110,28 @@ public class PropertyResource<T extends Property> {
      *
      * @return the ResponseEntity with status 200 (OK) and the property in body
      */
-   /* @GetMapping("/properties/{reference}")
+    @GetMapping("/properties/{reference}")
     @Timed
     public T getAllProperties(@PathVariable String reference) {
         log.debug("REST request to get all Properties");
-        return propertyRepository.findOne(Long.valueOf("1"));
-    }*/
+        return propertyService.findOne(reference);
+    }
+    /**
+     * DELETE  /properties/{reference} : delete the property by reference
+     *
+     * void the ResponseEntity with status 200 (OK) and the property in body
+     */
+    @DeleteMapping("/properties/{reference}")
+    @Timed
+    public void removeProperty(@PathVariable String reference) {
+        log.debug("REST request to delete a property by reference");
+        T property = propertyService.findOne(reference);
+        if (property == null) {
+            throw new BadRequestAlertException("Reference not found", "PROPERTY",ErrorConstants.ERR_BAD_REFERENCE);
+        }
+        propertyService.delete(property.getId());
+    }
+
 
    /* @GetMapping("/properties/last/{size}")
     @Timed

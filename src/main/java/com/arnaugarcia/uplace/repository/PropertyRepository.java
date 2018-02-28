@@ -20,6 +20,7 @@ import java.util.List;
 public interface PropertyRepository<T extends Property> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
 
     @Query("select distinct property from Property property left join fetch property.managers")
+    //@Query(value = "SELECT * FROM property LEFT JOIN photo ON property.id = photo.property_id LEFT JOIN location ON property.location_id = location.id", nativeQuery = true)
     List<T> findAllWithEagerRelationships();
 
     @Query("select property from Property property left join fetch property.managers where property.id =:id")
