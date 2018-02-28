@@ -27,8 +27,8 @@
         </dd>
         <dt><span jhiTranslate="uplaceApp.photo.property">Property</span></dt>
         <dd>
-            <div *ngIf="photo.propertyId">
-                <a [routerLink]="['/property', photo.propertyId]">{{photo.propertyReference}}</a>
+            <div *ngIf="photo.property">
+                <a [routerLink]="['/property', photo.property?.id]">{{photo.property?.reference}}</a>
             </div>
         </dd>
     </dl>

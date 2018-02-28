@@ -39,11 +39,11 @@ public class PropertyResource<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyResource.class);
 
-    private final PropertyQueryService propertyQueryService;
+    private final PropertyQueryService<T> propertyQueryService;
 
     private final PropertyService<T> propertyService;
 
-    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService<T> propertyService) {
+    public PropertyResource(PropertyQueryService<T> propertyQueryService, PropertyService<T> propertyService) {
         this.propertyQueryService = propertyQueryService;
         this.propertyService = propertyService;
     }
@@ -99,9 +99,9 @@ public class PropertyResource<T extends Property> {
      */
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<Page<T>> getAllProperties(Pageable pageable) {
+    public ResponseEntity<Page<T>> getAllProperties(PropertyCriteria propertyCriteria, Pageable pageable) {
         log.debug("REST request to get all Properties");
-        Page<T> entityList = propertyService.findAll(pageable);
+        Page<T> entityList = propertyQueryService.findByCriteria(propertyCriteria, pageable);
         return ResponseEntity.ok().body(entityList);
     }
 

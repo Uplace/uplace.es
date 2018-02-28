@@ -29,14 +29,14 @@ import com.arnaugarcia.uplace.service.dto.PropertyDTO;
  */
 @Service
 @Transactional(readOnly = true)
-public class PropertyQueryService extends QueryService<Property> {
+public class PropertyQueryService<T extends Property> extends QueryService<T> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyQueryService.class);
 
 
-    private final PropertyRepository propertyRepository;
+    private final PropertyRepository<T> propertyRepository;
 
-    public PropertyQueryService(PropertyRepository propertyRepository) {
+    public PropertyQueryService(PropertyRepository<T> propertyRepository) {
         this.propertyRepository = propertyRepository;
     }
 
@@ -46,9 +46,9 @@ public class PropertyQueryService extends QueryService<Property> {
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<PropertyDTO> findByCriteria(PropertyCriteria criteria) {
+    public List<T> findByCriteria(PropertyCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
-        final Specifications<Property> specification = createSpecification(criteria);
+        final Specifications<T> specification = createSpecification(criteria);
         return propertyRepository.findAll(specification);
     }
 
@@ -59,17 +59,17 @@ public class PropertyQueryService extends QueryService<Property> {
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<PropertyDTO> findByCriteria(PropertyCriteria criteria, Pageable page) {
+    public Page<T> findByCriteria(PropertyCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
-        final Specifications<Property> specification = createSpecification(criteria);
+        final Specifications<T> specification = createSpecification(criteria);
         return propertyRepository.findAll(specification, page);
     }
 
     /**
      * Function to convert PropertyCriteria to a {@link Specifications}
      */
-    private Specifications<Property> createSpecification(PropertyCriteria criteria) {
-        Specifications<Property> specification = Specifications.where(null);
+    private Specifications<T> createSpecification(PropertyCriteria criteria) {
+        Specifications<T> specification = Specifications.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), Property_.id));
@@ -109,15 +109,6 @@ public class PropertyQueryService extends QueryService<Property> {
             }
             if (criteria.getSurface() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getSurface(), Property_.surface));
-            }
-            if (criteria.getLocationId() != null) {
-                specification = specification.and(buildReferringEntitySpecification(criteria.getLocationId(), Property_.location, Location_.id));
-            }
-            if (criteria.getPhotoId() != null) {
-                specification = specification.and(buildReferringEntitySpecification(criteria.getPhotoId(), Property_.photos, Photo_.id));
-            }
-            if (criteria.getManagerId() != null) {
-                specification = specification.and(buildReferringEntitySpecification(criteria.getManagerId(), Property_.managers, Agent_.id));
             }
 
         }

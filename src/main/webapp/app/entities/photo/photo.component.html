@@ -38,8 +38,8 @@
                 </td>
                 <td>{{photo.thumbnail}}</td>
                 <td>
-                    <div *ngIf="photo.propertyId">
-                        <a [routerLink]="['../property', photo.propertyId  ]" >{{photo.propertyReference}}</a>
+                    <div *ngIf="photo.property">
+                        <a [routerLink]="['../property', photo.property?.id ]" >{{photo.property?.reference}}</a>
                     </div>
                 </td>
                 <td class="text-right">

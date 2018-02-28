@@ -65,9 +65,9 @@
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.photo.property" for="field_property">Property</label>
-            <select class="form-control" id="field_property" name="property" [(ngModel)]="photo.propertyId" >
+            <select class="form-control" id="field_property" name="property" [(ngModel)]="photo.property" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="propertyOption.id" *ngFor="let propertyOption of properties; trackBy: trackPropertyById">{{propertyOption.reference}}</option>
+                <option [ngValue]="propertyOption.id === photo.property?.id ? photo.property : propertyOption" *ngFor="let propertyOption of properties; trackBy: trackPropertyById">{{propertyOption.reference}}</option>
             </select>
         </div>
     </div>

@@ -8,7 +8,7 @@ export class Photo implements BaseEntity {
         public photoContentType?: string,
         public photo?: any,
         public thumbnail?: boolean,
-        public propertyId?: number,
+        public property?: BaseEntity,
     ) {
         this.thumbnail = false;
     }

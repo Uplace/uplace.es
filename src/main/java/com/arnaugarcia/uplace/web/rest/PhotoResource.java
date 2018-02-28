@@ -6,12 +6,10 @@ import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import com.arnaugarcia.uplace.service.dto.PhotoDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,8 +39,8 @@ public class PhotoResource {
     /**
      * POST  /photos : Create a new photo.
      *
-     * @param photo the photoDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new photoDTO, or with status 400 (Bad Request) if the photo has already an ID
+     * @param photo the photo to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new photo, or with status 400 (Bad Request) if the photo has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/photos")
@@ -61,10 +59,10 @@ public class PhotoResource {
     /**
      * PUT  /photos : Updates an existing photo.
      *
-     * @param photo the photoDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated photoDTO,
-     * or with status 400 (Bad Request) if the photoDTO is not valid,
-     * or with status 500 (Internal Server Error) if the photoDTO couldn't be updated
+     * @param photo the photo to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated photo,
+     * or with status 400 (Bad Request) if the photo is not valid,
+     * or with status 500 (Internal Server Error) if the photo couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/photos")
@@ -76,7 +74,7 @@ public class PhotoResource {
         }
         Photo result = photoRepository.save(photo);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, photo.getId().toString()))
             .body(result);
     }
 
@@ -95,8 +93,8 @@ public class PhotoResource {
     /**
      * GET  /photos/:id : get the "id" photo.
      *
-     * @param id the id of the photoDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the photoDTO, or with status 404 (Not Found)
+     * @param id the id of the photo to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the photo, or with status 404 (Not Found)
      */
     @GetMapping("/photos/{id}")
     @Timed
@@ -109,7 +107,7 @@ public class PhotoResource {
     /**
      * DELETE  /photos/:id : delete the "id" photo.
      *
-     * @param id the id of the photoDTO to delete
+     * @param id the id of the photo to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/photos/{id}")

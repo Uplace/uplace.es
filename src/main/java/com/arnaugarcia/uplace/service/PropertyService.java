@@ -2,6 +2,7 @@ package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
+import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.service.dto.PropertyDTO;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import org.slf4j.Logger;
