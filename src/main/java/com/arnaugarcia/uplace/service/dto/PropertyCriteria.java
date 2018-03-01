@@ -59,12 +59,6 @@ public class PropertyCriteria implements Serializable {
 
     private IntegerFilter surface;
 
-    private LongFilter locationId;
-
-    private LongFilter photoId;
-
-    private LongFilter managerId;
-
     public PropertyCriteria() {
     }
 
@@ -172,30 +166,6 @@ public class PropertyCriteria implements Serializable {
         this.surface = surface;
     }
 
-    public LongFilter getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(LongFilter locationId) {
-        this.locationId = locationId;
-    }
-
-    public LongFilter getPhotoId() {
-        return photoId;
-    }
-
-    public void setPhotoId(LongFilter photoId) {
-        this.photoId = photoId;
-    }
-
-    public LongFilter getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(LongFilter managerId) {
-        this.managerId = managerId;
-    }
-
     @Override
     public String toString() {
         return "PropertyCriteria{" +
@@ -212,9 +182,6 @@ public class PropertyCriteria implements Serializable {
                 (newCreation != null ? "newCreation=" + newCreation + ", " : "") +
                 (visible != null ? "visible=" + visible + ", " : "") +
                 (surface != null ? "surface=" + surface + ", " : "") +
-                (locationId != null ? "locationId=" + locationId + ", " : "") +
-                (photoId != null ? "photoId=" + photoId + ", " : "") +
-                (managerId != null ? "managerId=" + managerId + ", " : "") +
             "}";
     }
 

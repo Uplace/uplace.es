@@ -1,7 +1,6 @@
 package com.arnaugarcia.uplace.service;
 
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -32,7 +31,6 @@ import com.arnaugarcia.uplace.service.dto.PropertyDTO;
 public class PropertyQueryService<T extends Property> extends QueryService<T> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyQueryService.class);
-
 
     private final PropertyRepository<T> propertyRepository;
 
