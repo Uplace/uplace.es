@@ -1,4 +1,4 @@
-
+<!--
 <div *ngIf="property">
     <h2><span jhiTranslate="uplaceApp.property.detail.title">Property</span> {{property.id}}</h2>
     <hr>
@@ -83,4 +83,332 @@
             class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
+</div>
+-->
+
+<div class="main-wrapper">
+    <div class="main">
+        <div class="main-inner">
+            <div class="listing-hero">
+                <div class="listing-hero-inner">
+                    <div class="container">
+                        <up-alert-error></up-alert-error>
+                        <div *ngIf="property">
+                            <div class="listing-hero-image" style="background-image: url('')"></div>
+                            <!-- /.listing-hero-image -->
+                            <h1>{{property.title}} <i class="fa fa-check"></i></h1>
+                            <address *ngIf="property.location && property.location.fullAddress && property.location.city">
+                                {{property.location.fullAddress}}<br>
+                                {{property.location.city}} - {{property.location.postalCode}}
+                            </address>
+                            <ul class="social">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.container -->
+                </div>
+                <!-- /.listing-hero-inner -->
+            </div>
+            <!-- /.listing-hero -->
+            <div class="listing-toolbar-wrapper">
+                <div class="listing-toolbar" data-spy="affix" data-offset-top="203">
+                    <div class="container">
+                        <ul class="nav">
+                            <li class="nav-item"><a href="#listing-detail-section-description" class="nav-link">Description</a></li>
+                            <li class="nav-item"><a href="#listing-detail-section-amenities" class="nav-link">Amenities</a></li>
+                            <li class="nav-item"><a href="#listing-detail-section-contact-information" class="nav-link">Contact</a></li>
+                            <li class="nav-item"><a href="#listing-detail-section-menu" class="nav-link">Menu</a></li>
+                            <li class="nav-item"><a href="#listing-detail-section-valuation" class="nav-link">Valuation</a></li>
+                            <li class="nav-item"><a href="#listing-detail-section-opening-hours" class="nav-link">Opening Hours</a></li>
+                            <li class="nav-item"><a href="#listing-detail-section-map-position" class="nav-link">Map Position</a></li>
+                            <li class="nav-item"><a href="#listing-detail-section-price" class="nav-link">Price</a></li>
+                            <li class="nav-item"><a href="#listing-detail-section-reviews" class="nav-link">Reviews</a></li>
+                        </ul>
+                        <!-- /.nav -->
+                    </div>
+                    <!-- /.container -->
+                </div>
+                <!-- /.listing-toolbar -->
+            </div>
+            <!-- /.listing-toolbar-wrapper -->
+            <div class="container" *ngIf="property">
+                <div class="row">
+                    <div class="col-md-8 col-lg-9">
+                        <div class="listing-detail-section" id="listing-detail-section-description" data-title="Description">
+                            <div class="gallery">
+                                <div class="gallery-item" style="background-image: url('');">
+                                </div>
+                                <!-- /.gallery-item -->
+                            </div>
+                            <!-- /.gallery -->
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="overview">
+                                        <h2>Listing Attributes</h2>
+                                        <ul>
+                                            <li><strong>Price</strong><span>{{property.price}}</span></li>
+                                            <li *ngIf="property.location.city"><strong>Location</strong><span>{{property.location.city}}</span></li>
+                                            <li><strong>Status</strong><span>{{property.transaction}}</span></li>
+                                            <li><strong>Bedrooms</strong><span>2</span></li>
+                                            <li><strong>Bathrooms</strong><span>2</span></li>
+                                            <li><strong>Area</strong><span>{{property.surface}} m2</span></li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.overview -->
+                                </div>
+                                <!-- /.col-* -->
+                                <div class="col-lg-7">
+                                    <h2>Description</h2>
+                                    <p>{{property.description}}</p>
+                                </div>
+                                <!-- /.col-* -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.listing-detail-section -->
+                        <div class="listing-detail-section" id="listing-detail-section-amenities" data-title="Amenities">
+                            <h2>Amenities</h2>
+                            <ul class="amenities">
+                                <li class="yes">Conditioning</li>
+                                <li class="no">Balcony</li>
+                                <li class="no">Bedding</li>
+                                <li class="no">Cable TV</li>
+                                <li class="no">Cleaning</li>
+                                <li class="no">Cofee pot</li>
+                                <li class="no">Computer</li>
+                                <li class="yes">Cot</li>
+                                <li class="no">Dishwasher</li>
+                                <li class="yes">DVD</li>
+                                <li class="no">Fan</li>
+                                <li class="yes">Fridge</li>
+                                <li class="no">Grill</li>
+                                <li class="yes">Hairdryer</li>
+                                <li class="no">Heating</li>
+                                <li class="yes">Hi-fi</li>
+                                <li class="no">Internet</li>
+                                <li class="yes">Iron</li>
+                                <li class="no">Juicer</li>
+                                <li class="yes">Lift</li>
+                                <li class="yes">Microwave</li>
+                                <li class="yes">Oven</li>
+                                <li class="no">Parking</li>
+                                <li class="no">Parquet</li>
+                                <li class="yes">Pool</li>
+                                <li class="yes">Radio</li>
+                                <li class="no">Roof terrace</li>
+                                <li class="no">Smoking</li>
+                                <li class="yes">Terrace</li>
+                                <li class="no">Toaster</li>
+                                <li class="no">Towelwes</li>
+                                <li class="no">Use of pool</li>
+                            </ul>
+                        </div>
+                        <!-- /.listing-detail-section -->
+                        <div class="listing-detail-section" id="listing-detail-section-contact-information" data-title="Contact">
+                            <h2>Contact Information</h2>
+                            <div class="box">
+                                <div class="box-inner">
+                                    <div class="overview overview-half overview-no-margin">
+                                        <ul>
+                                            <li><strong>Country</strong><span>Canada</span></li>
+                                            <li><strong>City</strong><span>Toronto</span></li>
+                                            <li><strong>Address</strong><span>4886 Hickory Ridge Drive</span></li>
+                                            <li><strong>E-mail</strong><span><a href="mailto:">sample@example.com</a></span></li>
+                                            <li><strong>Phone</strong><span>+0-123-456-789</span></li>
+                                            <li><strong>Website</strong><span><a href="#">example.com</a></span></li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.overview -->
+                                </div>
+                                <!-- /.box-inner -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.listing-detail-section -->
+                        <div class="listing-detail-section" id="listing-detail-section-map-position" data-title="Map Position">
+                            <h2>Map Position</h2>
+                            <agm-map style="height: 500px"></agm-map>
+                        </div>
+                        <!-- /.listing-detail-section -->
+                    </div>
+                    <!-- /.col-* -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="sidebar">
+                            <div class="widget" *upHasAnyAuthority="'ROLE_USER'">
+                                <ul class="nav actions flex-column">
+                                    <li class="nav-item featured">
+                                        <a href="#" class="nav-link">
+                                            <i class="fa fa-file-text-o"></i> Claim Listing
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="fa fa-star-o"></i> Add to Favorites
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="fa fa-flag"></i> Report Listing
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" onclick="window.print(); return false;">
+                                            <i class="fa fa-print"></i> Print page
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="fa fa-facebook"></i> Share on Facebook
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="fa fa-google"></i> Share on Google+
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="fa fa-twitter"></i> Share on Twitter
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="fa fa-linkedin"></i> Share on LinkedIn
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="widget" *ngIf="property.managers.length > 0">
+                                <div class="author-small">
+                                    <div class="avatar" [ngStyle]="{'background-image' : property.managers.length > 0 ? 'url(data:' + property.managers[0].photoContentType + ';base64,' + property.managers[0].photo + ')' : 'url()'}"></div>
+                                    <h3>{{property.managers[0].lastName}}. {{property.managers[0].firstName}}</h3>
+                                    <p>Working for Vinyl Fever. Authored 20 unique listings.</p>
+                                    <div class="author-small-actions">
+                                        <a href="#" class="btn btn-primary">Profile</a>
+                                        <a href="#" class="btn">Contact</a>
+                                    </div>
+                                    <!-- /.author-small-actions -->
+                                </div>
+                                <!-- /.author-small -->
+                            </div>
+                            <!-- /.widget -->
+                            <div class="widget widget-background-white">
+                                <h3 class="widgettitle">Inquire Form</h3>
+                                <form method="post" action="?">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Full name">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" placeholder="E-mail">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Subject">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="4">Message</textarea>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="form-group-btn">
+                                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                                    </div>
+                                    <!-- /.form-group-btn -->
+                                </form>
+                            </div>
+                            <!-- /.widget -->
+                            <div class="widget">
+                                <h3 class="widgettitle">Recent Listings</h3>
+                                <div>
+                                    <div class="listing-row-medium">
+                                        <div class="listing-row-medium-inner">
+                                            <a href="listings-detail.html" class="listing-row-medium-image" style="background-image: url('');">
+                                            </a>
+                                            <div class="listing-row-medium-content">
+                                                <a class="listing-row-medium-price" href="listings-detail.html">$9.90</a>
+                                                <a class="listing-row-medium-category tag" href="listings-detail.html">Sport cars</a>
+                                                <h4 class="listing-row-medium-title"><a href="listings-detail.html">Steak House</a></h4>
+                                                <div class="listing-row-medium-address">
+                                                    1122 Wilkinson Court Naples
+                                                </div>
+                                                <!-- /.listing-row-medium-address -->
+                                            </div>
+                                            <!-- /.listing-row-medium-content -->
+                                        </div>
+                                        <!-- /.listing-row-medium-inner -->
+                                    </div>
+                                    <!-- /.listings-row-medium -->
+                                    <div class="listing-row-medium">
+                                        <div class="listing-row-medium-inner">
+                                            <a href="listings-detail.html" class="listing-row-medium-image" style="background-image: url('');">
+                                                <span class="listing-row-medium-featured">Featured</span><!-- /.listing-row-medium-featured -->
+                                            </a>
+                                            <div class="listing-row-medium-content">
+                                                <a class="listing-row-medium-category tag" href="listings-detail.html">Gastronomy</a>
+                                                <h4 class="listing-row-medium-title"><a href="listings-detail.html">SUV Cars Reseller</a></h4>
+                                                <div class="listing-row-medium-address">
+                                                    4692 Arbutus Drive Miami Springs
+                                                </div>
+                                                <!-- /.listing-row-medium-address -->
+                                            </div>
+                                            <!-- /.listing-row-medium-content -->
+                                        </div>
+                                        <!-- /.listing-row-medium-inner -->
+                                    </div>
+                                    <!-- /.listings-row-medium -->
+                                    <div class="listing-row-medium">
+                                        <div class="listing-row-medium-inner">
+                                            <a href="listings-detail.html" class="listing-row-medium-image" style="background-image: url('');">
+                                            </a>
+                                            <div class="listing-row-medium-content">
+                                                <a class="listing-row-medium-price" href="listings-detail.html">$533.00</a>
+                                                <a class="listing-row-medium-category tag" href="listings-detail.html">Marketing</a>
+                                                <h4 class="listing-row-medium-title"><a href="listings-detail.html">T-Shirt Specialized Shop</a></h4>
+                                                <div class="listing-row-medium-address">
+                                                    2460 Ashwood Drive Farragut
+                                                </div>
+                                                <!-- /.listing-row-medium-address -->
+                                            </div>
+                                            <!-- /.listing-row-medium-content -->
+                                        </div>
+                                        <!-- /.listing-row-medium-inner -->
+                                    </div>
+                                    <!-- /.listings-row-medium -->
+                                    <div class="listing-row-medium">
+                                        <div class="listing-row-medium-inner">
+                                            <a href="listings-detail.html" class="listing-row-medium-image" style="background-image: url('');">
+                                            </a>
+                                            <div class="listing-row-medium-content">
+                                                <a class="listing-row-medium-price" href="listings-detail.html">$76.90</a>
+                                                <a class="listing-row-medium-category tag" href="listings-detail.html">Museum</a>
+                                                <h4 class="listing-row-medium-title"><a href="listings-detail.html">Erb Lumber</a></h4>
+                                                <div class="listing-row-medium-address">
+                                                    2155 Philli Lane Mcalester
+                                                </div>
+                                                <!-- /.listing-row-medium-address -->
+                                            </div>
+                                            <!-- /.listing-row-medium-content -->
+                                        </div>
+                                        <!-- /.listing-row-medium-inner -->
+                                    </div>
+                                    <!-- /.listings-row-medium -->
+                                </div>
+                            </div>
+                            <!-- /.widget -->
+                        </div>
+                        <!-- /.sidebar -->
+                    </div>
+                    <!-- /.col-* -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.main-inner -->
+    </div>
+    <!-- /.main -->
 </div>
