@@ -4,8 +4,6 @@ import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.LocationRepository;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.FilterDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -17,8 +15,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class FilterService {
-
-    private final Logger log = LoggerFactory.getLogger(FilterService.class);
 
     private final PropertyRepository<Property> propertyRepository;
 

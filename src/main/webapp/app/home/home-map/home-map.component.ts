@@ -14,8 +14,8 @@ import {HttpResponse} from "@angular/common/http";
 })
 export class HomeMapComponent implements OnInit {
 
-    latitude = 47.5883;
-    longitude = -122.303;
+    latitude = 41.390205;
+    longitude = 2.154007;
     markers: Marker[] = [];
     filters: Filter = {};
     mapType: 'roadmap' | 'hybrid' | 'satellite' | 'terrain' = 'roadmap';
@@ -58,7 +58,7 @@ export class HomeMapComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // this.getUserLocation();
+        this.getUserLocation();
 
         this.markersService.query().subscribe(
             (res: HttpResponse<Marker[]>) => {
@@ -87,7 +87,7 @@ export class HomeMapComponent implements OnInit {
     getUserLocation() {
         // locate the user
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
+            navigator.geolocation.getCurrentPosition((position) => {
                 this.latitude = position.coords.latitude;
                 this.longitude = position.coords.longitude;
                 this.agmMap.triggerResize().then(() =>  (this.agmMap as any)._mapsWrapper.setCenter({lat: this.latitude, lng: this.longitude}));
