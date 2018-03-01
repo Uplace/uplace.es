@@ -12,7 +12,7 @@ import { Principal } from '../../shared';
     templateUrl: './property.component.html'
 })
 export class PropertyComponent implements OnInit, OnDestroy {
-properties: Property[];
+    properties: Property[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -30,7 +30,7 @@ properties: Property[];
             (res: HttpResponse<Property[]>) => {
                 this.properties = res.body;
                 if (this.properties.length === 0) {
-                    this.jhiAlertService.info('No Properties has been loaded');
+                    this.jhiAlertService.info('error.noData');
                 }
             },
             (res: HttpErrorResponse) => this.onError(res.message)
