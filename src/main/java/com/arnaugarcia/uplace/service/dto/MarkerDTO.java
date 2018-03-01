@@ -7,11 +7,13 @@ public class MarkerDTO implements Serializable {
     private String propertyReference;
     private Double latitude;
     private Double longitude;
+    private String propertyType;
 
-    public MarkerDTO(String propertyReference, Double latitude, Double longitude) {
+    public MarkerDTO(String propertyReference, Double latitude, Double longitude, String propertyType) {
         this.propertyReference = propertyReference;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.propertyType = propertyType;
     }
 
     public String getPropertyReference() {
@@ -38,12 +40,21 @@ public class MarkerDTO implements Serializable {
         this.longitude = longitude;
     }
 
+    public String getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
+    }
+
     @Override
     public String toString() {
         return "MarkerDTO{" +
             "propertyReference='" + propertyReference + '\'' +
             ", latitude=" + latitude +
             ", longitude=" + longitude +
+            ", propertyType='" + propertyType + '\'' +
             '}';
     }
 }

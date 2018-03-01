@@ -44,7 +44,7 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      * @return a List of markers
      */
     // TODO : AND p.location.hide != null
-    @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.location.latitude, p.location.longitude) FROM Property p WHERE p.location is not null and p.visible = true")
+    @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.location.latitude, p.location.longitude, p.propertyType) FROM Property p WHERE p.location is not null and p.visible = true")
     List<MarkerDTO> findAllMarkers();
 
     /**

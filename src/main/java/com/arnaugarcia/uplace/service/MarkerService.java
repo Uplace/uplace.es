@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Hotel.
@@ -24,6 +26,13 @@ public class MarkerService {
 
     @Transactional(readOnly = true)
     public List<MarkerDTO> getAllMarkers() {
-        return propertyRepository.findAllMarkers();
+        List<MarkerDTO> markerDTOList = propertyRepository.findAllMarkers();
+        List<MarkerDTO> result = markerDTOList.parallelStream()
+            .filter(markerDTO -> Objects.nonNull(markerDTO.getLatitude()))
+            .filter(markerDTO -> markerDTO.getLatitude() > 0)
+            .filter(markerDTO -> Objects.nonNull(markerDTO.getLongitude()))
+            .filter(markerDTO -> markerDTO.getLongitude() > 0)
+            .collect(Collectors.toList());
+        return result;
     }
 }
