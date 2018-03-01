@@ -30,4 +30,8 @@ export class UpMainComponent implements OnInit {
             }
         });
     }
+
+    onDeactivate() {
+        document.body.scrollTop = 0;
+    }
 }
