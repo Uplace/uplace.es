@@ -52,7 +52,7 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      *
      * @return a List of integer
      */
-    @Query("select property.price from Property property")
+    @Query("select distinct property.price from Property property")
     List<Double> findAllPrices();
 
     /**

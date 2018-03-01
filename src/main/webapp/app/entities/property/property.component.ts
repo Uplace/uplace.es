@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import {JhiEventManager, JhiAlertService, JhiDataUtils, JhiParseLinks, JhiPaginationUtil} from 'ng-jhipster';
+import {JhiEventManager, JhiAlertService, JhiDataUtils, JhiParseLinks} from 'ng-jhipster';
 
 import { Property } from './property.model';
 import { PropertyService } from './property.service';

@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.service;
 
+import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.LocationRepository;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.FilterDTO;
@@ -19,16 +20,16 @@ public class FilterService {
 
     private final Logger log = LoggerFactory.getLogger(FilterService.class);
 
-    private final PropertyRepository propertyRepository;
+    private final PropertyRepository<Property> propertyRepository;
 
     private final LocationRepository locationRepository;
 
-    public FilterService(PropertyRepository propertyRepository, LocationRepository locationRepository) {
+    public FilterService(PropertyRepository<Property> propertyRepository, LocationRepository locationRepository) {
         this.propertyRepository = propertyRepository;
         this.locationRepository = locationRepository;
     }
 
-    /*public FilterDTO getFilters() {
+    public FilterDTO getFilters() {
 
         List<String> cities = locationRepository.findAllCities();
 
@@ -44,5 +45,5 @@ public class FilterService {
 
         FilterDTO filterDTO = new FilterDTO(cities, prices, maxPrice, minPrice, types);
         return filterDTO;
-    }*/
+    }
 }
