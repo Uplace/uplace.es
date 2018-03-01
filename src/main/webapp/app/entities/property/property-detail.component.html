@@ -228,9 +228,11 @@
                             <!-- /.box -->
                         </div>
                         <!-- /.listing-detail-section -->
-                        <div class="listing-detail-section" id="listing-detail-section-map-position" data-title="Map Position">
+                        <div class="listing-detail-section" id="listing-detail-section-map-position" data-title="Map Position" *ngIf="property.location && property.location.latitude && property.location.longitude">
                             <h2>Map Position</h2>
-                            <agm-map style="height: 500px"></agm-map>
+                            <agm-map style="height: 400px" [latitude]="property.location.latitude" [longitude]="property.location.longitude" [zoom]="13">
+                                <agm-marker [latitude]="property.location.latitude" [longitude]="property.location.longitude"></agm-marker>
+                            </agm-map>
                         </div>
                         <!-- /.listing-detail-section -->
                     </div>
