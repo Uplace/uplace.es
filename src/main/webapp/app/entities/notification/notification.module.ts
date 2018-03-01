@@ -25,7 +25,6 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         UplaceSharedModule,
-        UplaceAdminModule,
         RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [

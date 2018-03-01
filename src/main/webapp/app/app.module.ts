@@ -12,7 +12,7 @@ import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.inter
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
 import { UplaceSharedModule, UserRouteAccessService } from './shared';
 import { UplaceAppRoutingModule} from './app-routing.module';
-import { UplaceHomeModule } from './home/home.module';
+import { UplaceHomeModule } from './home';
 import { UplaceAdminModule } from './admin/admin.module';
 import { UplaceAccountModule } from './account/account.module';
 import { UplaceEntityModule } from './entities/entity.module';

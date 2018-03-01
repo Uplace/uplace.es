@@ -14,6 +14,7 @@ import {
     propertyRoute,
     propertyPopupRoute,
 } from './';
+import {PropertyResolvePagingParams} from "./property.route";
 
 const ENTITY_STATES = [
     ...propertyRoute,
@@ -43,6 +44,7 @@ const ENTITY_STATES = [
     providers: [
         PropertyService,
         PropertyPopupService,
+        PropertyResolvePagingParams
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
