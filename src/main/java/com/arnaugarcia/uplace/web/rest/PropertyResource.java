@@ -7,6 +7,7 @@ import com.arnaugarcia.uplace.service.*;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.service.dto.PropertyDTO;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
+import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Property;
 
@@ -18,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -88,6 +91,7 @@ public class PropertyResource<T extends Property> {
             return createProperty(property);
         }
         T result = propertyService.save(property);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(property.getPropertyType(), property.getReference()))
             .body(result);
@@ -100,10 +104,11 @@ public class PropertyResource<T extends Property> {
      */
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<Page<T>> getAllProperties(PropertyCriteria propertyCriteria, Pageable pageable) {
+    public ResponseEntity<List<T>> getAllProperties(PropertyCriteria propertyCriteria, Pageable pageable) {
         log.debug("REST request to get all Properties");
-        Page<T> entityList = propertyQueryService.findByCriteria(propertyCriteria, pageable);
-        return ResponseEntity.ok().body(entityList);
+        Page<T> page = propertyService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/properties");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**

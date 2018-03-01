@@ -7,6 +7,7 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'n
 import { Notification } from './notification.model';
 import { NotificationService } from './notification.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
+import {Property} from "../property";
 
 @Component({
     selector: 'up-notification',
@@ -53,7 +54,7 @@ currentAccount: any;
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(
-                (res: HttpResponse<Notification[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<Property[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
