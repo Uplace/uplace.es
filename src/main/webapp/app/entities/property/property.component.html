@@ -195,14 +195,13 @@
                             </div>
                             <!-- /.row -->
                             <div *ngIf="properties && properties.length">
-                                <div class="row justify-content-center">
-                                    <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-                                </div>
-                                <div class="row justify-content-center">
-                                    <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <ngb-pagination class="pagination pull-right" [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-sm-12">
                                     <ul class="pagination pull-right">
                                         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -212,8 +211,7 @@
                                         <li class="page-item"><a class="page-link" href="#">Next</a></li>
                                     </ul>
                                 </div>
-                                <!-- /.col-* -->
-                            </div>
+                            </div>-->
                         </div>
                         <!-- /.content -->
                     </div>
