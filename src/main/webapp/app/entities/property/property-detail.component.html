@@ -89,29 +89,7 @@
 <div class="main-wrapper">
     <div class="main">
         <div class="main-inner">
-            <div class="listing-hero">
-                <div class="listing-hero-inner">
-                    <div class="container">
-                        <up-alert-error></up-alert-error>
-                        <div *ngIf="property">
-                            <div class="listing-hero-image" style="background-image: url('')"></div>
-                            <!-- /.listing-hero-image -->
-                            <h1>{{property.title}} <i class="fa fa-check"></i></h1>
-                            <address *ngIf="property.location && property.location.fullAddress && property.location.city">
-                                {{property.location.fullAddress}}<br>
-                                {{property.location.city}} - {{property.location.postalCode}}
-                            </address>
-                            <ul class="social">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.container -->
-                </div>
-                <!-- /.listing-hero-inner -->
-            </div>
+            <up-alert-error></up-alert-error>
             <!-- /.listing-hero -->
             <div class="listing-toolbar-wrapper">
                 <div class="listing-toolbar" data-spy="affix" data-offset-top="203">
@@ -133,9 +111,12 @@
                 <div class="row">
                     <div class="col-md-8 col-lg-9">
                         <div class="listing-detail-section" id="listing-detail-section-description" data-title="Description">
-                            <div class="gallery">
-                                <div class="gallery-item" style="background-image: url('');">
-                                </div>
+                            <div class="gallery" *ngIf="property.photos[0]">
+                                <ngb-carousel>
+                                    <ng-template *ngFor="let photo of property.photos" ngbSlide>
+                                        <img class="gallery-item" [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo"/>
+                                    </ng-template>
+                                </ngb-carousel>
                                 <!-- /.gallery-item -->
                             </div>
                             <!-- /.gallery -->
@@ -145,7 +126,7 @@
                                         <h2>Listing Attributes</h2>
                                         <ul>
                                             <li><strong>Price</strong><span>{{property.price}}</span></li>
-                                            <li *ngIf="property.location.city"><strong>Location</strong><span>{{property.location.city}}</span></li>
+                                            <li *ngIf="property.location && property.location.hide && property.location.city"><strong>Location</strong><span>{{property.location.city}}</span></li>
                                             <li><strong>Status</strong><span>{{property.transaction}}</span></li>
                                             <li><strong>Bedrooms</strong><span>2</span></li>
                                             <li><strong>Bathrooms</strong><span>2</span></li>
@@ -278,7 +259,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="widget" *ngIf="property.managers.length > 0">
+                            <div class="widget" *ngIf="property.managers[0]">
                                 <div class="author-small">
                                     <div class="avatar" [ngStyle]="{'background-image' : property.managers.length > 0 ? 'url(data:' + property.managers[0].photoContentType + ';base64,' + property.managers[0].photo + ')' : 'url()'}"></div>
                                     <h3>{{property.managers[0].lastName}}. {{property.managers[0].firstName}}</h3>
