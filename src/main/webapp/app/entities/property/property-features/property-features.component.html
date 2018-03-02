@@ -1,6 +1,6 @@
 <div class="listing-detail-section" id="listing-detail-section-amenities" data-title="Amenities" [ngSwitch]="property.propertyType">
     <h2>Features</h2>
     <ul class="amenities" *ngSwitchCase="'Apartment'">
-        <up-property-feature [fieldValue]="property.elevator" [fieldType]="'enum'" [fieldName]="'Elevator'"></up-property-feature>
+        <up-property-feature [fieldValue]="property.elevator" [fieldType]="'enum'" [fieldName]="'uplaceApp.apartment.elevator' | translate"></up-property-feature>
     </ul>
 </div>
