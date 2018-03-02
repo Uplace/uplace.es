@@ -1,3 +1,10 @@
-<ng-content [ngSwitch]="field">
-
-</ng-content>
+<div [ngSwitch]="fieldType">
+    <div *ngSwitchCase="'enum'">
+        <div *ngIf="fieldValue" [ngSwitch]="fieldValue">
+            <li *ngSwitchCase="'YES'" class="yes">{{fieldName}}</li>
+            <li *ngSwitchCase="'NO'" class="no">{{fieldName}}</li>
+            <li *ngSwitchCase="'UNDEFINED'" class="undefined">{{fieldName}}</li>
+            <li *ngSwitchCase="null" class="undefined">{{fieldName}}</li>
+        </div>
+    </div>
+</div>

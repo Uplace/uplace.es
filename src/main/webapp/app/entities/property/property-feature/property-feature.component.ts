@@ -8,8 +8,9 @@ import {Component, Input, OnInit} from '@angular/core';
 
 export class PropertyFeatureComponent implements OnInit {
 
-    @Input() field: any;
-    fieldType: string;
+    @Input() fieldValue: any;
+    @Input() fieldName: string;
+    @Input() fieldType: | 'enum';
 
     constructor() {
     }
