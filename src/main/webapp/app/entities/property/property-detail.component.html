@@ -125,11 +125,18 @@
                                     <div class="overview">
                                         <h2>Listing Attributes</h2>
                                         <ul>
+                                            <!--public m2Buildable?: number,
+                                            public buildable?: boolean,
+                                            public buildableDepth?: number,
+                                            public floorsSR?: number,
+                                            public floorsBR?: number,
+                                            public constructionCoefficient?: number,-->
                                             <li><strong>Price</strong><span>{{property.price}} €</span></li>
                                             <li *ngIf="property.location && property.location.hide && property.location.city"><strong>Location</strong><span>{{property.location.city}}</span></li>
                                             <li><strong>Status</strong><span>{{property.transaction}}</span></li>
                                             <li><strong>Area</strong><span>{{property.surface}} m2</span></li>
                                             <li *ngIf="property.propertyType == 'Parking'"><strong>Type</strong><span>{{property.parkingType}}</span></li>
+
                                             <li *ngIf="property.propertyType == 'Apartment'"><strong>Type</strong><span>{{property.type}}</span></li>
                                             <li *ngIf="property.propertyType == 'Apartment'"><strong>Bedrooms</strong><span>{{property.numberBedrooms}}</span></li>
                                             <li *ngIf="property.propertyType == 'Apartment'"><strong>Bathrooms</strong><span>{{property.numberBathrooms}}</span></li>
@@ -139,6 +146,14 @@
                                             <li *ngIf="property.propertyType == 'Apartment'"><strong>Surface Terrace</strong><span>{{property.surfaceTerrace}}</span></li>
                                             <li *ngIf="property.propertyType == 'Apartment'"><strong>Surface saloon</strong><span>{{property.surfaceSaloon}}</span></li>
                                             <li *ngIf="property.propertyType == 'Apartment'"><strong>Energy certificate</strong><span>{{property.energyCertificate}}</span></li>
+
+                                            <li *ngIf="property.propertyType == 'IndustrialPlant'"><strong>Rooms</strong><span>{{property.numberRooms}}</span></li>
+                                            <li *ngIf="property.propertyType == 'IndustrialPlant'"><strong>M2 Offices</strong><span>{{property.m2Offices}}</span></li>
+                                            <li *ngIf="property.propertyType == 'IndustrialPlant'"><strong>M2 Storage</strong><span>{{property.m2Storage}}</span></li>
+                                            <li *ngIf="property.propertyType == 'IndustrialPlant'"><strong>Height free</strong><span>{{property.heightFree}}</span></li>
+                                            <li *ngIf="property.propertyType == 'IndustrialPlant'"><strong>Docks</strong><span>{{property.numberDocks}}</span></li>
+
+
                                         </ul>
                                     </div>
                                     <!-- /.overview -->
