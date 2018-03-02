@@ -7871,7 +7871,7 @@ h4.infobox-address {
     content: '\f00d';
     font-family: 'FontAwesome'; }
 .amenities li.undefined:before {
-    color: #eeeeee;
+    color: #0f8be3;
     content: '\f05e';
     font-family: 'FontAwesome'; }
 .gallery {
