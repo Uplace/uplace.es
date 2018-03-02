@@ -1,0 +1,13 @@
+<div class="widget" *ngIf="agents[0]">
+    <div class="author-small">
+        <div class="avatar" [ngStyle]="{'background-image' : agents.length > 0 ? 'url(data:' + agents[0].photoContentType + ';base64,' + agents[0].photo + ')' : 'url()'}"></div>
+        <h3>{{agents[0].lastName}}. {{agents[0].firstName}}</h3>
+        <p>Working for Vinyl Fever. Authored 20 unique listings.</p>
+        <div class="author-small-actions">
+            <a href="#" class="btn btn-primary">Profile</a>
+            <a href="#" class="btn">Contact</a>
+        </div>
+        <!-- /.author-small-actions -->
+    </div>
+    <!-- /.author-small -->
+</div>
