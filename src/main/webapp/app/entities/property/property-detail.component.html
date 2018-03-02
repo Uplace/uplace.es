@@ -125,12 +125,20 @@
                                     <div class="overview">
                                         <h2>Listing Attributes</h2>
                                         <ul>
-                                            <li><strong>Price</strong><span>{{property.price}}</span></li>
+                                            <li><strong>Price</strong><span>{{property.price}} €</span></li>
                                             <li *ngIf="property.location && property.location.hide && property.location.city"><strong>Location</strong><span>{{property.location.city}}</span></li>
                                             <li><strong>Status</strong><span>{{property.transaction}}</span></li>
-                                            <li><strong>Bedrooms</strong><span>2</span></li>
-                                            <li><strong>Bathrooms</strong><span>2</span></li>
                                             <li><strong>Area</strong><span>{{property.surface}} m2</span></li>
+                                            <li *ngIf="property.propertyType == 'Parking'"><strong>Type</strong><span>{{property.parkingType}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>Type</strong><span>{{property.type}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>Bedrooms</strong><span>{{property.numberBedrooms}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>Bathrooms</strong><span>{{property.numberBathrooms}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>M2 Edified</strong><span>{{property.m2Edified}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>M2 Usable</strong><span>{{property.m2Usable}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>Height</strong><span>{{property.height}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>Surface Terrace</strong><span>{{property.surfaceTerrace}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>Surface saloon</strong><span>{{property.surfaceSaloon}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Apartment'"><strong>Energy certificate</strong><span>{{property.energyCertificate}}</span></li>
                                         </ul>
                                     </div>
                                     <!-- /.overview -->
