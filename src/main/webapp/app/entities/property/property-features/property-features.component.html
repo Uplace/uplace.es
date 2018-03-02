@@ -1,0 +1,256 @@
+<div class="listing-detail-section" id="listing-detail-section-amenities" data-title="Amenities" [ngSwitch]="property.propertyType">
+    <h2>Features</h2>
+    {{property.elevator}}
+    <ul class="amenities" *ngSwitchCase="'Apartment'">
+        <div *ngIf="property.elevator" [ngSwitch]="property.elevator">
+            <li *ngSwitchCase="YES" class="yes">Elevator</li>
+            <li *ngSwitchCase="NO" class="no">Elevator</li>
+            <li *ngSwitchCase="UNDEFINED" class="undefined">Elevator</li>
+        </div>
+    </ul>
+    <ul class="amenities" *ngSwitchCase="'Building'">
+        <div *ngIf="property.elevator" [ngSwitch]="property.elevator">
+            <li *ngSwitchCase="YES" class="yes">YES</li>
+            <li *ngSwitchCase="NO" class="no">NO</li>
+            <li *ngSwitchCase="UNDEFINED" class="undefined">UNDEFINED</li>
+        </div>
+    </ul>
+    <ul class="amenities" *ngSwitchCase="'Business'">
+        <li class="yes">Conditioning</li>
+        <li class="no">Balcony</li>
+        <li class="no">Bedding</li>
+        <li class="no">Cable TV</li>
+        <li class="no">Cleaning</li>
+        <li class="no">Cofee pot</li>
+        <li class="no">Computer</li>
+        <li class="yes">Cot</li>
+        <li class="no">Dishwasher</li>
+        <li class="yes">DVD</li>
+        <li class="no">Fan</li>
+        <li class="yes">Fridge</li>
+        <li class="no">Grill</li>
+        <li class="yes">Hairdryer</li>
+        <li class="no">Heating</li>
+        <li class="yes">Hi-fi</li>
+        <li class="no">Internet</li>
+        <li class="yes">Iron</li>
+        <li class="no">Juicer</li>
+        <li class="yes">Lift</li>
+        <li class="yes">Microwave</li>
+        <li class="yes">Oven</li>
+        <li class="no">Parking</li>
+        <li class="no">Parquet</li>
+        <li class="yes">Pool</li>
+        <li class="yes">Radio</li>
+        <li class="no">Roof terrace</li>
+        <li class="no">Smoking</li>
+        <li class="yes">Terrace</li>
+        <li class="no">Toaster</li>
+        <li class="no">Towelwes</li>
+        <li class="no">Use of pool</li>
+    </ul>
+    <ul class="amenities" *ngSwitchCase="'IndustrialPlant'">
+        <li class="yes">Conditioning</li>
+        <li class="no">Balcony</li>
+        <li class="no">Bedding</li>
+        <li class="no">Cable TV</li>
+        <li class="no">Cleaning</li>
+        <li class="no">Cofee pot</li>
+        <li class="no">Computer</li>
+        <li class="yes">Cot</li>
+        <li class="no">Dishwasher</li>
+        <li class="yes">DVD</li>
+        <li class="no">Fan</li>
+        <li class="yes">Fridge</li>
+        <li class="no">Grill</li>
+        <li class="yes">Hairdryer</li>
+        <li class="no">Heating</li>
+        <li class="yes">Hi-fi</li>
+        <li class="no">Internet</li>
+        <li class="yes">Iron</li>
+        <li class="no">Juicer</li>
+        <li class="yes">Lift</li>
+        <li class="yes">Microwave</li>
+        <li class="yes">Oven</li>
+        <li class="no">Parking</li>
+        <li class="no">Parquet</li>
+        <li class="yes">Pool</li>
+        <li class="yes">Radio</li>
+        <li class="no">Roof terrace</li>
+        <li class="no">Smoking</li>
+        <li class="yes">Terrace</li>
+        <li class="no">Toaster</li>
+        <li class="no">Towelwes</li>
+        <li class="no">Use of pool</li>
+    </ul>
+    <ul class="amenities" *ngSwitchCase="'Establishment'">
+        <li class="yes">Conditioning</li>
+        <li class="no">Balcony</li>
+        <li class="no">Bedding</li>
+        <li class="no">Cable TV</li>
+        <li class="no">Cleaning</li>
+        <li class="no">Cofee pot</li>
+        <li class="no">Computer</li>
+        <li class="yes">Cot</li>
+        <li class="no">Dishwasher</li>
+        <li class="yes">DVD</li>
+        <li class="no">Fan</li>
+        <li class="yes">Fridge</li>
+        <li class="no">Grill</li>
+        <li class="yes">Hairdryer</li>
+        <li class="no">Heating</li>
+        <li class="yes">Hi-fi</li>
+        <li class="no">Internet</li>
+        <li class="yes">Iron</li>
+        <li class="no">Juicer</li>
+        <li class="yes">Lift</li>
+        <li class="yes">Microwave</li>
+        <li class="yes">Oven</li>
+        <li class="no">Parking</li>
+        <li class="no">Parquet</li>
+        <li class="yes">Pool</li>
+        <li class="yes">Radio</li>
+        <li class="no">Roof terrace</li>
+        <li class="no">Smoking</li>
+        <li class="yes">Terrace</li>
+        <li class="no">Toaster</li>
+        <li class="no">Towelwes</li>
+        <li class="no">Use of pool</li>
+    </ul>
+    <ul class="amenities" *ngSwitchCase="'Hotel'">
+        <li class="yes">Conditioning</li>
+        <li class="no">Balcony</li>
+        <li class="no">Bedding</li>
+        <li class="no">Cable TV</li>
+        <li class="no">Cleaning</li>
+        <li class="no">Cofee pot</li>
+        <li class="no">Computer</li>
+        <li class="yes">Cot</li>
+        <li class="no">Dishwasher</li>
+        <li class="yes">DVD</li>
+        <li class="no">Fan</li>
+        <li class="yes">Fridge</li>
+        <li class="no">Grill</li>
+        <li class="yes">Hairdryer</li>
+        <li class="no">Heating</li>
+        <li class="yes">Hi-fi</li>
+        <li class="no">Internet</li>
+        <li class="yes">Iron</li>
+        <li class="no">Juicer</li>
+        <li class="yes">Lift</li>
+        <li class="yes">Microwave</li>
+        <li class="yes">Oven</li>
+        <li class="no">Parking</li>
+        <li class="no">Parquet</li>
+        <li class="yes">Pool</li>
+        <li class="yes">Radio</li>
+        <li class="no">Roof terrace</li>
+        <li class="no">Smoking</li>
+        <li class="yes">Terrace</li>
+        <li class="no">Toaster</li>
+        <li class="no">Towelwes</li>
+        <li class="no">Use of pool</li>
+    </ul>
+    <ul class="amenities" *ngSwitchCase="'Office'">
+        <li class="yes">Conditioning</li>
+        <li class="no">Balcony</li>
+        <li class="no">Bedding</li>
+        <li class="no">Cable TV</li>
+        <li class="no">Cleaning</li>
+        <li class="no">Cofee pot</li>
+        <li class="no">Computer</li>
+        <li class="yes">Cot</li>
+        <li class="no">Dishwasher</li>
+        <li class="yes">DVD</li>
+        <li class="no">Fan</li>
+        <li class="yes">Fridge</li>
+        <li class="no">Grill</li>
+        <li class="yes">Hairdryer</li>
+        <li class="no">Heating</li>
+        <li class="yes">Hi-fi</li>
+        <li class="no">Internet</li>
+        <li class="yes">Iron</li>
+        <li class="no">Juicer</li>
+        <li class="yes">Lift</li>
+        <li class="yes">Microwave</li>
+        <li class="yes">Oven</li>
+        <li class="no">Parking</li>
+        <li class="no">Parquet</li>
+        <li class="yes">Pool</li>
+        <li class="yes">Radio</li>
+        <li class="no">Roof terrace</li>
+        <li class="no">Smoking</li>
+        <li class="yes">Terrace</li>
+        <li class="no">Toaster</li>
+        <li class="no">Towelwes</li>
+        <li class="no">Use of pool</li>
+    </ul>
+    <ul class="amenities" *ngSwitchCase="'Parking'">
+        <li class="yes">Conditioning</li>
+        <li class="no">Balcony</li>
+        <li class="no">Bedding</li>
+        <li class="no">Cable TV</li>
+        <li class="no">Cleaning</li>
+        <li class="no">Cofee pot</li>
+        <li class="no">Computer</li>
+        <li class="yes">Cot</li>
+        <li class="no">Dishwasher</li>
+        <li class="yes">DVD</li>
+        <li class="no">Fan</li>
+        <li class="yes">Fridge</li>
+        <li class="no">Grill</li>
+        <li class="yes">Hairdryer</li>
+        <li class="no">Heating</li>
+        <li class="yes">Hi-fi</li>
+        <li class="no">Internet</li>
+        <li class="yes">Iron</li>
+        <li class="no">Juicer</li>
+        <li class="yes">Lift</li>
+        <li class="yes">Microwave</li>
+        <li class="yes">Oven</li>
+        <li class="no">Parking</li>
+        <li class="no">Parquet</li>
+        <li class="yes">Pool</li>
+        <li class="yes">Radio</li>
+        <li class="no">Roof terrace</li>
+        <li class="no">Smoking</li>
+        <li class="yes">Terrace</li>
+        <li class="no">Toaster</li>
+        <li class="no">Towelwes</li>
+        <li class="no">Use of pool</li>
+    </ul>
+    <ul class="amenities" *ngSwitchCase="'Terrain'">
+        <li class="yes">Conditioning</li>
+        <li class="no">Balcony</li>
+        <li class="no">Bedding</li>
+        <li class="no">Cable TV</li>
+        <li class="no">Cleaning</li>
+        <li class="no">Cofee pot</li>
+        <li class="no">Computer</li>
+        <li class="yes">Cot</li>
+        <li class="no">Dishwasher</li>
+        <li class="yes">DVD</li>
+        <li class="no">Fan</li>
+        <li class="yes">Fridge</li>
+        <li class="no">Grill</li>
+        <li class="yes">Hairdryer</li>
+        <li class="no">Heating</li>
+        <li class="yes">Hi-fi</li>
+        <li class="no">Internet</li>
+        <li class="yes">Iron</li>
+        <li class="no">Juicer</li>
+        <li class="yes">Lift</li>
+        <li class="yes">Microwave</li>
+        <li class="yes">Oven</li>
+        <li class="no">Parking</li>
+        <li class="no">Parquet</li>
+        <li class="yes">Pool</li>
+        <li class="yes">Radio</li>
+        <li class="no">Roof terrace</li>
+        <li class="no">Smoking</li>
+        <li class="yes">Terrace</li>
+        <li class="no">Toaster</li>
+        <li class="no">Towelwes</li>
+        <li class="no">Use of pool</li>
+    </ul>
+</div>

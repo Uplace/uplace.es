@@ -19,6 +19,8 @@ import { WidgetActionComponent } from './widgets/widget-action/widget-action.com
 import { WidgetAgentComponent } from './widgets/widget-agent/widget-agent.component';
 import { WidgetInquireComponent } from './widgets/widget-inquire/widget-inquire.component';
 import { WidgetRecentsComponent } from './widgets/widget-recents/widget-recents.component';
+import { PropertyFeaturesComponent } from './property-features/property-features.component';
+import { PropertyFeatureComponent } from './property-feature/property-feature.component';
 
 const ENTITY_STATES = [
     ...propertyRoute,
@@ -41,6 +43,9 @@ const ENTITY_STATES = [
         WidgetAgentComponent,
         WidgetInquireComponent,
         WidgetRecentsComponent,
+        PropertyFeaturesComponent,
+        PropertyFeatureComponent
+
     ],
     entryComponents: [
         PropertyComponent,
