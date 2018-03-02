@@ -153,6 +153,11 @@
                                             <li *ngIf="property.propertyType == 'IndustrialPlant'"><strong>Height free</strong><span>{{property.heightFree}}</span></li>
                                             <li *ngIf="property.propertyType == 'IndustrialPlant'"><strong>Docks</strong><span>{{property.numberDocks}}</span></li>
 
+                                            <li *ngIf="property.propertyType == 'Terrain'"><strong>M2 Buildable</strong><span>{{property.m2Buildable}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Terrain'"><strong>Buildable depth</strong><span>{{property.buildableDepth}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Terrain'"><strong>Floors SR</strong><span>{{property.floorsSR}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Terrain'"><strong>Floors BR</strong><span>{{property.floorsBR}}</span></li>
+                                            <li *ngIf="property.propertyType == 'Terrain'"><strong>Construction Coeficient</strong><span>{{property.constructionCoefficient}}</span></li>
 
                                         </ul>
                                     </div>
