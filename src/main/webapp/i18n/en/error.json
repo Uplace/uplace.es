@@ -2,6 +2,7 @@
     "error": {
         "title": "Error page!",
         "http": {
+            "401": "Unauthorized",
             "400": "Bad request.",
             "403": "You are not authorized to access this page.",
             "405": "The HTTP verb you used is not supported for this URL.",

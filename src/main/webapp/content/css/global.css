@@ -7867,12 +7867,12 @@ h4.infobox-address {
     content: '\f00c';
     font-family: 'FontAwesome'; }
 .amenities li.no:before {
-    color: #eeeeee;
+    color: #323232;
     content: '\f00d';
     font-family: 'FontAwesome'; }
 .amenities li.undefined:before {
-    color: #0f8be3;
-    content: '\f05e';
+    color: #323232;
+    content: '\f128';
     font-family: 'FontAwesome'; }
 .gallery {
     margin: 0 0 60px 0;

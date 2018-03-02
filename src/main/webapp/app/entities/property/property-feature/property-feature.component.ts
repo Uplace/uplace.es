@@ -10,7 +10,7 @@ export class PropertyFeatureComponent implements OnInit {
 
     @Input() fieldValue: any;
     @Input() fieldName: string;
-    @Input() fieldType: | 'enum';
+    @Input() fieldType: | 'select' | 'energycertificate';
 
     constructor() {
     }

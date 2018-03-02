@@ -12,7 +12,7 @@ export const enum Select {
     'UNDEFINED'
 }
 
-export class Parking extends Property{
+export class Parking extends Property {
     constructor(
         public parkingType?: ParkingType,
         public nearTransport?: Select,
