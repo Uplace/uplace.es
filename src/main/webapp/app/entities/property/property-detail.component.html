@@ -219,17 +219,17 @@
                                 <ul class="nav actions flex-column">
                                     <li class="nav-item featured">
                                         <a href="#" class="nav-link">
-                                            <i class="fa fa-file-text-o"></i> Claim Listing
+                                            <i class="fa fa-file-text-o"></i> Add new property
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            <i class="fa fa-star-o"></i> Add to Favorites
+                                            <i class="fa fa-edit"></i> Edit property
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            <i class="fa fa-flag"></i> Report Listing
+                                            <i class="fa fa-trash"></i> Delete property
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -238,23 +238,16 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="fa fa-facebook"></i> Share on Facebook
+                                        <a href="#" class="nav-link" *ngIf="!property.visible">
+                                            <i class="fa fa-paper-plane" ></i> Publish
+                                        </a>
+                                        <a href="#" class="nav-link" *ngIf="property.visible">
+                                            <i class="fa fa-paper-plane-o"></i> Un publish
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            <i class="fa fa-google"></i> Share on Google+
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="fa fa-twitter"></i> Share on Twitter
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="fa fa-linkedin"></i> Share on LinkedIn
+                                            <i class="fa fa-link"></i> Share link
                                         </a>
                                     </li>
                                 </ul>
