@@ -21,6 +21,7 @@ import { WidgetInquireComponent } from './widgets/widget-inquire/widget-inquire.
 import { WidgetRecentsComponent } from './widgets/widget-recents/widget-recents.component';
 import { PropertyFeaturesComponent } from './property-features/property-features.component';
 import { PropertyFeatureComponent } from './property-feature/property-feature.component';
+import { PropertyFilterComponent } from './property-filter/property-filter.component';
 
 const ENTITY_STATES = [
     ...propertyRoute,
@@ -44,7 +45,8 @@ const ENTITY_STATES = [
         WidgetInquireComponent,
         WidgetRecentsComponent,
         PropertyFeaturesComponent,
-        PropertyFeatureComponent
+        PropertyFeatureComponent,
+        PropertyFilterComponent
 
     ],
     entryComponents: [

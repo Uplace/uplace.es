@@ -7,10 +7,14 @@
                     </h1>
                     <div class="page-title-actions">
                         <div class="switcher">
-                            <strong>Currency</strong>
+                            <strong>View</strong>
                             <ul>
-                                <li class="active"><a href="#">USD</a></li>
-                                <li><a href="#">EUR</a></li>
+                                <li class="active">
+                                    <a href="#" class="fa fa-th"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fa fa-th-list"></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -23,102 +27,7 @@
                 <div class="row">
                     <div class="col-sm-4 col-md-3 sidebar-wrapper-col">
                         <div class="sidebar">
-                            <div class="filter">
-                                <h2>Search criteria</h2>
-                                <div class="form-group">
-                                    <label>Keyword</label>
-                                    <input type="text" class="form-control" placeholder="Search by keyword ...">
-                                </div>
-                                <!-- /.form-group -->
-                                <div class="form-group">
-                                    <label>City</label>
-                                    <select class="form-control">
-                                        <option>Location</option>
-                                        <option>Chicago</option>
-                                        <option>San Francisco</option>
-                                        <option>Seattle</option>
-                                        <option>New York</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                                <!-- /.form-group -->
-                                <div class="form-group">
-                                    <label>Price Slider</label>
-                                    <div id="slider" class="price-slider"></div>
-                                </div>
-                                <!-- /.form-group -->
-                                <div class="form-group">
-                                    <label>Amenities</label>
-                                    <select class="form-control">
-                                        <option>Air conditioning</option>
-                                        <option>Balcony</option>
-                                        <option>Bedding</option>
-                                        <option>Cable TV</option>
-                                        <option>Cleaning after exit</option>
-                                        <option>Cofee pot</option>
-                                        <option>Computer</option>
-                                        <option>Cot</option>
-                                        <option>Dishwasher</option>
-                                    </select>
-                                </div>
-                                <!-- /.form-group -->
-                                <div class="row">
-                                    <div class="form-group col-xl-6">
-                                        <label>Price From</label>
-                                        <input type="text" class="form-control" placeholder="Min. price">
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <div class="form-group col-xl-6">
-                                        <label>Price To</label>
-                                        <input type="text" class="form-control" placeholder="Max. price">
-                                    </div>
-                                    <!-- /.form-group -->
-                                </div>
-                                <!-- /.row -->
-                                <h2>Category</h2>
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="rent"> Property <span
-                                        class="label">78</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="sale"> Restaurant <span
-                                        class="label">54</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="sale"> Travel <span
-                                        class="label">50</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="lease"> Food &amp; Drink
-                                        <span class="label">32</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="lease"> Events <span
-                                        class="label">53</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <h2>Attributes</h2>
-                                <div class="checkbox">
-                                    <label><input type="checkbox"> Reduced <span class="label">93</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="checkbox"> Featured <span class="label">54</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="checkbox"> Verified <span class="label">22</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="form-group-btn form-group-btn-placeholder-gap">
-                                    <button type="submit" class="btn btn-primary btn-block">Search</button>
-                                </div>
-                                <!-- /.form-group -->
-                            </div>
+                            <up-property-filter></up-property-filter>
                             <!-- /.filter -->
                         </div>
                         <!-- /.sidebar -->
@@ -247,8 +156,7 @@
                                             <!-- /.listing-box-attributes -->
                                             <div class="listing-box-attributes-icons">
                                                 <ul>
-                                                    <li><i class="fa fa-arrows"></i> <span>{{property.surface}}</span>
-                                                    </li>
+                                                    <li><i class="fa fa-arrows"></i><span>{{property.surface}}</span></li>
                                                     <li><i class="fa fa-shower"></i> <span>2</span></li>
                                                     <li><i class="fa fa-car"></i> <span>1</span></li>
                                                 </ul>
