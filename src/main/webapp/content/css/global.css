@@ -8280,6 +8280,14 @@ h4.infobox-address {
     display: block;
     position: absolute;
     right: 12px; }
+
+.listing-box-type {
+    bottom: 12px;
+    display: block;
+    position: absolute;
+    margin-bottom: 0px;
+    right: 12px; }
+
 .listing-box-rating .fa {
     color: #fff;
     font-size: 11px; }
