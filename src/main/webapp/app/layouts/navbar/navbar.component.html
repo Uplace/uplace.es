@@ -145,11 +145,11 @@
                     </div>
                     <!-- /.primary-nav-wrapper -->
                 </div>
-                <!--<div class="header-toggle toggle">
+                <div class="header-toggle toggle" *upHasAnyAuthority="'ROLE_USER'" (click)="collapseSidebar()">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>-->
+                </div>
                 <!-- /.header-actions -->
             </div>
             <!-- /.header-inner -->
