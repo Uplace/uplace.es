@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { errorRoute, navbarRoute, dashboardRoute } from './layouts';
+import { errorRoute, navbarRoute } from './layouts';
 import { DEBUG_INFO_ENABLED } from './app.constants';
+import {adminNavbarRoute} from "./layouts/admin-navbar/admin-navbar.route";
 
 const LAYOUT_ROUTES = [
     navbarRoute,
-    dashboardRoute,
     ...errorRoute
 ];
+
+const DASHBOARD_ROUTES = [
+    adminNavbarRoute,
+    ...errorRoute
+];
+
+
+// CHANGE TO DASHBOARD_ROUTES TO LOAD NEW LAYOUT
 
 @NgModule({
     imports: [

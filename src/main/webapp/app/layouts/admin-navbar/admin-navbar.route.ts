@@ -1,9 +1,8 @@
-import { Route } from '@angular/router';
+import {Route} from "@angular/router";
+import {AdminNavbarComponent} from "./admin-navbar.component";
 
-import {AdminNavbarComponent} from './admin-navbar.component';
-
-export const navbarRoute: Route = {
+export const adminNavbarRoute: Route = {
     path: '',
     component: AdminNavbarComponent,
-    outlet: 'navbar'
+    outlet: 'admin-navbar'
 };
