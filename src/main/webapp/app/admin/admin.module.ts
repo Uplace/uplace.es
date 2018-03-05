@@ -29,6 +29,7 @@ import {
     UserResolve,
     UserModalService
 } from './';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
     imports: [
@@ -50,7 +51,8 @@ import {
         UpHealthModalComponent,
         UpDocsComponent,
         UpMetricsMonitoringComponent,
-        UpMetricsMonitoringModalComponent
+        UpMetricsMonitoringModalComponent,
+        DashboardComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,

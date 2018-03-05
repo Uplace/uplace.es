@@ -28,6 +28,8 @@ import {
     ErrorComponent
 } from './layouts';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { AdminFooterComponent } from './layouts/admin-footer/admin-footer.component';
+import { AdminNavbarComponent } from './layouts/admin-navbar/admin-navbar.component';
 
 @NgModule({
     imports: [
@@ -48,7 +50,9 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
         PageRibbonComponent,
         ActiveMenuDirective,
         FooterComponent,
-        SidebarComponent
+        SidebarComponent,
+        AdminFooterComponent,
+        AdminNavbarComponent
     ],
     providers: [
         ProfileService,

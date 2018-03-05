@@ -12,9 +12,11 @@ import {
 } from './';
 
 import { UserRouteAccessService } from '../shared';
+import {dashboardRoute} from './dashboard/dashboard.route';
 
 const ADMIN_ROUTES = [
     auditsRoute,
+    dashboardRoute,
     configurationRoute,
     docsRoute,
     healthRoute,
