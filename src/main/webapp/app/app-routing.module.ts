@@ -11,6 +11,7 @@ import {auditsRoute, configurationRoute, docsRoute, healthRoute, logsRoute, metr
 import {UserRouteAccessService} from "./shared";
 import {accountState} from "./account";
 import {adminSidebarRoute} from "./layouts/admin-sidebar/admin-sidebar.route";
+import {dashboardRoute} from "./admin/dashboard/dashboard.route";
 
 const LAYOUT_ROUTES = [
     navbarRoute,
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
             logsRoute,
             ...userMgmtRoute,
             metricsRoute,
+            dashboardRoute,
             ...errorRoute
         ]
     },

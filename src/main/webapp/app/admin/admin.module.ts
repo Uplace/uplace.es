@@ -29,10 +29,13 @@ import {
     UserResolve,
     UserModalService
 } from './';
+import {DashboardComponent} from "./dashboard/dashboard.component";
+import {DashboardModule} from "./dashboard/dashboard.module";
 
 @NgModule({
     imports: [
         UplaceSharedModule,
+        DashboardModule,
         RouterModule.forChild(adminState),
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
