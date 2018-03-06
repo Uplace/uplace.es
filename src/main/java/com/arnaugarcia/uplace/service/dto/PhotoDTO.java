@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.service.dto;
 
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,15 +15,22 @@ public class PhotoDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String name;
 
     private String description;
 
+    @NotNull
     @Lob
     private byte[] photo;
     private String photoContentType;
 
-    private Long galleryId;
+    @NotNull
+    private Boolean thumbnail;
+
+    private Long propertyId;
+
+    private String propertyReference;
 
     public Long getId() {
         return id;
@@ -64,12 +72,28 @@ public class PhotoDTO implements Serializable {
         this.photoContentType = photoContentType;
     }
 
-    public Long getGalleryId() {
-        return galleryId;
+    public Boolean isThumbnail() {
+        return thumbnail;
     }
 
-    public void setGalleryId(Long galleryId) {
-        this.galleryId = galleryId;
+    public void setThumbnail(Boolean thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Long getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Long propertyId) {
+        this.propertyId = propertyId;
+    }
+
+    public String getPropertyReference() {
+        return propertyReference;
+    }
+
+    public void setPropertyReference(String propertyReference) {
+        this.propertyReference = propertyReference;
     }
 
     @Override
@@ -100,6 +124,7 @@ public class PhotoDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", photo='" + getPhoto() + "'" +
+            ", thumbnail='" + isThumbnail() + "'" +
             "}";
     }
 }

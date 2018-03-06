@@ -1,0 +1,37 @@
+<div class="widget" *upHasAnyAuthority="'ROLE_USER'">
+    <ul class="nav actions flex-column">
+        <li class="nav-item featured">
+            <a href="#" class="nav-link">
+                <i class="fa fa-file-text-o"></i> Add new property
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-edit"></i> Edit property
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-trash"></i> Delete property
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" onclick="window.print(); return false;">
+                <i class="fa fa-print"></i> Print page
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" *ngIf="!property.visible">
+                <i class="fa fa-paper-plane" ></i> Publish
+            </a>
+            <a href="#" class="nav-link" *ngIf="property.visible">
+                <i class="fa fa-paper-plane-o"></i> Un publish
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-link"></i> Share link
+            </a>
+        </li>
+    </ul>
+</div>

@@ -41,6 +41,6 @@
     "entityTableName": "agent",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

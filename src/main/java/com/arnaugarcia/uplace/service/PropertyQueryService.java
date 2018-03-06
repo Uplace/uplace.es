@@ -1,7 +1,6 @@
 package com.arnaugarcia.uplace.service;
 
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,56 +18,56 @@ import com.arnaugarcia.uplace.domain.*; // for static metamodels
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 
+import com.arnaugarcia.uplace.service.dto.PropertyDTO;
 
 /**
  * Service for executing complex queries for Property entities in the database.
  * The main input is a {@link PropertyCriteria} which get's converted to {@link Specifications},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link Property} or a {@link Page} of {@link Property} which fulfills the criteria.
+ * It returns a {@link List} of {@link PropertyDTO} or a {@link Page} of {@link PropertyDTO} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
-public class PropertyQueryService extends QueryService<Property> {
+public class PropertyQueryService<T extends Property> extends QueryService<T> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyQueryService.class);
 
+    private final PropertyRepository<T> propertyRepository;
 
-    private final PropertyRepository propertyRepository;
-
-    public PropertyQueryService(PropertyRepository propertyRepository) {
+    public PropertyQueryService(PropertyRepository<T> propertyRepository) {
         this.propertyRepository = propertyRepository;
     }
 
     /**
-     * Return a {@link List} of {@link Property} which matches the criteria from the database
+     * Return a {@link List} of {@link PropertyDTO} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<Property> findByCriteria(PropertyCriteria criteria) {
+    public List<T> findByCriteria(PropertyCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
-        final Specifications<Property> specification = createSpecification(criteria);
+        final Specifications<T> specification = createSpecification(criteria);
         return propertyRepository.findAll(specification);
     }
 
     /**
-     * Return a {@link Page} of {@link Property} which matches the criteria from the database
+     * Return a {@link Page} of {@link PropertyDTO} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<Property> findByCriteria(PropertyCriteria criteria, Pageable page) {
+    public Page<T> findByCriteria(PropertyCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
-        final Specifications<Property> specification = createSpecification(criteria);
+        final Specifications<T> specification = createSpecification(criteria);
         return propertyRepository.findAll(specification, page);
     }
 
     /**
      * Function to convert PropertyCriteria to a {@link Specifications}
      */
-    private Specifications<Property> createSpecification(PropertyCriteria criteria) {
-        Specifications<Property> specification = Specifications.where(null);
+    private Specifications<T> createSpecification(PropertyCriteria criteria) {
+        Specifications<T> specification = Specifications.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), Property_.id));
@@ -84,6 +83,9 @@ public class PropertyQueryService extends QueryService<Property> {
             }
             if (criteria.getUpdated() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
+            }
+            if (criteria.getTransaction() != null) {
+                specification = specification.and(buildSpecification(criteria.getTransaction(), Property_.transaction));
             }
             if (criteria.getReference() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
@@ -106,12 +108,7 @@ public class PropertyQueryService extends QueryService<Property> {
             if (criteria.getSurface() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getSurface(), Property_.surface));
             }
-            if (criteria.getPhotoId() != null) {
-                specification = specification.and(buildReferringEntitySpecification(criteria.getPhotoId(), Property_.photos, Photo_.id));
-            }
-            if (criteria.getManagerId() != null) {
-                specification = specification.and(buildReferringEntitySpecification(criteria.getManagerId(), Property_.managers, Agent_.id));
-            }
+
         }
         return specification;
     }

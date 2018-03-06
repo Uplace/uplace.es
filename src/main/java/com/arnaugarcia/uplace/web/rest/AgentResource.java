@@ -2,8 +2,7 @@ package com.arnaugarcia.uplace.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Agent;
-
-import com.arnaugarcia.uplace.repository.AgentRepository;
+import com.arnaugarcia.uplace.service.AgentService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class AgentResource {
 
     private static final String ENTITY_NAME = "agent";
 
-    private final AgentRepository agentRepository;
+    private final AgentService agentService;
 
-    public AgentResource(AgentRepository agentRepository) {
-        this.agentRepository = agentRepository;
+    public AgentResource(AgentService agentService) {
+        this.agentService = agentService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class AgentResource {
         if (agent.getId() != null) {
             throw new BadRequestAlertException("A new agent cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Agent result = agentRepository.save(agent);
+        Agent result = agentService.save(agent);
         return ResponseEntity.created(new URI("/api/agents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class AgentResource {
         if (agent.getId() == null) {
             return createAgent(agent);
         }
-        Agent result = agentRepository.save(agent);
+        Agent result = agentService.save(agent);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, agent.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class AgentResource {
     @Timed
     public List<Agent> getAllAgents() {
         log.debug("REST request to get all Agents");
-        return agentRepository.findAll();
+        return agentService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class AgentResource {
     @Timed
     public ResponseEntity<Agent> getAgent(@PathVariable Long id) {
         log.debug("REST request to get Agent : {}", id);
-        Agent agent = agentRepository.findOne(id);
+        Agent agent = agentService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(agent));
     }
 
@@ -114,7 +113,7 @@ public class AgentResource {
     @Timed
     public ResponseEntity<Void> deleteAgent(@PathVariable Long id) {
         log.debug("REST request to delete Agent : {}", id);
-        agentRepository.delete(id);
+        agentService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

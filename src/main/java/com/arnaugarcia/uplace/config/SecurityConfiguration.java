@@ -94,27 +94,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .authorizeRequests()
 
-            // FLATS
-            .antMatchers(HttpMethod.GET, "/api/flats/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/flats").permitAll()
             .antMatchers(HttpMethod.GET, "/api/markers").permitAll()
-
-
-            // HOUSES
-            .antMatchers(HttpMethod.GET, "/api/houses/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/houses").permitAll()
-
-            // RURALS
-            .antMatchers(HttpMethod.GET, "/api/rurals/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/rurals").permitAll()
-
-            // TOWERS
-            .antMatchers(HttpMethod.GET, "/api/towers/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/towers").permitAll()
-
-            // LOFTS
-            .antMatchers(HttpMethod.GET, "/api/lofts/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/lofts").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/filters").permitAll()
 
             .antMatchers(HttpMethod.GET, "/api/properties").permitAll()
             .antMatchers(HttpMethod.GET, "/api/properties/**").permitAll()

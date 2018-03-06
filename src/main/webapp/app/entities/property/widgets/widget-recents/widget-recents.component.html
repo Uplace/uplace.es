@@ -1,0 +1,25 @@
+<div class="widget">
+    <h3 class="widgettitle">Recent Listings</h3>
+    <div>
+        <div class="listing-row-medium" *ngFor="let property of properties">
+            <div class="listing-row-medium-inner">
+                <a [routerLink]="'/property/' + property.reference" class="listing-row-medium-image" [ngStyle]="{'background-image' : property.photos[0] ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}">
+                </a>
+                <div class="listing-row-medium-content">
+                    <a class="listing-row-medium-price" [routerLink]="'/property' + property.reference">{{property.price}}</a>
+                    <a class="listing-row-medium-category tag" [routerLink]="'/property' + property.reference">{{property.propertyType}}</a>
+                    <h4 class="listing-row-medium-title"><a [routerLink]="'/property' + property.reference">{{property.title}}</a></h4>
+                    <div class="listing-row-medium-address" *ngIf="property.location && !property.location.hide">
+                        {{property.location.fullAdress}}, {{property.location.postalCode}} - {{property.location.city}}
+                    </div>
+                    <div class="listing-row-medium-address" *ngIf="property.location && property.location.hide">
+                        {{property.location.postalCode}} - {{property.location.city}}
+                    </div>
+                    <!-- /.listing-row-medium-address -->
+                </div>
+                <!-- /.listing-row-medium-content -->
+            </div>
+            <!-- /.listing-row-medium-inner -->
+        </div>
+    </div>
+</div>

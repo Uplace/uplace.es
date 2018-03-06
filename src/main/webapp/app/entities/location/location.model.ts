@@ -10,7 +10,7 @@ export class Location implements BaseEntity {
         public fullAddress?: string,
         public hide?: boolean,
         public urlGMaps?: string,
-        public property?: BaseEntity,
+        public propertyId?: number,
     ) {
         this.hide = false;
     }

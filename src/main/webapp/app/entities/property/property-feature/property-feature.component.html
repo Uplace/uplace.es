@@ -1,0 +1,6 @@
+<div [ngSwitch]="fieldValue">
+    <li *ngSwitchCase="'YES'" class="yes">{{fieldName}}</li>
+    <li *ngSwitchCase="'NO'" class="no">{{fieldName}}</li>
+    <li *ngSwitchCase="'UNDEFINED'" class="undefined">{{fieldName}}</li>
+    <li *ngSwitchCase="null" class="undefined">{{fieldName}}</li>
+</div>

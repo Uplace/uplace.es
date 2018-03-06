@@ -7867,10 +7867,13 @@ h4.infobox-address {
     content: '\f00c';
     font-family: 'FontAwesome'; }
 .amenities li.no:before {
-    color: #eeeeee;
+    color: #323232;
     content: '\f00d';
     font-family: 'FontAwesome'; }
-
+.amenities li.undefined:before {
+    color: #323232;
+    content: '\f128';
+    font-family: 'FontAwesome'; }
 .gallery {
     margin: 0 0 60px 0;
     position: relative; }
@@ -8277,6 +8280,14 @@ h4.infobox-address {
     display: block;
     position: absolute;
     right: 12px; }
+
+.listing-box-type {
+    bottom: 12px;
+    display: block;
+    position: absolute;
+    margin-bottom: 0px;
+    right: 12px; }
+
 .listing-box-rating .fa {
     color: #fff;
     font-size: 11px; }

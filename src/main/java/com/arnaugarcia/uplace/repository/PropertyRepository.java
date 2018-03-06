@@ -17,12 +17,14 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSpecificationExecutor<Property> {
+public interface PropertyRepository<T extends Property> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
+
     @Query("select distinct property from Property property left join fetch property.managers")
-    List<Property> findAllWithEagerRelationships();
+    //@Query(value = "SELECT * FROM property LEFT JOIN photo ON property.id = photo.property_id LEFT JOIN location ON property.location_id = location.id", nativeQuery = true)
+    List<T> findAllWithEagerRelationships();
 
     @Query("select property from Property property left join fetch property.managers where property.id =:id")
-    Property findOneWithEagerRelationships(@Param("id") Long id);
+    T findOneWithEagerRelationships(@Param("id") Long id);
 
     /**
      * Query to get a property by reference
@@ -31,10 +33,10 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
      * @return property if found or null if not
      */
     @Query("SELECT p FROM Property p left join fetch p.managers where p.reference = :reference")
-    Property findByReference(@Param("reference") String reference);
+    T findByReference(@Param("reference") String reference);
 
     @Query("SELECT p FROM Property p ORDER BY p.created DESC")
-    Page<Property> findLastProperties(Pageable pageable);
+    Page<T> findLastProperties(Pageable pageable);
 
     /**
      * Query to get the markers of all Properties
@@ -42,7 +44,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
      * @return a List of markers
      */
     // TODO : AND p.location.hide != null
-    @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.location.latitude, p.location.longitude) FROM Property p WHERE p.location is not null and p.visible = true")
+    @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.location.latitude, p.location.longitude, p.propertyType) FROM Property p WHERE p.location is not null and p.visible = true")
     List<MarkerDTO> findAllMarkers();
 
     /**
@@ -50,7 +52,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
      *
      * @return a List of integer
      */
-    @Query("select property.price from Property property")
+    @Query("select distinct property.price from Property property")
     List<Double> findAllPrices();
 
     /**

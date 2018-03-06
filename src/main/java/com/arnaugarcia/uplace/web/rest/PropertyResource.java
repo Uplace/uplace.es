@@ -1,9 +1,13 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.domain.IndustrialPlant;
+import com.arnaugarcia.uplace.domain.Terrain;
 import com.arnaugarcia.uplace.repository.*;
 import com.arnaugarcia.uplace.service.*;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
+import com.arnaugarcia.uplace.service.dto.PropertyDTO;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
+import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.Property;
 
@@ -12,6 +16,11 @@ import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -29,15 +38,15 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class PropertyResource {
+public class PropertyResource<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyResource.class);
 
-    private final PropertyQueryService propertyQueryService;
+    private final PropertyQueryService<T> propertyQueryService;
 
-    private final PropertyService propertyService;
+    private final PropertyService<T> propertyService;
 
-    public PropertyResource(PropertyQueryService propertyQueryService, PropertyService propertyService) {
+    public PropertyResource(PropertyQueryService<T> propertyQueryService, PropertyService<T> propertyService) {
         this.propertyQueryService = propertyQueryService;
         this.propertyService = propertyService;
     }
@@ -49,18 +58,21 @@ public class PropertyResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new property, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PostMapping("/properties")
+    @PostMapping("/properties")
     @Timed
-    public ResponseEntity<Property> createProperty(@Valid @RequestBody Property property) throws URISyntaxException {
+    public ResponseEntity<T> createProperty(@Valid @RequestBody T property) throws URISyntaxException {
         log.debug("REST request to save Property : {}", property);
-        if (property.getId() != null) {
-            throw new BadRequestAlertException("A new property cannot already have an ID", ENTITY_NAME, "idexists");
+
+        if (property.getReference() != null) {
+            throw new BadRequestAlertException("A new property cannot already have a Reference", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
-        Property result = propertyService.save(property);
-        return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+
+        // TODO: Implement DTOS in order to validate Entity
+        T result = propertyService.save(property);
+        return ResponseEntity.created(new URI("/api/properties/" + result.getReference()))
+            .headers(HeaderUtil.createEntityCreationAlert(property.getReference(), result.getId().toString()))
             .body(result);
-    }*/
+    }
 
     /**
      * PUT  /properties : Updates an existing property.
@@ -71,18 +83,19 @@ public class PropertyResource {
      * or with status 500 (Internal Server Error) if the property couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    /*@PutMapping("/properties")
+    @PutMapping("/properties")
     @Timed
-    public ResponseEntity<Property> updateProperty(@Valid @RequestBody Property property) throws URISyntaxException {
+    public ResponseEntity<T> updateProperty(@Valid @RequestBody T property) throws URISyntaxException {
         log.debug("REST request to update Property : {}", property);
         if (property.getId() == null) {
             return createProperty(property);
         }
-        Property result = propertyRepository.save(property);
+        T result = propertyService.save(property);
+
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, property.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(property.getPropertyType(), property.getReference()))
             .body(result);
-    }*/
+    }
 
     /**
      * GET  /properties : get all the properties.
@@ -91,9 +104,11 @@ public class PropertyResource {
      */
     @GetMapping("/properties")
     @Timed
-    public List<Property> getAllProperties() {
+    public ResponseEntity<List<T>> getAllProperties(PropertyCriteria propertyCriteria, Pageable pageable) {
         log.debug("REST request to get all Properties");
-        return propertyService.findAll();
+        Page<T> page = propertyService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/properties");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -103,24 +118,20 @@ public class PropertyResource {
      */
     @GetMapping("/properties/{reference}")
     @Timed
-    public Property getAllProperties(@PathVariable String reference) {
+    public T getAllProperties(@PathVariable String reference) {
         log.debug("REST request to get all Properties");
         return propertyService.findOne(reference);
     }
-
-    @GetMapping("/properties/criteria")
+    /**
+     * DELETE  /properties/{reference} : delete the property by reference
+     *
+     * void the ResponseEntity with status 200 (OK) and the property in body
+     */
+    @DeleteMapping("/properties/{reference}")
     @Timed
-    public ResponseEntity<List<Property>> getAllPropertiesCriteria(PropertyCriteria criteria) {
-        log.debug("REST request to get Properties by criteria: {}", criteria);
-        List<Property> entityList = propertyQueryService.findByCriteria(criteria);
-        return ResponseEntity.ok().body(entityList);
-    }
-
-    @GetMapping("/properties/last/{size}")
-    @Timed
-    public List<Property> getLastProperties(@PathVariable Integer size) {
-        log.debug("Request to get last " + size + " Properties");
-        return propertyService.getLastProperties(size);
+    public void removeProperty(@PathVariable String reference) {
+        log.debug("REST request to delete a property by reference");
+        propertyService.delete(reference);
     }
 
 }

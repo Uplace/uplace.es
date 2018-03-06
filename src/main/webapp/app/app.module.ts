@@ -12,7 +12,7 @@ import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.inter
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
 import { UplaceSharedModule, UserRouteAccessService } from './shared';
 import { UplaceAppRoutingModule} from './app-routing.module';
-import { UplaceHomeModule } from './home/home.module';
+import { UplaceHomeModule } from './home';
 import { UplaceAdminModule } from './admin/admin.module';
 import { UplaceAccountModule } from './account/account.module';
 import { UplaceEntityModule } from './entities/entity.module';
@@ -27,10 +27,17 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import {AppComponent} from "./app.component";
+import {UpAdminMainComponent} from "./layouts/admin-main/admin-main.component";
+import {AdminNavbarComponent} from "./layouts/admin-navbar/admin-navbar.component";
+import { AdminFooterComponent } from './layouts/admin-footer/admin-footer.component';
+import { AdminSidebarComponent } from './layouts/admin-sidebar/admin-sidebar.component';
 
 @NgModule({
     imports: [
         BrowserModule,
+        UplaceAppRoutingModule,
         UplaceAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'up', separator: '-'}),
         UplaceSharedModule,
@@ -41,12 +48,18 @@ import {
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
+        AppComponent,
+        UpAdminMainComponent,
+        AdminNavbarComponent,
         UpMainComponent,
         NavbarComponent,
         ErrorComponent,
         PageRibbonComponent,
         ActiveMenuDirective,
-        FooterComponent
+        FooterComponent,
+        SidebarComponent,
+        AdminFooterComponent,
+        AdminSidebarComponent
     ],
     providers: [
         ProfileService,
@@ -86,6 +99,6 @@ import {
             ]
         }
     ],
-    bootstrap: [ UpMainComponent ]
+    bootstrap: [ AppComponent ]
 })
 export class UplaceAppModule {}

@@ -1,0 +1,39 @@
+<div class="admin-wrapper">
+
+    <div class="admin-sidebar">
+
+        <router-outlet name="admin-sidebar"></router-outlet>
+
+    </div>
+
+    <div class="admin-main">
+
+        <router-outlet name="admin-navbar"></router-outlet>
+
+        <div class="admin-page-title">
+            <div class="container-fluid">
+                <a href="admin-dashboard.html" class="admin-page-title-back">
+                    <i class="fa fa-long-arrow-left"></i>
+                </a>
+                <h1>Dashboard <small>Your listings headquarters</small></h1>
+                <div class="admin-page-title-actions">
+                    <a href="#" class="btn btn-secondary"><i class="fa fa-cog"></i> Settings</a>
+                </div>
+                <!-- /.admin-page-title-actions -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+
+        <div class="admin-content">
+            <router-outlet></router-outlet>
+            <router-outlet name="popup"></router-outlet>
+        </div>
+
+
+        <div class="admin-footer">
+            <up-admin-footer></up-admin-footer>
+        </div>
+
+    </div>
+
+</div>

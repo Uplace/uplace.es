@@ -2,30 +2,28 @@ package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
-import com.arnaugarcia.uplace.service.dto.PropertyDTO;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
+import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
 
 /**
  * Service Implementation for managing Property.
  */
 @Service
 @Transactional
-public class PropertyService {
+public class PropertyService<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyService.class);
 
-    private final PropertyRepository propertyRepository;
+    private final PropertyRepository<T> propertyRepository;
 
-    public PropertyService(PropertyRepository propertyRepository) {
+    public PropertyService(PropertyRepository<T> propertyRepository) {
         this.propertyRepository = propertyRepository;
     }
 
@@ -35,9 +33,10 @@ public class PropertyService {
      * @param property the entity to save
      * @return the persisted entity
      */
-    public Property save(Property property) {
+    public T save(T property) {
         log.debug("Request to save Property : {}", property);
-        return propertyRepository.save(property);
+        property.setReference(this.createReference());
+        return  propertyRepository.save(property);
     }
 
     /**
@@ -46,9 +45,9 @@ public class PropertyService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Property> findAll() {
+    public Page<T> findAll(Pageable pageable) {
         log.debug("Request to get all Properties");
-        return propertyRepository.findAllWithEagerRelationships();
+        return propertyRepository.findAll(pageable);
     }
 
     /**
@@ -57,11 +56,11 @@ public class PropertyService {
      * @param id the id of the entity
      * @return the entity
      */
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Property findOne(Long id) {
         log.debug("Request to get Property : {}", id);
         return propertyRepository.findOneWithEagerRelationships(id);
-    }
+    }*/
 
     /**
      * Get one property by reference.
@@ -70,19 +69,23 @@ public class PropertyService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public Property findOne(String reference) {
+    public T findOne(String reference) {
         log.debug("Request to get Property : {}", reference);
         return propertyRepository.findByReference(reference);
     }
 
     /**
-     * Delete the property by id.
+     * Delete the property by reference.
      *
-     * @param id the id of the entity
+     * @param reference the reference of the entity
      */
-    public void delete(Long id) {
-        log.debug("Request to delete Property : {}", id);
-        propertyRepository.delete(id);
+    public void delete(String reference) {
+        log.debug("Request to delete Property : {}", reference);
+        T property = propertyRepository.findByReference(reference);
+        if (property == null) {
+            throw new BadRequestAlertException("Reference not found", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
+        }
+        propertyRepository.delete(property.getId());
     }
 
 
@@ -100,10 +103,10 @@ public class PropertyService {
         return reference;
     }
 
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public List<Property> getLastProperties(@PathVariable Integer size) {
         PageRequest limit = new PageRequest(0, size);
         return propertyRepository.findLastProperties(limit).getContent();
-    }
+    }*/
 
 }

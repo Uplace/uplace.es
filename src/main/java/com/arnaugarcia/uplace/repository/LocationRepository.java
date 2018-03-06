@@ -14,6 +14,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
-    @Query("select location.city from Location location")
+    @Query("select distinct location.city from Location location")
     List<String> findAllCities();
 }

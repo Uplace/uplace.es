@@ -4,6 +4,8 @@ import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.Location;
 import com.arnaugarcia.uplace.repository.LocationRepository;
+import com.arnaugarcia.uplace.service.dto.LocationDTO;
+import com.arnaugarcia.uplace.service.mapper.LocationMapper;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -47,6 +49,9 @@ public class LocationResourceIntTest {
     private static final Double DEFAULT_LONGITUDE = 1D;
     private static final Double UPDATED_LONGITUDE = 2D;
 
+    private static final String DEFAULT_CITY = "AAAAAAAAAA";
+    private static final String UPDATED_CITY = "BBBBBBBBBB";
+
     private static final String DEFAULT_FULL_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_FULL_ADDRESS = "BBBBBBBBBB";
 
@@ -58,6 +63,9 @@ public class LocationResourceIntTest {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private LocationMapper locationMapper;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -78,7 +86,7 @@ public class LocationResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final LocationResource locationResource = new LocationResource(locationRepository);
+        final LocationResource locationResource = new LocationResource(locationRepository, locationMapper);
         this.restLocationMockMvc = MockMvcBuilders.standaloneSetup(locationResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -97,6 +105,7 @@ public class LocationResourceIntTest {
             .latitude(DEFAULT_LATITUDE)
             .postalCode(DEFAULT_POSTAL_CODE)
             .longitude(DEFAULT_LONGITUDE)
+            .city(DEFAULT_CITY)
             .fullAddress(DEFAULT_FULL_ADDRESS)
             .hide(DEFAULT_HIDE)
             .urlGMaps(DEFAULT_URL_G_MAPS);
@@ -114,9 +123,10 @@ public class LocationResourceIntTest {
         int databaseSizeBeforeCreate = locationRepository.findAll().size();
 
         // Create the Location
+        LocationDTO locationDTO = locationMapper.toDto(location);
         restLocationMockMvc.perform(post("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(location)))
+            .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Location in the database
@@ -126,6 +136,7 @@ public class LocationResourceIntTest {
         assertThat(testLocation.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
         assertThat(testLocation.getPostalCode()).isEqualTo(DEFAULT_POSTAL_CODE);
         assertThat(testLocation.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
+        assertThat(testLocation.getCity()).isEqualTo(DEFAULT_CITY);
         assertThat(testLocation.getFullAddress()).isEqualTo(DEFAULT_FULL_ADDRESS);
         assertThat(testLocation.isHide()).isEqualTo(DEFAULT_HIDE);
         assertThat(testLocation.getUrlGMaps()).isEqualTo(DEFAULT_URL_G_MAPS);
@@ -138,11 +149,12 @@ public class LocationResourceIntTest {
 
         // Create the Location with an existing ID
         location.setId(1L);
+        LocationDTO locationDTO = locationMapper.toDto(location);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restLocationMockMvc.perform(post("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(location)))
+            .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Location in the database
@@ -164,6 +176,7 @@ public class LocationResourceIntTest {
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE.toString())))
             .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
             .andExpect(jsonPath("$.[*].fullAddress").value(hasItem(DEFAULT_FULL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].hide").value(hasItem(DEFAULT_HIDE.booleanValue())))
             .andExpect(jsonPath("$.[*].urlGMaps").value(hasItem(DEFAULT_URL_G_MAPS.toString())));
@@ -183,6 +196,7 @@ public class LocationResourceIntTest {
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
             .andExpect(jsonPath("$.postalCode").value(DEFAULT_POSTAL_CODE.toString()))
             .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
+            .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
             .andExpect(jsonPath("$.fullAddress").value(DEFAULT_FULL_ADDRESS.toString()))
             .andExpect(jsonPath("$.hide").value(DEFAULT_HIDE.booleanValue()))
             .andExpect(jsonPath("$.urlGMaps").value(DEFAULT_URL_G_MAPS.toString()));
@@ -211,13 +225,15 @@ public class LocationResourceIntTest {
             .latitude(UPDATED_LATITUDE)
             .postalCode(UPDATED_POSTAL_CODE)
             .longitude(UPDATED_LONGITUDE)
+            .city(UPDATED_CITY)
             .fullAddress(UPDATED_FULL_ADDRESS)
             .hide(UPDATED_HIDE)
             .urlGMaps(UPDATED_URL_G_MAPS);
+        LocationDTO locationDTO = locationMapper.toDto(updatedLocation);
 
         restLocationMockMvc.perform(put("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedLocation)))
+            .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
             .andExpect(status().isOk());
 
         // Validate the Location in the database
@@ -227,6 +243,7 @@ public class LocationResourceIntTest {
         assertThat(testLocation.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testLocation.getPostalCode()).isEqualTo(UPDATED_POSTAL_CODE);
         assertThat(testLocation.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
+        assertThat(testLocation.getCity()).isEqualTo(UPDATED_CITY);
         assertThat(testLocation.getFullAddress()).isEqualTo(UPDATED_FULL_ADDRESS);
         assertThat(testLocation.isHide()).isEqualTo(UPDATED_HIDE);
         assertThat(testLocation.getUrlGMaps()).isEqualTo(UPDATED_URL_G_MAPS);
@@ -238,11 +255,12 @@ public class LocationResourceIntTest {
         int databaseSizeBeforeUpdate = locationRepository.findAll().size();
 
         // Create the Location
+        LocationDTO locationDTO = locationMapper.toDto(location);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restLocationMockMvc.perform(put("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(location)))
+            .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Location in the database
@@ -280,5 +298,28 @@ public class LocationResourceIntTest {
         assertThat(location1).isNotEqualTo(location2);
         location1.setId(null);
         assertThat(location1).isNotEqualTo(location2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(LocationDTO.class);
+        LocationDTO locationDTO1 = new LocationDTO();
+        locationDTO1.setId(1L);
+        LocationDTO locationDTO2 = new LocationDTO();
+        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
+        locationDTO2.setId(locationDTO1.getId());
+        assertThat(locationDTO1).isEqualTo(locationDTO2);
+        locationDTO2.setId(2L);
+        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
+        locationDTO1.setId(null);
+        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(locationMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(locationMapper.fromId(null)).isNull();
     }
 }

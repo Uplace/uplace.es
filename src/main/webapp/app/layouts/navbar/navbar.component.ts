@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    isSidebarCollapsed: boolean;
 
     constructor(
         private loginService: LoginService,
@@ -35,6 +36,7 @@ export class NavbarComponent implements OnInit {
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
+        this.isSidebarCollapsed = true;
     }
 
     ngOnInit() {
@@ -59,6 +61,15 @@ export class NavbarComponent implements OnInit {
             this.renderer.removeClass(document.body, 'navigation-open');
         }
         this.isNavbarCollapsed = !this.isNavbarCollapsed;
+    }
+
+    collapseSidebar() {
+        if (this.isSidebarCollapsed) {
+            this.renderer.addClass(document.body, 'side-open');
+        } else {
+            this.renderer.removeClass(document.body, 'side-open');
+        }
+        this.isSidebarCollapsed = !this.isSidebarCollapsed;
     }
 
     isAuthenticated() {

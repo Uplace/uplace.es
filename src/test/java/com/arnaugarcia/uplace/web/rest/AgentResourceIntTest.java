@@ -5,10 +5,10 @@ import com.arnaugarcia.uplace.UplaceApp;
 import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.domain.User;
 import com.arnaugarcia.uplace.repository.AgentRepository;
+import com.arnaugarcia.uplace.service.AgentService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
-@Ignore  public class AgentResourceIntTest {
+public class AgentResourceIntTest {
 
     private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
@@ -57,6 +57,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     @Autowired
     private AgentRepository agentRepository;
+
+    @Autowired
+    private AgentService agentService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -77,7 +80,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AgentResource agentResource = new AgentResource(agentRepository);
+        final AgentResource agentResource = new AgentResource(agentService);
         this.restAgentMockMvc = MockMvcBuilders.standaloneSetup(agentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -200,7 +203,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Transactional
     public void updateAgent() throws Exception {
         // Initialize the database
-        agentRepository.saveAndFlush(agent);
+        agentService.save(agent);
+
         int databaseSizeBeforeUpdate = agentRepository.findAll().size();
 
         // Update the agent
@@ -252,7 +256,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Transactional
     public void deleteAgent() throws Exception {
         // Initialize the database
-        agentRepository.saveAndFlush(agent);
+        agentService.save(agent);
+
         int databaseSizeBeforeDelete = agentRepository.findAll().size();
 
         // Get the agent

@@ -1,0 +1,36 @@
+<div class="admin-header">
+    <div class="container-fluid">
+        <div class="admin-header-sidebar-toggle toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <!-- /.primary-nav-wrapper -->
+        <div class="admin-header-avatar">
+            <!--<span class="avatar" style="background-image: url('../assets/img/tmp/user-10.jpg');"></span>-->
+            <span class="admin-header-avatar-name">{{principal.userIdentity.firstName + ', ' + principal.userIdentity.lastName}} <i class="fa fa-chevron-down"></i></span>
+            <ul class="admin-header-avatar-menu">
+                <li><a routerLink="/settings">Your Profile</a></li>
+                <li><a routerLink="/password">Change Password</a></li>
+                <li><a href="#" (click)="logout()">Sign Out</a></li>
+            </ul>
+            <!-- /.admin-header-avatar-menu -->
+        </div>
+        <!-- /.admin-header-avatar -->
+        <div class="admin-header-actions">
+            <div class="admin-header-action">
+                <a routerLink="/settings"> <i class="fa fa-cog"></i></a>
+            </div>
+            <!-- /.admin-header-action -->
+            <div class="admin-header-action">
+                <a>
+                    <i class="fa fa-bell-o"></i>
+                    <span class="active"></span>
+                </a>
+            </div>
+            <!-- /.admin-header-action -->
+        </div>
+        <!-- /.admin-header-actions -->
+    </div>
+    <!-- /.container -->
+</div>

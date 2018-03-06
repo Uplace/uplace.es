@@ -7,10 +7,14 @@
                     </h1>
                     <div class="page-title-actions">
                         <div class="switcher">
-                            <strong>Currency</strong>
+                            <strong>View</strong>
                             <ul>
-                                <li class="active"><a href="#">USD</a></li>
-                                <li><a href="#">EUR</a></li>
+                                <li class="active">
+                                    <a href="#" class="fa fa-th"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fa fa-th-list"></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -23,97 +27,7 @@
                 <div class="row">
                     <div class="col-sm-4 col-md-3 sidebar-wrapper-col">
                         <div class="sidebar">
-                            <div class="filter">
-                                <h2>Search criteria</h2>
-                                <div class="form-group">
-                                    <label>Keyword</label>
-                                    <input type="text" class="form-control" placeholder="Search by keyword ...">
-                                </div>
-                                <!-- /.form-group -->
-                                <div class="form-group">
-                                    <label>City</label>
-                                    <select class="form-control">
-                                        <option>Location</option>
-                                        <option>Chicago</option>
-                                        <option>San Francisco</option>
-                                        <option>Seattle</option>
-                                        <option>New York</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                                <!-- /.form-group -->
-                                <div class="form-group">
-                                    <label>Price Slider</label>
-                                    <div id="slider" class="price-slider"></div>
-                                </div>
-                                <!-- /.form-group -->
-                                <div class="form-group">
-                                    <label>Amenities</label>
-                                    <select class="form-control">
-                                        <option>Air conditioning</option>
-                                        <option>Balcony</option>
-                                        <option>Bedding</option>
-                                        <option>Cable TV</option>
-                                        <option>Cleaning after exit</option>
-                                        <option>Cofee pot</option>
-                                        <option>Computer</option>
-                                        <option>Cot</option>
-                                        <option>Dishwasher</option>
-                                    </select>
-                                </div>
-                                <!-- /.form-group -->
-                                <div class="row">
-                                    <div class="form-group col-xl-6">
-                                        <label>Price From</label>
-                                        <input type="text" class="form-control" placeholder="Min. price">
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <div class="form-group col-xl-6">
-                                        <label>Price To</label>
-                                        <input type="text" class="form-control" placeholder="Max. price">
-                                    </div>
-                                    <!-- /.form-group -->
-                                </div>
-                                <!-- /.row -->
-                                <h2>Category</h2>
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="rent"> Property <span class="label">78</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="sale"> Restaurant <span class="label">54</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="sale"> Travel <span class="label">50</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="lease"> Food &amp; Drink <span class="label">32</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="radio" name="form-property-type" value="lease"> Events <span class="label">53</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <h2>Attributes</h2>
-                                <div class="checkbox">
-                                    <label><input type="checkbox"> Reduced <span class="label">93</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="checkbox"> Featured <span class="label">54</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="checkbox">
-                                    <label><input type="checkbox"> Verified <span class="label">22</span></label>
-                                </div>
-                                <!-- /.checkbox -->
-                                <div class="form-group-btn form-group-btn-placeholder-gap">
-                                    <button type="submit" class="btn btn-primary btn-block">Search</button>
-                                </div>
-                                <!-- /.form-group -->
-                            </div>
+                            <up-property-filter></up-property-filter>
                             <!-- /.filter -->
                         </div>
                         <!-- /.sidebar -->
@@ -126,20 +40,26 @@
                                 <div class="col-md-6 col-lg-3" *ngFor="let property of properties">
                                     <div class="listing-box">
                                         <div class="listing-box-inner">
-                                            <a [routerLink]="'/property/' + property.reference" class="listing-box-image">
-                                                <span class="listing-box-image-content" [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span><!-- /.listing-box-image-content -->
+                                            <div class="listing-box-info" *ngIf="property.newCreation">
+                                                New!
+                                            </div>
+                                            <a [routerLink]="'/property/' + property.reference"
+                                               class="listing-box-image">
+                                                <span class="listing-box-image-content"
+                                                      [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span>
+                                                <!-- /.listing-box-image-content -->
                                                 <span class="listing-box-category tag">{{property.propertyType}}</span>
-                                                <span class="listing-box-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
+                                                <span class="listing-box-type tag" style="margin-bottom: 0px">
+                                                    {{'uplaceApp.TransactionType.' + property.transaction | translate}}
                                                 </span>
                                             </a><!-- /.listing-box-image -->
                                             <div class="listing-box-content">
-                                                <h2><a [routerLink]="'/property/' + property.reference">{{property.title}}</a></h2>
-                                                <h3 *ngIf="property.location && property.location.fullAddress && property.location.city">{{property.location.fullAddress}}, {{property.location.city}}</h3>
+                                                <h2><a [routerLink]="'/property/' + property.reference">{{property.title}}</a>
+                                                </h2>
+                                                <h3 *ngIf="property.location && !property.location.hide && property.location.fullAddress && property.location.city">
+                                                    {{property.location.fullAddress}}</h3>
+                                                <h3 *ngIf="property.location && property.location.hide">
+                                                    {{property.location.city}}, {{property.location.postalCode}}</h3>
                                                 <div class="actions">
                                                     <div class="actions-button">
                                                         <span></span>
@@ -159,28 +79,84 @@
                                             <!-- /.listing-box-content -->
                                             <div class="listing-box-attributes">
                                                 <dl [ngSwitch]="property.propertyType">
-                                                <ng-container *ngSwitchCase="'IndustrialPlant'">
-                                                    <dt>Surface</dt>
-                                                    <dd>{{property.surface}}</dd>
-                                                    <dt>M2 Offices</dt>
-                                                    <dd>{{property.m2Offices}}</dd>
-                                                    <dt>Number docks</dt>
-                                                    <dd>{{property.numberDocks}}</dd>
-                                                </ng-container>
-                                                <ng-container *ngSwitchCase="'Apartment'">
-                                                    <dt>Surface</dt>
-                                                    <dd>{{property.surface}}</dd>
-                                                    <dt>Shared pool</dt>
-                                                    <dd>{{property.sharedPool}}</dd>
-                                                    <dt>Balcony</dt>
-                                                    <dd>{{property.balcony}}</dd>
-                                                </ng-container>
+                                                    <ng-container *ngSwitchCase="'IndustrialPlant'">
+                                                        <dt>Surface</dt>
+                                                        <dd>{{property.surface}}</dd>
+                                                        <dt>M2 Offices</dt>
+                                                        <dd>{{property.m2Offices}}</dd>
+                                                        <dt>Number docks</dt>
+                                                        <dd>{{property.numberDocks}}</dd>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Apartment'">
+                                                        <dt>Surface</dt>
+                                                        <dd>{{property.surface}}</dd>
+                                                        <dt>Shared pool</dt>
+                                                        <dd>{{property.sharedPool}}</dd>
+                                                        <dt>Balcony</dt>
+                                                        <dd>{{property.balcony}}</dd>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Terrain'">
+                                                        <dt>Buildable</dt>
+                                                        <dd>{{property.buildable}}</dd>
+                                                        <dt>M2 Buildable</dt>
+                                                        <dd>{{property.m2Buildable}}</dd>
+                                                        <dt>Construcion Coeficient</dt>
+                                                        <dd>{{property.constructionCoefficient}}</dd>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Hotel'">
+                                                        <dt>M2 Edified</dt>
+                                                        <dd>{{property.m2Edified}}</dd>
+                                                        <dt>Pool</dt>
+                                                        <dd>{{property.pool}}</dd>
+                                                        <dt>Spa</dt>
+                                                        <dd>{{property.spa}}</dd>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Business'">
+                                                        <dt>Type</dt>
+                                                        <dd>{{property.type}}</dd>
+                                                        <dt>Elevator</dt>
+                                                        <dd>{{property.elevator}}</dd>
+                                                        <dt>Height</dt>
+                                                        <dd>{{property.height}}</dd>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Building'">
+                                                        <dt>Type</dt>
+                                                        <dd>{{'uplaceApp.BuildingType.' + property.type | translate}}</dd>
+                                                        <dt>M2 Edified</dt>
+                                                        <dd>{{property.m2Edified}}</dd>
+                                                        <dt>Solar surface</dt>
+                                                        <dd>{{property.solarSurface}}</dd>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Establishment'">
+                                                        <dt>Bathroom</dt>
+                                                        <dd>{{'uplaceApp.Select.' + property.bathroom | translate}}</dd>
+                                                        <dt>Use</dt>
+                                                        <dd>{{property.use}}</dd>
+                                                        <dt>M2 Facade</dt>
+                                                        <dd>{{property.m2Facade}}</dd>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Office'">
+                                                        <dt>Bathrooms</dt>
+                                                        <dd>{{property.bathrooms}}</dd>
+                                                        <dt>Storage</dt>
+                                                        <dd>{{'uplaceApp.Select.' + property.storage}}</dd>
+                                                        <dt>Ac</dt>
+                                                        <dd>{{'uplaceApp.Select.' + property.ac}}</dd>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Parking'">
+                                                        <dt>Type</dt>
+                                                        <dd>{{'uplaceApp.ParkingType.' + property.parkingType | translate}}</dd>
+                                                        <dt>Storage</dt>
+                                                        <dd>{{'uplaceApp.Select.' + property.storage | translate}}</dd>
+                                                        <dt>Ac</dt>
+                                                        <dd>{{'uplaceApp.Select.' + property.ac | translate}}</dd>
+                                                    </ng-container>
                                                 </dl>
                                             </div>
                                             <!-- /.listing-box-attributes -->
                                             <div class="listing-box-attributes-icons">
                                                 <ul>
-                                                    <li><i class="fa fa-arrows"></i> <span>182sqft</span></li>
+                                                    <li><i class="fa fa-arrows"></i><span>{{property.surface}}</span></li>
                                                     <li><i class="fa fa-shower"></i> <span>2</span></li>
                                                     <li><i class="fa fa-car"></i> <span>1</span></li>
                                                 </ul>
@@ -194,7 +170,17 @@
                                 <!-- /.col-* -->
                             </div>
                             <!-- /.row -->
-                            <div class="row">
+                            <div *ngIf="properties && properties.length">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <ngb-pagination class="pagination pull-right" [collectionSize]="totalItems"
+                                                        [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+                                                        [rotate]="true" [boundaryLinks]="true"
+                                                        (pageChange)="loadPage(page)"></ngb-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="row">
                                 <div class="col-sm-12">
                                     <ul class="pagination pull-right">
                                         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -204,8 +190,7 @@
                                         <li class="page-item"><a class="page-link" href="#">Next</a></li>
                                     </ul>
                                 </div>
-                                <!-- /.col-* -->
-                            </div>
+                            </div>-->
                         </div>
                         <!-- /.content -->
                     </div>

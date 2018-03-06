@@ -1,7 +1,9 @@
 package com.arnaugarcia.uplace.domain;
 
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -20,13 +22,27 @@ import java.util.Set;
 @Entity
 @Table(name = "property")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn()
+@DiscriminatorColumn
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Apartment.class, name = "Apartment"),
+    @JsonSubTypes.Type(value = Building.class, name = "Building"),
+    @JsonSubTypes.Type(value = Business.class, name = "Business"),
+    @JsonSubTypes.Type(value = Establishment.class, name = "Establishment"),
+    @JsonSubTypes.Type(value = Hotel.class, name = "Hotel"),
+    @JsonSubTypes.Type(value = IndustrialPlant.class, name = "IndustrialPlant"),
+    @JsonSubTypes.Type(value = Office.class, name = "Office"),
+    @JsonSubTypes.Type(value = Parking.class, name = "Parking"),
+    @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
+})
+// TODO: Make Property abstract
 public class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @NotNull
@@ -44,8 +60,7 @@ public class Property implements Serializable {
     @Column(name = "updated")
     private ZonedDateTime updated;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "dtype", insertable = false, updatable = false)
+    @Column(name = "dtype", insertable = false, updatable = false, nullable = false)
     private String propertyType;
 
     @Lob
@@ -57,7 +72,6 @@ public class Property implements Serializable {
     @Column(name = "up_transaction", nullable = false)
     private TransactionType transaction;
 
-    @NotNull
     @Column(name = "reference", nullable = false)
     private String reference;
 
@@ -80,15 +94,15 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     private Location location;
 
-    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "property_manager",
                joinColumns = @JoinColumn(name="properties_id", referencedColumnName="id"),
