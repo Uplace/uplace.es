@@ -12,6 +12,7 @@ import {
 } from './';
 
 import { UserRouteAccessService } from '../shared';
+import {UpAdminMainComponent} from "../layouts/admin-main/admin-main.component";
 
 const ADMIN_ROUTES = [
     auditsRoute,
@@ -25,6 +26,7 @@ const ADMIN_ROUTES = [
 
 export const adminState: Routes = [{
     path: '',
+    component: UpAdminMainComponent,
     data: {
         authorities: ['ROLE_ADMIN']
     },

@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { errorRoute, navbarRoute } from './layouts';
+import {RouterModule, Routes} from '@angular/router';
+import {errorRoute, navbarRoute, UpMainComponent} from './layouts';
 import { DEBUG_INFO_ENABLED } from './app.constants';
 import {adminNavbarRoute} from "./layouts/admin-navbar/admin-navbar.route";
+import {UpAdminMainComponent} from "./layouts/admin-main/admin-main.component";
+import {HOME_ROUTE} from "./home";
+import {UplaceAdminModule} from "./admin/admin.module";
+import {propertyPopupRoute, propertyRoute} from "./entities/property";
+import {auditsRoute, configurationRoute, docsRoute, healthRoute, logsRoute, metricsRoute, userMgmtRoute} from "./admin";
+import {UserRouteAccessService} from "./shared";
 
 const LAYOUT_ROUTES = [
     navbarRoute,
@@ -14,12 +20,46 @@ const DASHBOARD_ROUTES = [
     ...errorRoute
 ];
 
+const appRoutes: Routes = [
 
-// CHANGE TO DASHBOARD_ROUTES TO LOAD NEW LAYOUT
+    //Site routes goes here
+    {
+        path: '',
+        component: UpMainComponent,
+        children: [
+            HOME_ROUTE,
+            navbarRoute,
+            ...propertyRoute,
+            ...propertyPopupRoute,
+            ...errorRoute
+        ],
+    },
+
+    // App routes goes here here
+    {
+        path: '',
+        component: UpAdminMainComponent,
+        data: {
+            authorities: ['ROLE_ADMIN']
+        },
+        canActivate: [UserRouteAccessService],
+        children: [
+            adminNavbarRoute,
+            auditsRoute,
+            configurationRoute,
+            docsRoute,
+            healthRoute,
+            logsRoute,
+            ...userMgmtRoute,
+            metricsRoute,
+            ...errorRoute
+        ]
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(LAYOUT_ROUTES, { useHash: true , enableTracing: DEBUG_INFO_ENABLED })
+        RouterModule.forRoot(appRoutes, { useHash: true , enableTracing: DEBUG_INFO_ENABLED })
     ],
     exports: [
         RouterModule

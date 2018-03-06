@@ -4,7 +4,7 @@ import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 import { JhiLanguageHelper } from '../../shared';
 
 @Component({
-    selector: 'up-main',
+    selector: 'up-admin-main',
     templateUrl: './admin-main.component.html',
     encapsulation: ViewEncapsulation.None
 })

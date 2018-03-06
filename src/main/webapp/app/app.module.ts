@@ -28,10 +28,14 @@ import {
     ErrorComponent
 } from './layouts';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import {AppComponent} from "./app.component";
+import {UpAdminMainComponent} from "./layouts/admin-main/admin-main.component";
+import {AdminNavbarComponent} from "./layouts/admin-navbar/admin-navbar.component";
 
 @NgModule({
     imports: [
         BrowserModule,
+        UplaceAppRoutingModule,
         UplaceAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'up', separator: '-'}),
         UplaceSharedModule,
@@ -42,6 +46,9 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
+        AppComponent,
+        UpAdminMainComponent,
+        AdminNavbarComponent,
         UpMainComponent,
         NavbarComponent,
         ErrorComponent,
@@ -88,6 +95,6 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
             ]
         }
     ],
-    bootstrap: [ UpMainComponent ]
+    bootstrap: [ AppComponent ]
 })
 export class UplaceAppModule {}
