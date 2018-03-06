@@ -4,7 +4,7 @@
 
     <groupId>com.arnaugarcia.uplace</groupId>
     <artifactId>uplace</artifactId>
-    <version>0.0.11-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Uplace</name>
 

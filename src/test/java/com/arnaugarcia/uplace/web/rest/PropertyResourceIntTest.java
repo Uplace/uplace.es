@@ -13,6 +13,7 @@ import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.service.PropertyQueryService;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -49,6 +50,7 @@ import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
+@Ignore
 public class PropertyResourceIntTest {
 
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
