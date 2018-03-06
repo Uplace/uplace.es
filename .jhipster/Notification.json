@@ -53,6 +53,6 @@
     "entityTableName": "notification",
     "dto": "no",
     "pagination": "pagination",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

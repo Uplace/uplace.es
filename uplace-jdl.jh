@@ -192,6 +192,13 @@ enum NotificationType{
     NOTIFICATION, REQUEST, ALERT
 }
 
+entity Company {
+    name String,
+    photo String,
+    description TextBlob,
+    nif String
+}
+
 /* PHOTO */
 
 entity Photo {
@@ -216,11 +223,12 @@ relationship ManyToMany {
 
 relationship OneToOne {
     Agent{user(login) required} to User{agent(firstName) required},
-    Property{location(id)} to Location{property(reference)}
+    Property{location(id)} to Location{property(reference)},
+    Company{location(id)} to Location
 }
 
 paginate Notification with pagination
 
-service Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, Establishment, IndustrialPlant, Property with serviceClass
+service Agent, Notification, Property with serviceClass
 
-filter Apartment, Office, Parking, Business, Terrain, Building, Hotel, Business, Establishment, IndustrialPlant, Property
+filter Property

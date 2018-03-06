@@ -56,6 +56,6 @@
     "entityTableName": "business",
     "dto": "no",
     "pagination": "no",
-    "service": "serviceClass",
-    "jpaMetamodelFiltering": true
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }
