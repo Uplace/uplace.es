@@ -31,6 +31,8 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import {AppComponent} from "./app.component";
 import {UpAdminMainComponent} from "./layouts/admin-main/admin-main.component";
 import {AdminNavbarComponent} from "./layouts/admin-navbar/admin-navbar.component";
+import { AdminFooterComponent } from './layouts/admin-footer/admin-footer.component';
+import { AdminSidebarComponent } from './layouts/admin-sidebar/admin-sidebar.component';
 
 @NgModule({
     imports: [
@@ -55,7 +57,9 @@ import {AdminNavbarComponent} from "./layouts/admin-navbar/admin-navbar.componen
         PageRibbonComponent,
         ActiveMenuDirective,
         FooterComponent,
-        SidebarComponent
+        SidebarComponent,
+        AdminFooterComponent,
+        AdminSidebarComponent
     ],
     providers: [
         ProfileService,

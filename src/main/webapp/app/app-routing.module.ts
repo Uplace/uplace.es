@@ -10,6 +10,7 @@ import {propertyPopupRoute, propertyRoute} from "./entities/property";
 import {auditsRoute, configurationRoute, docsRoute, healthRoute, logsRoute, metricsRoute, userMgmtRoute} from "./admin";
 import {UserRouteAccessService} from "./shared";
 import {accountState} from "./account";
+import {adminSidebarRoute} from "./layouts/admin-sidebar/admin-sidebar.route";
 
 const LAYOUT_ROUTES = [
     navbarRoute,
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
         canActivate: [UserRouteAccessService],
         children: [
             ...accountState,
+            adminSidebarRoute,
             adminNavbarRoute,
             auditsRoute,
             configurationRoute,
