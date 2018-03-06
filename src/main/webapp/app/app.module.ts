@@ -28,8 +28,6 @@ import {
     ErrorComponent
 } from './layouts';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
-import {UpAdminMainComponent} from "./layouts/admin-main/admin-main.component";
-import {AdminNavbarComponent} from "./layouts/admin-navbar/admin-navbar.component";
 
 @NgModule({
     imports: [
@@ -45,8 +43,6 @@ import {AdminNavbarComponent} from "./layouts/admin-navbar/admin-navbar.componen
     ],
     declarations: [
         UpMainComponent,
-        AdminNavbarComponent,
-        UpAdminMainComponent,
         NavbarComponent,
         ErrorComponent,
         PageRibbonComponent,
