@@ -1,0 +1,44 @@
+
+<div *ngIf="company">
+    <h2><span jhiTranslate="uplaceApp.company.detail.title">Company</span> {{company.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.company.name">Name</span></dt>
+        <dd>
+            <span>{{company.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.company.photo">Photo</span></dt>
+        <dd>
+            <span>{{company.photo}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.company.description">Description</span></dt>
+        <dd>
+            <span>{{company.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.company.nif">Nif</span></dt>
+        <dd>
+            <span>{{company.nif}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.company.location">Location</span></dt>
+        <dd>
+            <div *ngIf="company.location">
+                <a [routerLink]="['/location', company.location?.id]">{{company.location?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'company/'+ company.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

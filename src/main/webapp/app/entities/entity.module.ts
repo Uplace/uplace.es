@@ -16,6 +16,7 @@ import { UplaceIndustrialPlantModule } from './industrial-plant/industrial-plant
 import { UplaceEstablishmentModule } from './establishment/establishment.module';
 import {UplaceFilterModule} from './filter/filter.module';
 import {UplaceMarkerModule} from './marker/marker.module';
+import { UplaceCompanyModule } from './company/company.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -35,7 +36,8 @@ import {UplaceMarkerModule} from './marker/marker.module';
         UplaceIndustrialPlantModule,
         UplaceEstablishmentModule,
         UplaceFilterModule,
-        UplaceMarkerModule
+        UplaceMarkerModule,
+        UplaceCompanyModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

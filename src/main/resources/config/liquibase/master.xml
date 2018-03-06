@@ -37,4 +37,6 @@
     <include file="config/liquibase/changelog/20180207123354_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180221154755_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180222083857_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180306121054_added_entity_Company.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180306121054_added_entity_constraints_Company.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
