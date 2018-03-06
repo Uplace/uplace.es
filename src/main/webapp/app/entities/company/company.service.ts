@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
 
 import { Company } from './company.model';
-import { createRequestOption } from '../../shared';
+import { createRequestOption } from '../../shared/index';
 
 export type EntityResponseType = HttpResponse<Company>;
 

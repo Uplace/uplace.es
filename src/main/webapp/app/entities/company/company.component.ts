@@ -5,7 +5,7 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Company } from './company.model';
 import { CompanyService } from './company.service';
-import { Principal } from '../../shared';
+import { Principal } from '../../shared/index';
 
 @Component({
     selector: 'up-company',

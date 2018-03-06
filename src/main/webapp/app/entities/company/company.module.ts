@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { UplaceSharedModule } from '../../shared';
+import { UplaceSharedModule } from '../../shared/index';
 import {
     CompanyService,
     CompanyPopupService,
@@ -13,7 +13,7 @@ import {
     CompanyDeleteDialogComponent,
     companyRoute,
     companyPopupRoute,
-} from './';
+} from './index';
 
 const ENTITY_STATES = [
     ...companyRoute,
