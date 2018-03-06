@@ -29,7 +29,6 @@ import {
     UserResolve,
     UserModalService
 } from './';
-import {DashboardComponent} from "./dashboard/dashboard.component";
 import {DashboardModule} from "./dashboard/dashboard.module";
 
 @NgModule({
