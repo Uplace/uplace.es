@@ -9,6 +9,7 @@ import {UplaceAdminModule} from "./admin/admin.module";
 import {propertyPopupRoute, propertyRoute} from "./entities/property";
 import {auditsRoute, configurationRoute, docsRoute, healthRoute, logsRoute, metricsRoute, userMgmtRoute} from "./admin";
 import {UserRouteAccessService} from "./shared";
+import {accountState} from "./account";
 
 const LAYOUT_ROUTES = [
     navbarRoute,
@@ -44,6 +45,7 @@ const appRoutes: Routes = [
         },
         canActivate: [UserRouteAccessService],
         children: [
+            ...accountState,
             adminNavbarRoute,
             auditsRoute,
             configurationRoute,
