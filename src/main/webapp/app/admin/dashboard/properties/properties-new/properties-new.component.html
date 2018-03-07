@@ -1,3 +1,257 @@
-<p>
-  properties-new works!
-</p>
+<div class="container">
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="#">Home</a>
+        <a class="breadcrumb-item" href="#">Library</a>
+        <a class="breadcrumb-item" href="#">Data</a>
+        <span class="breadcrumb-item active">Bootstrap</span>
+    </nav>
+    <up-alert-error></up-alert-error>
+    <form method="post" action="?" class="mb80" (submit)="onSubmit($event)" #newPropertyForm="ngForm">
+        <fieldset>
+            <legend>Basic Information</legend>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" [(ngModel)]="property.title" name="title">
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" class="form-control" [(ngModel)]="property.price" name="price">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="uplaceApp.property.created" for="field_created">Created</label>
+                <div class="d-flex">
+                    <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="property.created"
+                           required/>
+                </div>
+                <div [hidden]="!(newPropertyForm.controls.created?.dirty && newPropertyForm.controls.created?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!newPropertyForm.controls.created?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                    <small class="form-text text-danger"
+                           [hidden]="!newPropertyForm.controls.created?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                        This field should be a date and time.
+                    </small>
+                </div>
+            </div>
+            <!-- /.form-group -->
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" rows="6" [(ngModel)]="property.description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Surface</label>
+                <input type="number" class="form-control" [(ngModel)]="property.surface" name="surface">
+            </div>
+            <div class="form-group">
+                <select [(ngModel)]="property.propertyType" name="propertyType">
+                    <option value="Apartment" selected>Apartment</option>
+                    <option value="Building">Building</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select [(ngModel)]="property.transaction" name="propertyType">
+                    <option value="RENT" selected>Apartment</option>
+                    <option value="RENT_BUY">Building</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Reference</label>
+                <input type="text" class="form-control" [(ngModel)]="property.reference" name="reference">
+            </div>
+            <div class="form-group">
+                <label>Year contstruction</label>
+                <input type="number" class="form-control" [(ngModel)]="property.yearConstruction" name="yearConstruction">
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+            <!-- /.form-group -->
+        </fieldset>
+        <!--<fieldset>
+            <legend>Payment Information</legend>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Package</label>
+                        <select class="form-control">
+                            <option value="">Bronze + $10</option>
+                        </select>
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <select class="form-control">
+                            <option value="">Paypal</option>
+                        </select>
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <select class="form-control">
+                            <option value="">1 Year (Save 10%)</option>
+                        </select>
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+            </div>
+            &lt;!&ndash; /.row &ndash;&gt;
+        </fieldset>
+        <fieldset>
+            <legend>Location</legend>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div id="location-google-map" style="height: 450px;"></div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control location-google-map-search">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                    <div class="form-group">
+                        <label>Latitude</label>
+                        <input type="text" class="form-control" id="listing_location_latitude">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                    <div class="form-group">
+                        <label>Longitude</label>
+                        <input type="text" class="form-control" id="listing_location_longitude">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                    <div class="form-group">
+                        <label>Country</label>
+                        <select class="form-control"></select>
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                    <div class="form-group">
+                        <label>Location</label>
+                        <select class="form-control"></select>
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                    <div class="form-group">
+                        <label>Sublocation</label>
+                        <select class="form-control"></select>
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+            </div>
+            &lt;!&ndash; /.row &ndash;&gt;
+        </fieldset>
+        <fieldset>
+            <legend>Contact Information</legend>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Website</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>
+                &lt;!&ndash; /.col-* &ndash;&gt;
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Amenities</legend>
+            <div class="checkbox-list">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input"> Air conditioning
+                    </label>
+                </div>
+                &lt;!&ndash; /.form-check &ndash;&gt;
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input"> Balcony
+                    </label>
+                </div>
+                &lt;!&ndash; /.form-check &ndash;&gt;
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input"> Bedding
+                    </label>
+                </div>
+                &lt;!&ndash; /.form-check &ndash;&gt;
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input"> Cable TV
+                    </label>
+                </div>
+                &lt;!&ndash; /.form-check &ndash;&gt;
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input"> Cleaning after exit
+                    </label>
+                </div>
+                &lt;!&ndash; /.form-check &ndash;&gt;
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input"> Cofee pot
+                    </label>
+                </div>
+                &lt;!&ndash; /.form-check &ndash;&gt;
+            </div>
+            &lt;!&ndash; /.checkbox-list &ndash;&gt;
+        </fieldset>
+        <fieldset>
+            <legend>Additional Information</legend>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input"> Send me newsletter
+                </label>
+            </div>
+            &lt;!&ndash; /.form-check &ndash;&gt;
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input"> I agree with terms &amp; conditions
+                </label>
+            </div>
+            &lt;!&ndash; /.form-check &ndash;&gt;
+        </fieldset>-->
+    </form>
+</div>

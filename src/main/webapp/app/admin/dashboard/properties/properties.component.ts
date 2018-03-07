@@ -48,15 +48,7 @@ export class PropertiesComponent implements OnInit {
     }
 
     loadAll() {
-        /*this.propertyService.query().subscribe(
-            (res: HttpResponse<Property[]>) => {
-                if (this.properties.length === 0) {
-                    this.jhiAlertService.info('error.noData');
-                }
-                console.log(this.properties);
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );*/
+
         this.propertyService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
