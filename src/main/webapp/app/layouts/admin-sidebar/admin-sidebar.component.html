@@ -16,7 +16,7 @@
         <h3>Property management</h3>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                     <i class="fa fa-tachometer"></i><span>Dashboard</span>
                 </a>
             </li>

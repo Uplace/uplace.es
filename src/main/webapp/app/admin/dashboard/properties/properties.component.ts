@@ -65,6 +65,7 @@ export class PropertiesComponent implements OnInit {
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then((account) => {
@@ -81,8 +82,6 @@ export class PropertiesComponent implements OnInit {
         } else {
             event.path[1].classList.add("show");
         }
-
-
     }
 
     private onSuccess(data, headers) {
