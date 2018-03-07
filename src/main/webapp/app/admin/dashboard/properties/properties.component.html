@@ -35,7 +35,8 @@
                 <td class="min-width center"><input type="checkbox"></td>
                 <td class="min-width center id">{{property.reference}}</td>
                 <td>
-                    <div class="avatar squared" style="background-image: url()"></div>
+                    <div class="avatar squared"
+                         [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span></div>
                     <h2>
                         <a href="#">{{property.title}}</a>
                         <span *ngIf="property.location && property.location.fullAddress">{{property.location.fullAddress}}</span>
@@ -56,7 +57,7 @@
                 </td>
                 <td class="min-width">
                     <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
                             Actions
                         </button>
                         <div class="dropdown-menu">
