@@ -17,6 +17,7 @@ export class AdminNavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    isSidebarCollapsed: boolean;
 
     constructor(
         private loginService: LoginService,
@@ -29,6 +30,7 @@ export class AdminNavbarComponent implements OnInit {
         private renderer: Renderer2
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
+        this.isSidebarCollapsed = false;
     }
 
     ngOnInit() {
@@ -40,6 +42,15 @@ export class AdminNavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+    }
+
+    toggleSidebar(){
+        if (!this.isSidebarCollapsed) {
+            this.renderer.addClass(document.body, 'admin-sidebar-minimal');
+        } else {
+            this.renderer.removeClass(document.body, 'admin-sidebar-minimal');
+        }
+        this.isSidebarCollapsed = !this.isSidebarCollapsed;
     }
 
     changeLanguage(languageKey: string) {

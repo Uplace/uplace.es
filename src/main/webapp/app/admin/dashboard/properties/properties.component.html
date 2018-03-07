@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" routerLink="/dashboard">Dashboard</a>
+        <a class="breadcrumb-item" routerLink="/dashboard/properties">Properties</a>
+    </nav>
+    <div class="table-header clearfix">
+        <div class="table-header-count">
+            <strong>{{totalItems}}</strong> results matching query
+        </div>
+        <!-- /.table-header-count -->
+        <div class="table-header-actions">
+            <a href="#" class="btn btn-primary"><i class="fa fa-filter"></i> Apply filters</a>
+            <a href="#" class="btn"><i class="fa fa-download"></i> Export All</a>
+        </div>
+        <!-- /.table-header-actions -->
+    </div>
+    <!-- /.table-header -->
+    <div class="table-wrapper">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="min-width center">
+                    <input type="checkbox">
+                </th>
+                <th class="min-width center">Reference</th>
+                <th>Title</th>
+                <th class="min-width center">Category</th>
+                <th class="min-width center">Price</th>
+                <th class="min-width center">Visible</th>
+                <th class="min-width"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let property of properties">
+                <td class="min-width center"><input type="checkbox"></td>
+                <td class="min-width center id">{{property.reference}}</td>
+                <td>
+                    <div class="avatar squared"
+                         [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span></div>
+                    <h2>
+                        <a href="#">{{property.title}}</a>
+                        <span *ngIf="property.location && property.location.fullAddress">{{property.location.fullAddress}}</span>
+                    </h2>
+                </td>
+                <td class="min-width no-wrap center">
+                    <span class="tag">{{property.propertyType}}</span>
+                </td>
+                <td class="min-width price">
+                    {{property.price}}
+                </td>
+                <td class="min-width center">
+                    <div class="status">
+                        <i class="fa fa-check" *ngIf="property.visible"></i>
+                        <i class="fa fa-times" *ngIf="!property.visible"></i>
+                    </div>
+                    <!-- /.status -->
+                </td>
+                <td class="min-width">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" (click)="showActions($event)">
+                            Actions
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Workflow Action</a>
+                            <a class="dropdown-item" href="#">Change Values</a>
+                            <a class="dropdown-item" href="#">Delete Item</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- /.table-wrapper -->
+    <ul class="pagination pull-right">
+        <ngb-pagination class="pagination pull-right" [collectionSize]="totalItems"
+                        [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+                        [rotate]="true" [boundaryLinks]="true"
+                        (pageChange)="loadPage(page)">
+    </ul>
+</div>
+<!-- /.container -->

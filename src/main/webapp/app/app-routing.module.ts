@@ -38,13 +38,14 @@ const appRoutes: Routes = [
         ],
     },
 
-    // App routes goes here here
+    // App routes goes here
     {
         path: '',
         component: UpAdminMainComponent,
         data: {
-            authorities: ['ROLE_ADMIN']
+            authorities: ['ROLE_USER']
         },
+
         canActivate: [UserRouteAccessService],
         children: [
             ...accountState,
@@ -57,7 +58,7 @@ const appRoutes: Routes = [
             logsRoute,
             ...userMgmtRoute,
             metricsRoute,
-            dashboardRoute,
+            ...dashboardRoute,
             ...errorRoute
         ]
     },
