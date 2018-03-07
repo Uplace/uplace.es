@@ -113,7 +113,7 @@ export class PropertiesComponent implements OnInit {
     }
 
     transition() {
-        this.router.navigate(['/properties'], {queryParams:
+        this.router.navigate(['/dashboard/properties'], {queryParams:
                 {
                     page: this.page,
                     size: this.itemsPerPage,
