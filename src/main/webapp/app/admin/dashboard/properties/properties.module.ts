@@ -3,22 +3,21 @@ import {CommonModule} from '@angular/common';
 import {PropertiesComponent} from './properties.component';
 import {PropertiesNewComponent} from "./properties-new/properties-new.component";
 import {UplaceSharedModule} from "../../../shared";
-import {RouterModule} from "@angular/router";
-import {dashboardPropertyRoute} from "./properties.route";
-
-const DASHBOARD_PROPERTY_ROUTES = [
-    ...dashboardPropertyRoute
-];
+import {PropertyService} from "../../../entities/property";
+import {PropertyResolvePagingParams} from "../dashboard.route";
 
 @NgModule({
     imports: [
         UplaceSharedModule,
         CommonModule,
-        RouterModule.forChild(DASHBOARD_PROPERTY_ROUTES)
     ],
     declarations: [
         PropertiesComponent,
         PropertiesNewComponent
+    ],
+    providers: [
+        PropertyService,
+        PropertyResolvePagingParams
     ]
 })
 export class PropertiesModule {
