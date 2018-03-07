@@ -57,7 +57,7 @@
                 </td>
                 <td class="min-width">
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" (click)="showActions($event)">
                             Actions
                         </button>
                         <div class="dropdown-menu">
@@ -77,8 +77,6 @@
                         [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
                         [rotate]="true" [boundaryLinks]="true"
                         (pageChange)="loadPage(page)">
-
-            </ngb-paginationi>
     </ul>
 </div>
 <!-- /.container -->

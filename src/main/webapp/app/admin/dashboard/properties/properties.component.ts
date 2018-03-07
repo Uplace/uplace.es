@@ -73,13 +73,24 @@ export class PropertiesComponent implements OnInit {
         this.registerChangeInProperties();
     }
 
+    showActions(event) {
+        var contains = event.path[1].classList.contains("show");
+
+        if (contains) {
+            event.path[1].classList.remove("show");
+        } else {
+            event.path[1].classList.add("show");
+        }
+
+
+    }
+
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.properties = data;
-        console.log(this.properties);
     }
 
     ngOnDestroy() {
