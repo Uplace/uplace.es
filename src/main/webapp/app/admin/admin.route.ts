@@ -23,7 +23,7 @@ const ADMIN_ROUTES = [
     logsRoute,
     ...userMgmtRoute,
     metricsRoute,
-    dashboardRoute
+    ...dashboardRoute
 ];
 
 export const adminState: Routes = [{

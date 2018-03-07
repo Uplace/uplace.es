@@ -57,7 +57,7 @@ const appRoutes: Routes = [
             logsRoute,
             ...userMgmtRoute,
             metricsRoute,
-            dashboardRoute,
+            ...dashboardRoute,
             ...errorRoute
         ]
     },
