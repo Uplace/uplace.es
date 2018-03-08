@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import {Component, AfterViewInit, Renderer, ElementRef, ViewEncapsulation} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
@@ -8,7 +8,14 @@ import { StateStorageService } from '../auth/state-storage.service';
 
 @Component({
     selector: 'up-login-modal',
-    templateUrl: './login.component.html'
+    templateUrl: './login.component.html',
+    encapsulation: ViewEncapsulation.None,
+    styles: [
+        `.modal-dialog {
+            margin-top: 10%;
+        }
+        `
+    ]
 })
 export class UpLoginModalComponent implements AfterViewInit {
     authenticationError: boolean;
