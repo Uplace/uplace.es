@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Property, PropertyService} from "../../../../entities/property";
+import {Property, PropertyService, TransactionType} from "../../../../entities/property";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {JhiEventManager} from "ng-jhipster";
@@ -12,18 +12,26 @@ import {JhiEventManager} from "ng-jhipster";
 export class PropertiesNewComponent implements OnInit {
 
     isSaving: boolean;
-    property: Property = new Property();
+    property: Property;
+    propertyTypes = ['Apartment','Building','Business','Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
+    transactionTypes = TransactionType;
 
     constructor(
         private propertyService: PropertyService,
         private eventManager: JhiEventManager
     ) {
+        this.property = new Property();
+        this.property.transaction = 1;
+        this.property.propertyType = this.propertyTypes[0];
     }
 
     ngOnInit() {
+        console.log(this.transactionTypes);
+        console.log(this.property.transaction);
+        console.log(TransactionType.RENT);
     }
 
-    onSubmit(event) {
+    onSubmit() {
         this.save();
     }
 

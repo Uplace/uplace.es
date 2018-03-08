@@ -10,6 +10,7 @@ import {
     UpAlertComponent,
     UpAlertErrorComponent
 } from './';
+import {EnumToArrayPipe} from "./pipes/enum-to-string.pipe";
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import {
     ],
     declarations: [
         FindLanguageFromKeyPipe,
+        EnumToArrayPipe,
         UpAlertComponent,
         UpAlertErrorComponent
     ],
@@ -32,6 +34,7 @@ import {
     ],
     exports: [
         UplaceSharedLibsModule,
+        EnumToArrayPipe,
         FindLanguageFromKeyPipe,
         UpAlertComponent,
         UpAlertErrorComponent

@@ -11,11 +11,11 @@
             <legend>Basic Information</legend>
             <div class="form-group">
                 <label>Title</label>
-                <input type="text" class="form-control" [(ngModel)]="property.title" name="title">
+                <input type="text" class="form-control" [(ngModel)]="property.title" name="title" required>
             </div>
             <div class="form-group">
                 <label>Price</label>
-                <input type="number" class="form-control" [(ngModel)]="property.price" name="price">
+                <input type="number" class="form-control" [(ngModel)]="property.price" name="price" required>
             </div>
             <div class="form-group">
                 <label class="form-control-label" jhiTranslate="uplaceApp.property.created" for="field_created">Created</label>
@@ -41,27 +41,22 @@
             </div>
             <div class="form-group">
                 <label>Surface</label>
-                <input type="number" class="form-control" [(ngModel)]="property.surface" name="surface">
+                <input type="number" class="form-control" [(ngModel)]="property.surface" name="surface" required>
             </div>
             <div class="form-group">
-                <select [(ngModel)]="property.propertyType" name="propertyType">
-                    <option value="Apartment" selected>Apartment</option>
-                    <option value="Building">Building</option>
+                <select [(ngModel)]="property.propertyType" class="form-control" name="propertyType" required>
+                    <option *ngFor="let type of propertyTypes" [ngValue]="type" >{{type}}</option>
                 </select>
             </div>
             <div class="form-group">
-                <select [(ngModel)]="property.transaction" name="propertyType">
-                    <option value="RENT" selected>Apartment</option>
-                    <option value="RENT_BUY">Building</option>
+                <label jhiTranslate="uplaceApp.property.transaction" for="field_transaction">Transaction</label>
+                <select class="form-control" name="transaction" [(ngModel)]="property.transaction" id="field_transaction" required>
+                    <option *ngFor="let transaction of transactionTypes" [ngValue]="transaction">{{'uplaceApp.TransactionType.' + transaction | translate}}</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>Reference</label>
-                <input type="text" class="form-control" [(ngModel)]="property.reference" name="reference">
-            </div>
-            <div class="form-group">
-                <label>Year contstruction</label>
-                <input type="number" class="form-control" [(ngModel)]="property.yearConstruction" name="yearConstruction">
+                <label>Year construction</label>
+                <input type="number" class="form-control" [(ngModel)]="property.yearConstruction" name="yearConstruction" required>
             </div>
             <button type="submit" class="btn btn-success">Submit</button>
             <!-- /.form-group -->

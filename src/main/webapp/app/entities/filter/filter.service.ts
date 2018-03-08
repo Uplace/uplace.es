@@ -32,8 +32,7 @@ export class FilterService {
 
     findAll(): Observable<Filter> {
         return this.http.get(`${this.resourceUrl}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
+            return this.convertItemFromServer(res);
         });
     }
 
