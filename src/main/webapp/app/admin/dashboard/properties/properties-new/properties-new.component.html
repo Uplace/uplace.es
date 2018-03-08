@@ -58,20 +58,28 @@
                     <!-- /.form-group -->
                 </div>
                 <!-- /.col-* -->
-                <div class="col-sm-4">
+                <div class="col-sm-4" *ngIf="property.transaction && (property.transaction == transactionTypes.RENT_BUY || property.transaction == transactionTypes.RENT)">
                     <div class="form-group">
-                        <label>Price</label>
-                        <input type="number" class="form-control" [(ngModel)]="property.price" name="price" required>
+                        <label>Price rent</label>
+                        <input type="number" class="form-control" [(ngModel)]="property.priceRent" name="priceRent" required>
                     </div>
                     <!-- /.form-group -->
                 </div>
                 <!-- /.col-* -->
-                <div class="col-sm-4" *ngIf="property.transaction && property.transaction == transactionTypes.RENT_BUY">
+                <div class="col-sm-4" *ngIf="property.transaction && (property.transaction == transactionTypes.RENT_BUY || property.transaction == transactionTypes.BUY)">
                     <div class="form-group">
-                        <label>Duration</label>
-                        <select class="form-control">
-                            <option value="">1 Year (Save 10%)</option>
-                        </select>
+                        <label>Price buy</label>
+                        <input type="number" class="form-control" [(ngModel)]="property.priceSell" name="priceSell" required>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col-* -->
+
+                <!-- /.col-* -->
+                <div class="col-sm-4" *ngIf="property.transaction == transactionTypes.TRANSFER">
+                    <div class="form-group">
+                        <label>Price transfer</label>
+                        <input type="number" class="form-control" [(ngModel)]="property.price" name="priceSell" required>
                     </div>
                     <!-- /.form-group -->
                 </div>
