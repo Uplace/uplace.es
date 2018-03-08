@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
+
 /**
  * Service Implementation for managing Property.
  */
@@ -35,8 +37,11 @@ public class PropertyService<T extends Property> {
      */
     public T save(T property) {
         log.debug("Request to save Property : {}", property);
+        if (property.getCreated() != null) {
+            property.setCreated(ZonedDateTime.now());
+        }
         property.setReference(this.createReference());
-        return  propertyRepository.save(property);
+        return propertyRepository.save(property);
     }
 
     /**

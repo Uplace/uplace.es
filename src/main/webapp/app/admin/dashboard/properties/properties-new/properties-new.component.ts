@@ -21,14 +21,12 @@ export class PropertiesNewComponent implements OnInit {
         private eventManager: JhiEventManager
     ) {
         this.property = new Property();
-        this.property.transaction = 1;
         this.property.propertyType = this.propertyTypes[0];
+        this.property.transaction = TransactionType.RENT_BUY;
     }
 
     ngOnInit() {
         console.log(this.transactionTypes);
-        console.log(this.property.transaction);
-        console.log(TransactionType.RENT);
     }
 
     onSubmit() {
@@ -36,6 +34,7 @@ export class PropertiesNewComponent implements OnInit {
     }
 
     save() {
+        document.body.scrollTop = 0;
         this.isSaving = true;
         if (this.property.id !== undefined) {
             this.subscribeToSaveResponse(
@@ -52,8 +51,6 @@ export class PropertiesNewComponent implements OnInit {
     }
 
     private onSaveSuccess(result: Property) {
-        console.log("OK!");
-        console.log(result);
         this.eventManager.broadcast({ name: 'propertyListModification', content: 'OK'});
         this.isSaving = false;
     }
