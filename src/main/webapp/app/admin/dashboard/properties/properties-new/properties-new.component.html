@@ -87,49 +87,7 @@
             </div>
             <!-- /.row -->
         </fieldset>
-        <fieldset>
-            <legend>Location</legend>
-            <div class="row">
-                <div class="col-sm-6">
-                    <agm-map [latitude]="latitude" [streetViewControl]="false" [longitude]="longitude" [zoom]="zoom" id="location-google-map" style="height: 450px;">
-                        <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerMoved($event)"></agm-marker>
-                    </agm-map>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control location-google-map-search" autocorrect="off" autocapitalize="off" spellcheck="off" #search [formControl]="searchControl" name="searchControl" >
-                    </div>
-                    <!-- /.form-group -->
-                    <div class="form-group">
-                        <label>Latitude</label>
-                        <input type="text" class="form-control" id="listing_location_latitude" [(ngModel)]="latitude" name="latitude">
-                    </div>
-                    <!-- /.form-group -->
-                    <div class="form-group">
-                        <label>Longitude</label>
-                        <input type="text" class="form-control" id="listing_location_longitude" [(ngModel)]="longitude" name="longitude">
-                    </div>
-                    <!-- /.form-group -->
-                    <div class="form-group">
-                        <label>Country</label>
-                        <select class="form-control"></select>
-                    </div>
-                    <!-- /.form-group -->
-                    <div class="form-group">
-                        <label>Location</label>
-                        <select class="form-control"></select>
-                    </div>
-                    <!-- /.form-group -->
-                    <div class="form-group">
-                        <label>Sublocation</label>
-                        <select class="form-control"></select>
-                    </div>
-                    <!-- /.form-group -->
-                </div>
-            </div>
-            <!-- /.row -->
-        </fieldset>
+        <up-property-map [(location)]="property.location"></up-property-map>
         <fieldset>
             <legend>Contact Information</legend>
             <div class="row">
