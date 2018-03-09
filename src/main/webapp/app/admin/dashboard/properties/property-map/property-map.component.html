@@ -2,39 +2,39 @@
     <legend>Location</legend>
     <div class="row">
         <div class="col-sm-6">
-            <agm-map [latitude]="latitude" [streetViewControl]="false" [longitude]="longitude" [zoom]="zoom" id="location-google-map" style="height: 450px;">
-                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerMoved($event)"></agm-marker>
+            <agm-map [latitude]="location.latitude" [streetViewControl]="false" [longitude]="location.longitude" [zoom]="zoom" id="location-google-map" style="height: 450px;">
+                <agm-marker [latitude]="location.latitude" [longitude]="location.longitude" [markerDraggable]="true" (dragEnd)="markerMoved($event)"></agm-marker>
             </agm-map>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
                 <label>Address</label>
-                <input type="text" class="form-control location-google-map-search" autocorrect="off" autocapitalize="off" spellcheck="off" #search name="searchControl">
+                <input type="text" class="form-control location-google-map-search" autocorrect="off" autocapitalize="off" spellcheck="off" #search [(ngModel)]="location.fullAddress" name="fullAddress">
             </div>
             <!-- /.form-group -->
             <div class="form-group">
                 <label>Latitude</label>
-                <input type="text" class="form-control" id="listing_location_latitude" [(ngModel)]="latitude" name="latitude">
+                <input type="text" class="form-control" id="listing_location_latitude" [(ngModel)]="location.latitude" name="latitude">
             </div>
             <!-- /.form-group -->
             <div class="form-group">
                 <label>Longitude</label>
-                <input type="text" class="form-control" id="listing_location_longitude" [(ngModel)]="longitude" name="longitude">
+                <input type="text" class="form-control" id="listing_location_longitude" [(ngModel)]="location.longitude" name="longitude">
             </div>
             <!-- /.form-group -->
             <div class="form-group">
                 <label>Country</label>
-                <select class="form-control"></select>
+                <input type="text" class="form-control" id="listing_location_city" [(ngModel)]="location.city" name="city">
             </div>
             <!-- /.form-group -->
             <div class="form-group">
-                <label>Location</label>
-                <select class="form-control"></select>
+                <label>Postal code</label>
+                <input type="text" class="form-control" id="listing_location_postal_code" [(ngModel)]="location.postalCode" name="postalCode">
             </div>
             <!-- /.form-group -->
             <div class="form-group">
-                <label>Sublocation</label>
-                <select class="form-control"></select>
+                <label>Hidden</label>
+                <input type="checkbox" class="form-control" id="listing_location_hide" [(ngModel)]="location.hide" name="hide">
             </div>
             <!-- /.form-group -->
         </div>

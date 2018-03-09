@@ -13,8 +13,8 @@ import {Location} from '../../../../entities/location';
 
 export class PropertyMapComponent implements OnInit {
 
-    latitude = 41.390205;
-    longitude = 2.154007;
+    defaultLatitude = 41.390205;
+    defaultLongitude = 2.154007;
     zoom = 14;
 
     @ViewChild(AgmMap) agmMap: AgmMap;
@@ -34,27 +34,33 @@ export class PropertyMapComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.location);
-        this.getUserLocation();
+        if (this.location.latitude == null || this.location.longitude == null){
+            this.location.latitude = this.defaultLatitude;
+            this.location.longitude = this.defaultLongitude;
+        }
         this.mapsAPILoader.load().then(() => {
-            let autocomplete = new google.maps.places.Autocomplete(this.inputSearch.nativeElement, {
-                types: ["address"]
-            });
-            autocomplete.addListener("place_changed", () => {
-                this.ngZone.run(() => {
-                    //get the place result
-                    let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+            this.getUserLocation();
+            this.initPlaces();
+        });
+    }
+    initPlaces(){
+        let autocomplete = new google.maps.places.Autocomplete(this.inputSearch.nativeElement, {
+            types: ["address"]
+        });
+        autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+                //get the place result
+                let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-                    //verify result
-                    if (place.geometry === undefined || place.geometry === null) {
-                        return;
-                    }
+                //verify result
+                if (place.geometry === undefined || place.geometry === null) {
+                    return;
+                }
 
-                    //set latitude, longitude and zoom
-                    this.latitude = place.geometry.location.lat();
-                    this.longitude = place.geometry.location.lng();
-                    this.zoom = 12;
-                });
+                //set latitude, longitude and zoom
+                this.location.latitude = place.geometry.location.lat();
+                this.location.longitude = place.geometry.location.lng();
+                this.zoom = 12;
             });
         });
     }
@@ -63,10 +69,11 @@ export class PropertyMapComponent implements OnInit {
         // locate the user
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
-                this.latitude = position.coords.latitude;
-                this.longitude = position.coords.longitude;
-                this.agmMap.triggerResize().then(() =>  (this.agmMap as any)._mapsWrapper.setCenter({lat: this.latitude, lng: this.longitude}));
+                this.location.latitude = position.coords.latitude;
+                this.location.longitude = position.coords.longitude;
+                this.agmMap.triggerResize().then(() =>  (this.agmMap as any)._mapsWrapper.setCenter({lat: this.location.latitude, lng: this.location.longitude}));
                 console.log('Location of user found!');
+                this.geocodeLatLng();
             });
         } else {
             this.alertService.error('Cannot find user location :(');
@@ -74,18 +81,21 @@ export class PropertyMapComponent implements OnInit {
     }
 
     markerMoved(e) {
-        this.latitude = e.coords.lat;
-        this.longitude = e.coords.lng;
+        this.location.latitude = e.coords.lat;
+        this.location.longitude = e.coords.lng;
         this.geocodeLatLng();
     }
 
     geocodeLatLng() {
         let geocoder = new google.maps.Geocoder;
-        let latlng = {lat: this.latitude, lng: this.longitude};
+        let latlng = {lat: this.location.latitude, lng: this.location.longitude};
         geocoder.geocode({'location': latlng}, (results, status) => {
             if (status.toString() === 'OK') {
+                console.log(results);
                 if (results[0]) {
-                    console.log(results[0].formatted_address);
+                    this.location.fullAddress = results[0].formatted_address;
+                    this.location.city = results[0].address_components[2].long_name;
+                    this.location.postalCode = results[0].address_components[6].long_name;
                 } else {
                     console.log('No results found');
                 }
