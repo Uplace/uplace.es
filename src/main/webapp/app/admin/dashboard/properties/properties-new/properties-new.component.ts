@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Property, PropertyService} from "../../../../entities/property";
+import {Property, PropertyService, TransactionType} from "../../../../entities/property";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {JhiEventManager} from "ng-jhipster";
@@ -12,22 +12,29 @@ import {JhiEventManager} from "ng-jhipster";
 export class PropertiesNewComponent implements OnInit {
 
     isSaving: boolean;
-    property: Property = new Property();
+    property: Property;
+    propertyTypes = ['Apartment','Building','Business','Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
+    transactionTypes = TransactionType;
+
 
     constructor(
         private propertyService: PropertyService,
         private eventManager: JhiEventManager
     ) {
+        this.property = new Property();
+        this.property.propertyType = this.propertyTypes[0];
+        this.property.transaction = TransactionType.RENT_BUY;
     }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
-    onSubmit(event) {
+    onSubmit() {
+        console.log(this.property);
         this.save();
     }
 
     save() {
+        document.body.scrollTop = 0;
         this.isSaving = true;
         if (this.property.id !== undefined) {
             this.subscribeToSaveResponse(
@@ -44,8 +51,6 @@ export class PropertiesNewComponent implements OnInit {
     }
 
     private onSaveSuccess(result: Property) {
-        console.log("OK!");
-        console.log(result);
         this.eventManager.broadcast({ name: 'propertyListModification', content: 'OK'});
         this.isSaving = false;
     }

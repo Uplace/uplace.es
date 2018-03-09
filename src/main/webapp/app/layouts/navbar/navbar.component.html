@@ -111,7 +111,7 @@
                                     <li><a routerLink="/establishment" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">{{'global.menu.entities.establishment' | translate}}</a></li>
                                 </ul>
                             </li>
-                            <li *upHasAnyAuthority="'ROLE_ADMIN'" class="nav-item has-sub-menu">
+                            <!--<li *upHasAnyAuthority="'ROLE_ADMIN'" class="nav-item has-sub-menu">
                                 <a class="nav-link">{{'global.menu.admin.main' | translate}}</a>
                                 <ul class="sub-menu">
                                     <li><a routerLink="/user-management" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">{{'global.menu.admin.userManagement' | translate}}</a></li>
@@ -122,7 +122,7 @@
                                     <li><a routerLink="/logs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">{{'global.menu.admin.logs' | translate}}</a></li>
                                     <li *ngIf="swaggerEnabled"><a routerLink="/docs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">{{'global.menu.admin.apidocs' | translate}}</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <li *ngIf="languages" class="nav-item has-sub-menu">
                                 <a class="nav-link">{{'global.menu.language' | translate}}</a>
                                 <ul class="sub-menu">
@@ -131,7 +131,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item has-sub-menu">
+                            <!--<li class="nav-item has-sub-menu">
                                 <a class="nav-link">{{'global.menu.account.main' | translate}}</a>
                                 <ul class="sub-menu">
                                     <li *ngSwitchCase="true"><a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">{{'global.menu.account.settings' | translate}}</a></li>
@@ -140,7 +140,7 @@
                                     <li *ngSwitchCase="false"><a (click)="login()" (click)="collapseNavbar()">{{'global.menu.account.login' | translate}}</a></li>
                                     <li *ngSwitchCase="false"><a routerLink="/register" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">{{'global.menu.account.register' | translate}}</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                     <!-- /.primary-nav-wrapper -->

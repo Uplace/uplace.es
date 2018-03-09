@@ -4,10 +4,10 @@ import {Agent} from "../agent";
 import {Location} from "../location/location.model";
 
 export enum TransactionType {
-    RENT = 1,
-    BUY = 2,
-    TRANSFER = 4,
-    RENT_BUY = 3
+    RENT,
+    BUY,
+    TRANSFER,
+    RENT_BUY
 }
 
 export class Property implements BaseEntity {
@@ -33,5 +33,6 @@ export class Property implements BaseEntity {
     ) {
         this.newCreation = false;
         this.visible = false;
+        this.location = new Location();
     }
 }

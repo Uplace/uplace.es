@@ -2,6 +2,7 @@ package com.arnaugarcia.uplace.domain;
 
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.Cache;
@@ -53,7 +54,7 @@ public class Property implements Serializable {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @NotNull
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
