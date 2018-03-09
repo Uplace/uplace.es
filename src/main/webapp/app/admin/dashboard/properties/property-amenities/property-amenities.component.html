@@ -1,102 +1,536 @@
 <fieldset [ngSwitch]="property.propertyType">
     <legend>Amenities</legend>
-    <div class="row" *ngSwitchCase="'Apartment'">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            Feature
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" class="form-check-input" [(ngModel)]="property.visible"
-                                       name="visible"><span class="indicator"></span>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- /.form-check -->
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            Feature
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" class="form-check-input" [(ngModel)]="property.visible"
-                                       name="visible"><span class="indicator"></span>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- /.form-check -->
-                </div>
-                <div class="col-md-6">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            Feature
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" class="form-check-input" [(ngModel)]="property.visible"
-                                       name="visible"><span class="indicator"></span>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- /.form-check -->
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            Feature
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" class="form-check-input" [(ngModel)]="property.visible"
-                                       name="visible"><span class="indicator"></span>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- /.form-check -->
-                </div>
-            </div>
+    <div *ngSwitchCase="'Apartment'">
+        <div class="form-group">
+            <label>{{'uplaceApp.apartment.numberBedrooms'| translate}}</label>
+            <input type="number" class="form-control" [(ngModel)]="property.numberBedrooms" name="numberBedrooms"
+                   required>
         </div>
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            Feature
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" class="form-check-input" [(ngModel)]="property.visible"
-                                       name="visible"><span class="indicator"></span>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- /.form-check -->
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            Feature
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" class="form-check-input" [(ngModel)]="property.visible"
-                                       name="visible"><span class="indicator"></span>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- /.form-check -->
-                </div>
-                <div class="col-md-6">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            Feature
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" class="form-check-input" [(ngModel)]="property.visible"
-                                       name="visible"><span class="indicator"></span>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- /.form-check -->
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            Feature
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" class="form-check-input" [(ngModel)]="property.visible"
-                                       name="visible"><span class="indicator"></span>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- /.form-check -->
-                </div>
-            </div>
+        <div class="form-group">
+            <label>{{'uplaceApp.apartment.numberBathrooms'| translate}}</label>
+            <input type="number" class="form-control" [(ngModel)]="property.numberBathrooms" name="numberBathrooms"
+                   required>
+        </div>
+        <div class="form-group">
+            <label>{{'uplaceApp.apartment.m2Edified'| translate}}</label>
+            <input type="number" class="form-control" [(ngModel)]="property.m2Edified" name="m2Edified" required>
+        </div>
+        <div class="form-group">
+            <label>{{'uplaceApp.apartment.m2Usable'| translate}}</label>
+            <input type="number" class="form-control" [(ngModel)]="property.m2Usable" name="m2Usable" required>
+        </div>
+        <div class="form-group">
+            <label>{{'uplaceApp.apartment.height'| translate}}</label>
+            <input type="number" class="form-control" [(ngModel)]="property.height" name="height" required>
+        </div>
+        <div class="form-group">
+            <label>{{'uplaceApp.apartment.surfaceTerrace' | translate}}</label>
+            <input type="number" class="form-control" [(ngModel)]="property.surfaceTerrace" name="surfaceTerrace"
+                   required>
+        </div>
+        <div class="form-group">
+            <label>{{'uplaceApp.apartment.surfaceSaloon' | translate}}</label>
+            <input type="number" class="form-control" [(ngModel)]="property.surfaceSaloon" name="surfaceSaloon"
+                   required>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.elevator" for="field_elevator">Elevator</label>
+            <select class="form-control" name="elevator" [(ngModel)]="property.elevator" id="field_elevator">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.ac" for="field_ac">Ac</label>
+            <select class="form-control" name="ac" [(ngModel)]="property.ac" id="field_ac">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.heat" for="field_heat">Heat</label>
+            <select class="form-control" name="heat" [(ngModel)]="property.heat" id="field_heat">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.parking" for="field_parking">Elevator</label>
+            <select class="form-control" name="parking" [(ngModel)]="property.parking" id="field_parking">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.terrace" for="field_terrace">Terrace</label>
+            <select class="form-control" name="terrace" [(ngModel)]="property.terrace" id="field_terrace">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.balcony" for="field_balcony">Elevator</label>
+            <select class="form-control" name="balcony" [(ngModel)]="property.balcony" id="field_balcony">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.office" for="field_office">Office</label>
+            <select class="form-control" name="office" [(ngModel)]="property.office" id="field_office">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.kitchenOffice" for="field_kitchenOffice">kitchenOffice</label>
+            <select class="form-control" name="kitchenOffice" [(ngModel)]="property.kitchenOffice"
+                    id="field_kitchenOffice">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.balcony" for="field_storage">Storage</label>
+            <select class="form-control" name="storage" [(ngModel)]="property.storage" id="field_storage">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.nearTransport" for="field_sharedPool">nearTransport</label>
+            <select class="form-control" name="field_nearTransport" [(ngModel)]="property.nearTransport"
+                    id="field_nearTransport">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="uplaceApp.apartment.reformed" for="field_reformed">reformed</label>
+            <select class="form-control" name="reformed" [(ngModel)]="property.reformed" id="field_reformed">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.apartment.energyCertificate"
+                   for="field_energyCertificate">Energy Certificate</label>
+            <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate"
+                    id="field_energyCertificate">
+                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.apartment.certificateHabitability"
+                   for="field_certificateHabitability">Certificate Habitability</label>
+            <select class="form-control" name="certificateHabitability" [(ngModel)]="property.certificateHabitability"
+                    id="field_certificateHabitability">
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
         </div>
     </div>
+
+    <div *ngSwitchCase="'Building'">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.building.type" for="field_type">Type</label>
+            <select class="form-control" name="type" [(ngModel)]="property.type" id="field_type">
+                <option value="RESIDENTIAL">{{'uplaceApp.BuildingType.RESIDENTIAL' | translate}}</option>
+                <option value="HOTEL">{{'uplaceApp.BuildingType.HOTEL' | translate}}</option>
+                <option value="INDUSTRIAL">{{'uplaceApp.BuildingType.INDUSTRIAL' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.building.solarSurface" for="field_solarSurface">Solar
+                Surface</label>
+            <input type="number" class="form-control" name="solarSurface" id="field_solarSurface"
+                   [(ngModel)]="property.solarSurface"/>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.building.m2Edified" for="field_m2Edified">M 2
+                Edified</label>
+            <input type="number" class="form-control" name="m2Edified" id="field_m2Edified"
+                   [(ngModel)]="property.m2Edified"/>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.building.floorsSR" for="field_floorsSR">Floors
+                SR</label>
+            <input type="number" class="form-control" name="floorsSR" id="field_floorsSR"
+                   [(ngModel)]="property.floorsSR"/>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.building.floorsBR" for="field_floorsBR">Floors
+                BR</label>
+            <input type="number" class="form-control" name="floorsBR" id="field_floorsBR"
+                   [(ngModel)]="property.floorsBR"/>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.building.energyCertificate"
+                   for="field_energyCertificate">Energy Certificate</label>
+            <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate"
+                    id="field_energyCertificate">
+                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'Business'">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.type" for="field_type">Type</label>
+            <select class="form-control" name="type" [(ngModel)]="property.type" id="field_type" >
+                <option value="PUB">{{'uplaceApp.BusinessType.PUB' | translate}}</option>
+                <option value="HOTEL">{{'uplaceApp.BusinessType.HOTEL' | translate}}</option>
+                <option value="OTHERS">{{'uplaceApp.BusinessType.OTHERS' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.numberBathrooms" for="field_numberBathrooms">Number Bathrooms</label>
+            <input type="number" class="form-control" name="numberBathrooms" id="field_numberBathrooms"
+                   [(ngModel)]="property.numberBathrooms" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.elevator" for="field_elevator">Elevator</label>
+            <select class="form-control" name="elevator" [(ngModel)]="property.elevator" id="field_elevator" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.ac" for="field_ac">Ac</label>
+            <select class="form-control" name="ac" [(ngModel)]="property.ac" id="field_ac" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.heat" for="field_heat">Heat</label>
+            <select class="form-control" name="heat" [(ngModel)]="property.heat" id="field_heat" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.surfaceTerrace" for="field_surfaceTerrace">Surface Terrace</label>
+            <input type="number" class="form-control" name="surfaceTerrace" id="field_surfaceTerrace"
+                   [(ngModel)]="property.surfaceTerrace" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.surfaceGarden" for="field_surfaceGarden">Surface Garden</label>
+            <input type="number" class="form-control" name="surfaceGarden" id="field_surfaceGarden"
+                   [(ngModel)]="property.surfaceGarden" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.numberOffice" for="field_numberOffice">Number Office</label>
+            <input type="number" class="form-control" name="numberOffice" id="field_numberOffice"
+                   [(ngModel)]="property.numberOffice" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.surfaceSaloon" for="field_surfaceSaloon">Surface Saloon</label>
+            <input type="number" class="form-control" name="surfaceSaloon" id="field_surfaceSaloon"
+                   [(ngModel)]="property.surfaceSaloon" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.height" for="field_height">Height</label>
+            <input type="number" class="form-control" name="height" id="field_height"
+                   [(ngModel)]="property.height" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.business.pool" for="field_pool">Pool</label>
+            <select class="form-control" name="pool" [(ngModel)]="property.pool" id="field_pool" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'Establishment'">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.establishment.m2Facade" for="field_m2Facade">M 2 Facade</label>
+            <input type="number" class="form-control" name="m2Facade" id="field_m2Facade"
+                   [(ngModel)]="property.m2Facade" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.establishment.bathroom" for="field_bathroom">Bathroom</label>
+            <select class="form-control" name="bathroom" [(ngModel)]="property.bathroom" id="field_bathroom" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.establishment.use" for="field_use">Use</label>
+            <select class="form-control" name="use" [(ngModel)]="property.use" id="field_use" >
+                <option value="RESTAURANT">{{'uplaceApp.UseEstablishment.RESTAURANT' | translate}}</option>
+                <option value="PUB">{{'uplaceApp.UseEstablishment.PUB' | translate}}</option>
+                <option value="SHOP">{{'uplaceApp.UseEstablishment.SHOP' | translate}}</option>
+                <option value="OTHER">{{'uplaceApp.UseEstablishment.OTHER' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.establishment.energyCertificate" for="field_energyCertificate">Energy Certificate</label>
+            <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate" id="field_energyCertificate" >
+                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'Hotel'">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.establishment.m2Facade" for="field_m2Facade">M 2 Facade</label>
+            <input type="number" class="form-control" name="m2Facade" id="field_m2Facade"
+                   [(ngModel)]="property.m2Facade" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.establishment.bathroom" for="field_bathroom">Bathroom</label>
+            <select class="form-control" name="bathroom" [(ngModel)]="property.bathroom" id="field_bathroom" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.establishment.use" for="field_use">Use</label>
+            <select class="form-control" name="use" [(ngModel)]="property.use" id="field_use" >
+                <option value="RESTAURANT">{{'uplaceApp.UseEstablishment.RESTAURANT' | translate}}</option>
+                <option value="PUB">{{'uplaceApp.UseEstablishment.PUB' | translate}}</option>
+                <option value="SHOP">{{'uplaceApp.UseEstablishment.SHOP' | translate}}</option>
+                <option value="OTHER">{{'uplaceApp.UseEstablishment.OTHER' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.establishment.energyCertificate" for="field_energyCertificate">Energy Certificate</label>
+            <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate" id="field_energyCertificate" >
+                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'IndustrialPlant'">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.industrialPlant.solarSurface" for="field_solarSurface">Solar Surface</label>
+            <input type="number" class="form-control" name="solarSurface" id="field_solarSurface"
+                   [(ngModel)]="property.solarSurface" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.industrialPlant.numberRooms" for="field_numberRooms">Number Rooms</label>
+            <input type="number" class="form-control" name="numberRooms" id="field_numberRooms"
+                   [(ngModel)]="property.numberRooms" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.industrialPlant.m2Offices" for="field_m2Offices">M 2 Offices</label>
+            <input type="number" class="form-control" name="m2Offices" id="field_m2Offices"
+                   [(ngModel)]="property.m2Offices" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.industrialPlant.m2Storage" for="field_m2Storage">M 2 Storage</label>
+            <input type="number" class="form-control" name="m2Storage" id="field_m2Storage"
+                   [(ngModel)]="property.m2Storage" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.industrialPlant.heightFree" for="field_heightFree">Height Free</label>
+            <input type="number" class="form-control" name="heightFree" id="field_heightFree"
+                   [(ngModel)]="property.heightFree" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.industrialPlant.numberDocks" for="field_numberDocks">Number Docks</label>
+            <input type="number" class="form-control" name="numberDocks" id="field_numberDocks"
+                   [(ngModel)]="property.numberDocks" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.industrialPlant.energyCertificate" for="field_energyCertificate">Energy Certificate</label>
+            <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate" id="field_energyCertificate" >
+                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'Office'">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.bathrooms" for="field_bathrooms">Bathrooms</label>
+            <input type="text" class="form-control" name="bathrooms" id="field_bathrooms"
+                   [(ngModel)]="property.bathrooms" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.floors" for="field_floors">Floors</label>
+            <input type="number" class="form-control" name="floors" id="field_floors"
+                   [(ngModel)]="property.floors" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.terrace" for="field_terrace">Terrace</label>
+            <select class="form-control" name="terrace" [(ngModel)]="property.terrace" id="field_terrace" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.office" for="field_office">Office</label>
+            <select class="form-control" name="office" [(ngModel)]="property.office" id="field_office" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.storage" for="field_storage">Storage</label>
+            <select class="form-control" name="storage" [(ngModel)]="property.storage" id="field_storage" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.storageSurface" for="field_storageSurface">Storage Surface</label>
+            <input type="number" class="form-control" name="storageSurface" id="field_storageSurface"
+                   [(ngModel)]="property.storageSurface" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.officesSurface" for="field_officesSurface">Offices Surface</label>
+            <input type="number" class="form-control" name="officesSurface" id="field_officesSurface"
+                   [(ngModel)]="property.officesSurface" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.ac" for="field_ac">Ac</label>
+            <select class="form-control" name="ac" [(ngModel)]="property.ac" id="field_ac" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.heat" for="field_heat">Heat</label>
+            <select class="form-control" name="heat" [(ngModel)]="property.heat" id="field_heat" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.office.energyCertificate" for="field_energyCertificate">Energy Certificate</label>
+            <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate" id="field_energyCertificate" >
+                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'Parking'">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.parking.nearTransport" for="field_nearTransport">Near Transport</label>
+            <select class="form-control" name="nearTransport" [(ngModel)]="property.nearTransport" id="field_nearTransport" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.parking.surveillance" for="field_surveillance">Surveillance</label>
+            <select class="form-control" name="surveillance" [(ngModel)]="property.surveillance" id="field_surveillance" >
+                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'Terrain'">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.m2Buildable" for="field_m2Buildable">M 2 Buildable</label>
+            <input type="number" class="form-control" name="m2Buildable" id="field_m2Buildable"
+                   [(ngModel)]="property.m2Buildable" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.buildable" for="field_buildable">Buildable</label>
+            <input type="checkbox" class="form-control" name="buildable" id="field_buildable"
+                   [(ngModel)]="property.buildable" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.buildableDepth" for="field_buildableDepth">Buildable Depth</label>
+            <input type="number" class="form-control" name="buildableDepth" id="field_buildableDepth"
+                   [(ngModel)]="property.buildableDepth" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.floorsSR" for="field_floorsSR">Floors SR</label>
+            <input type="number" class="form-control" name="floorsSR" id="field_floorsSR"
+                   [(ngModel)]="property.floorsSR" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.floorsBR" for="field_floorsBR">Floors BR</label>
+            <input type="number" class="form-control" name="floorsBR" id="field_floorsBR"
+                   [(ngModel)]="property.floorsBR" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.constructionCoefficient" for="field_constructionCoefficient">Construction Coefficient</label>
+            <input type="number" class="form-control" name="constructionCoefficient" id="field_constructionCoefficient"
+                   [(ngModel)]="property.constructionCoefficient" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.terrain.type" for="field_type">Type</label>
+            <select class="form-control" name="type" [(ngModel)]="property.type" id="field_type" >
+                <option value="RESIDENTIAL">{{'uplaceApp.TerrainType.RESIDENTIAL' | translate}}</option>
+                <option value="URBAN">{{'uplaceApp.TerrainType.URBAN' | translate}}</option>
+                <option value="RUSTIC">{{'uplaceApp.TerrainType.RUSTIC' | translate}}</option>
+                <option value="INDUSTRIAL">{{'uplaceApp.TerrainType.INDUSTRIAL' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
     <!-- /.checkbox-list -->
 </fieldset>
