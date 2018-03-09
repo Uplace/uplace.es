@@ -6,6 +6,7 @@ import {UplaceSharedModule} from "../../../shared";
 import {PropertyService} from "../../../entities/property";
 import {PropertyResolvePagingParams} from "../dashboard.route";
 import { PropertyMapComponent } from './property-map/property-map.component';
+import { PropertyAmenitiesComponent } from './property-amenities/property-amenities.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { PropertyMapComponent } from './property-map/property-map.component';
     declarations: [
         PropertiesComponent,
         PropertiesNewComponent,
-        PropertyMapComponent
+        PropertyMapComponent,
+        PropertyAmenitiesComponent
     ],
     providers: [
         PropertyService,

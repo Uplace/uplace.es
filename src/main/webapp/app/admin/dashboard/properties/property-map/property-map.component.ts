@@ -1,5 +1,4 @@
 import {Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
-import {FormControl} from "@angular/forms";
 import {AgmMap, MapsAPILoader} from "@agm/core";
 import {JhiAlertService, JhiEventManager} from "ng-jhipster";
 import {} from '@types/googlemaps';
@@ -91,7 +90,6 @@ export class PropertyMapComponent implements OnInit {
         let latlng = {lat: this.location.latitude, lng: this.location.longitude};
         geocoder.geocode({'location': latlng}, (results, status) => {
             if (status.toString() === 'OK') {
-                console.log(results);
                 if (results[0]) {
                     this.location.fullAddress = results[0].formatted_address;
                     this.location.city = results[0].address_components[2].long_name;

@@ -79,7 +79,7 @@
                 <div class="col-sm-4" *ngIf="property.transaction == transactionTypes.TRANSFER">
                     <div class="form-group">
                         <label>Price transfer</label>
-                        <input type="number" class="form-control" [(ngModel)]="property.price" name="priceSell" required>
+                        <input type="number" class="form-control" [(ngModel)]="property.price" name="price" required>
                     </div>
                     <!-- /.form-group -->
                 </div>
@@ -88,7 +88,7 @@
             <!-- /.row -->
         </fieldset>
         <up-property-map [(location)]="property.location"></up-property-map>
-        <fieldset>
+<!--        <fieldset>
             <legend>Contact Information</legend>
             <div class="row">
                 <div class="col-sm-4">
@@ -96,107 +96,51 @@
                         <label>Country</label>
                         <input type="text" class="form-control">
                     </div>
-                    <!-- /.form-group -->
+                    &lt;!&ndash; /.form-group &ndash;&gt;
                 </div>
-                <!-- /.col-* -->
+                &lt;!&ndash; /.col-* &ndash;&gt;
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>City</label>
                         <input type="text" class="form-control">
                     </div>
-                    <!-- /.form-group -->
+                    &lt;!&ndash; /.form-group &ndash;&gt;
                 </div>
-                <!-- /.col-* -->
+                &lt;!&ndash; /.col-* &ndash;&gt;
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Address</label>
                         <input type="text" class="form-control">
                     </div>
-                    <!-- /.form-group -->
+                    &lt;!&ndash; /.form-group &ndash;&gt;
                 </div>
-                <!-- /.col-* -->
+                &lt;!&ndash; /.col-* &ndash;&gt;
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Phone</label>
                         <input type="text" class="form-control">
                     </div>
-                    <!-- /.form-group -->
+                    &lt;!&ndash; /.form-group &ndash;&gt;
                 </div>
-                <!-- /.col-* -->
+                &lt;!&ndash; /.col-* &ndash;&gt;
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>E-mail</label>
                         <input type="text" class="form-control">
                     </div>
-                    <!-- /.form-group -->
+                    &lt;!&ndash; /.form-group &ndash;&gt;
                 </div>
-                <!-- /.col-* -->
+                &lt;!&ndash; /.col-* &ndash;&gt;
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Website</label>
                         <input type="text" class="form-control">
                     </div>
-                    <!-- /.form-group -->
+                    &lt;!&ndash; /.form-group &ndash;&gt;
                 </div>
-                <!-- /.col-* -->
+                &lt;!&ndash; /.col-* &ndash;&gt;
             </div>
-        </fieldset>
-        <fieldset>
-            <legend>Amenities</legend>
-            <div class="checkbox-list">
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Air conditioning
-                    </label>
-                </div>
-                <!-- /.form-check -->
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Balcony
-                    </label>
-                </div>
-                <!-- /.form-check -->
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Bedding
-                    </label>
-                </div>
-                <!-- /.form-check -->
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Cable TV
-                    </label>
-                </div>
-                <!-- /.form-check -->
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Cleaning after exit
-                    </label>
-                </div>
-                <!-- /.form-check -->
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Cofee pot
-                    </label>
-                </div>
-                <!-- /.form-check -->
-            </div>
-            <!-- /.checkbox-list -->
-        </fieldset>
-        <fieldset>
-            <legend>Additional Information</legend>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input"> Send me newsletter
-                </label>
-            </div>
-            <!-- /.form-check -->
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input"> I agree with terms &amp; conditions
-                </label>
-            </div>
-            <!-- /.form-check -->
-        </fieldset>
+        </fieldset>-->
+        <up-property-amenities [property]="property"></up-property-amenities>
     </form>
 </div>
