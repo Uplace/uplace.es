@@ -7,6 +7,7 @@ import {PropertyService} from "../../../entities/property";
 import {PropertyResolvePagingParams} from "../dashboard.route";
 import { PropertyMapComponent } from './property-map/property-map.component';
 import { PropertyAmenitiesComponent } from './property-amenities/property-amenities.component';
+import { PropertyPhotosComponent } from './property-photos/property-photos.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import { PropertyAmenitiesComponent } from './property-amenities/property-amenit
         PropertiesComponent,
         PropertiesNewComponent,
         PropertyMapComponent,
-        PropertyAmenitiesComponent
+        PropertyAmenitiesComponent,
+        PropertyPhotosComponent
     ],
     providers: [
         PropertyService,

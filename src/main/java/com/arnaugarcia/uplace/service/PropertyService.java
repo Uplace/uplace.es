@@ -1,6 +1,8 @@
 package com.arnaugarcia.uplace.service;
 
+import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 /**
  * Service Implementation for managing Property.
@@ -25,8 +28,11 @@ public class PropertyService<T extends Property> {
 
     private final PropertyRepository<T> propertyRepository;
 
-    public PropertyService(PropertyRepository<T> propertyRepository) {
+    private final PhotoRepository photoRepository;
+
+    public PropertyService(PropertyRepository<T> propertyRepository, PhotoRepository photoRepository) {
         this.propertyRepository = propertyRepository;
+        this.photoRepository = photoRepository;
     }
 
     /**
@@ -41,7 +47,14 @@ public class PropertyService<T extends Property> {
             property.setCreated(ZonedDateTime.now());
         }
         property.setReference(this.createReference());
-        return propertyRepository.save(property);
+
+        Set<Photo> photos = property.getPhotos();
+        T result = propertyRepository.save(property);
+        photos.forEach((photo -> photo.setProperty(result)));
+
+        photoRepository.save(photos);
+
+        return result;
     }
 
     /**

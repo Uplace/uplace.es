@@ -42,21 +42,21 @@ export class PropertyMapComponent implements OnInit {
             this.initPlaces();
         });
     }
-    initPlaces(){
+    initPlaces() {
         let autocomplete = new google.maps.places.Autocomplete(this.inputSearch.nativeElement, {
             types: ["address"]
         });
         autocomplete.addListener("place_changed", () => {
             this.ngZone.run(() => {
-                //get the place result
+                // get the place result
                 let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-                //verify result
+                // verify result
                 if (place.geometry === undefined || place.geometry === null) {
                     return;
                 }
 
-                //set latitude, longitude and zoom
+                // set latitude, longitude and zoom
                 this.location.latitude = place.geometry.location.lat();
                 this.location.longitude = place.geometry.location.lng();
                 this.zoom = 12;

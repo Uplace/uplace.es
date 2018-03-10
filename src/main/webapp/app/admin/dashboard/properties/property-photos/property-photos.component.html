@@ -1,0 +1,17 @@
+<div class="form-group">
+    <label class="form-control-label" jhiTranslate="uplaceApp.photo.photo" for="field_photo">Photo</label>
+    <div>
+        <img [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo" style="max-height: 100px;" *ngIf="photo.photo" alt="photo image"/>
+        <div *ngIf="photo.photo" class="form-text text-danger clearfix">
+            <span class="pull-left">{{photo.photoContentType}}, {{byteSize(photo.photo)}}</span>
+            <button type="button" (click)="clearInputImage('photo', 'photoContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                <span class="fa fa-times"></span>
+            </button>
+        </div>
+        <input type="file" id="file_photo" (change)="setFileData($event, photo, 'photo', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+    </div>
+    <input type="hidden" class="form-control" name="photo" id="field_photo"
+           [(ngModel)]="photo.photo" required/>
+    <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType"
+           [(ngModel)]="photo.photoContentType" />
+</div>
