@@ -43,8 +43,11 @@ public class PropertyService<T extends Property> {
      */
     public T save(T property) {
         log.debug("Request to save Property : {}", property);
-        if (property.getCreated() != null) {
+
+        if (property.getId() == null) {
             property.setCreated(ZonedDateTime.now());
+        } else {
+            property.setUpdated(ZonedDateTime.now());
         }
         property.setReference(this.createReference());
 
