@@ -44,7 +44,11 @@
                     </td>
                     <td>{{photo.name}}</td>
                     <td>
-                        <input type="checkbox" [checked]="photo.thumbnail">
+                        <label class="form-check-label">
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" class="form-check-input" [(ngModel)]="photo.thumbnail" name="thumbnail"><span class="indicator"></span>
+                            </div>
+                        </label>
                     </td>
                     <td>
                         <button class="fa fa-trash" (click)="deletePhoto(photo)"></button>
