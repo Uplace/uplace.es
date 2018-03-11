@@ -8,11 +8,13 @@ import {PropertyResolvePagingParams} from "../dashboard.route";
 import { PropertyMapComponent } from './property-map/property-map.component';
 import { PropertyAmenitiesComponent } from './property-amenities/property-amenities.component';
 import { PropertyPhotosComponent } from './property-photos/property-photos.component';
+import {FileUploadModule} from 'ng2-file-upload';
 
 @NgModule({
     imports: [
         UplaceSharedModule,
         CommonModule,
+        FileUploadModule
     ],
     declarations: [
         PropertiesComponent,

@@ -1,6 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Photo} from '../../../../entities/photo';
 import {JhiDataUtils} from 'ng-jhipster';
+import {FileUploader} from 'ng2-file-upload';
 
 @Component({
     selector: 'up-property-photos',
@@ -17,6 +18,38 @@ export class PropertyPhotosComponent implements OnInit {
     @Input() photos: Photo[];
 
     @Output() photosChange: EventEmitter<Photo[]> = new EventEmitter<Photo[]>();
+
+    public uploader: FileUploader = new FileUploader({url: ''});
+    public hasBaseDropZoneOver: boolean = false;
+
+    public fileOverBase(e: any): void {
+        this.hasBaseDropZoneOver = e;
+        if (!this.hasBaseDropZoneOver) {
+            let fileCount: number = this.uploader.queue.length;
+            console.log(fileCount);
+            if (fileCount > 0) {
+
+                this.uploader.queue.forEach((val, i, array) => {
+
+                    let fileReader = new FileReader();
+                    fileReader.onloadend = (e) => {
+                        let imageData = fileReader.result;
+                        let rawData = imageData.split("base64,");
+
+                        if (rawData.length > 1) {
+                            rawData = rawData[1];
+
+                            // create my model here
+
+                            // call my service here
+                        }
+                    };
+                    fileReader.readAsDataURL(val._file);
+
+                });
+            }
+        }
+    }
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -40,11 +73,14 @@ export class PropertyPhotosComponent implements OnInit {
     }
 
     setFileData(event, entity, field, isImage) {
+        console.log(event);
+        console.log(entity);
+        console.log(field);
+        console.log(isImage);
         this.dataUtils.setFileData(event, entity, field, isImage);
         this.photo.name = 'Test photo';
         this.photo.description = 'Test photo';
         this.photo.thumbnail = true;
-        console.log(this.photo);
         this.photos.push(this.photo);
         this.photosChange.emit(this.photos);
     }

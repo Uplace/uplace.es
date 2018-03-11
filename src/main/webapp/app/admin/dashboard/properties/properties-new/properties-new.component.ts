@@ -13,7 +13,7 @@ export class PropertiesNewComponent implements OnInit {
 
     isSaving: boolean;
     property: Property;
-    propertyTypes = ['Apartment','Building','Business','Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
+    propertyTypes = ['Apartment', 'Building', 'Business', 'Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
     transactionTypes = TransactionType;
 
 
