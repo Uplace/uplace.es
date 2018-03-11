@@ -51,5 +51,14 @@ export const dashboardRoute: Routes = [
             pageTitle: 'Dashboard - New property'
         },
         canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'dashboard/properties/:reference',
+        component: PropertiesNewComponent,
+        data: {
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Dashboard - Edit property'
+        },
+        canActivate: [UserRouteAccessService]
     }
 ];

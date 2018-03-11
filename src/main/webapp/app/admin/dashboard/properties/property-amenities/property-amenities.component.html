@@ -1,4 +1,4 @@
-<fieldset [ngSwitch]="property.propertyType">
+<div [ngSwitch]="property.propertyType">
     <legend>Amenities</legend>
     <div *ngSwitchCase="'Apartment'">
         <div class="form-group">
@@ -533,4 +533,4 @@
     </div>
 
     <!-- /.checkbox-list -->
-</fieldset>
+</div>

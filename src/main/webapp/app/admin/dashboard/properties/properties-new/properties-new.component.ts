@@ -3,6 +3,7 @@ import {Property, PropertyService, TransactionType} from "../../../../entities/p
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {JhiEventManager} from "ng-jhipster";
+import {ActivatedRoute, Params} from '@angular/router';
 
 @Component({
     selector: 'up-properties-new',
@@ -19,14 +20,23 @@ export class PropertiesNewComponent implements OnInit {
 
     constructor(
         private propertyService: PropertyService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private route: ActivatedRoute
     ) {
         this.property = new Property();
         this.property.propertyType = this.propertyTypes[0];
         this.property.transaction = TransactionType.RENT_BUY;
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+       this.route.params.subscribe((params: Params) => {
+            if (params['reference']) {
+               this.propertyService.find(params['reference']).subscribe((property) => {
+                   this.property = property.body;
+               });
+            }
+       });
+    }
 
     onSubmit() {
         console.log(this.property);
