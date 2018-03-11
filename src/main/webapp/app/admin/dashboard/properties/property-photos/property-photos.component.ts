@@ -26,22 +26,21 @@ export class PropertyPhotosComponent implements OnInit {
         this.hasBaseDropZoneOver = e;
         if (!this.hasBaseDropZoneOver) {
             let fileCount: number = this.uploader.queue.length;
-            console.log(fileCount);
             if (fileCount > 0) {
 
                 this.uploader.queue.forEach((val, i, array) => {
 
                     let fileReader = new FileReader();
                     fileReader.onloadend = (e) => {
+
                         let imageData = fileReader.result;
                         let rawData = imageData.split("base64,");
 
                         if (rawData.length > 1) {
+
                             rawData = rawData[1];
-
-                            // create my model here
-
-                            // call my service here
+                            this.photos.push(new Photo(null, 'Test Photo', 'Test photo', 'image/jpeg', rawData, true, null));
+                            this.photosChange.emit(this.photos);
                         }
                     };
                     fileReader.readAsDataURL(val._file);
