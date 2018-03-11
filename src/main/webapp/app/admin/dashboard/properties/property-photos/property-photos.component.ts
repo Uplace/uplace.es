@@ -20,9 +20,18 @@ export class PropertyPhotosComponent implements OnInit {
     public uploader: FileUploader = new FileUploader({url: ''});
     public hasBaseDropZoneOver = false;
 
-    constructor(
+    constructor() { }
 
-    ) {
+    public fileOverBase(e: any): void {
+        this.hasBaseDropZoneOver = e;
+    }
+
+    ngOnInit() {
+
+        if (this.photos == null) {
+            this.photos = <Photo[]>[];
+        }
+
         this.uploader.onAfterAddingFile = (item) => {
             const reader = new FileReader();
 
@@ -32,7 +41,7 @@ export class PropertyPhotosComponent implements OnInit {
             photo.name = item._file.name;
             photo.description = item._file.name;
 
-            reader.onload =  (event) => {
+            reader.onload =  () => {
 
                 let imageData = reader.result;
 
@@ -49,16 +58,6 @@ export class PropertyPhotosComponent implements OnInit {
             };
             reader.readAsDataURL(item._file);
         };
-    }
-
-    public fileOverBase(e: any): void {
-        this.hasBaseDropZoneOver = e;
-    }
-
-    ngOnInit() {
-        if (this.photos == null) {
-            this.photos = <Photo[]>[];
-        }
 
     }
 
