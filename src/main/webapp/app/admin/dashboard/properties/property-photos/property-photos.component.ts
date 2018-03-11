@@ -60,5 +60,9 @@ export class PropertyPhotosComponent implements OnInit {
         };
 
     }
+    deletePhoto(photo: Photo) {
+        const index: number = this.photos.indexOf(photo);
+        this.photos.splice(index, 1);
+    }
 
 }

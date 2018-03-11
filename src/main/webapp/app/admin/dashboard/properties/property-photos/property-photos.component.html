@@ -32,6 +32,7 @@
                     <th>Preview</th>
                     <th>Title</th>
                     <th>Thumbnail</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,9 @@
                     <td>{{photo.name}}</td>
                     <td>
                         <input type="checkbox" [checked]="photo.thumbnail">
+                    </td>
+                    <td>
+                        <button class="fa fa-trash" (click)="deletePhoto(photo)"></button>
                     </td>
                 </tr>
                 </tbody>
