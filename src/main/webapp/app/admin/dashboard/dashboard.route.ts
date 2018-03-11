@@ -35,7 +35,7 @@ export const dashboardRoute: Routes = [
         path: 'dashboard/properties',
         component: PropertiesComponent,
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'uplaceApp.property.home.title'
         },
         resolve: {
@@ -47,7 +47,7 @@ export const dashboardRoute: Routes = [
         path: 'dashboard/properties/new',
         component: PropertiesNewComponent,
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'Dashboard - New property'
         },
         canActivate: [UserRouteAccessService]
@@ -56,7 +56,7 @@ export const dashboardRoute: Routes = [
         path: 'dashboard/properties/:reference',
         component: PropertiesNewComponent,
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'Dashboard - Edit property'
         },
         canActivate: [UserRouteAccessService]
