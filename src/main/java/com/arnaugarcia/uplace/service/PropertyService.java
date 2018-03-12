@@ -46,10 +46,10 @@ public class PropertyService<T extends Property> {
 
         if (property.getId() == null) {
             property.setCreated(ZonedDateTime.now());
+            property.setReference(this.createReference());
         } else {
             property.setUpdated(ZonedDateTime.now());
         }
-        property.setReference(this.createReference());
 
         Set<Photo> photos = property.getPhotos();
         T result = propertyRepository.save(property);
@@ -92,7 +92,11 @@ public class PropertyService<T extends Property> {
     @Transactional(readOnly = true)
     public T findOne(String reference) {
         log.debug("Request to get Property : {}", reference);
-        return propertyRepository.findByReference(reference);
+        T result = propertyRepository.findByReference(reference);
+        if (result == null) {
+            throw new BadRequestAlertException("Property not found", "Property", ErrorConstants.ERR_BAD_REFERENCE);
+        }
+        return result;
     }
 
     /**

@@ -6,7 +6,8 @@
         <span class="breadcrumb-item active">Bootstrap</span>
     </nav>
     <up-alert-error></up-alert-error>
-    <form method="post" action="?" class="mb80" (submit)="onSubmit($event)" #newPropertyForm="ngForm">
+    <up-alert></up-alert>
+    <form class="mb80" (ngSubmit)="onSubmit($event)" #newPropertyForm="ngForm">
         <fieldset>
             <legend>
                 <div class="pull-left">Basic Information</div>

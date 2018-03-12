@@ -28,7 +28,7 @@ export class PropertyService {
         return this.http.put<Property>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
-    
+
     find(reference: string): Observable<EntityResponseType> {
         return this.http.get<any>(`${this.resourceUrl}/${reference}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
@@ -76,9 +76,10 @@ export class PropertyService {
     private convert(property: Property): Property {
         const copy: Property = Object.assign({}, property);
 
-        copy.created = this.dateUtils.toDate(property.created);
+        copy.created = this.dateUtils.convertDateTimeFromServer(property.created);
 
-        copy.updated = this.dateUtils.toDate(property.updated);
+        copy.updated = this.dateUtils.convertDateTimeFromServer(property.updated);
+
         return copy;
     }
 }

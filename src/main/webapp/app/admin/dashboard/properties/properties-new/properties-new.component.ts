@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Property, PropertyService, TransactionType} from "../../../../entities/property";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
-import {JhiEventManager} from "ng-jhipster";
-import {ActivatedRoute, Params} from '@angular/router';
+import {JhiAlertService, JhiEventManager} from "ng-jhipster";
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
     selector: 'up-properties-new',
@@ -21,7 +21,9 @@ export class PropertiesNewComponent implements OnInit {
     constructor(
         private propertyService: PropertyService,
         private eventManager: JhiEventManager,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private alertService: JhiAlertService,
+        private router: Router
     ) {
         this.property = new Property();
         this.property.propertyType = this.propertyTypes[0];
@@ -31,20 +33,21 @@ export class PropertiesNewComponent implements OnInit {
     ngOnInit() {
        this.route.params.subscribe((params: Params) => {
             if (params['reference']) {
-               this.propertyService.find(params['reference']).subscribe((property) => {
-                   this.property = property.body;
+               this.propertyService.find(params['reference']).subscribe((result) => {
+                   this.property = result.body;
+               }, error => {
+                   this.alertService.error(error.message, null, null);
+                   this.router.navigate(['/dashboard/properties']);
                });
             }
        });
     }
 
     onSubmit() {
-        console.log(this.property);
         this.save();
     }
 
     save() {
-        document.body.scrollTop = 0;
         this.isSaving = true;
         if (this.property.id !== undefined) {
             this.subscribeToSaveResponse(
@@ -53,6 +56,7 @@ export class PropertiesNewComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.propertyService.create(this.property));
         }
+        document.body.scrollTop = 0;
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Property>>) {
