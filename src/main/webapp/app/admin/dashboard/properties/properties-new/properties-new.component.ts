@@ -4,6 +4,7 @@ import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {JhiAlertService, JhiEventManager} from "ng-jhipster";
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Location} from '../../../../entities/location/location.model';
 
 @Component({
     selector: 'up-properties-new',
@@ -13,7 +14,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 export class PropertiesNewComponent implements OnInit {
 
     isSaving: boolean;
-    property: Property;
+    property: Property = new Property();
     propertyTypes = ['Apartment', 'Building', 'Business', 'Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
     transactionTypes = TransactionType;
 
@@ -25,7 +26,6 @@ export class PropertiesNewComponent implements OnInit {
         private alertService: JhiAlertService,
         private router: Router
     ) {
-        this.property = new Property();
         this.property.propertyType = this.propertyTypes[0];
         this.property.transaction = TransactionType.RENT_BUY;
     }
@@ -34,6 +34,9 @@ export class PropertiesNewComponent implements OnInit {
        this.route.params.subscribe((params: Params) => {
             if (params['reference']) {
                this.propertyService.find(params['reference']).subscribe((result) => {
+                   if (result.body.location == null) {
+                       result.body.location = new Location();
+                   }
                    this.property = result.body;
                }, error => {
                    this.alertService.error(error.message, null, null);
@@ -41,6 +44,7 @@ export class PropertiesNewComponent implements OnInit {
                });
             }
        });
+
     }
 
     onSubmit() {
@@ -56,7 +60,7 @@ export class PropertiesNewComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.propertyService.create(this.property));
         }
-        document.body.scrollTop = 0;
+        window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Property>>) {
@@ -66,7 +70,7 @@ export class PropertiesNewComponent implements OnInit {
 
     private onSaveSuccess(result: Property) {
         this.eventManager.broadcast({ name: 'propertyListModification', content: 'OK'});
-        this.isSaving = false;
+        this.isSaving = true;
     }
 
     private onSaveError() {

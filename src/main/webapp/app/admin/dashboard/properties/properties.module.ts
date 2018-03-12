@@ -9,12 +9,14 @@ import { PropertyMapComponent } from './property-map/property-map.component';
 import { PropertyAmenitiesComponent } from './property-amenities/property-amenities.component';
 import { PropertyPhotosComponent } from './property-photos/property-photos.component';
 import {FileUploadModule} from 'ng2-file-upload';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [
         UplaceSharedModule,
         CommonModule,
-        FileUploadModule
+        FileUploadModule,
+        RouterModule
     ],
     declarations: [
         PropertiesComponent,

@@ -39,7 +39,7 @@
                     <div class="avatar squared"
                          [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span></div>
                     <h2>
-                        <a>{{property.title}}</a>
+                        <a [routerLink]="['/dashboard/properties/', property.reference]">{{property.title}}</a>
                         <span *ngIf="property.location && property.location.fullAddress">{{property.location.fullAddress}}</span>
                     </h2>
                 </td>

@@ -68,7 +68,6 @@ export class HomeMapComponent implements OnInit {
         this.filterService.query().subscribe(
             (res: HttpResponse<Filter>) => {
                 this.filters = res.body;
-                console.log(this.filters);
             }
         );
 

@@ -46,7 +46,6 @@ public class Agent implements Serializable {
     @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     @ManyToMany(mappedBy = "managers")

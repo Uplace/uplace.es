@@ -29,8 +29,7 @@ export class PropertyMapComponent implements OnInit {
         private alertService: JhiAlertService,
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone
-    ) {
-    }
+    ) { }
 
     ngOnInit() {
         if (this.location.latitude == null || this.location.longitude == null){
@@ -42,10 +41,13 @@ export class PropertyMapComponent implements OnInit {
             this.initPlaces();
         });
     }
+
     initPlaces() {
+
         let autocomplete = new google.maps.places.Autocomplete(this.inputSearch.nativeElement, {
             types: ["address"]
         });
+
         autocomplete.addListener("place_changed", () => {
             this.ngZone.run(() => {
                 // get the place result
