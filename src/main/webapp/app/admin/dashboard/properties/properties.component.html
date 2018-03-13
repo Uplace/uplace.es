@@ -12,7 +12,6 @@
         <div class="table-header-actions">
             <a href="#" class="btn btn-primary"><i class="fa fa-filter"></i> Apply filters</a>
             <a href="#" class="btn"><i class="fa fa-download"></i> Export All</a>
-            <a href="#" class="btn"><i class="fa fa-trash"></i> Delete All</a>
         </div>
         <!-- /.table-header-actions -->
     </div>
@@ -65,7 +64,7 @@
                             Actions
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Workflow Action</a>
+                            <!--<a class="dropdown-item" href="#">Workflow Action</a>-->
                             <a class="dropdown-item" [routerLink]="['/dashboard/properties/', property.reference]">Change Values</a>
                             <a class="dropdown-item" (click)="openDeleteModal(property)">Delete Item</a>
                         </div>
