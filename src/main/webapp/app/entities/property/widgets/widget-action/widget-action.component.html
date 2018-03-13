@@ -1,17 +1,17 @@
 <div class="widget" *upHasAnyAuthority="'ROLE_USER'">
     <ul class="nav actions flex-column">
-        <li class="nav-item featured">
-            <a href="#" class="nav-link">
+        <li class="nav-item">
+            <a href="#" class="nav-link" [routerLink]="['/dashboard/properties/new']">
                 <i class="fa fa-file-text-o"></i> Add new property
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" [routerLink]="['/dashboard/properties/', property.reference]">
                 <i class="fa fa-edit"></i> Edit property
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" [routerLink]="['/dashboard/properties/', property.reference]">
                 <i class="fa fa-trash"></i> Delete property
             </a>
         </li>
@@ -28,10 +28,10 @@
                 <i class="fa fa-paper-plane-o"></i> Un publish
             </a>
         </li>
-        <li class="nav-item">
+        <!--<li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="fa fa-link"></i> Share link
             </a>
-        </li>
+        </li>-->
     </ul>
 </div>
