@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h4 class="modal-title">Hi there!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('cancel')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>Are you sure do you want to delete the property {{name}}?</p>
+    <p>This process can't be undone, are you sure?</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="activeModal.close('cancel')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="activeModal.close('delete');">Delete</button>
+</div>

@@ -33,7 +33,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let property of properties">
-                <td class="min-width center"><input type="checkbox"></td>
+                <td class="min-width center"><input type="checkbox" (change)="selectedProperty($event)"></td>
                 <td class="min-width center id">{{property.reference}}</td>
                 <td>
                     <div class="avatar squared"
@@ -63,8 +63,8 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Workflow Action</a>
-                            <a class="dropdown-item" href="#">Change Values</a>
-                            <a class="dropdown-item" href="#">Delete Item</a>
+                            <a class="dropdown-item" [routerLink]="['/dashboard/properties/', property.reference]">Change Values</a>
+                            <a class="dropdown-item" (click)="openDeleteModal(property)">Delete Item</a>
                         </div>
                     </div>
                 </td>

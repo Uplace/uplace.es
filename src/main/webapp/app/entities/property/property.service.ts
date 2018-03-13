@@ -40,13 +40,28 @@ export class PropertyService {
             .map((res: HttpResponse<Property[]>) => this.convertArrayResponse(res));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    delete(reference: string): Observable<HttpResponse<any>> {
+        return this.http.delete<any>(`${this.resourceUrl}/${reference}`, { observe: 'response'});
+    }
+
+    deleteMultiple(properties: Property[]): Observable<HttpResponse<any>> {
+        const references = this.convertPropertyToReferences(properties);
+        return this.http.delete<any>(`${this.resourceUrl}/${references}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Property = this.convertItemFromServer(res.body);
         return res.clone({body});
+    }
+
+    private convertPropertyToReferences(properties: Property[]): string {
+        let references = [];
+        properties.forEach((property) => {
+            references.push(property.reference);
+        });
+        const result = references.join(',');
+        console.log(result);
+        return result;
     }
 
     private convertArrayResponse(res: HttpResponse<Property[]>): HttpResponse<Property[]> {

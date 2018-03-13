@@ -10,6 +10,8 @@ import { PropertyAmenitiesComponent } from './property-amenities/property-amenit
 import { PropertyPhotosComponent } from './property-photos/property-photos.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {RouterModule} from "@angular/router";
+import { PropertyModalComponent } from './property-modal/property-modal.component';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
     imports: [
@@ -23,11 +25,16 @@ import {RouterModule} from "@angular/router";
         PropertiesNewComponent,
         PropertyMapComponent,
         PropertyAmenitiesComponent,
-        PropertyPhotosComponent
+        PropertyPhotosComponent,
+        PropertyModalComponent
+    ],
+    entryComponents: [
+        PropertyModalComponent
     ],
     providers: [
         PropertyService,
-        PropertyResolvePagingParams
+        PropertyResolvePagingParams,
+        NgbActiveModal
     ]
 })
 export class PropertiesModule {

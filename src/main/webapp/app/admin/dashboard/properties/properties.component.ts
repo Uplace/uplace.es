@@ -7,6 +7,8 @@ import {Subscription} from "rxjs/Subscription";
 import {JhiAlertService, JhiDataUtils, JhiEventManager, JhiParseLinks} from "ng-jhipster";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ITEMS_PER_PAGE, Principal} from "../../../shared";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {PropertyModalComponent} from "./property-modal/property-modal.component";
 
 @Component({
   selector: 'up-properties',
@@ -16,6 +18,7 @@ import {ITEMS_PER_PAGE, Principal} from "../../../shared";
 export class PropertiesComponent implements OnInit {
 
     properties: Property[];
+    selectedproperties: Property[];
     currentAccount: any;
     eventSubscriber: Subscription;
     itemsPerPage: any;
@@ -36,7 +39,9 @@ export class PropertiesComponent implements OnInit {
         private eventManager: JhiEventManager,
         private principal: Principal,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private modalService: NgbModal,
+        public activeModal: NgbActiveModal
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -131,6 +136,29 @@ export class PropertiesComponent implements OnInit {
             result.push('id');
         }
         return result;
+    }
+
+    selectedProperty(event) {
+        console.log(event)
+    }
+
+    openDeleteModal(property: Property) {
+        const modalRef = this.modalService.open(PropertyModalComponent);
+        modalRef.componentInstance.name = property.title;
+        modalRef.result.then((result) => {
+            if (result == 'delete') {
+                this.propertyService.delete(property.reference).subscribe((response) => {
+                    this.eventManager.broadcast({
+                        name: 'propertyListModification',
+                        content: 'Deleted an property'
+                    });
+                }, error => {
+                    this.onError(error);
+                });
+            }
+        }, reason => {
+            console.log(reason);
+        })
     }
 
 }
