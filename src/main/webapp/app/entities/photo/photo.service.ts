@@ -68,7 +68,9 @@ export class PhotoService {
      * Convert a Photo to a JSON which can be sent to the server.
      */
     private convert(photo: Photo): Photo {
+        console.log(photo);
         const copy: Photo = Object.assign({}, photo);
+        console.log(copy);
         return copy;
     }
 }

@@ -28,13 +28,13 @@ export class PropertyDeleteDialogComponent {
     }
 
     confirmDelete(id: number) {
-        this.propertyService.delete(id).subscribe((response) => {
+        /*this.propertyService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'propertyListModification',
                 content: 'Deleted an property'
             });
             this.activeModal.dismiss(true);
-        });
+        });*/
     }
 }
 

@@ -4,12 +4,15 @@ import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.service.dto.MarkerDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -34,6 +37,8 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      */
     @Query("SELECT p FROM Property p left join fetch p.managers where p.reference = :reference")
     T findByReference(@Param("reference") String reference);
+
+    List<T> findByReferenceIn(Collection<String> references);
 
     @Query("SELECT p FROM Property p ORDER BY p.created DESC")
     Page<T> findLastProperties(Pageable pageable);

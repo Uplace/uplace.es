@@ -1,6 +1,8 @@
 package com.arnaugarcia.uplace.service;
 
+import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
@@ -13,6 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * Service Implementation for managing Property.
@@ -25,8 +32,11 @@ public class PropertyService<T extends Property> {
 
     private final PropertyRepository<T> propertyRepository;
 
-    public PropertyService(PropertyRepository<T> propertyRepository) {
+    private final PhotoRepository photoRepository;
+
+    public PropertyService(PropertyRepository<T> propertyRepository, PhotoRepository photoRepository) {
         this.propertyRepository = propertyRepository;
+        this.photoRepository = photoRepository;
     }
 
     /**
@@ -37,11 +47,21 @@ public class PropertyService<T extends Property> {
      */
     public T save(T property) {
         log.debug("Request to save Property : {}", property);
-        if (property.getCreated() != null) {
+
+        if (property.getId() == null) {
             property.setCreated(ZonedDateTime.now());
+            property.setReference(this.createReference());
+        } else {
+            property.setUpdated(ZonedDateTime.now());
         }
-        property.setReference(this.createReference());
-        return propertyRepository.save(property);
+
+        Set<Photo> photos = property.getPhotos();
+        T result = propertyRepository.save(property);
+        photos.forEach((photo -> photo.setProperty(result)));
+
+        photoRepository.save(photos);
+
+        return result;
     }
 
     /**
@@ -76,21 +96,26 @@ public class PropertyService<T extends Property> {
     @Transactional(readOnly = true)
     public T findOne(String reference) {
         log.debug("Request to get Property : {}", reference);
-        return propertyRepository.findByReference(reference);
+        T result = propertyRepository.findByReference(reference);
+        if (result == null) {
+            throw new BadRequestAlertException("Property not found", "Property", ErrorConstants.ERR_BAD_REFERENCE);
+        }
+        return result;
     }
 
     /**
      * Delete the property by reference.
      *
-     * @param reference the reference of the entity
+     * @param references the references of the entities
      */
-    public void delete(String reference) {
-        log.debug("Request to delete Property : {}", reference);
-        T property = propertyRepository.findByReference(reference);
-        if (property == null) {
+    public void delete(String references) {
+        log.debug("Request to delete Property : {}", references);
+        String[] referencesList = references.split(",");
+        List<T> properties = propertyRepository.findByReferenceIn(Arrays.asList(referencesList));
+        if (properties.size() <= 0) {
             throw new BadRequestAlertException("Reference not found", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
-        propertyRepository.delete(property.getId());
+        propertyRepository.delete(properties);
     }
 
 

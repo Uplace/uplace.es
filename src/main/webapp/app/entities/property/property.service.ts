@@ -28,7 +28,7 @@ export class PropertyService {
         return this.http.put<Property>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
-    
+
     find(reference: string): Observable<EntityResponseType> {
         return this.http.get<any>(`${this.resourceUrl}/${reference}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
@@ -40,13 +40,24 @@ export class PropertyService {
             .map((res: HttpResponse<Property[]>) => this.convertArrayResponse(res));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    delete(properties: Property[]): Observable<HttpResponse<any>> {
+        const references = this.convertPropertyToReferences(properties);
+        return this.http.delete<any>(`${this.resourceUrl}/${references}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Property = this.convertItemFromServer(res.body);
         return res.clone({body});
+    }
+
+    private convertPropertyToReferences(properties: Property[]): string {
+        let references = [];
+        properties.forEach((property) => {
+            references.push(property.reference);
+        });
+        const result = references.join(',');
+        console.log(result);
+        return result;
     }
 
     private convertArrayResponse(res: HttpResponse<Property[]>): HttpResponse<Property[]> {
@@ -76,9 +87,10 @@ export class PropertyService {
     private convert(property: Property): Property {
         const copy: Property = Object.assign({}, property);
 
-        copy.created = this.dateUtils.toDate(property.created);
+        copy.created = this.dateUtils.convertDateTimeFromServer(property.created);
 
-        copy.updated = this.dateUtils.toDate(property.updated);
+        copy.updated = this.dateUtils.convertDateTimeFromServer(property.updated);
+
         return copy;
     }
 }

@@ -6,7 +6,8 @@
         <span class="breadcrumb-item active">Bootstrap</span>
     </nav>
     <up-alert-error></up-alert-error>
-    <form method="post" action="?" class="mb80" (submit)="onSubmit()" #newPropertyForm="ngForm">
+    <up-alert></up-alert>
+    <form class="mb80" (ngSubmit)="onSubmit($event)" #newPropertyForm="ngForm">
         <fieldset>
             <legend>
                 <div class="pull-left">Basic Information</div>
@@ -88,7 +89,14 @@
             </div>
             <!-- /.row -->
         </fieldset>
-        <up-property-map [(location)]="property.location"></up-property-map>
-        <up-property-amenities [property]="property"></up-property-amenities>
+        <fieldset>
+            <up-property-map [(location)]="property.location"></up-property-map>
+        </fieldset>
+        <fieldset>
+            <up-property-amenities [property]="property"></up-property-amenities>
+        </fieldset>
+        <fieldset>
+            <up-property-photos [(photos)]="property.photos"></up-property-photos>
+        </fieldset>
     </form>
 </div>

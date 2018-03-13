@@ -4,6 +4,7 @@
         <a class="breadcrumb-item" routerLink="/dashboard/properties">Properties</a>
     </nav>
     <div class="table-header clearfix">
+        <up-alert></up-alert>
         <div class="table-header-count">
             <strong>{{totalItems}}</strong> results matching query
         </div>
@@ -20,7 +21,7 @@
             <thead>
             <tr>
                 <th class="min-width center">
-                    <input type="checkbox">
+                    <!--<input type="checkbox" (change)="toggleSelected($event)">-->
                 </th>
                 <th class="min-width center">Reference</th>
                 <th>Title</th>
@@ -32,13 +33,15 @@
             </thead>
             <tbody>
             <tr *ngFor="let property of properties">
-                <td class="min-width center"><input type="checkbox"></td>
+                <td class="min-width center">
+                    <input type="checkbox" (change)="selectedProperty(property, $event)">
+                </td>
                 <td class="min-width center id">{{property.reference}}</td>
                 <td>
                     <div class="avatar squared"
                          [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span></div>
                     <h2>
-                        <a href="#">{{property.title}}</a>
+                        <a [routerLink]="['/dashboard/properties/', property.reference]">{{property.title}}</a>
                         <span *ngIf="property.location && property.location.fullAddress">{{property.location.fullAddress}}</span>
                     </h2>
                 </td>
@@ -61,9 +64,9 @@
                             Actions
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Workflow Action</a>
-                            <a class="dropdown-item" href="#">Change Values</a>
-                            <a class="dropdown-item" href="#">Delete Item</a>
+                            <!--<a class="dropdown-item" href="#">Workflow Action</a>-->
+                            <a class="dropdown-item" [routerLink]="['/dashboard/properties/', property.reference]">Change Values</a>
+                            <a class="dropdown-item" (click)="openDeleteModal(property)">Delete Item</a>
                         </div>
                     </div>
                 </td>

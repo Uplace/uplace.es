@@ -4,12 +4,14 @@ import {DashboardComponent} from './dashboard.component';
 import {UplaceSharedModule} from "../../shared";
 import {PropertiesModule} from "./properties/properties.module";
 import {RouterModule} from "@angular/router";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
     imports: [
         UplaceSharedModule,
         CommonModule,
-        PropertiesModule
+        PropertiesModule,
+        RouterModule
     ],
     declarations: [
         DashboardComponent

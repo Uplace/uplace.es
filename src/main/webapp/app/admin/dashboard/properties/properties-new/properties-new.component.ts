@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Property, PropertyService, TransactionType} from "../../../../entities/property";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
-import {JhiEventManager} from "ng-jhipster";
+import {JhiAlertService, JhiEventManager} from "ng-jhipster";
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Location} from '../../../../entities/location/location.model';
 
 @Component({
     selector: 'up-properties-new',
@@ -12,29 +14,44 @@ import {JhiEventManager} from "ng-jhipster";
 export class PropertiesNewComponent implements OnInit {
 
     isSaving: boolean;
-    property: Property;
-    propertyTypes = ['Apartment','Building','Business','Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
+    property: Property = new Property();
+    propertyTypes = ['Apartment', 'Building', 'Business', 'Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
     transactionTypes = TransactionType;
 
 
     constructor(
         private propertyService: PropertyService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private route: ActivatedRoute,
+        private alertService: JhiAlertService,
+        private router: Router
     ) {
-        this.property = new Property();
         this.property.propertyType = this.propertyTypes[0];
         this.property.transaction = TransactionType.RENT_BUY;
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+       this.route.params.subscribe((params: Params) => {
+            if (params['reference']) {
+               this.propertyService.find(params['reference']).subscribe((result) => {
+                   if (result.body.location == null) {
+                       result.body.location = new Location();
+                   }
+                   this.property = result.body;
+               }, error => {
+                   this.alertService.error(error.message, null, null);
+                   this.router.navigate(['/dashboard/properties']);
+               });
+            }
+       });
+
+    }
 
     onSubmit() {
-        console.log(this.property);
         this.save();
     }
 
     save() {
-        document.body.scrollTop = 0;
         this.isSaving = true;
         if (this.property.id !== undefined) {
             this.subscribeToSaveResponse(
@@ -43,6 +60,7 @@ export class PropertiesNewComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.propertyService.create(this.property));
         }
+        window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Property>>) {
@@ -52,7 +70,7 @@ export class PropertiesNewComponent implements OnInit {
 
     private onSaveSuccess(result: Property) {
         this.eventManager.broadcast({ name: 'propertyListModification', content: 'OK'});
-        this.isSaving = false;
+        this.isSaving = true;
     }
 
     private onSaveError() {

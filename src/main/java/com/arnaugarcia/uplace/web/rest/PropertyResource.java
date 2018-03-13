@@ -1,37 +1,27 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.domain.IndustrialPlant;
-import com.arnaugarcia.uplace.domain.Terrain;
-import com.arnaugarcia.uplace.repository.*;
-import com.arnaugarcia.uplace.service.*;
+import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.service.PropertyQueryService;
+import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
-import com.arnaugarcia.uplace.service.dto.PropertyDTO;
+import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
+import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
-import com.arnaugarcia.uplace.domain.Property;
-
-import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
-import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Property.
@@ -122,16 +112,17 @@ public class PropertyResource<T extends Property> {
         log.debug("REST request to get all Properties");
         return propertyService.findOne(reference);
     }
+
     /**
      * DELETE  /properties/{reference} : delete the property by reference
-     *
+     * <p>
      * void the ResponseEntity with status 200 (OK) and the property in body
      */
-    @DeleteMapping("/properties/{reference}")
+    @DeleteMapping("/properties/{references}")
     @Timed
-    public void removeProperty(@PathVariable String reference) {
+    public void removeProperty(@PathVariable String references) {
         log.debug("REST request to delete a property by reference");
-        propertyService.delete(reference);
+        propertyService.delete(references);
     }
 
 }
