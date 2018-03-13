@@ -49,35 +49,36 @@
         <fieldset>
             <legend>Payment Information</legend>
             <div class="row">
-                <div class="col-sm-4">
+<!--                <div class="col-sm-4">
                     <div class="form-group">
                         <label class="form-control-label" jhiTranslate="uplaceApp.property.transaction" for="field_transaction">Transaction</label>
                         <select class="form-control" [(ngModel)]="property.transaction" name="transaction" id="field_transaction" required>
                             <option *ngFor="let transaction of transactionTypes | keys" [value]="transaction.key">{{'uplaceApp.TransactionType.' +  transaction.value | translate}}</option>
                         </select>
                     </div>
-                    <!-- /.form-group -->
+                    &lt;!&ndash; /.form-group &ndash;&gt;
                 </div>
-                <!-- /.col-* -->
-                <div class="col-sm-4" *ngIf="property.transaction && (property.transaction == transactionTypes.RENT_BUY || property.transaction == transactionTypes.RENT)">
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4" *ngIf="property.transaction && (property.transaction === transactionTypes.RENT_BUY || property.transaction === transactionTypes.RENT)">
                     <div class="form-group">
                         <label>Price rent</label>
                         <input type="number" class="form-control" [(ngModel)]="property.priceRent" name="priceRent" required>
                     </div>
-                    <!-- /.form-group -->
+                    &lt;!&ndash; /.form-group &ndash;&gt;
                 </div>
-                <!-- /.col-* -->
-                <div class="col-sm-4" *ngIf="property.transaction && (property.transaction == transactionTypes.RENT_BUY || property.transaction == transactionTypes.BUY)">
+                &lt;!&ndash; /.col-* &ndash;&gt;
+                <div class="col-sm-4" *ngIf="property.transaction && (property.transaction === transactionTypes.RENT_BUY || property.transaction === transactionTypes.BUY)">
                     <div class="form-group">
                         <label>Price buy</label>
                         <input type="number" class="form-control" [(ngModel)]="property.priceSell" name="priceSell" required>
                     </div>
-                    <!-- /.form-group -->
-                </div>
+                    &lt;!&ndash; /.form-group &ndash;&gt;
+                </div>-->
                 <!-- /.col-* -->
 
                 <!-- /.col-* -->
-                <div class="col-sm-4" *ngIf="property.transaction == transactionTypes.TRANSFER">
+                <!--<div class="col-sm-4" *ngIf="property.transaction == transactionTypes.TRANSFER">-->
+                <div class="col-sm-4">
                     <div class="form-group">
                         <label>Price transfer</label>
                         <input type="number" class="form-control" [(ngModel)]="property.price" name="price" required>

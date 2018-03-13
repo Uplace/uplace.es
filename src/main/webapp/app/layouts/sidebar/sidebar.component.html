@@ -14,9 +14,9 @@
             <!-- /.side-user -->
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link" routerLink="/dashboard">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/settings" (click)="collapseNavbar()">{{'global.menu.account.settings' | translate}}</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/password" (click)="collapseNavbar()">{{'global.menu.account.password' | translate}}</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/" (click)="logout()" (click)="collapseNavbar()">{{'global.menu.account.logout' | translate}}</a></li>
+                <li class="nav-item"><a class="nav-link" routerLink="/settings" (click)="collapseSidebar()">{{'global.menu.account.settings' | translate}}</a></li>
+                <li class="nav-item"><a class="nav-link" routerLink="/password" (click)="collapseSidebar()">{{'global.menu.account.password' | translate}}</a></li>
+                <li class="nav-item"><a class="nav-link" routerLink="/" (click)="logout()" (click)="collapseSidebar()">{{'global.menu.account.logout' | translate}}</a></li>
             </ul>
         </div>
         <!-- /.side-inner -->
