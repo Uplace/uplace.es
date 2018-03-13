@@ -15,7 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * Service Implementation for managing Property.
@@ -102,15 +106,16 @@ public class PropertyService<T extends Property> {
     /**
      * Delete the property by reference.
      *
-     * @param reference the reference of the entity
+     * @param references the references of the entities
      */
-    public void delete(String reference) {
-        log.debug("Request to delete Property : {}", reference);
-        T property = propertyRepository.findByReference(reference);
-        if (property == null) {
+    public void delete(String references) {
+        log.debug("Request to delete Property : {}", references);
+        String[] referencesList = references.split(",");
+        List<T> properties = propertyRepository.findByReferenceIn(Arrays.asList(referencesList));
+        if (properties.size() <= 0) {
             throw new BadRequestAlertException("Reference not found", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
-        propertyRepository.delete(property.getId());
+        propertyRepository.delete(properties);
     }
 
 

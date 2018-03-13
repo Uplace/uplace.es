@@ -12,6 +12,7 @@
         <div class="table-header-actions">
             <a href="#" class="btn btn-primary"><i class="fa fa-filter"></i> Apply filters</a>
             <a href="#" class="btn"><i class="fa fa-download"></i> Export All</a>
+            <a href="#" class="btn"><i class="fa fa-trash"></i> Delete All</a>
         </div>
         <!-- /.table-header-actions -->
     </div>
@@ -21,7 +22,7 @@
             <thead>
             <tr>
                 <th class="min-width center">
-                    <input type="checkbox">
+                    <!--<input type="checkbox" (change)="toggleSelected($event)">-->
                 </th>
                 <th class="min-width center">Reference</th>
                 <th>Title</th>
@@ -33,7 +34,9 @@
             </thead>
             <tbody>
             <tr *ngFor="let property of properties">
-                <td class="min-width center"><input type="checkbox" (change)="selectedProperty($event)"></td>
+                <td class="min-width center">
+                    <input type="checkbox" (change)="selectedProperty(property, $event)">
+                </td>
                 <td class="min-width center id">{{property.reference}}</td>
                 <td>
                     <div class="avatar squared"

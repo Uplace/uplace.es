@@ -112,16 +112,17 @@ public class PropertyResource<T extends Property> {
         log.debug("REST request to get all Properties");
         return propertyService.findOne(reference);
     }
+
     /**
      * DELETE  /properties/{reference} : delete the property by reference
-     *
+     * <p>
      * void the ResponseEntity with status 200 (OK) and the property in body
      */
-    @DeleteMapping("/properties/{reference}")
+    @DeleteMapping("/properties/{references}")
     @Timed
-    public void removeProperty(@PathVariable String reference) {
+    public void removeProperty(@PathVariable String references) {
         log.debug("REST request to delete a property by reference");
-        propertyService.delete(reference);
+        propertyService.delete(references);
     }
 
 }

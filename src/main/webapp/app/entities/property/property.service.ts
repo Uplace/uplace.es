@@ -40,11 +40,7 @@ export class PropertyService {
             .map((res: HttpResponse<Property[]>) => this.convertArrayResponse(res));
     }
 
-    delete(reference: string): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${reference}`, { observe: 'response'});
-    }
-
-    deleteMultiple(properties: Property[]): Observable<HttpResponse<any>> {
+    delete(properties: Property[]): Observable<HttpResponse<any>> {
         const references = this.convertPropertyToReferences(properties);
         return this.http.delete<any>(`${this.resourceUrl}/${references}`, { observe: 'response' });
     }
