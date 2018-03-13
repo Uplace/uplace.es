@@ -1,451 +1,91 @@
 <div class="listing-tabs mt-80">
-    <div class="listing-tabs-header">
+    <div class="listing-tabs-header mb-30">
         <h2>Search for the <strong>best properties</strong></h2>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" [class.active]="!tabShow" (click)="changeTab()">All</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [class.active]="tabShow === TransactionType.RENT" (click)="changeTab(TransactionType.RENT)">For Rent</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [class.active]="tabShow === TransactionType.BUY" (click)="changeTab(TransactionType.BUY)">For Buy</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [class.active]="tabShow === TransactionType.RENT_BUY" (click)="changeTab(TransactionType.RENT_BUY)">For Rent and Buy</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [class.active]="tabShow === TransactionType.TRANSFER" (click)="changeTab(TransactionType.TRANSFER)">For Transfers</a>
-            </li>
-        </ul>
     </div>
     <!-- /.listing-tabs-header -->
-    <div [ngSwitch]="tabShow">
-        <ng-container *ngSwitchDefault>
-            <div class="tab-pane">
-                <div class="listing-boxes">
-                    <div class="row">
-                        <div class="col-sm-3" *ngFor="let property of properties">
-                            <div class="listing-box">
-                                <div class="listing-box-inner">
-                                    <!--<div class="listing-box-info">
-                                        Special opening prices available.
-                                    </div>-->
-                                    <!-- /.listing-box-info -->
-                                    <a [routerLink]="['property' , property.reference]" class="listing-box-image">
+        <div class="listing-boxes">
+            <div class="row">
+                <div class="col-sm-3" *ngFor="let property of properties">
+                    <div class="listing-box">
+                        <div class="listing-box-inner">
+                            <!--<div class="listing-box-info">
+                                Special opening prices available.
+                            </div>-->
+                            <!-- /.listing-box-info -->
+                            <a [routerLink]="['property' , property.reference]" class="listing-box-image">
                                     <span class="listing-box-image-content">
-                                        <img *ngIf="property.photos.length > 0" [src]="'data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo" [alt]="property.description">
+                                        <img *ngIf="property.photos.length > 0"
+                                             [src]="'data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo"
+                                             [alt]="property.description">
                                     </span><!-- /.listing-box-image-content -->
-                                        <span class="listing-box-category tag">{{property.propertyType}}</span>
-                                        <!--                                 <span class="listing-box-rating">
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                         </span>-->
-                                    </a><!-- /.listing-box-image -->
-                                    <div class="listing-box-content">
-                                        <h2><a [routerLink]="['property' , property.reference]">{{property.title}}</a></h2>
-                                        <h3 *ngIf="property.location">{{property.location.fullAddress}}</h3>
-                                        <div class="actions">
-                                            <div class="actions-button">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <!-- /.actions-button -->
-                                            <ul class="actions-list">
-                                                <li><a href="#">Add to compare</a></li>
-                                                <li><a href="#">Add to favorites</a></li>
-                                                <li><a href="#">Report listing</a></li>
-                                            </ul>
-                                            <!-- /.actions-list -->
-                                        </div>
-                                        <!-- /.actions -->
+                                <span class="listing-box-category tag">{{property.propertyType}}</span>
+                                <!--                                 <span class="listing-box-rating">
+                                                                     <i class="fa fa-star"></i>
+                                                                     <i class="fa fa-star"></i>
+                                                                     <i class="fa fa-star"></i>
+                                                                     <i class="fa fa-star-o"></i>
+                                                                     <i class="fa fa-star-o"></i>
+                                                                 </span>-->
+                            </a><!-- /.listing-box-image -->
+                            <div class="listing-box-content">
+                                <h2><a [routerLink]="['property' , property.reference]">{{property.title}}</a></h2>
+                                <h3 *ngIf="property.location">{{property.location.fullAddress}}</h3>
+                                <div class="actions">
+                                    <div class="actions-button">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
                                     </div>
-                                    <!-- /.listing-box-content -->
-                                    <div class="listing-box-attributes">
-                                        <dl [ngSwitch]="property.propertyType">
-                                            <ng-container *ngSwitchCase="'IndustrialPlant'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>M2 Offices</dt>
-                                                <dd>{{property.m2Offices}}</dd>
-                                                <dt>Number docks</dt>
-                                                <dd>{{property.numberDocks}}</dd>
-                                            </ng-container>
-                                            <ng-container *ngSwitchCase="'Apartment'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>Shared pool</dt>
-                                                <dd>{{property.sharedPool}}</dd>
-                                                <dt>Balcony</dt>
-                                                <dd>{{property.balcony}}</dd>
-                                            </ng-container>
-                                        </dl>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                    <div class="listing-box-attributes-icons">
-                                        <ul>
-                                            <li><i class="fa fa-arrows"></i> <span>{{property.surface}}</span></li>
-                                            <li><i class="fa fa-shower"></i> <span>{{property.m2Usable}}</span></li>
-                                            <li><i class="fa fa-car"></i> <span>{{property.m2Offices}}</span></li>
-                                        </ul>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
+                                    <!-- /.actions-button -->
+                                    <ul class="actions-list">
+                                        <li><a href="#">Add to compare</a></li>
+                                        <li><a href="#">Add to favorites</a></li>
+                                        <li><a href="#">Report listing</a></li>
+                                    </ul>
+                                    <!-- /.actions-list -->
                                 </div>
-                                <!-- /.listing-box-inner -->
+                                <!-- /.actions -->
                             </div>
-                            <!-- /.listing-box -->
-                        </div>
-                        <!-- /.col-* -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.listing-boxes -->
-            </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="TransactionType.RENT">
-            <div class="tab-pane">
-                <div class="listing-boxes">
-                    <div class="row">
-                        <div class="col-sm-3" *ngFor="let property of propertiesRent">
-                            <div class="listing-box">
-                                <div class="listing-box-inner">
-                                    <!--<div class="listing-box-info">
-                                        Special opening prices available.
-                                    </div>-->
-                                    <!-- /.listing-box-info -->
-                                    <a [routerLink]="['property' , property.reference]" class="listing-box-image">
-                                    <span class="listing-box-image-content">
-                                        <img *ngIf="property.photos.length > 0" [src]="'data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo" [alt]="property.description">
-                                    </span><!-- /.listing-box-image-content -->
-                                        <span class="listing-box-category tag">{{property.propertyType}}</span>
-                                        <!--                                 <span class="listing-box-rating">
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                         </span>-->
-                                    </a><!-- /.listing-box-image -->
-                                    <div class="listing-box-content">
-                                        <h2><a [routerLink]="['property' , property.reference]">{{property.title}}</a></h2>
-                                        <h3 *ngIf="property.location">{{property.location.fullAddress}}</h3>
-                                        <div class="actions">
-                                            <div class="actions-button">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <!-- /.actions-button -->
-                                            <ul class="actions-list">
-                                                <li><a href="#">Add to compare</a></li>
-                                                <li><a href="#">Add to favorites</a></li>
-                                                <li><a href="#">Report listing</a></li>
-                                            </ul>
-                                            <!-- /.actions-list -->
-                                        </div>
-                                        <!-- /.actions -->
-                                    </div>
-                                    <!-- /.listing-box-content -->
-                                    <div class="listing-box-attributes">
-                                        <dl [ngSwitch]="property.propertyType">
-                                            <ng-container *ngSwitchCase="'IndustrialPlant'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>M2 Offices</dt>
-                                                <dd>{{property.m2Offices}}</dd>
-                                                <dt>Number docks</dt>
-                                                <dd>{{property.numberDocks}}</dd>
-                                            </ng-container>
-                                            <ng-container *ngSwitchCase="'Apartment'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>Shared pool</dt>
-                                                <dd>{{property.sharedPool}}</dd>
-                                                <dt>Balcony</dt>
-                                                <dd>{{property.balcony}}</dd>
-                                            </ng-container>
-                                        </dl>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                    <div class="listing-box-attributes-icons">
-                                        <ul>
-                                            <li><i class="fa fa-arrows"></i> <span>{{property.surface}}</span></li>
-                                            <li><i class="fa fa-shower"></i> <span>{{property.m2Usable}}</span></li>
-                                            <li><i class="fa fa-car"></i> <span>{{property.m2Offices}}</span></li>
-                                        </ul>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                </div>
-                                <!-- /.listing-box-inner -->
+                            <!-- /.listing-box-content -->
+                            <div class="listing-box-attributes">
+                                <dl [ngSwitch]="property.propertyType">
+                                    <ng-container *ngSwitchCase="'IndustrialPlant'">
+                                        <dt>Surface</dt>
+                                        <dd>{{property.surface}}</dd>
+                                        <dt>M2 Offices</dt>
+                                        <dd>{{property.m2Offices}}</dd>
+                                        <dt>Number docks</dt>
+                                        <dd>{{property.numberDocks}}</dd>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="'Apartment'">
+                                        <dt>Surface</dt>
+                                        <dd>{{property.surface}}</dd>
+                                        <dt>Shared pool</dt>
+                                        <dd>{{property.sharedPool}}</dd>
+                                        <dt>Balcony</dt>
+                                        <dd>{{property.balcony}}</dd>
+                                    </ng-container>
+                                </dl>
                             </div>
-                            <!-- /.listing-box -->
-                        </div>
-                        <!-- /.col-* -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.listing-boxes -->
-            </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="TransactionType.BUY">
-            <div class="tab-pane">
-                <div class="listing-boxes">
-                    <div class="row">
-                        <div class="col-sm-3" *ngFor="let property of propertiesBuy">
-                            <div class="listing-box">
-                                <div class="listing-box-inner">
-                                    <!--<div class="listing-box-info">
-                                        Special opening prices available.
-                                    </div>-->
-                                    <!-- /.listing-box-info -->
-                                    <a [routerLink]="['property' , property.reference]" class="listing-box-image">
-                                    <span class="listing-box-image-content">
-                                        <img *ngIf="property.photos.length > 0" [src]="'data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo" [alt]="property.description">
-                                    </span><!-- /.listing-box-image-content -->
-                                        <span class="listing-box-category tag">{{property.propertyType}}</span>
-                                        <!--                                 <span class="listing-box-rating">
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                         </span>-->
-                                    </a><!-- /.listing-box-image -->
-                                    <div class="listing-box-content">
-                                        <h2><a [routerLink]="['property' , property.reference]">{{property.title}}</a></h2>
-                                        <h3 *ngIf="property.location">{{property.location.fullAddress}}</h3>
-                                        <div class="actions">
-                                            <div class="actions-button">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <!-- /.actions-button -->
-                                            <ul class="actions-list">
-                                                <li><a href="#">Add to compare</a></li>
-                                                <li><a href="#">Add to favorites</a></li>
-                                                <li><a href="#">Report listing</a></li>
-                                            </ul>
-                                            <!-- /.actions-list -->
-                                        </div>
-                                        <!-- /.actions -->
-                                    </div>
-                                    <!-- /.listing-box-content -->
-                                    <div class="listing-box-attributes">
-                                        <dl [ngSwitch]="property.propertyType">
-                                            <ng-container *ngSwitchCase="'IndustrialPlant'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>M2 Offices</dt>
-                                                <dd>{{property.m2Offices}}</dd>
-                                                <dt>Number docks</dt>
-                                                <dd>{{property.numberDocks}}</dd>
-                                            </ng-container>
-                                            <ng-container *ngSwitchCase="'Apartment'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>Shared pool</dt>
-                                                <dd>{{property.sharedPool}}</dd>
-                                                <dt>Balcony</dt>
-                                                <dd>{{property.balcony}}</dd>
-                                            </ng-container>
-                                        </dl>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                    <div class="listing-box-attributes-icons">
-                                        <ul>
-                                            <li><i class="fa fa-arrows"></i> <span>{{property.surface}}</span></li>
-                                            <li><i class="fa fa-shower"></i> <span>{{property.m2Usable}}</span></li>
-                                            <li><i class="fa fa-car"></i> <span>{{property.m2Offices}}</span></li>
-                                        </ul>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                </div>
-                                <!-- /.listing-box-inner -->
+                            <!-- /.listing-box-attributes -->
+                            <div class="listing-box-attributes-icons">
+                                <ul>
+                                    <li><i class="fa fa-arrows"></i> <span>{{property.surface}}</span></li>
+                                    <li><i class="fa fa-shower"></i> <span>{{property.m2Usable}}</span></li>
+                                    <li><i class="fa fa-car"></i> <span>{{property.m2Offices}}</span></li>
+                                </ul>
                             </div>
-                            <!-- /.listing-box -->
+                            <!-- /.listing-box-attributes -->
                         </div>
-                        <!-- /.col-* -->
+                        <!-- /.listing-box-inner -->
                     </div>
-                    <!-- /.row -->
+                    <!-- /.listing-box -->
                 </div>
-                <!-- /.listing-boxes -->
+                <!-- /.col-* -->
             </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="TransactionType.RENT_BUY">
-            <div class="tab-pane">
-                <div class="listing-boxes">
-                    <div class="row">
-                        <div class="col-sm-3" *ngFor="let property of propertiesRentBuy">
-                            <div class="listing-box">
-                                <div class="listing-box-inner">
-                                    <!--<div class="listing-box-info">
-                                        Special opening prices available.
-                                    </div>-->
-                                    <!-- /.listing-box-info -->
-                                    <a [routerLink]="['property' , property.reference]" class="listing-box-image">
-                                    <span class="listing-box-image-content">
-                                        <img *ngIf="property.photos.length > 0" [src]="'data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo" [alt]="property.description">
-                                    </span><!-- /.listing-box-image-content -->
-                                        <span class="listing-box-category tag">{{property.propertyType}}</span>
-                                        <!--                                 <span class="listing-box-rating">
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                         </span>-->
-                                    </a><!-- /.listing-box-image -->
-                                    <div class="listing-box-content">
-                                        <h2><a [routerLink]="['property' , property.reference]">{{property.title}}</a></h2>
-                                        <h3 *ngIf="property.location">{{property.location.fullAddress}}</h3>
-                                        <div class="actions">
-                                            <div class="actions-button">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <!-- /.actions-button -->
-                                            <ul class="actions-list">
-                                                <li><a href="#">Add to compare</a></li>
-                                                <li><a href="#">Add to favorites</a></li>
-                                                <li><a href="#">Report listing</a></li>
-                                            </ul>
-                                            <!-- /.actions-list -->
-                                        </div>
-                                        <!-- /.actions -->
-                                    </div>
-                                    <!-- /.listing-box-content -->
-                                    <div class="listing-box-attributes">
-                                        <dl [ngSwitch]="property.propertyType">
-                                            <ng-container *ngSwitchCase="'IndustrialPlant'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>M2 Offices</dt>
-                                                <dd>{{property.m2Offices}}</dd>
-                                                <dt>Number docks</dt>
-                                                <dd>{{property.numberDocks}}</dd>
-                                            </ng-container>
-                                            <ng-container *ngSwitchCase="'Apartment'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>Shared pool</dt>
-                                                <dd>{{property.sharedPool}}</dd>
-                                                <dt>Balcony</dt>
-                                                <dd>{{property.balcony}}</dd>
-                                            </ng-container>
-                                        </dl>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                    <div class="listing-box-attributes-icons">
-                                        <ul>
-                                            <li><i class="fa fa-arrows"></i> <span>{{property.surface}}</span></li>
-                                            <li><i class="fa fa-shower"></i> <span>{{property.m2Usable}}</span></li>
-                                            <li><i class="fa fa-car"></i> <span>{{property.m2Offices}}</span></li>
-                                        </ul>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                </div>
-                                <!-- /.listing-box-inner -->
-                            </div>
-                            <!-- /.listing-box -->
-                        </div>
-                        <!-- /.col-* -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.listing-boxes -->
-            </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="TransactionType.TRANSFER">
-            <div class="tab-pane">
-                <div class="listing-boxes">
-                    <div class="row">
-                        <div class="col-sm-3" *ngFor="let property of propertiesTransfer">
-                            <div class="listing-box">
-                                <div class="listing-box-inner">
-                                    <!--<div class="listing-box-info">
-                                        Special opening prices available.
-                                    </div>-->
-                                    <!-- /.listing-box-info -->
-                                    <a [routerLink]="['property' , property.reference]" class="listing-box-image">
-                                    <span class="listing-box-image-content">
-                                        <img *ngIf="property.photos.length > 0" [src]="'data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo" [alt]="property.description">
-                                    </span><!-- /.listing-box-image-content -->
-                                        <span class="listing-box-category tag">{{property.propertyType}}</span>
-                                        <!--                                 <span class="listing-box-rating">
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                             <i class="fa fa-star-o"></i>
-                                                                         </span>-->
-                                    </a><!-- /.listing-box-image -->
-                                    <div class="listing-box-content">
-                                        <h2><a [routerLink]="['property' , property.reference]">{{property.title}}</a></h2>
-                                        <h3 *ngIf="property.location">{{property.location.fullAddress}}</h3>
-                                        <div class="actions">
-                                            <div class="actions-button">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <!-- /.actions-button -->
-                                            <ul class="actions-list">
-                                                <li><a href="#">Add to compare</a></li>
-                                                <li><a href="#">Add to favorites</a></li>
-                                                <li><a href="#">Report listing</a></li>
-                                            </ul>
-                                            <!-- /.actions-list -->
-                                        </div>
-                                        <!-- /.actions -->
-                                    </div>
-                                    <!-- /.listing-box-content -->
-                                    <div class="listing-box-attributes">
-                                        <dl [ngSwitch]="property.propertyType">
-                                            <ng-container *ngSwitchCase="'IndustrialPlant'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>M2 Offices</dt>
-                                                <dd>{{property.m2Offices}}</dd>
-                                                <dt>Number docks</dt>
-                                                <dd>{{property.numberDocks}}</dd>
-                                            </ng-container>
-                                            <ng-container *ngSwitchCase="'Apartment'">
-                                                <dt>Surface</dt>
-                                                <dd>{{property.surface}}</dd>
-                                                <dt>Shared pool</dt>
-                                                <dd>{{property.sharedPool}}</dd>
-                                                <dt>Balcony</dt>
-                                                <dd>{{property.balcony}}</dd>
-                                            </ng-container>
-                                        </dl>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                    <div class="listing-box-attributes-icons">
-                                        <ul>
-                                            <li><i class="fa fa-arrows"></i> <span>{{property.surface}}</span></li>
-                                            <li><i class="fa fa-shower"></i> <span>{{property.m2Usable}}</span></li>
-                                            <li><i class="fa fa-car"></i> <span>{{property.m2Offices}}</span></li>
-                                        </ul>
-                                    </div>
-                                    <!-- /.listing-box-attributes -->
-                                </div>
-                                <!-- /.listing-box-inner -->
-                            </div>
-                            <!-- /.listing-box -->
-                        </div>
-                        <!-- /.col-* -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.listing-boxes -->
-            </div>
-        </ng-container>
+            <!-- /.row -->
+        </div>
+        <!-- /.listing-boxes -->
     </div>
-    <!-- /.listing-tabs-content -->
+<!-- /.listing-tabs-content -->
 </div>
