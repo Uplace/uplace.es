@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Property, PropertyService, TransactionType} from "../../../entities/property";
+import {Property, PropertyService} from "../../../entities/property";
 import {JhiAlertService} from "ng-jhipster";
 import {HttpResponse} from "@angular/common/http";
 
