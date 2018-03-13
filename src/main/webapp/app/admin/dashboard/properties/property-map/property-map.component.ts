@@ -14,7 +14,7 @@ export class PropertyMapComponent implements OnInit {
 
     defaultLatitude = 41.390205;
     defaultLongitude = 2.154007;
-    zoom = 14;
+    defaultZoom = 14;
 
     @ViewChild(AgmMap) agmMap: AgmMap;
 
@@ -32,13 +32,9 @@ export class PropertyMapComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        if (this.location.latitude == null || this.location.longitude == null){
-            this.location.latitude = this.defaultLatitude;
-            this.location.longitude = this.defaultLongitude;
-        }
         this.mapsAPILoader.load().then(() => {
-            this.getUserLocation();
             this.initPlaces();
+            this.getUserLocation();
         });
     }
 
@@ -61,7 +57,6 @@ export class PropertyMapComponent implements OnInit {
                 // set latitude, longitude and zoom
                 this.location.latitude = place.geometry.location.lat();
                 this.location.longitude = place.geometry.location.lng();
-                this.zoom = 12;
             });
         });
     }
@@ -72,13 +67,17 @@ export class PropertyMapComponent implements OnInit {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.location.latitude = position.coords.latitude;
                 this.location.longitude = position.coords.longitude;
-                this.agmMap.triggerResize().then(() =>  (this.agmMap as any)._mapsWrapper.setCenter({lat: this.location.latitude, lng: this.location.longitude}));
+                this.setMapCenter(this.location.latitude, this.location.longitude);
                 console.log('Location of user found!');
                 this.geocodeLatLng();
             });
         } else {
             this.alertService.error('Cannot find user location :(');
         }
+    }
+
+    setMapCenter(latitude: number, longitude: number) {
+        this.agmMap.triggerResize().then(() =>  (this.agmMap as any)._mapsWrapper.setCenter({lat: latitude, lng: longitude}));
     }
 
     markerMoved(e) {
