@@ -34,13 +34,21 @@ export class InnerMapComponent implements OnInit {
 
                     const markerVerified = marker['isNew'] ? '<div class="marker-verified"><i class="fa fa-check"></i></div>' : '';
 
+                    let thumbnail = '';
+
+                    switch (marker['propertyType']) {
+                        case 'Apartment':
+                            thumbnail = '<span class="marker-apartment"></span>';
+                            break;
+
+                    }
                     const markerContent =
                         '<div class="marker">' +
-                            '<div class="marker-inner">' +
-                                '<span class="marker-image" style="background-image: url(' + marker['thumbnail'] + ');"></span>' +
+                            '<div class="marker-inner">'
+                                 + thumbnail +
                             '</div>'
                                 + markerVerified +
-                            '<div class="marker-price">' + marker['price'] + '</div>' +
+                            '<div class="marker-price">' + marker['price'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + '€</div>' +
                         '</div>';
 
                     const richMarker = new RichMarker({

@@ -7456,6 +7456,25 @@ input[type=radio]::-ms-expand {
     right: 0px;
     top: 0px; }
 
+.marker-car::before {
+    font-family: "FontAwesome";
+    content: "\f007";
+    font-size: 30px;
+}
+
+.marker-apartment::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
+.marker-apartment::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
+
 .marker-price {
     background-color: #fff;
     border-radius: 2px;
