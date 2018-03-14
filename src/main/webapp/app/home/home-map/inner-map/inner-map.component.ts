@@ -25,6 +25,7 @@ export class InnerMapComponent implements OnInit {
         this._mapsWrapper.getNativeMap()
             .then((map)=> {
                 require ('../../../../content/js/google-map-richmarker.min.js');
+                require ('../../../../content/js/markerclusterer.js');
                 this.map = map;
 
                 this.markersFromService.forEach((marker) => {
@@ -53,6 +54,7 @@ export class InnerMapComponent implements OnInit {
                 });
 
                 new MarkerClusterer(this.map, this.markers, {
+                    cssClass: 'custom-pin',
                     styles: [
                         {
                             imagePath: '../../../../content/img/cluster.png',
