@@ -1,16 +1,32 @@
 package com.arnaugarcia.uplace.service.dto;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 public class MarkerDTO implements Serializable {
 
     private String propertyReference;
+    private Double price;
+    private Boolean isNew;
+    private ZonedDateTime date;
     private Double latitude;
     private Double longitude;
     private String propertyType;
 
-    public MarkerDTO(String propertyReference, Double latitude, Double longitude, String propertyType) {
+    public MarkerDTO(String propertyReference, Double price, ZonedDateTime date, Double latitude, Double longitude, String propertyType) {
         this.propertyReference = propertyReference;
+        this.price = price;
+        this.date = date;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.propertyType = propertyType;
+    }
+
+    public MarkerDTO(String propertyReference, Double price, Boolean isNew, ZonedDateTime date, Double latitude, Double longitude, String propertyType) {
+        this.propertyReference = propertyReference;
+        this.price = price;
+        this.isNew = isNew;
+        this.date = date;
         this.latitude = latitude;
         this.longitude = longitude;
         this.propertyType = propertyType;
@@ -22,6 +38,30 @@ public class MarkerDTO implements Serializable {
 
     public void setPropertyReference(String propertyReference) {
         this.propertyReference = propertyReference;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Boolean getNew() {
+        return isNew;
+    }
+
+    public void setNew(Boolean aNew) {
+        isNew = aNew;
+    }
+
+    public ZonedDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(ZonedDateTime date) {
+        this.date = date;
     }
 
     public Double getLatitude() {
@@ -52,6 +92,9 @@ public class MarkerDTO implements Serializable {
     public String toString() {
         return "MarkerDTO{" +
             "propertyReference='" + propertyReference + '\'' +
+            ", price=" + price +
+            ", isNew=" + isNew +
+            ", date=" + date +
             ", latitude=" + latitude +
             ", longitude=" + longitude +
             ", propertyType='" + propertyType + '\'' +

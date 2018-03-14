@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.repository;
 
+import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.service.dto.MarkerDTO;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ import java.util.List;
 public interface PropertyRepository<T extends Property> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
 
     @Query("select distinct property from Property property left join fetch property.managers")
-    //@Query(value = "SELECT * FROM property LEFT JOIN photo ON property.id = photo.property_id LEFT JOIN location ON property.location_id = location.id", nativeQuery = true)
+    // @Query(value = "SELECT * FROM property LEFT JOIN photo ON property.id = photo.property_id LEFT JOIN location ON property.location_id = location.id", nativeQuery = true)
     List<T> findAllWithEagerRelationships();
 
     @Query("select property from Property property left join fetch property.managers where property.id =:id")
@@ -49,8 +50,18 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      * @return a List of markers
      */
     // TODO : AND p.location.hide != null
-    @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.location.latitude, p.location.longitude, p.propertyType) FROM Property p WHERE p.location is not null and p.visible = true")
+    @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.price, p.updated, p.location.latitude, p.location.longitude, p.propertyType) FROM Property p WHERE p.location is not null and p.visible = true and p.location.hide = false")
     List<MarkerDTO> findAllMarkers();
+
+
+    /**
+     * Query to get the markers of all Properties
+     *
+     * @return a List of markers
+     */
+    // TODO : AND p.location.hide != null
+    @Query("SELECT photo from Photo photo where photo.property.reference = :reference and photo.thumbnail = true")
+    List<Photo> findThumbnailByReference(@Param("reference") String reference);
 
     /**
      * Query to get the prices of all Properties

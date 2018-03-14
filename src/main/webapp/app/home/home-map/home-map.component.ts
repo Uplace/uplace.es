@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
 import {MarkerService} from "../../entities/marker/marker.service";
 import {Marker} from "../../entities/marker/marker.model";
@@ -23,6 +23,14 @@ export class HomeMapComponent implements OnInit {
     mapFullScreen: boolean = false;
 
     @ViewChild(AgmMap) agmMap: AgmMap;
+
+    @HostListener('window:resize')
+    onWindowResize() {
+        setTimeout(() => {
+            this.agmMap.triggerResize()
+                .then(() =>  (this.agmMap as any)._mapsWrapper.setCenter({lat: this.latitude, lng: this.longitude}));
+        },500);
+    }
 
     mapStyles = [
         {

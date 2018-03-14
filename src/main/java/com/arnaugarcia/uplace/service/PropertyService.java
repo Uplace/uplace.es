@@ -51,6 +51,7 @@ public class PropertyService<T extends Property> {
         if (property.getId() == null) {
             property.setCreated(ZonedDateTime.now());
             property.setReference(this.createReference());
+            property.setUpdated(ZonedDateTime.now());
         } else {
             property.setUpdated(ZonedDateTime.now());
         }

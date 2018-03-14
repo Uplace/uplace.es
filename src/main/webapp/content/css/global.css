@@ -7456,6 +7456,54 @@ input[type=radio]::-ms-expand {
     right: 0px;
     top: 0px; }
 
+.marker-parking::before {
+    font-family: "FontAwesome";
+    content: "\f007";
+    font-size: 30px;
+}
+
+.marker-apartment::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
+.marker-building::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
+.marker-terrain::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
+.marker-industrialplant::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
+.marker-business::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
+.marker-hotel::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
+.marker-establishment::before {
+    font-family: "FontAwesome";
+    content: "\f1ad";
+    font-size: 30px;
+}
+
 .marker-price {
     background-color: #fff;
     border-radius: 2px;
@@ -7495,18 +7543,38 @@ input[type=radio]::-ms-expand {
 .marker-verified .fa {
     margin: 2px 0 0 3px; }
 
-.map-wrapper .map .map-object .cluster {
+ .cluster {
     color: #fff; }
-.map-wrapper .map .map-object .cluster > div {
+ .cluster > div {
     background-color: #323232;
     border-radius: 50%;
     box-shadow: 0 0 0 6px rgba(50, 50, 50, 0.2);
     color: #fff;
-    font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
     font-weight: 700;
     height: 36px;
     width: 36px; }
 
+.custom-pin {
+    border-radius: 50%;
+    box-shadow: 0 0 0 6px rgba(50, 50, 50, 0.2);
+    height: 36px;
+    width: 36px;
+    padding: .7em;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    line-height: 20px;
+    background-color: #323232;
+    position: absolute;
+    font-size: 1em;
+    font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
+    transition: all 500ms;
+}
+
+.custom-pin:hover {
+    transform: scale(1.15);
+}
 .map-results-detail {
     background-color: #fff;
     bottom: 0;
