@@ -10,6 +10,8 @@ import {HomeCategoriesComponent} from "./sections/home-categories/home-categorie
 import {HomeCarouselComponent} from "./sections/home-carousel/home-carousel.component";
 import {HomePricingComponent} from "./sections/home-pricing/home-pricing.component";
 import {HomePartnersComponent} from "./sections/home-partners/home-partners.component";
+import { InnerMapComponent } from './home-map/inner-map/inner-map.component';
+import {GoogleMapsAPIWrapper} from "@agm/core";
 
 @NgModule({
     imports: [
@@ -23,11 +25,13 @@ import {HomePartnersComponent} from "./sections/home-partners/home-partners.comp
         HomeCategoriesComponent,
         HomeCarouselComponent,
         HomePricingComponent,
-        HomePartnersComponent
+        HomePartnersComponent,
+        InnerMapComponent
     ],
     entryComponents: [
     ],
     providers: [
+        GoogleMapsAPIWrapper
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
