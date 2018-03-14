@@ -6,6 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,6 +31,20 @@ public class MarkerService {
     @Transactional(readOnly = true)
     public List<MarkerDTO> getAllMarkers() {
         List<MarkerDTO> markerDTOList = propertyRepository.findAllMarkers();
+        markerDTOList.parallelStream().forEach((markerDTO -> {
+            if (markerDTO.getDate() != null) {
+                LocalDate localDate =  markerDTO.getDate().toLocalDate();
+                LocalDate today = LocalDate.now();
+                Period period = Period.between(localDate, today);
+                if (period.getMonths() >= 1) {
+                    markerDTO.setNew(false);
+                } else {
+                    markerDTO.setNew(true);
+                }
+            } else {
+                markerDTO.setNew(false);
+            }
+        }));
         List<MarkerDTO> result = markerDTOList.parallelStream()
             .filter(markerDTO -> Objects.nonNull(markerDTO.getLatitude()))
             .filter(markerDTO -> markerDTO.getLatitude() > 0)

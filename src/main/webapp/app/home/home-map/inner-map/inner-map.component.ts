@@ -32,13 +32,15 @@ export class InnerMapComponent implements OnInit {
 
                     const markerCenter = new google.maps.LatLng(marker['latitude'], marker['longitude']);
 
+                    const markerVerified = marker['isNew'] ? '<div class="marker-verified"><i class="fa fa-check"></i></div>' : '';
+
                     const markerContent =
                         '<div class="marker">' +
-                        '<div class="marker-inner">' +
-                        '<span class="marker-image" style="background-image: url(' + marker['thumbnail'] + ');"></span>' +
-                        '</div>' +
-                        '<div class="marker-verified"><i class="fa fa-check"></i></div>' +
-                        '<div class="marker-price">1000</div>' +
+                            '<div class="marker-inner">' +
+                                '<span class="marker-image" style="background-image: url(' + marker['thumbnail'] + ');"></span>' +
+                            '</div>'
+                                + markerVerified +
+                            '<div class="marker-price">' + marker['price'] + '</div>' +
                         '</div>';
 
                     const richMarker = new RichMarker({
