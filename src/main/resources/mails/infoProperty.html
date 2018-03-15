@@ -1,9 +1,9 @@
 <!doctype html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <title th:text="#{email.activation.title}">Uplace creation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
     <style>
         /* -------------------------------------
             GLOBAL RESETS
@@ -34,15 +34,10 @@
             font-size: 14px;
             vertical-align: top; }
 
-        /* -------------------------------------
-            BODY & CONTAINER
-        ------------------------------------- */
-
         .body {
             background-color: #f6f6f6;
             width: 100%; }
 
-        /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
         .container {
             display: block;
             Margin: 0 auto !important;
@@ -51,7 +46,6 @@
             padding: 10px;
             width: 580px; }
 
-        /* This should also be a block element, so that it will fill 100% of the .container */
         .content {
             box-sizing: border-box;
             display: block;
@@ -59,9 +53,6 @@
             max-width: 580px;
             padding: 10px; }
 
-        /* -------------------------------------
-            HEADER, FOOTER, MAIN
-        ------------------------------------- */
         .main {
             background: #ffffff;
             border-radius: 3px;
@@ -88,10 +79,6 @@
             color: #999999;
             font-size: 12px;
             text-align: center; }
-
-        /* -------------------------------------
-            TYPOGRAPHY
-        ------------------------------------- */
         h1,
         h2,
         h3,
@@ -127,9 +114,6 @@
             color: #3498db;
             text-decoration: underline; }
 
-        /* -------------------------------------
-            BUTTONS
-        ------------------------------------- */
         .btn {
             box-sizing: border-box;
             width: 100%; }
@@ -163,10 +147,6 @@
             background-color: #3498db;
             border-color: #3498db;
             color: #ffffff; }
-
-        /* -------------------------------------
-            OTHER STYLES THAT MIGHT BE USEFUL
-        ------------------------------------- */
         .last {
             margin-bottom: 0; }
 
@@ -277,7 +257,6 @@
 <body class="">
 <table border="0" cellpadding="0" cellspacing="0" class="body">
     <tr>
-        <td>&nbsp;</td>
         <td class="container">
             <div class="content">
 
@@ -325,7 +304,7 @@
                         <tr>
                             <td class="content-block">
                                 <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                                <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+                                <br></br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
                             </td>
                         </tr>
                         <tr>
@@ -340,7 +319,6 @@
                 <!-- END CENTERED WHITE CONTAINER -->
             </div>
         </td>
-        <td>&nbsp;</td>
     </tr>
 </table>
 </body>

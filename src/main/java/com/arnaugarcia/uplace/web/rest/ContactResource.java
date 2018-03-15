@@ -1,8 +1,7 @@
 package com.arnaugarcia.uplace.web.rest;
 
 
-import com.arnaugarcia.uplace.domain.Mail;
-import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.domain.Contact;
 import com.arnaugarcia.uplace.service.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
+;
 
 @RestController
 @RequestMapping("/api")
@@ -28,10 +26,10 @@ public class ContactResource {
     }
 
     @PostMapping("contact-property")
-    public ResponseEntity sendContactProperty(@Valid @RequestBody Mail mail, @RequestBody Property property) {
+    public ResponseEntity sendContactProperty(@RequestBody Contact contact) {
 
         try {
-            mailService.sendPropertyInfo(property, mail, "infoProperty", "infoProperty");
+            mailService.sendPropertyInfo(contact, "infoProperty", "email.activation.title");
         }catch( Exception e ){
             log.info("Error Sending Email: " + e.getMessage());
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
