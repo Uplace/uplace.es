@@ -1,13 +1,19 @@
 package com.arnaugarcia.uplace.service;
 
+import com.arnaugarcia.uplace.domain.Mail;
+import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.User;
 
+import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
+import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import io.github.jhipster.config.JHipsterProperties;
 
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -15,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 
@@ -29,6 +36,8 @@ public class MailService {
     private final Logger log = LoggerFactory.getLogger(MailService.class);
 
     private static final String USER = "user";
+
+    private static final String PROPERTY = "user";
 
     private static final String BASE_URL = "baseUrl";
 
@@ -50,13 +59,12 @@ public class MailService {
     }
 
     @Async
-    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) throws MessagingException {
         log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, subject, content);
 
         // Prepare message using a Spring helper
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
             message.setTo(to);
             message.setFrom(jHipsterProperties.getMail().getFrom());
@@ -64,13 +72,6 @@ public class MailService {
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
             log.debug("Sent email to User '{}'", to);
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.warn("Email could not be sent to user '{}'", to, e);
-            } else {
-                log.warn("Email could not be sent to user '{}': {}", to, e.getMessage());
-            }
-        }
     }
 
     @Async
@@ -81,7 +82,27 @@ public class MailService {
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
-        sendEmail(user.getEmail(), subject, content, false, true);
+        try {
+            sendEmail(user.getEmail(), subject, content, false, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Async
+    public void sendPropertyInfo(Property property, Mail mail, String templateName, String titleKey) {
+        Locale locale = Locale.forLanguageTag("es");
+        Context context = new Context(locale);
+        context.setVariable(PROPERTY, property);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = messageSource.getMessage(titleKey, null, locale);
+        try {
+            sendEmail(mail.getTo(), subject, content, false, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
 
     }
 
