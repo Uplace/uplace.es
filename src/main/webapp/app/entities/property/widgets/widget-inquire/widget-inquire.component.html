@@ -1,25 +1,25 @@
 <!-- /.widget -->
 <div class="widget widget-background-white">
     <h3 class="widgettitle">Inquire Form</h3>
-    <form method="post" action="?">
+    <form (ngSubmit)="onSubmit()" #inquireForm="ngForm">
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Full name">
+            <input type="text" class="form-control" placeholder="Full name" [(ngModel)]="mail.name" name="name" required>
         </div>
         <!-- /.form-group -->
         <div class="form-group">
-            <input type="email" class="form-control" placeholder="E-mail">
+            <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="mail.to" name="email" email required>
         </div>
         <!-- /.form-group -->
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Subject">
+            <input type="text" class="form-control" placeholder="Subject" [(ngModel)]="mail.subject" name="subject">
         </div>
         <!-- /.form-group -->
         <div class="form-group">
-            <textarea class="form-control" rows="4">Message</textarea>
+            <textarea class="form-control" rows="4" [(ngModel)]="mail.content" name="content">Message</textarea>
         </div>
         <!-- /.form-group -->
         <div class="form-group-btn">
-            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!inquireForm.valid">Send Message</button>
         </div>
         <!-- /.form-group-btn -->
     </form>

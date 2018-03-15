@@ -10,6 +10,7 @@ public final class ErrorConstants {
     public static final String ERR_BAD_USER = "error.badUser";
     public static final String ERR_BAD_REFERENCE = "error.badReference";
     public static final String ERR_ID_EXISTS = "error.idExists";
+    public static final String ERR_EMAIL = "error.email";
     public static final String ERR_BAD_TYPE = "error.badType";
     public static final String NOT_IMPLEMENTED = "error.notImplemented";
     public static final String PROBLEM_BASE_URL = "http://uplace.es/#/error";
