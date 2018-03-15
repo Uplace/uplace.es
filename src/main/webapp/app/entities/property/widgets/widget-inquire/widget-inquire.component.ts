@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Property} from "../../property.model";
-import {Contact} from "../../../contact/contact.model";
-import {ContactService} from "../../../contact/contact.service";
 import {Mail} from "../../../../shared/model/mail.model";
+import {PropertyService} from "../../property.service";
 
 @Component({
     selector: 'up-widget-inquire',
@@ -13,21 +12,20 @@ export class WidgetInquireComponent implements OnInit {
 
     @Input() property: Property;
 
-    contact: Contact = new Contact();
+    mail: Mail = new Mail();
 
     constructor(
-        private contactService: ContactService
+        private propertyService: PropertyService
     ) {
-        this.contact.mail = new Mail();
     }
 
     ngOnInit() {
     }
 
     onSubmit() {
-        this.contact.property = this.property;
-        this.contactService.createContactProperty(this.contact).subscribe((response) => {
-
+        console.log(this.mail);
+        this.propertyService.inquire(this.property.reference, this.mail).subscribe((response) => {
+            console.log(response);
         });
     }
 

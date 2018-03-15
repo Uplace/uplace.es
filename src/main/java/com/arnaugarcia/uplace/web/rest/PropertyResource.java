@@ -1,6 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.domain.Contact;
+import com.arnaugarcia.uplace.domain.Mail;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.service.ContactService;
 import com.arnaugarcia.uplace.service.PropertyQueryService;
@@ -137,9 +137,9 @@ public class PropertyResource<T extends Property> {
      */
     @PostMapping("/properties/{reference}/inquire")
     @Timed
-    public void removeProperty(@PathVariable String reference, @RequestBody Contact contact) {
+    public void removeProperty(@PathVariable String reference, @RequestBody Mail mail) {
         log.debug("REST request to create inquire by reference " + reference);
-        contactService.sendInquire(contact);
+        contactService.sendInquire(reference, mail);
     }
 
 

@@ -1,17 +1,21 @@
 package com.arnaugarcia.uplace.domain;
 
+import java.time.ZonedDateTime;
+
 public class Mail {
 
     private String to;
     private String name;
+    private ZonedDateTime date;
     private String subject;
     private String content;
 
     public Mail() { }
 
-    public Mail(String to, String name, String subject, String content) {
+    public Mail(String to, String name, ZonedDateTime date, String subject, String content) {
         this.to = to;
         this.name = name;
+        this.date = date;
         this.subject = subject;
         this.content = content;
     }
@@ -30,6 +34,14 @@ public class Mail {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ZonedDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(ZonedDateTime date) {
+        this.date = date;
     }
 
     public String getSubject() {
@@ -53,6 +65,7 @@ public class Mail {
         return "Mail{" +
             "to='" + to + '\'' +
             ", name='" + name + '\'' +
+            ", date=" + date +
             ", subject='" + subject + '\'' +
             ", content='" + content + '\'' +
             '}';

@@ -7,6 +7,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 
 import { Property } from './property.model';
 import { createRequestOption } from '../../shared';
+import {Mail} from "../../shared/model/mail.model";
 
 export type EntityResponseType = HttpResponse<Property>;
 
@@ -21,6 +22,11 @@ export class PropertyService {
         const copy = this.convert(property);
         return this.http.post<Property>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
+    }
+
+    inquire(reference: string, mail: Mail): Observable<EntityResponseType> {
+        return this.http.post<Property>(`${this.resourceUrl}/${reference}/inquire`, mail, { observe: 'response' })
+            .map((res: EntityResponseType) => res);
     }
 
     update(property: Property): Observable<EntityResponseType> {

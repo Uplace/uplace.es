@@ -8,7 +8,6 @@ import { UplaceNotificationModule } from './notification/notification.module';
 import {UplaceFilterModule} from './filter/filter.module';
 import {UplaceMarkerModule} from './marker/marker.module';
 import { UplaceCompanyModule } from './company/company.module';
-import {UplaceContactModule} from "./contact/contact.module";
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -21,7 +20,6 @@ import {UplaceContactModule} from "./contact/contact.module";
         UplaceFilterModule,
         UplaceMarkerModule,
         UplaceCompanyModule,
-        UplaceContactModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

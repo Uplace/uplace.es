@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.service;
 
-import com.arnaugarcia.uplace.domain.Contact;
+import com.arnaugarcia.uplace.domain.Mail;
+import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.User;
 
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
@@ -37,7 +38,9 @@ public class MailService {
 
     private static final String USER = "user";
 
-    private static final String CONTACT = "contact";
+    private static final String PROPERTY = "property";
+
+    private static final String MAIL = "mail";
 
     private static final String BASE_URL = "baseUrl";
 
@@ -91,15 +94,16 @@ public class MailService {
     }
 
     @Async
-    public void sendPropertyInfo(Contact contact, String templateName, String titleKey) {
+    public void sendPropertyInfo(Mail mail, Property property, String templateName, String titleKey) {
         Locale locale = Locale.forLanguageTag("es");
         Context context = new Context(locale);
-        context.setVariable(CONTACT, contact);
+        context.setVariable(MAIL, mail);
+        context.setVariable(PROPERTY, property);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         try {
-            sendEmail(contact.getMail().getTo(), subject, content, false, true);
+            sendEmail(mail.getTo(), subject, content, false, true);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
