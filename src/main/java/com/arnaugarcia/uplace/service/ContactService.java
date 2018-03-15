@@ -28,6 +28,10 @@ public class ContactService<T extends Property> {
         if (property == null) {
             throw new BadRequestAlertException("Property not found", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
+
+        // TODO : Send a notification to the agent
+        // TODO : Send an email to the agent
+        // TODO : Make the template of contact
         mailService.sendPropertyInfo(mail, property,"infoProperty","email.inquire.title");
         return new ResponseEntity<>(mail, HttpStatus.OK);
     }
