@@ -25,7 +25,7 @@ public class ContactResource {
         this.mailService = mailService;
     }
 
-    @PostMapping("contact-property")
+    @PostMapping("/contact-property")
     public ResponseEntity sendContactProperty(@RequestBody Contact contact) {
 
         try {
