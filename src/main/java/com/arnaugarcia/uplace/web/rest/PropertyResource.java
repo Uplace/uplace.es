@@ -1,6 +1,8 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.domain.Contact;
 import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.service.ContactService;
 import com.arnaugarcia.uplace.service.PropertyQueryService;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
@@ -34,11 +36,14 @@ public class PropertyResource<T extends Property> {
 
     private final PropertyQueryService<T> propertyQueryService;
 
+    private final ContactService contactService;
+
     private final PropertyService<T> propertyService;
 
-    public PropertyResource(PropertyQueryService<T> propertyQueryService, PropertyService<T> propertyService) {
+    public PropertyResource(PropertyQueryService<T> propertyQueryService, PropertyService<T> propertyService, ContactService contactService) {
         this.propertyQueryService = propertyQueryService;
         this.propertyService = propertyService;
+        this.contactService = contactService;
     }
 
     /**
@@ -124,5 +129,18 @@ public class PropertyResource<T extends Property> {
         log.debug("REST request to delete a property by reference");
         propertyService.delete(references);
     }
+
+    /**
+     * POST  /properties/{reference}/inquire : create a inquire request
+     * <p>
+     * void the ResponseEntity with status 200 (OK) and the inquire in body
+     */
+    @PostMapping("/properties/{reference}/inquire")
+    @Timed
+    public void removeProperty(@PathVariable String reference, @RequestBody Contact contact) {
+        log.debug("REST request to create inquire by reference " + reference);
+        contactService.sendInquire(contact);
+    }
+
 
 }

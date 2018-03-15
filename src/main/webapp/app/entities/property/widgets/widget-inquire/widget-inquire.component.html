@@ -3,19 +3,19 @@
     <h3 class="widgettitle">Inquire Form</h3>
     <form (ngSubmit)="onSubmit()" #inquireForm="ngForm">
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Full name" [(ngModel)]="contact.name" name="name" required>
+            <input type="text" class="form-control" placeholder="Full name" [(ngModel)]="contact.mail.name" name="name" required>
         </div>
         <!-- /.form-group -->
         <div class="form-group">
-            <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="contact.to" name="email" email required>
+            <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="contact.mail.to" name="email" email required>
         </div>
         <!-- /.form-group -->
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Subject" name="subject">
+            <input type="text" class="form-control" placeholder="Subject" [(ngModel)]="contact.mail.subject" name="subject">
         </div>
         <!-- /.form-group -->
         <div class="form-group">
-            <textarea class="form-control" rows="4" name="content">Message</textarea>
+            <textarea class="form-control" rows="4" [(ngModel)]="contact.mail.content" name="content">Message</textarea>
         </div>
         <!-- /.form-group -->
         <div class="form-group-btn">

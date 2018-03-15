@@ -22,6 +22,7 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 
 /**
@@ -98,7 +99,7 @@ public class MailService {
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         try {
-            sendEmail(contact.getTo(), subject, content, false, true);
+            sendEmail(contact.getMail().getTo(), subject, content, false, true);
         } catch (MessagingException e) {
             e.printStackTrace();
         }

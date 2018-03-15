@@ -5,44 +5,24 @@ import java.time.ZonedDateTime;
 
 public class Contact {
 
-    private String to;
-    private String name;
-    private String phone;
+    private Mail mail;
     private ZonedDateTime dateSend;
     private Property property;
 
     public Contact() { }
 
-    public Contact(String to, String name, String phone, ZonedDateTime dateSend, Property property) {
-        this.to = to;
-        this.name = name;
-        this.phone = phone;
+    public Contact(Mail mail, ZonedDateTime dateSend, Property property) {
+        this.mail = mail;
         this.dateSend = dateSend;
         this.property = property;
     }
 
-    public String getTo() {
-        return to;
+    public Mail getMail() {
+        return mail;
     }
 
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMail(Mail mail) {
+        this.mail = mail;
     }
 
     public ZonedDateTime getDateSend() {
@@ -64,9 +44,7 @@ public class Contact {
     @Override
     public String toString() {
         return "Contact{" +
-            "to='" + to + '\'' +
-            ", name='" + name + '\'' +
-            ", phone='" + phone + '\'' +
+            "mail=" + mail +
             ", dateSend=" + dateSend +
             ", property=" + property +
             '}';

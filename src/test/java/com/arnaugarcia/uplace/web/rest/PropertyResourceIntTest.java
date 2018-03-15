@@ -7,6 +7,7 @@ import com.arnaugarcia.uplace.domain.Location;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
+import com.arnaugarcia.uplace.service.ContactService;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
@@ -99,6 +100,9 @@ public class PropertyResourceIntTest {
     private PropertyService propertyService;
 
     @Autowired
+    private ContactService contactService;
+
+    @Autowired
     private PropertyQueryService propertyQueryService;
 
     @Autowired
@@ -120,7 +124,7 @@ public class PropertyResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService);
+        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService, contactService);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
