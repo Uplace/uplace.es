@@ -41,7 +41,7 @@ public class Company implements Serializable {
     @Column(name = "nif")
     private String nif;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     private Location location;
 

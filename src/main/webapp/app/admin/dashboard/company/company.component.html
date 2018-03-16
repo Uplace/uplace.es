@@ -1,0 +1,51 @@
+<div class="main-wrapper">
+    <div class="main">
+        <div class="main-inner">
+            <up-alert-error></up-alert-error>
+            <up-alert></up-alert>
+            <!-- /.page-title -->
+            <div class="container">
+                <form (ngSubmit)="onSubmit()" #companyForm="ngForm">
+                    <div class="box">
+                        <div class="box-inner">
+                            <h3 class="page-title-small">Company information</h3>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" [(ngModel)]="company.name" name="name" required>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group col-sm-6">
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control" [(ngModel)]="company.phone" name="phone">
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group col-sm-6">
+                                    <label>E-mail</label>
+                                    <input type="email" class="form-control" [(ngModel)]="company.email" name="email" email required>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group col-sm-6">
+                                    <label>NIF</label>
+                                    <input type="text" class="form-control" [(ngModel)]="company.nif" name="nif" required>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.row -->
+                            <h3 class="page-title-small">Location</h3>
+                            <!-- /.form-group -->
+                            <h3 class="page-title-small">Description</h3>
+                            <textarea class="form-control" rows="7" [(ngModel)]="company.description" name="description"></textarea>
+                        </div>
+                        <!-- /.box-inner -->
+                    </div>
+                    <button type="submit" class="btn btn-success" [disabled]="!companyForm.valid">Save</button>
+                    <!-- /.box -->
+                </form>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.main-inner -->
+    </div>
+    <!-- /.main -->
+</div>
