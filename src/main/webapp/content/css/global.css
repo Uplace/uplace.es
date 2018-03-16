@@ -7951,7 +7951,8 @@ h4.infobox-address {
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 360px; }
+    height: 360px;
+    width: 100%; }
 
 .listing-hero {
     background-color: #fff;
