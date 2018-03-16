@@ -41,9 +41,9 @@ public class CompanyService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Company> findAll() {
-        log.debug("Request to get all Companies");
-        return companyRepository.findAll();
+    public Company findAll() {
+        log.debug("Request to get Company");
+        return companyRepository.findCompany();
     }
 
     /**
