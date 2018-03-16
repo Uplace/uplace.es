@@ -8262,6 +8262,8 @@ h4.infobox-address {
 .listing-box-image-content.listing-box-image-content-centered {
     background-size: 60% auto; }
 
+.listing-box-image-content > img {height: 100%; width: 100%;}
+
 .listing-box-content {
     position: relative;
     padding: 12px 40px 12px 12px; }
