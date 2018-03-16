@@ -28,6 +28,12 @@ public class Company implements Serializable {
     @Column(name = "photo")
     private String photo;
 
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "email")
+    private String email;
+
     @Lob
     @Column(name = "description")
     private String description;
@@ -72,6 +78,32 @@ public class Company implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public Company phone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Company email(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDescription() {
@@ -140,6 +172,8 @@ public class Company implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", photo='" + getPhoto() + "'" +
+            ", phone='" + getPhone() + "'" +
+            ", email='" + getEmail() + "'" +
             ", description='" + getDescription() + "'" +
             ", nif='" + getNif() + "'" +
             "}";

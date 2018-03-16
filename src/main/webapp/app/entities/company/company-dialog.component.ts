@@ -9,7 +9,7 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { Company } from './company.model';
 import { CompanyPopupService } from './company-popup.service';
 import { CompanyService } from './company.service';
-import { Location, LocationService } from '../location/index';
+import { Location, LocationService } from '../location';
 
 @Component({
     selector: 'up-company-dialog',

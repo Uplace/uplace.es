@@ -1,23 +1,15 @@
-<div class="listing-detail-section" id="listing-detail-section-contact-information" data-title="Contact">
+<div class="listing-detail-section" id="listing-detail-section-contact-information" data-title="Contact" *ngIf="!property.managers || property.managers.length === 0 && company">
     <h2>Contact Information</h2>
     <div class="box">
         <div class="box-inner">
             <div class="overview overview-half overview-no-margin">
-                <ul *ngIf="!property.managers || property.managers.length === 0 && company">
+                <ul>
                     <li><strong>Postal code</strong><span>{{company.location.postalCode}}</span></li>
                     <li><strong>City</strong><span>{{company.location.city}}</span></li>
-                    <li><strong>Address</strong><span>{{company.location.fullAddress}}</span></li>
-                    <li><strong>E-mail</strong><span><a href="mailto:">info@uplace.es</a></span></li>
-                    <li><strong>Phone</strong><span>Phone</span></li>
-                    <li><strong>Website</strong><span><a href="#">{{company.nif}}</a></span></li>
-                </ul>
-                <ul *ngIf="property.managers && property.managers.length > 0">
-                    <li><strong>Country</strong><span>Canada</span></li>
-                    <li><strong>City</strong><span>Toronto</span></li>
-                    <li><strong>Address</strong><span>4886 Hickory Ridge Drive</span></li>
-                    <li><strong>E-mail</strong><span><a href="mailto:">sample@example.com</a></span></li>
-                    <li><strong>Phone</strong><span>+0-123-456-789</span></li>
-                    <li><strong>Website</strong><span><a href="#">example.com</a></span></li>
+                    <li><strong>Address</strong><span>{{company.location.fullAddress | truncate:[40, '...']}}</span></li>
+                    <li><strong>E-mail</strong><span><a [href]="'mailto:' + company.email">{{company.email}}</a></span></li>
+                    <li><strong>Phone</strong><span>{{company.phone}}</span></li>
+                    <li><strong>Website</strong><span><a routerLink="/">uplace.es</a></span></li>
                 </ul>
             </div>
             <!-- /.overview -->

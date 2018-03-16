@@ -1,4 +1,4 @@
-import { BaseEntity } from '../../shared/index';
+import { BaseEntity } from './../../shared';
 import {Location} from "../location";
 
 export class Company implements BaseEntity {
@@ -6,6 +6,8 @@ export class Company implements BaseEntity {
         public id?: number,
         public name?: string,
         public photo?: string,
+        public phone?: string,
+        public email?: string,
         public description?: any,
         public nif?: string,
         public location?: Location,

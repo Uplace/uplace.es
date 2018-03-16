@@ -18,6 +18,8 @@
             },
             "name": "Name",
             "photo": "Photo",
+            "phone": "Phone",
+            "email": "Email",
             "description": "Description",
             "nif": "Nif",
             "location": "Location"
