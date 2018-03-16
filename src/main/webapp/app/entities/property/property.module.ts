@@ -22,6 +22,7 @@ import { WidgetRecentsComponent } from './widgets/widget-recents/widget-recents.
 import { PropertyFeaturesComponent } from './property-features/property-features.component';
 import { PropertyFeatureComponent } from './property-feature/property-feature.component';
 import { PropertyFilterComponent } from './property-filter/property-filter.component';
+import { PropertyContactComponent } from './property-contact/property-contact.component';
 
 const ENTITY_STATES = [
     ...propertyRoute,
@@ -46,7 +47,8 @@ const ENTITY_STATES = [
         WidgetRecentsComponent,
         PropertyFeaturesComponent,
         PropertyFeatureComponent,
-        PropertyFilterComponent
+        PropertyFilterComponent,
+        PropertyContactComponent
 
     ],
     entryComponents: [

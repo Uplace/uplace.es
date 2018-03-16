@@ -7951,7 +7951,8 @@ h4.infobox-address {
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 360px; }
+    height: 460px;
+    width: 100%; }
 
 .listing-hero {
     background-color: #fff;
@@ -8261,6 +8262,8 @@ h4.infobox-address {
     top: 0; }
 .listing-box-image-content.listing-box-image-content-centered {
     background-size: 60% auto; }
+
+.listing-box-image-content > img {height: 100%; width: 100%;}
 
 .listing-box-content {
     position: relative;

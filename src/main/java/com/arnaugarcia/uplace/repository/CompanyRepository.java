@@ -13,4 +13,7 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
+    @Query(value="SELECT * FROM company LIMIT 1", nativeQuery = true)
+    Company findCompany();
+
 }

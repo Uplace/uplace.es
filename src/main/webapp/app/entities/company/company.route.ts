@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { UserRouteAccessService } from '../../shared/index';
+import { UserRouteAccessService } from '../../shared';
 import { CompanyComponent } from './company.component';
 import { CompanyDetailComponent } from './company-detail.component';
 import { CompanyPopupComponent } from './company-dialog.component';

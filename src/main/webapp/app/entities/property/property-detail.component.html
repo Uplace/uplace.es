@@ -175,26 +175,7 @@
                         <!-- /.listing-detail-section -->
                         <up-property-features *ngIf="property.propertyType !== 'Building' && property.propertyType !== 'IndustrialPlant' && property.propertyType !== 'Terrain' && property.propertyType !== 'Establishment'" [property]="property"></up-property-features>
                         <!-- /.listing-detail-section -->
-                        <div class="listing-detail-section" id="listing-detail-section-contact-information" data-title="Contact">
-                            <h2>Contact Information</h2>
-                            <div class="box">
-                                <div class="box-inner">
-                                    <div class="overview overview-half overview-no-margin">
-                                        <ul>
-                                            <li><strong>Country</strong><span>Canada</span></li>
-                                            <li><strong>City</strong><span>Toronto</span></li>
-                                            <li><strong>Address</strong><span>4886 Hickory Ridge Drive</span></li>
-                                            <li><strong>E-mail</strong><span><a href="mailto:">sample@example.com</a></span></li>
-                                            <li><strong>Phone</strong><span>+0-123-456-789</span></li>
-                                            <li><strong>Website</strong><span><a href="#">example.com</a></span></li>
-                                        </ul>
-                                    </div>
-                                    <!-- /.overview -->
-                                </div>
-                                <!-- /.box-inner -->
-                            </div>
-                            <!-- /.box -->
-                        </div>
+                        <up-property-contact [property]="property"></up-property-contact>
                         <!-- /.listing-detail-section -->
                         <div class="listing-detail-section" id="listing-detail-section-map-position" data-title="Map Position" *ngIf="property.location && property.location.latitude && property.location.longitude">
                             <h2>Map Position</h2>

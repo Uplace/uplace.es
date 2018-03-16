@@ -20,6 +20,14 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "description",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "text"

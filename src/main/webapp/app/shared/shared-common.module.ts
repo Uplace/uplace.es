@@ -11,6 +11,7 @@ import {
     UpAlertErrorComponent
 } from './';
 import {KeysPipe} from "./pipes/keys.pipe";
+import {TruncatePipe} from "./pipes/truncate.pipe";
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import {KeysPipe} from "./pipes/keys.pipe";
     declarations: [
         FindLanguageFromKeyPipe,
         KeysPipe,
+        TruncatePipe,
         UpAlertComponent,
         UpAlertErrorComponent
     ],
@@ -35,6 +37,7 @@ import {KeysPipe} from "./pipes/keys.pipe";
     exports: [
         UplaceSharedLibsModule,
         KeysPipe,
+        TruncatePipe,
         FindLanguageFromKeyPipe,
         UpAlertComponent,
         UpAlertErrorComponent

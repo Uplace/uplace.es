@@ -26,12 +26,12 @@ companies: Company[];
     }
 
     loadAll() {
-        this.companyService.query().subscribe(
+        /*this.companyService.query().subscribe(
             (res: HttpResponse<Company[]>) => {
                 this.companies = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        );*/
     }
     ngOnInit() {
         this.loadAll();

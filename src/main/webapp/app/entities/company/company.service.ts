@@ -11,7 +11,7 @@ export type EntityResponseType = HttpResponse<Company>;
 @Injectable()
 export class CompanyService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/companies';
+    private resourceUrl =  SERVER_API_URL + 'api/company';
 
     constructor(private http: HttpClient) { }
 
@@ -32,10 +32,10 @@ export class CompanyService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<Company[]>> {
+    query(req?: any): Observable<HttpResponse<Company>> {
         const options = createRequestOption(req);
-        return this.http.get<Company[]>(this.resourceUrl, { params: options, observe: 'response' })
-            .map((res: HttpResponse<Company[]>) => this.convertArrayResponse(res));
+        return this.http.get<Company>(this.resourceUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<Company>) => this.convertResponse(res));
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
@@ -44,15 +44,6 @@ export class CompanyService {
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Company = this.convertItemFromServer(res.body);
-        return res.clone({body});
-    }
-
-    private convertArrayResponse(res: HttpResponse<Company[]>): HttpResponse<Company[]> {
-        const jsonResponse: Company[] = res.body;
-        const body: Company[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
         return res.clone({body});
     }
 
