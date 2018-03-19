@@ -1,0 +1,76 @@
+<div>
+    <h2>
+        <span jhiTranslate="uplaceApp.hotel.home.title">Hotels</span>
+        <button class="btn btn-primary float-right jh-create-entity create-hotel" [routerLink]="['/', { outlets: { popup: ['hotel-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="uplaceApp.hotel.home.createLabel">
+            Create new Hotel
+            </span>
+        </button>
+    </h2>
+    <up-alert></up-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="hotels">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.solarSurface">Solar Surface</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.m2Edified">M 2 Edified</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.numberRooms">Number Rooms</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.operator">Operator</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.pool">Pool</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.spa">Spa</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.conferenceRoom">Conference Room</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.floorsSR">Floors SR</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.floorsBR">Floors BR</span></th>
+            <th><span jhiTranslate="uplaceApp.hotel.energyCertificate">Energy Certificate</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let hotel of hotels ;trackBy: trackId">
+                <td><a [routerLink]="['../hotel', hotel.id ]">{{hotel.id}}</a></td>
+                <td>{{hotel.solarSurface}}</td>
+                <td>{{hotel.m2Edified}}</td>
+                <td>{{hotel.numberRooms}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + hotel.operator}}">{{hotel.operator}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + hotel.pool}}">{{hotel.pool}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + hotel.spa}}">{{hotel.spa}}</td>
+                <td jhiTranslate="{{'uplaceApp.Select.' + hotel.conferenceRoom}}">{{hotel.conferenceRoom}}</td>
+                <td>{{hotel.floorsSR}}</td>
+                <td>{{hotel.floorsBR}}</td>
+                <td jhiTranslate="{{'uplaceApp.EnergyCertificate.' + hotel.energyCertificate}}">{{hotel.energyCertificate}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../hotel', hotel.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'hotel/'+ hotel.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'hotel/'+ hotel.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

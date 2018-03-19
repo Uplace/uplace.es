@@ -1,0 +1,47 @@
+
+<div *ngIf="agent">
+    <h2><span jhiTranslate="uplaceApp.agent.detail.title">Agent</span> {{agent.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.agent.firstName">First Name</span></dt>
+        <dd>
+            <span>{{agent.firstName}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.agent.lastName">Last Name</span></dt>
+        <dd>
+            <span>{{agent.lastName}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.agent.phone">Phone</span></dt>
+        <dd>
+            <span>{{agent.phone}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.agent.photo">Photo</span></dt>
+        <dd>
+            <div *ngIf="agent.photo">
+                <a (click)="openFile(agent.photoContentType, agent.photo)">
+                    <img [src]="'data:' + agent.photoContentType + ';base64,' + agent.photo" style="max-width: 100%;" alt="agent image"/>
+                </a>
+                {{agent.photoContentType}}, {{byteSize(agent.photo)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.agent.user">User</span></dt>
+        <dd>
+            {{agent.user?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'agent/'+ agent.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,11 @@
+{
+    "uplaceApp": {
+        "TerrainType" : {
+            "null": "",
+            "RESIDENTIAL": "RESIDENTIAL",
+            "URBAN": "URBAN",
+            "RUSTIC": "RUSTIC",
+            "INDUSTRIAL": "INDUSTRIAL"
+        }
+    }
+}

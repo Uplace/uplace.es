@@ -1,0 +1,27 @@
+
+{
+    "uplaceApp": {
+        "agent" : {
+            "home": {
+                "title": "Agents",
+                "createLabel": "Crear nuevo Agent",
+                "createOrEditLabel": "Crear o editar Agent"
+            },
+            "created": "Un nuevo Agent ha sido creado con el identificador {{ param }}",
+            "updated": "Un Agent ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Agent ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Agent {{ id }}?"
+            },
+            "detail": {
+                "title": "Agent"
+            },
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "phone": "Phone",
+            "photo": "Photo",
+            "user": "User",
+            "property": "Property"
+        }
+    }
+}

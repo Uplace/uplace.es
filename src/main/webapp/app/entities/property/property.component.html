@@ -1,0 +1,94 @@
+<div>
+    <h2>
+        <span jhiTranslate="uplaceApp.property.home.title">Properties</span>
+        <button class="btn btn-primary float-right jh-create-entity create-property" [routerLink]="['/', { outlets: { popup: ['property-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="uplaceApp.property.home.createLabel">
+            Create new Property
+            </span>
+        </button>
+    </h2>
+    <up-alert></up-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="properties">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="uplaceApp.property.title">Title</span></th>
+            <th><span jhiTranslate="uplaceApp.property.price">Price</span></th>
+            <th><span jhiTranslate="uplaceApp.property.created">Created</span></th>
+            <th><span jhiTranslate="uplaceApp.property.updated">Updated</span></th>
+            <th><span jhiTranslate="uplaceApp.property.description">Description</span></th>
+            <th><span jhiTranslate="uplaceApp.property.transaction">Transaction</span></th>
+            <th><span jhiTranslate="uplaceApp.property.reference">Reference</span></th>
+            <th><span jhiTranslate="uplaceApp.property.priceSell">Price Sell</span></th>
+            <th><span jhiTranslate="uplaceApp.property.priceRent">Price Rent</span></th>
+            <th><span jhiTranslate="uplaceApp.property.yearConstruction">Year Construction</span></th>
+            <th><span jhiTranslate="uplaceApp.property.newCreation">New Creation</span></th>
+            <th><span jhiTranslate="uplaceApp.property.visible">Visible</span></th>
+            <th><span jhiTranslate="uplaceApp.property.surface">Surface</span></th>
+            <th><span jhiTranslate="uplaceApp.property.location">Location</span></th>
+            <th><span jhiTranslate="uplaceApp.property.manager">Manager</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let property of properties ;trackBy: trackId">
+                <td><a [routerLink]="['../property', property.id ]">{{property.id}}</a></td>
+                <td>{{property.title}}</td>
+                <td>{{property.price}}</td>
+                <td>{{property.created | date:'medium'}}</td>
+                <td>{{property.updated | date:'medium'}}</td>
+                <td>{{property.description}}</td>
+                <td jhiTranslate="{{'uplaceApp.TransactionType.' + property.transaction}}">{{property.transaction}}</td>
+                <td>{{property.reference}}</td>
+                <td>{{property.priceSell}}</td>
+                <td>{{property.priceRent}}</td>
+                <td>{{property.yearConstruction}}</td>
+                <td>{{property.newCreation}}</td>
+                <td>{{property.visible}}</td>
+                <td>{{property.surface}}</td>
+                <td>
+                    <div *ngIf="property.location">
+                        <a [routerLink]="['../location', property.location?.id ]" >{{property.location?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <span *ngFor="let manager of property.managers; let last = last">
+                            <a class="form-control-static" [routerLink]="['../agent', manager?.id ]">{{manager.firstName}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../property', property.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'property/'+ property.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

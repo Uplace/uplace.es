@@ -1,0 +1,80 @@
+<div>
+    <h2>
+        <span jhiTranslate="uplaceApp.notification.home.title">Notifications</span>
+        <button class="btn btn-primary float-right jh-create-entity create-notification" [routerLink]="['/', { outlets: { popup: ['notification-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="uplaceApp.notification.home.createLabel">
+            Create new Notification
+            </span>
+        </button>
+    </h2>
+    <up-alert></up-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="notifications">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="title"><span jhiTranslate="uplaceApp.notification.title">Title</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="content"><span jhiTranslate="uplaceApp.notification.content">Content</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="creation"><span jhiTranslate="uplaceApp.notification.creation">Creation</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="type"><span jhiTranslate="uplaceApp.notification.type">Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="token"><span jhiTranslate="uplaceApp.notification.token">Token</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="read"><span jhiTranslate="uplaceApp.notification.read">Read</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="user.login"><span jhiTranslate="uplaceApp.notification.user">User</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let notification of notifications ;trackBy: trackId">
+                <td><a [routerLink]="['../notification', notification.id ]">{{notification.id}}</a></td>
+                <td>{{notification.title}}</td>
+                <td>{{notification.content}}</td>
+                <td>{{notification.creation | date:'medium'}}</td>
+                <td jhiTranslate="{{'uplaceApp.NotificationType.' + notification.type}}">{{notification.type}}</td>
+                <td>{{notification.token}}</td>
+                <td>{{notification.read}}</td>
+                <td>
+                    {{notification.user?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../notification', notification.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'notification/'+ notification.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'notification/'+ notification.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="notifications && notifications.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

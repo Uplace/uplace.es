@@ -1,0 +1,32 @@
+
+{
+    "uplaceApp": {
+        "business" : {
+            "home": {
+                "title": "Businesses",
+                "createLabel": "Create a new Business",
+                "createOrEditLabel": "Create or edit a Business"
+            },
+            "created": "A new Business is created with identifier {{ param }}",
+            "updated": "A Business is updated with identifier {{ param }}",
+            "deleted": "A Business is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Business {{ id }}?"
+            },
+            "detail": {
+                "title": "Business"
+            },
+            "type": "Type",
+            "numberBathrooms": "Number Bathrooms",
+            "elevator": "Elevator",
+            "ac": "Ac",
+            "heat": "Heat",
+            "surfaceTerrace": "Surface Terrace",
+            "surfaceGarden": "Surface Garden",
+            "numberOffice": "Number Office",
+            "surfaceSaloon": "Surface Saloon",
+            "height": "Height",
+            "pool": "Pool"
+        }
+    }
+}

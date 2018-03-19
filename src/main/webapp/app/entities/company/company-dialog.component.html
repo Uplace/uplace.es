@@ -1,0 +1,62 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myCompanyLabel" jhiTranslate="uplaceApp.company.home.createOrEditLabel">Create or edit a Company</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <up-alert-error></up-alert-error>
+        <div class="form-group" [hidden]="!company.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="company.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.company.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="company.name" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.company.photo" for="field_photo">Photo</label>
+            <input type="text" class="form-control" name="photo" id="field_photo"
+                [(ngModel)]="company.photo" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.company.phone" for="field_phone">Phone</label>
+            <input type="text" class="form-control" name="phone" id="field_phone"
+                [(ngModel)]="company.phone" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.company.email" for="field_email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email"
+                [(ngModel)]="company.email" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.company.description" for="field_description">Description</label>
+            <textarea class="form-control" name="description" id="field_description"
+                [(ngModel)]="company.description" ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.company.nif" for="field_nif">Nif</label>
+            <input type="text" class="form-control" name="nif" id="field_nif"
+                [(ngModel)]="company.nif" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.company.location" for="field_location">Location</label>
+            <select class="form-control" id="field_location" name="location" [(ngModel)]="company.location">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="locationOption.id === company.location?.id ? company.location : locationOption" *ngFor="let locationOption of locations; trackBy: trackLocationById">{{locationOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,48 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "property",
+            "otherEntityName": "property",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "location"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "latitude",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "postalCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "longitude",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fullAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hide",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "urlGMaps",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180117115522",
+    "entityTableName": "location",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

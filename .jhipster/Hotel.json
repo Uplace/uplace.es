@@ -1,0 +1,57 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "solarSurface",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "m2Edified",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "numberRooms",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "operator",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "pool",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "spa",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "conferenceRoom",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "floorsSR",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "floorsBR",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "energyCertificate",
+            "fieldType": "EnergyCertificate",
+            "fieldValues": "A,B,C,D,E,F,G,UNDEFINED"
+        }
+    ],
+    "changelogDate": "20180129130241",
+    "entityTableName": "hotel",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

@@ -1,0 +1,10 @@
+{
+    "uplaceApp": {
+        "BuildingType" : {
+            "null": "",
+            "RESIDENTIAL": "RESIDENTIAL",
+            "HOTEL": "HOTEL",
+            "INDUSTRIAL": "INDUSTRIAL"
+        }
+    }
+}

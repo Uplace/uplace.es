@@ -1,0 +1,115 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "numberBedrooms",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "numberBathrooms",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "m2Edified",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "m2Usable",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "height",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "elevator",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "ac",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "heat",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "parking",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "terrace",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "balcony",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "surfaceTerrace",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "surfaceSaloon",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "ApartmentType",
+            "fieldValues": "HOUSES,RURALS,FLATS,APARTMENTS,TOWERS,LOFTS"
+        },
+        {
+            "fieldName": "office",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "kitchenOffice",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "storage",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "sharedPool",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "nearTransport",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "reformed",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        },
+        {
+            "fieldName": "energyCertificate",
+            "fieldType": "EnergyCertificate",
+            "fieldValues": "A,B,C,D,E,F,G,UNDEFINED"
+        },
+        {
+            "fieldName": "certificateHabitability",
+            "fieldType": "Select",
+            "fieldValues": "YES,NO,UNDEFINED"
+        }
+    ],
+    "changelogDate": "20180117115517",
+    "entityTableName": "apartment",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

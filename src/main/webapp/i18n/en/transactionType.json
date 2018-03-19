@@ -1,0 +1,11 @@
+{
+    "uplaceApp": {
+        "TransactionType" : {
+            "null": "",
+            "RENT": "RENT",
+            "BUY": "BUY",
+            "TRANSFER": "TRANSFER",
+            "RENT_BUY": "RENT_BUY"
+        }
+    }
+}

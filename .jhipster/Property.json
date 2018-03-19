@@ -1,0 +1,108 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "property(reference)"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "photo",
+            "otherEntityName": "photo",
+            "otherEntityRelationshipName": "property"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "property",
+            "relationshipName": "manager",
+            "otherEntityName": "agent",
+            "otherEntityField": "firstName",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "created",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "updated",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        },
+        {
+            "fieldName": "transaction",
+            "fieldType": "TransactionType",
+            "fieldValues": "RENT,BUY,TRANSFER,RENT_BUY",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "reference",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "priceSell",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "priceRent",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "yearConstruction",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 500
+        },
+        {
+            "fieldName": "newCreation",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "visible",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "surface",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180117115516",
+    "entityTableName": "property",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true
+}

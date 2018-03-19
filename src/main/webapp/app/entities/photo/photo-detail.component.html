@@ -1,0 +1,49 @@
+
+<div *ngIf="photo">
+    <h2><span jhiTranslate="uplaceApp.photo.detail.title">Photo</span> {{photo.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.photo.name">Name</span></dt>
+        <dd>
+            <span>{{photo.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.photo.description">Description</span></dt>
+        <dd>
+            <span>{{photo.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.photo.photo">Photo</span></dt>
+        <dd>
+            <div *ngIf="photo.photo">
+                <a (click)="openFile(photo.photoContentType, photo.photo)">
+                    <img [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo" style="max-width: 100%;" alt="photo image"/>
+                </a>
+                {{photo.photoContentType}}, {{byteSize(photo.photo)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.photo.thumbnail">Thumbnail</span></dt>
+        <dd>
+            <span>{{photo.thumbnail}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.photo.property">Property</span></dt>
+        <dd>
+            <div *ngIf="photo.property">
+                <a [routerLink]="['/property', photo.property?.id]">{{photo.property?.reference}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'photo/'+ photo.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

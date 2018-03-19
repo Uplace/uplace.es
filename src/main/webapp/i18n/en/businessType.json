@@ -1,0 +1,10 @@
+{
+    "uplaceApp": {
+        "BusinessType" : {
+            "null": "",
+            "PUB": "PUB",
+            "HOTEL": "HOTEL",
+            "OTHERS": "OTHERS"
+        }
+    }
+}

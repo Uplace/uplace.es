@@ -1,0 +1,29 @@
+
+{
+    "uplaceApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "Create a new Location",
+                "createOrEditLabel": "Create or edit a Location"
+            },
+            "created": "A new Location is created with identifier {{ param }}",
+            "updated": "A Location is updated with identifier {{ param }}",
+            "deleted": "A Location is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Location {{ id }}?"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "latitude": "Latitude",
+            "postalCode": "Postal Code",
+            "longitude": "Longitude",
+            "city": "City",
+            "fullAddress": "Full Address",
+            "hide": "Hide",
+            "urlGMaps": "Url G Maps",
+            "property": "Property"
+        }
+    }
+}
