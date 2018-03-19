@@ -36,6 +36,11 @@ import java.util.Set;
     @JsonSubTypes.Type(value = Parking.class, name = "Parking"),
     @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
 })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name = "graph.PropertyLocation", attributeNodes = {
+        @NamedAttributeNode("location")
+    })
+})
 // TODO: Make Property abstract
 public class Property implements Serializable {
 
@@ -95,15 +100,16 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(unique = true)
+    @PrimaryKeyJoinColumn
     private Location location;
 
-    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "property_manager",
                joinColumns = @JoinColumn(name="properties_id", referencedColumnName="id"),
