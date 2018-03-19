@@ -4,11 +4,11 @@
         <div class="box-inner">
             <div class="overview overview-half overview-no-margin">
                 <ul>
-                    <li><strong>Postal code</strong><span>{{company.location.postalCode}}</span></li>
-                    <li><strong>City</strong><span>{{company.location.city}}</span></li>
-                    <li><strong>Address</strong><span>{{company.location.fullAddress | truncate:[40, '...']}}</span></li>
-                    <li><strong>E-mail</strong><span><a [href]="'mailto:' + company.email">{{company.email}}</a></span></li>
-                    <li><strong>Phone</strong><span>{{company.phone}}</span></li>
+                    <li><strong>Postal code</strong><span>{{company?.location?.postalCode}}</span></li>
+                    <li><strong>City</strong><span>{{company?.location?.city}}</span></li>
+                    <li *ngIf="company?.location?.fullAddress"><strong>Address</strong><span>{{company.location.fullAddress | truncate:[40, '...']}}</span></li>
+                    <li><strong>E-mail</strong><span><a [href]="'mailto:' + company?.email">{{company?.email}}</a></span></li>
+                    <li><strong>Phone</strong><span>{{company?.phone}}</span></li>
                     <li><strong>Website</strong><span><a routerLink="/">uplace.es</a></span></li>
                 </ul>
             </div>
