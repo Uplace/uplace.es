@@ -41,6 +41,7 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      * @param reference of the property to search
      * @return property if found or null if not
      */
+    @EntityGraph("graph.PropertyLocation")
     @Query("SELECT p FROM Property p left join fetch p.managers where p.reference = :reference")
     T findByReference(@Param("reference") String reference);
 
