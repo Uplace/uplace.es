@@ -38,7 +38,15 @@ import java.util.Set;
 })
 @NamedEntityGraphs({
     @NamedEntityGraph(name = "graph.PropertyLocation", attributeNodes = {
-        @NamedAttributeNode("location")
+        @NamedAttributeNode("location"),
+        @NamedAttributeNode(value = "managers", subgraph = "graph.AgentUser"),
+        @NamedAttributeNode("photos")
+
+    },
+    subgraphs = {
+        @NamedSubgraph(name = "graph.AgentUser", attributeNodes = {
+            @NamedAttributeNode("user")
+        })
     })
 })
 // TODO: Make Property abstract
