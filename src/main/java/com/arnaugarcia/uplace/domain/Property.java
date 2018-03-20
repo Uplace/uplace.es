@@ -36,6 +36,19 @@ import java.util.Set;
     @JsonSubTypes.Type(value = Parking.class, name = "Parking"),
     @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
 })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name = "graph.PropertyLocation", attributeNodes = {
+        @NamedAttributeNode("location"),
+        @NamedAttributeNode(value = "managers", subgraph = "graph.AgentUser"),
+        @NamedAttributeNode("photos")
+
+    },
+    subgraphs = {
+        @NamedSubgraph(name = "graph.AgentUser", attributeNodes = {
+            @NamedAttributeNode("user")
+        })
+    })
+})
 // TODO: Make Property abstract
 public class Property implements Serializable {
 
@@ -95,20 +108,23 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(unique = true)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(unique = true, nullable = false)
     private Location location;
 
-    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "property_manager",
                joinColumns = @JoinColumn(name="properties_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
+
+    @ManyToOne
+    private RealEstate realEstate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -354,6 +370,20 @@ public class Property implements Serializable {
     public void setManagers(Set<Agent> agents) {
         this.managers = agents;
     }
+
+    public RealEstate getRealEstate() {
+        return realEstate;
+    }
+
+    public Property realEstate(RealEstate realEstate) {
+        this.realEstate = realEstate;
+        return this;
+    }
+
+    public void setRealEstate(RealEstate realEstate) {
+        this.realEstate = realEstate;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

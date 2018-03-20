@@ -24,6 +24,8 @@
                 "industrialPlant": "Industrial Plant",
                 "establishment": "Establishment",
                 "company": "Company",
+                "property": "Property",
+                "realEstate": "Real Estate",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -3,6 +3,7 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
+            "relationshipValidateRules": "required",
             "relationshipName": "location",
             "otherEntityName": "location",
             "otherEntityField": "id",
@@ -22,6 +23,12 @@
             "otherEntityName": "agent",
             "otherEntityField": "firstName",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "realEstate",
+            "otherEntityName": "realEstate",
+            "otherEntityField": "reference"
         }
     ],
     "fields": [
