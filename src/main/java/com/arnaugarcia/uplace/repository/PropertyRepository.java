@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -29,6 +30,10 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
 
     @Query("select property from Property property left join fetch property.managers where property.id =:id")
     T findOneWithEagerRelationships(@Param("id") Long id);
+
+    @EntityGraph(value = "graph.PropertyLocation", type = EntityGraph.EntityGraphType.LOAD)
+    @Override
+    Page<T> findAll(Pageable pageable);
 
     /**
      * Query to get a property by reference

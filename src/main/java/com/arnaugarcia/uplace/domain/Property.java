@@ -40,7 +40,8 @@ import java.util.Set;
     @NamedEntityGraph(name = "graph.PropertyLocation", attributeNodes = {
         @NamedAttributeNode("location"),
         @NamedAttributeNode(value = "managers", subgraph = "graph.AgentUser"),
-        @NamedAttributeNode("photos")
+        @NamedAttributeNode("photos"),
+        @NamedAttributeNode("realEstate")
 
     },
     subgraphs = {
@@ -110,6 +111,7 @@ public class Property implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(unique = true, nullable = false)
+    @PrimaryKeyJoinColumn
     private Location location;
 
     @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -123,7 +125,7 @@ public class Property implements Serializable {
                inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private RealEstate realEstate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
