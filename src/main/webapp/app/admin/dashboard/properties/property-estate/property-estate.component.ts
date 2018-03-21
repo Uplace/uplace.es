@@ -32,7 +32,6 @@ export class PropertyEstateComponent implements OnInit, AfterContentInit {
 
     ngAfterContentInit() {
         if (this.realEstate == null) {
-            console.log("Empty!");
             this.realEstate = new RealEstate();
         }
     }
