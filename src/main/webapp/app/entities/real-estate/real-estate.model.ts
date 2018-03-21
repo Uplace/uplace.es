@@ -1,4 +1,5 @@
 import { BaseEntity } from './../../shared';
+import {Property} from "../property";
 
 export class RealEstate implements BaseEntity {
     constructor(
@@ -6,7 +7,7 @@ export class RealEstate implements BaseEntity {
         public name?: string,
         public nif?: string,
         public reference?: string,
-        public properties?: BaseEntity[],
+        public properties?: Property[],
     ) {
     }
 }

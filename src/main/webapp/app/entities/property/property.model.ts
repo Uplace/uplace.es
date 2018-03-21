@@ -2,6 +2,7 @@ import { BaseEntity } from './../../shared';
 import {Photo} from "../photo";
 import {Agent} from "../agent";
 import {Location} from "../location/location.model";
+import {RealEstate} from "../real-estate";
 
 export enum TransactionType {
     RENT,
@@ -30,6 +31,7 @@ export class Property implements BaseEntity {
         public location?: Location,
         public photos?: Photo[],
         public managers?: Agent[],
+        public realEstate?: RealEstate
     ) {
         this.newCreation = false;
         this.visible = false;

@@ -5,6 +5,7 @@ import {UplaceSharedModule} from "../../shared";
 import {PropertiesModule} from "./properties/properties.module";
 import {RouterModule} from "@angular/router";
 import {CompanyModule} from "./company/company.module";
+import {RealEstateService} from "../../entities/real-estate";
 
 @NgModule({
     imports: [
@@ -17,7 +18,7 @@ import {CompanyModule} from "./company/company.module";
     declarations: [
         DashboardComponent
     ],
-    providers: []
+    providers: [RealEstateService]
 })
 export class DashboardModule {
 }
