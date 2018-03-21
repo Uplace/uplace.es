@@ -6,6 +6,7 @@ import {PropertiesModule} from "./properties/properties.module";
 import {RouterModule} from "@angular/router";
 import {CompanyModule} from "./company/company.module";
 import {RealEstateService} from "../../entities/real-estate";
+import {RealEstateModule} from "./real-estate/real-estate.module";
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import {RealEstateService} from "../../entities/real-estate";
         CommonModule,
         PropertiesModule,
         CompanyModule,
+        RealEstateModule,
         RouterModule
     ],
     declarations: [
