@@ -31,7 +31,8 @@
             "surface": "Surface",
             "location": "Location",
             "photo": "Photo",
-            "manager": "Manager"
+            "manager": "Manager",
+            "realEstate": "Real Estate"
         }
     }
 }

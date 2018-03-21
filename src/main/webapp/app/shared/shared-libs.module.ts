@@ -8,6 +8,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieModule } from 'ngx-cookie';
 import {AgmCoreModule} from "@agm/core";
 import {AgmJsMarkerClustererModule} from "@agm/js-marker-clusterer";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import {AgmJsMarkerClustererModule} from "@agm/js-marker-clusterer";
             apiKey: 'AIzaSyA2cKil90Egaj6l1QY-h42Slh0UScns69Y',
             libraries: ['places']
         }),
-        AgmJsMarkerClustererModule
+        AgmJsMarkerClustererModule,
+        NgSelectModule
 
     ],
     exports: [
@@ -36,7 +38,8 @@ import {AgmJsMarkerClustererModule} from "@agm/js-marker-clusterer";
         NgJhipsterModule,
         InfiniteScrollModule,
         AgmCoreModule,
-        AgmJsMarkerClustererModule
+        AgmJsMarkerClustererModule,
+        NgSelectModule
     ]
 })
 export class UplaceSharedLibsModule {}

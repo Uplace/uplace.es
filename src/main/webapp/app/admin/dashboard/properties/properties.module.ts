@@ -12,6 +12,7 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {RouterModule} from "@angular/router";
 import { PropertyModalComponent } from './property-modal/property-modal.component';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { PropertyEstateComponent } from './property-estate/property-estate.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
         PropertyMapComponent,
         PropertyAmenitiesComponent,
         PropertyPhotosComponent,
-        PropertyModalComponent
+        PropertyModalComponent,
+        PropertyEstateComponent
     ],
     entryComponents: [
         PropertyModalComponent

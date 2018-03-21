@@ -1,0 +1,25 @@
+
+{
+    "uplaceApp": {
+        "realEstate" : {
+            "home": {
+                "title": "Real Estates",
+                "createLabel": "Crear nuevo Real Estate",
+                "createOrEditLabel": "Crear o editar Real Estate"
+            },
+            "created": "Un nuevo Real Estate ha sido creado con el identificador {{ param }}",
+            "updated": "Un Real Estate ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Real Estate ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Real Estate {{ id }}?"
+            },
+            "detail": {
+                "title": "Real Estate"
+            },
+            "name": "Name",
+            "nif": "Nif",
+            "reference": "Reference",
+            "property": "Property"
+        }
+    }
+}
