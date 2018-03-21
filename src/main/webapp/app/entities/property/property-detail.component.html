@@ -111,7 +111,7 @@
                 <div class="row">
                     <div class="col-md-8 col-lg-9">
                         <div class="listing-detail-section" id="listing-detail-section-description" data-title="Description">
-                            <div class="gallery" *ngIf="property.photos[0]">
+                            <div class="gallery" *ngIf="property.photos && property.photos[0]">
                                 <ngb-carousel>
                                     <ng-template *ngFor="let photo of property.photos" ngbSlide>
                                         <img class="gallery-item" [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo"/>

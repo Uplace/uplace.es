@@ -101,7 +101,7 @@ public class LocationResource {
             log.debug("REST request to get all Locations where property is null");
             return StreamSupport
                 .stream(locationRepository.findAll().spliterator(), false)
-                .filter(location -> location.getProperty() == null)
+                //.filter(location -> location.getProperty() == null)
                 .map(locationMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
         }
