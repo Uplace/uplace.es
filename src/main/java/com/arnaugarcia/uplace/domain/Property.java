@@ -113,9 +113,8 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true, nullable = false)
-    @PrimaryKeyJoinColumn
     private Location location;
 
     @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -129,7 +128,7 @@ public class Property implements Serializable {
                inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private RealEstate realEstate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

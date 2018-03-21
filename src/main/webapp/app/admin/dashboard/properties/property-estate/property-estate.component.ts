@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {RealEstate, RealEstateService} from "../../../../entities/real-estate";
 import {Observable} from "rxjs/Observable";
 import {Property} from "../../../../entities/property/property.model";
@@ -12,9 +12,9 @@ import {el} from "@angular/platform-browser/testing/src/browser_util";
     templateUrl: './property-estate.component.html',
     styles: []
 })
-export class PropertyEstateComponent implements OnInit, AfterContentInit {
+export class PropertyEstateComponent implements OnInit, AfterViewChecked {
 
-    @Input() realEstate: RealEstate = {};
+    @Input() realEstate: RealEstate = new RealEstate();
 
     @Output() realEstateChange: EventEmitter<RealEstate> = new EventEmitter<RealEstate>();
 
@@ -29,14 +29,14 @@ export class PropertyEstateComponent implements OnInit, AfterContentInit {
                 private jhiAlertService: JhiAlertService) {
     }
 
-    ngAfterContentInit() {
+    ngOnInit() {
+        this.loadAll();
+    }
+
+    ngAfterViewChecked() {
         if (this.realEstate == null) {
             this.realEstate = new RealEstate();
         }
-    }
-
-    ngOnInit() {
-        this.loadAll();
     }
 
     loadAll() {
@@ -45,17 +45,21 @@ export class PropertyEstateComponent implements OnInit, AfterContentInit {
         })
     }
 
+    onChange(event) {
+        this.realEstateChange.emit(this.realEstate);
+    }
+
     onClear() {
         this.realEstate = new RealEstate();
     }
 
-    saveRealEstate(realEstate: RealEstate) {
-        if (realEstate.id == null) {
+    saveRealEstate() {
+        if (this.realEstate.id == null) {
             this.subscribeToSaveResponse(
-                this.realEstateService.create(realEstate));
+                this.realEstateService.create(this.realEstate));
         } else {
             this.subscribeToSaveResponse(
-                this.realEstateService.update(realEstate));
+                this.realEstateService.update(this.realEstate));
         }
 
     }
@@ -79,6 +83,7 @@ export class PropertyEstateComponent implements OnInit, AfterContentInit {
         this.realEstates.push(result);
         this.realEstate = result;
         this.eventManager.broadcast({name: 'propertyListModification', content: 'OK'});
+        this.realEstateChange.emit(this.realEstate);
         this.loadAll();
     }
 

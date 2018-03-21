@@ -22,4 +22,6 @@ public interface RealEstateRepository<T extends Property> extends JpaRepository<
     @Query("select p from Property p where p.realEstate.reference = :reference")
     List<T> findPropertiesByReference(@Param("reference") String reference);
 
+    RealEstate findByReference(@Param("reference") String reference);
+
 }

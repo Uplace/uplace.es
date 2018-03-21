@@ -3,6 +3,7 @@ package com.arnaugarcia.uplace.service;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.RealEstate;
 import com.arnaugarcia.uplace.repository.RealEstateRepository;
+import com.arnaugarcia.uplace.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,9 @@ public class RealEstateService<T extends Property> {
      */
     public RealEstate save(RealEstate realEstate) {
         log.debug("Request to save RealEstate : {}", realEstate);
+        if (realEstate.getId() == null) {
+            realEstate.setReference(this.createReference());
+        }
         return realEstateRepository.save(realEstate);
     }
 
@@ -74,5 +78,19 @@ public class RealEstateService<T extends Property> {
     public void delete(Long id) {
         log.debug("Request to delete RealEstate : {}", id);
         realEstateRepository.delete(id);
+    }
+
+    /**
+     * Create unique reference randomly.
+     *
+     * @return reference created
+     */
+    private String createReference() {
+        String reference;
+        do {
+            reference = RandomUtil.generateReference().toUpperCase();
+            log.debug("Generating reference: " + reference);
+        } while (realEstateRepository.findByReference(reference) != null);
+        return reference;
     }
 }
