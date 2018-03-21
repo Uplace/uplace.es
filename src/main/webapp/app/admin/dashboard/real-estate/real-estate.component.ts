@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {RealEstate, RealEstateService} from "../../../entities/real-estate";
 
 @Component({
-  selector: 'up-real-estate',
-  templateUrl: './real-estate.component.html',
-  styles: []
+    selector: 'up-real-estate',
+    templateUrl: './real-estate.component.html',
+    styles: []
 })
 export class RealEstateComponent implements OnInit {
 
-  constructor() { }
+    realEstates: RealEstate[] = [];
 
-  ngOnInit() {
-  }
+    constructor(private realEstateService: RealEstateService) {
+    }
+
+    ngOnInit() {
+        this.realEstateService.query().subscribe((result) => {
+            this.realEstates = result.body;
+        })
+    }
 
 }

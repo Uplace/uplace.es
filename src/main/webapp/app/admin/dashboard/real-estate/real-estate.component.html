@@ -1,3 +1,40 @@
-<p>
-  real-estate works!
-</p>
+<div class="container-fluid">
+    <!--<nav class="breadcrumb">
+        <a class="breadcrumb-item" href="#">Home</a>
+        <a class="breadcrumb-item" href="#">Library</a>
+        <a class="breadcrumb-item" href="#">Data</a>
+        <span class="breadcrumb-item active">Bootstrap</span>
+    </nav>-->
+    <div class="cards">
+        <div class="box">
+            <div class="box-inner">
+                <div class="box-title clearfix">
+                    <div class="form-group">
+                        <label>Search Real Estate</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2" *ngFor="let realEstate of realEstates">
+                        <div class="card card-dark" style="background-image: url();">
+                            <div class="card-inner">
+                                <!-- /.card-close -->
+                                <div class="card-attribute">TODO Address</div>
+                                <div class="card-content">
+                                    <h2><a href="#">{{realEstate.name}}</a></h2>
+                                    <p>{{realEstate.nif}}</p>
+                                </div>
+                                <!-- /.card-content -->
+                            </div>
+                            <!-- /.card-inner -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+
+    </div>
+    <!-- /.cards -->
+</div>

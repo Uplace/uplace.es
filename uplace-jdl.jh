@@ -238,6 +238,6 @@
 
   paginate Notification with pagination
 
-  service Agent, Notification, Property, Company with serviceClass
+  service Agent, Notification, Property, Company, RealEstate with serviceClass
 
   filter Property

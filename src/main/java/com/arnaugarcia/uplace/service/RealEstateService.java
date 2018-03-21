@@ -1,0 +1,70 @@
+package com.arnaugarcia.uplace.service;
+
+import com.arnaugarcia.uplace.domain.RealEstate;
+import com.arnaugarcia.uplace.repository.RealEstateRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Service Implementation for managing RealEstate.
+ */
+@Service
+@Transactional
+public class RealEstateService {
+
+    private final Logger log = LoggerFactory.getLogger(RealEstateService.class);
+
+    private final RealEstateRepository realEstateRepository;
+
+    public RealEstateService(RealEstateRepository realEstateRepository) {
+        this.realEstateRepository = realEstateRepository;
+    }
+
+    /**
+     * Save a realEstate.
+     *
+     * @param realEstate the entity to save
+     * @return the persisted entity
+     */
+    public RealEstate save(RealEstate realEstate) {
+        log.debug("Request to save RealEstate : {}", realEstate);
+        return realEstateRepository.save(realEstate);
+    }
+
+    /**
+     * Get all the realEstates.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<RealEstate> findAll() {
+        log.debug("Request to get all RealEstates");
+        return realEstateRepository.findAll();
+    }
+
+    /**
+     * Get one realEstate by id.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public RealEstate findOne(Long id) {
+        log.debug("Request to get RealEstate : {}", id);
+        return realEstateRepository.findOne(id);
+    }
+
+    /**
+     * Delete the realEstate by id.
+     *
+     * @param id the id of the entity
+     */
+    public void delete(Long id) {
+        log.debug("Request to delete RealEstate : {}", id);
+        realEstateRepository.delete(id);
+    }
+}

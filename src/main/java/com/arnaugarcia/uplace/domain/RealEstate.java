@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -37,7 +38,6 @@ public class RealEstate implements Serializable {
     private String reference;
 
     @OneToMany(mappedBy = "realEstate")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Property> properties = new HashSet<>();
 

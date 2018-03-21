@@ -3,8 +3,8 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.UplaceApp;
 
 import com.arnaugarcia.uplace.domain.RealEstate;
-import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.RealEstateRepository;
+import com.arnaugarcia.uplace.service.RealEstateService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -52,6 +52,9 @@ public class RealEstateResourceIntTest {
     private RealEstateRepository realEstateRepository;
 
     @Autowired
+    private RealEstateService realEstateService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -70,7 +73,7 @@ public class RealEstateResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final RealEstateResource realEstateResource = new RealEstateResource(realEstateRepository);
+        final RealEstateResource realEstateResource = new RealEstateResource(realEstateService);
         this.restRealEstateMockMvc = MockMvcBuilders.standaloneSetup(realEstateResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -89,11 +92,6 @@ public class RealEstateResourceIntTest {
             .name(DEFAULT_NAME)
             .nif(DEFAULT_NIF)
             .reference(DEFAULT_REFERENCE);
-        // Add required entity
-        Property property = PropertyResourceIntTest.createEntity(em);
-        em.persist(property);
-        em.flush();
-        realEstate.getProperties().add(property);
         return realEstate;
     }
 
@@ -203,7 +201,8 @@ public class RealEstateResourceIntTest {
     @Transactional
     public void updateRealEstate() throws Exception {
         // Initialize the database
-        realEstateRepository.saveAndFlush(realEstate);
+        realEstateService.save(realEstate);
+
         int databaseSizeBeforeUpdate = realEstateRepository.findAll().size();
 
         // Update the realEstate
@@ -251,7 +250,8 @@ public class RealEstateResourceIntTest {
     @Transactional
     public void deleteRealEstate() throws Exception {
         // Initialize the database
-        realEstateRepository.saveAndFlush(realEstate);
+        realEstateService.save(realEstate);
+
         int databaseSizeBeforeDelete = realEstateRepository.findAll().size();
 
         // Get the realEstate

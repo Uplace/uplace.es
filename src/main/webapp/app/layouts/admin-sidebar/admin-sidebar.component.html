@@ -40,8 +40,8 @@
                 </a>
             </li>
         </ul>
-        <h3>Admin tools</h3>
         <ul class="nav flex-column" *upHasAnyAuthority="'ROLE_ADMIN'">
+            <h3>Admin tools</h3>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/user-management" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-users"></i>{{'global.menu.admin.userManagement' | translate}}</a>
             </li>

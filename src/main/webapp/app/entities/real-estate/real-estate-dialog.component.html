@@ -34,12 +34,6 @@
                 [(ngModel)]="realEstate.reference" />
         </div>
 
-        <div [hidden]="!(editForm.controls.property?.dirty && editForm.controls.property?.invalid)">
-            <small class="form-text text-danger"
-                [hidden]="!editForm.controls.property?.errors?.required" jhiTranslate="entity.validation.required">
-                This field is required.
-            </small>
-        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">

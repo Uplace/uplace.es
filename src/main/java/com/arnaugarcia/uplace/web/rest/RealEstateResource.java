@@ -2,8 +2,7 @@ package com.arnaugarcia.uplace.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.RealEstate;
-
-import com.arnaugarcia.uplace.repository.RealEstateRepository;
+import com.arnaugarcia.uplace.service.RealEstateService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class RealEstateResource {
 
     private static final String ENTITY_NAME = "realEstate";
 
-    private final RealEstateRepository realEstateRepository;
+    private final RealEstateService realEstateService;
 
-    public RealEstateResource(RealEstateRepository realEstateRepository) {
-        this.realEstateRepository = realEstateRepository;
+    public RealEstateResource(RealEstateService realEstateService) {
+        this.realEstateService = realEstateService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class RealEstateResource {
         if (realEstate.getId() != null) {
             throw new BadRequestAlertException("A new realEstate cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RealEstate result = realEstateRepository.save(realEstate);
+        RealEstate result = realEstateService.save(realEstate);
         return ResponseEntity.created(new URI("/api/real-estates/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class RealEstateResource {
         if (realEstate.getId() == null) {
             return createRealEstate(realEstate);
         }
-        RealEstate result = realEstateRepository.save(realEstate);
+        RealEstate result = realEstateService.save(realEstate);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, realEstate.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class RealEstateResource {
     @Timed
     public List<RealEstate> getAllRealEstates() {
         log.debug("REST request to get all RealEstates");
-        return realEstateRepository.findAll();
+        return realEstateService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class RealEstateResource {
     @Timed
     public ResponseEntity<RealEstate> getRealEstate(@PathVariable Long id) {
         log.debug("REST request to get RealEstate : {}", id);
-        RealEstate realEstate = realEstateRepository.findOne(id);
+        RealEstate realEstate = realEstateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(realEstate));
     }
 
@@ -114,7 +113,7 @@ public class RealEstateResource {
     @Timed
     public ResponseEntity<Void> deleteRealEstate(@PathVariable Long id) {
         log.debug("REST request to delete RealEstate : {}", id);
-        realEstateRepository.delete(id);
+        realEstateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
