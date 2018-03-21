@@ -1,11 +1,14 @@
 package com.arnaugarcia.uplace.service;
 
+import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.RealEstate;
 import com.arnaugarcia.uplace.repository.RealEstateRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,13 +17,13 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class RealEstateService {
+public class RealEstateService<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(RealEstateService.class);
 
-    private final RealEstateRepository realEstateRepository;
+    private final RealEstateRepository<T> realEstateRepository;
 
-    public RealEstateService(RealEstateRepository realEstateRepository) {
+    public RealEstateService(RealEstateRepository<T> realEstateRepository) {
         this.realEstateRepository = realEstateRepository;
     }
 
@@ -44,6 +47,11 @@ public class RealEstateService {
     public List<RealEstate> findAll() {
         log.debug("Request to get all RealEstates");
         return realEstateRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> findProperties(String reference){
+        return realEstateRepository.findPropertiesByReference(reference);
     }
 
     /**

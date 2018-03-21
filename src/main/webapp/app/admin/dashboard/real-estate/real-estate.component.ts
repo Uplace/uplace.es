@@ -16,6 +16,7 @@ export class RealEstateComponent implements OnInit {
     ngOnInit() {
         this.realEstateService.query().subscribe((result) => {
             this.realEstates = result.body;
+            console.log(this.realEstates);
         })
     }
 

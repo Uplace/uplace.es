@@ -37,7 +37,7 @@ import java.util.Set;
     @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
 })
 @NamedEntityGraphs({
-    @NamedEntityGraph(name = "graph.PropertyLocation", attributeNodes = {
+    @NamedEntityGraph(name = "graph.PropertyAll", attributeNodes = {
         @NamedAttributeNode("location"),
         @NamedAttributeNode(value = "managers", subgraph = "graph.AgentUser"),
         @NamedAttributeNode("photos"),
@@ -48,6 +48,10 @@ import java.util.Set;
         @NamedSubgraph(name = "graph.AgentUser", attributeNodes = {
             @NamedAttributeNode("user")
         })
+    }),
+    @NamedEntityGraph(name = "graph.PropertyLocationPhotos", attributeNodes = {
+        @NamedAttributeNode("location"),
+        @NamedAttributeNode("photos")
     })
 })
 // TODO: Make Property abstract

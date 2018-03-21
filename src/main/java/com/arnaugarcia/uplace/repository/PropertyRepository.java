@@ -31,7 +31,7 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
     @Query("select property from Property property left join fetch property.managers where property.id =:id")
     T findOneWithEagerRelationships(@Param("id") Long id);
 
-    @EntityGraph(value = "graph.PropertyLocation", type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(value = "graph.PropertyAll", type = EntityGraph.EntityGraphType.LOAD)
     @Override
     Page<T> findAll(Pageable pageable);
 
@@ -41,7 +41,7 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      * @param reference of the property to search
      * @return property if found or null if not
      */
-    @EntityGraph("graph.PropertyLocation")
+    @EntityGraph("graph.PropertyAll")
     @Query("SELECT p FROM Property p left join fetch p.managers where p.reference = :reference")
     T findByReference(@Param("reference") String reference);
 

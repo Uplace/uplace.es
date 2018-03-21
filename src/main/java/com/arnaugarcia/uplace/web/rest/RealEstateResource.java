@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.web.rest;
 
+import com.arnaugarcia.uplace.domain.Property;
 import com.codahale.metrics.annotation.Timed;
 import com.arnaugarcia.uplace.domain.RealEstate;
 import com.arnaugarcia.uplace.service.RealEstateService;
@@ -8,6 +9,7 @@ import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class RealEstateResource {
+public class RealEstateResource<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(RealEstateResource.class);
 
@@ -88,6 +90,18 @@ public class RealEstateResource {
         log.debug("REST request to get all RealEstates");
         return realEstateService.findAll();
         }
+
+    /**
+     * GET  /real-estates : get all the realEstates.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of realEstates in body
+     */
+    @GetMapping("/real-estates/{reference}/properties")
+    @Timed
+    public List<T> getPropertiesByRealEstateReference(@PathVariable String reference) {
+        log.debug("REST request to get all RealEstates");
+        return realEstateService.findProperties(reference);
+    }
 
     /**
      * GET  /real-estates/:id : get the "id" realEstate.

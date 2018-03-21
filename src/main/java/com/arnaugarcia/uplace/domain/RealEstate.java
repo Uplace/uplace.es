@@ -39,6 +39,7 @@ public class RealEstate implements Serializable {
 
     @OneToMany(mappedBy = "realEstate")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
     private Set<Property> properties = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
