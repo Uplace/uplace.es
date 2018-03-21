@@ -1,236 +1,243 @@
-entity Property {
-	title String required
-    price Double required,
-    created ZonedDateTime required,
-    updated ZonedDateTime,
-    description TextBlob,
-    transaction TransactionType required,
-    reference String required,
-    // PONGO DOS CAMPOS POR QUE PUEDE QUE SE PUEDA VENDER Y ALQUILAR A LA VEZ
-    priceSell Double,
-    priceRent Double,
-    yearConstruction Integer min(500),
-    newCreation Boolean,
-    visible Boolean,
-    surface Integer
-    // CATEGORY
+  entity Property {
+      title String required
+      price Double required,
+      created ZonedDateTime required,
+      updated ZonedDateTime,
+      description TextBlob,
+      transaction TransactionType required,
+      reference String required,
+      // PONGO DOS CAMPOS POR QUE PUEDE QUE SE PUEDA VENDER Y ALQUILAR A LA VEZ
+      priceSell Double,
+      priceRent Double,
+      yearConstruction Integer min(500),
+      newCreation Boolean,
+      visible Boolean,
+      surface Integer
+      // CATEGORY
 
-}
+  }
 
-enum TerrainType {
-	RESIDENTIAL, URBAN, RUSTIC, INDUSTRIAL
-}
+  enum TerrainType {
+      RESIDENTIAL, URBAN, RUSTIC, INDUSTRIAL
+  }
 
-enum TransactionType {
-	RENT, BUY, TRANSFER, RENT_BUY
-}
+  enum TransactionType {
+      RENT, BUY, TRANSFER, RENT_BUY
+  }
 
-enum ApartmentType {
-    HOUSES, RURALS, FLATS, APARTMENTS, TOWERS, LOFTS
-}
+  enum ApartmentType {
+      HOUSES, RURALS, FLATS, APARTMENTS, TOWERS, LOFTS
+  }
 
-enum Select {
-	YES, NO, UNDEFINED
-}
+  enum Select {
+      YES, NO, UNDEFINED
+  }
 
-enum ParkingType {
-	CAR, MOTO, OTHER
-}
+  enum ParkingType {
+      CAR, MOTO, OTHER
+  }
 
-enum BusinessType {
-	PUB, HOTEL, OTHERS
-}
+  enum BusinessType {
+      PUB, HOTEL, OTHERS
+  }
 
-entity Apartment {
-    numberBedrooms Integer,
-    numberBathrooms Integer,
-  	m2Edified Integer,
-    m2Usable Integer,
-    height Integer,
-    elevator Select,
-    ac Select,
-    heat Select,
-    parking Select,
-    terrace Select,
-    balcony Select,
-    surfaceTerrace Integer,
-    surfaceSaloon Integer,
-	type ApartmentType,
-    office Select,
-    kitchenOffice Select,
-    storage Select,
-    sharedPool Select,
-    nearTransport Select,
-    reformed Select,
-    energyCertificate EnergyCertificate,
-    certificateHabitability  Select,
-}
+  entity Apartment {
+      numberBedrooms Integer,
+      numberBathrooms Integer,
+      m2Edified Integer,
+      m2Usable Integer,
+      height Integer,
+      elevator Select,
+      ac Select,
+      heat Select,
+      parking Select,
+      terrace Select,
+      balcony Select,
+      surfaceTerrace Integer,
+      surfaceSaloon Integer,
+      type ApartmentType,
+      office Select,
+      kitchenOffice Select,
+      storage Select,
+      sharedPool Select,
+      nearTransport Select,
+      reformed Select,
+      energyCertificate EnergyCertificate,
+      certificateHabitability  Select,
+  }
 
-entity Office {
-    bathrooms String,
-    floors Integer,
-    terrace Select,
-    office Select,
-    storage Select,
-    storageSurface Integer,
-    officesSurface Integer,
-  	ac Select,
-    heat Select,
-    energyCertificate EnergyCertificate
-}
+  entity Office {
+      bathrooms String,
+      floors Integer,
+      terrace Select,
+      office Select,
+      storage Select,
+      storageSurface Integer,
+      officesSurface Integer,
+      ac Select,
+      heat Select,
+      energyCertificate EnergyCertificate
+  }
 
-entity Agent {
-	firstName String,
-    lastName String
-    phone String,
-    photo ImageBlob
-}
+  entity Agent {
+      firstName String,
+      lastName String
+      phone String,
+      photo ImageBlob
+  }
 
-entity Parking {
-    parkingType ParkingType,
-    nearTransport Select
-    surveillance Select
+  entity Parking {
+      parkingType ParkingType,
+      nearTransport Select
+      surveillance Select
 
-}
+  }
 
-entity Building {
-	type BuildingType,
-    solarSurface Integer,
-    m2Edified Integer,
-    floorsSR Integer,
-    floorsBR Integer,
-    energyCertificate EnergyCertificate
-}
+  entity Building {
+      type BuildingType,
+      solarSurface Integer,
+      m2Edified Integer,
+      floorsSR Integer,
+      floorsBR Integer,
+      energyCertificate EnergyCertificate
+  }
 
-enum BuildingType {
-	RESIDENTIAL, HOTEL, INDUSTRIAL
-}
+  enum BuildingType {
+      RESIDENTIAL, HOTEL, INDUSTRIAL
+  }
 
-entity Hotel {
-	solarSurface Integer,
-    m2Edified Integer,
-    numberRooms Integer,
-    operator Select,
-    pool Select,
-    spa Select,
-    conferenceRoom Select,
-    floorsSR Integer,
-    floorsBR Integer,
-    energyCertificate EnergyCertificate
-}
+  entity Hotel {
+      solarSurface Integer,
+      m2Edified Integer,
+      numberRooms Integer,
+      operator Select,
+      pool Select,
+      spa Select,
+      conferenceRoom Select,
+      floorsSR Integer,
+      floorsBR Integer,
+      energyCertificate EnergyCertificate
+  }
 
-entity IndustrialPlant {
-	solarSurface Integer,
-    numberRooms Integer,
-    m2Offices Integer,
-    m2Storage Integer,
-    heightFree Integer,
-    numberDocks Integer,
-    energyCertificate EnergyCertificate
-}
+  entity IndustrialPlant {
+      solarSurface Integer,
+      numberRooms Integer,
+      m2Offices Integer,
+      m2Storage Integer,
+      heightFree Integer,
+      numberDocks Integer,
+      energyCertificate EnergyCertificate
+  }
 
-entity Establishment {
-	m2Facade Integer,
-    bathroom Select,
-    use UseEstablishment,
-    energyCertificate EnergyCertificate
-}
+  entity Establishment {
+      m2Facade Integer,
+      bathroom Select,
+      use UseEstablishment,
+      energyCertificate EnergyCertificate
+  }
 
-enum UseEstablishment {
-	RESTAURANT, PUB, SHOP, OTHER
-}
+  enum UseEstablishment {
+      RESTAURANT, PUB, SHOP, OTHER
+  }
 
-enum EnergyCertificate {
-	A, B, C, D, E, F, G, UNDEFINED
-}
+  enum EnergyCertificate {
+      A, B, C, D, E, F, G, UNDEFINED
+  }
 
-entity Terrain {
-    m2Buildable Integer,
-    buildable Boolean,
-    buildableDepth Integer,
-    floorsSR Integer,
-    floorsBR Integer,
-    constructionCoefficient Double,
-    type TerrainType
-}
+  entity Terrain {
+      m2Buildable Integer,
+      buildable Boolean,
+      buildableDepth Integer,
+      floorsSR Integer,
+      floorsBR Integer,
+      constructionCoefficient Double,
+      type TerrainType
+  }
 
-entity Location {
-	latitude Double,
-    postalCode String,
-    longitude Double,
-    city String,
-    fullAddress String,
-    hide Boolean,
-    urlGMaps String
+  entity Location {
+      latitude Double,
+      postalCode String,
+      longitude Double,
+      city String,
+      fullAddress String,
+      hide Boolean,
+      urlGMaps String
 
-}
+  }
 
-entity Business {
-    type BusinessType,
-    numberBathrooms Integer,
-    elevator Select,
-    ac Select,
-    heat Select,
-    surfaceTerrace Integer,
-    surfaceGarden Integer,
-    numberOffice Integer,
-    surfaceSaloon Integer,
-    height Integer,
-    pool Select,
-}
+  entity Business {
+      type BusinessType,
+      numberBathrooms Integer,
+      elevator Select,
+      ac Select,
+      heat Select,
+      surfaceTerrace Integer,
+      surfaceGarden Integer,
+      numberOffice Integer,
+      surfaceSaloon Integer,
+      height Integer,
+      pool Select,
+  }
 
-entity Notification {
-	title String required,
-    content TextBlob,
-    creation ZonedDateTime required,
-    type NotificationType required,
-    token String,
-    read Boolean required
-}
+  entity Notification {
+      title String required,
+      content TextBlob,
+      creation ZonedDateTime required,
+      type NotificationType required,
+      token String,
+      read Boolean required
+  }
 
-enum NotificationType{
-    NOTIFICATION, REQUEST, ALERT
-}
+  enum NotificationType{
+      NOTIFICATION, REQUEST, ALERT
+  }
 
-entity Company {
-    name String,
-    photo String,
-    phone String,
-    email String,
-    description TextBlob,
-    nif String
-}
+  entity Company {
+      name String,
+      photo String,
+      phone String,
+      email String,
+      description TextBlob,
+      nif String
+  }
 
-/* PHOTO */
+  /* PHOTO */
 
-entity Photo {
-	name String required,
-    description String,
-    photo ImageBlob required,
-    thumbnail Boolean required
-}
+  entity Photo {
+      name String required,
+      description String,
+      photo ImageBlob required,
+      thumbnail Boolean required
+  }
 
-relationship OneToMany {
-	// One Property can own many photos
-    Property{photo(name)} to Photo{property(reference)}
-}
+  entity RealEstate {
+      name String required,
+      nif String,
+      reference String
+  }
 
-relationship ManyToOne {
-    Notification{user(login) required} to User{notification(title) required}
-}
+  relationship OneToMany {
+      // One Property can own many photos
+      Property{photo(name)} to Photo{property(reference)},
+      RealEstate{property(reference)} to Property{realEstate(reference)}
+  }
 
-relationship ManyToMany {
-    Property{manager(firstName)} to Agent{property(title)}
-}
+  relationship ManyToOne {
+      Notification{user(login) required} to User{notification(title) required}
+  }
 
-relationship OneToOne {
-    Agent{user(login) required} to User{agent(firstName) required},
-    Property{location(id)} to Location{property(reference)},
-    Company{location(id)} to Location
-}
+  relationship ManyToMany {
+      Property{manager(firstName)} to Agent{property(title)}
+  }
 
-paginate Notification with pagination
+  relationship OneToOne {
+      Agent{user(login) required} to User{agent(firstName) required},
+      Property{location(id) required} to Location{property(reference) required},
+      Company{location(id)} to Location
+  }
 
-service Agent, Notification, Property, Company with serviceClass
+  paginate Notification with pagination
 
-filter Property
+  service Agent, Notification, Property, Company, RealEstate with serviceClass
+
+  filter Property

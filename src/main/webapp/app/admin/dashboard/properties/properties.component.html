@@ -16,63 +16,74 @@
         <!-- /.table-header-actions -->
     </div>
     <!-- /.table-header -->
-    <div class="table-wrapper">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="min-width center">
-                    <!--<input type="checkbox" (change)="toggleSelected($event)">-->
-                </th>
-                <th class="min-width center">Reference</th>
-                <th>Title</th>
-                <th class="min-width center">Category</th>
-                <th class="min-width center">Price</th>
-                <th class="min-width center">Visible</th>
-                <th class="min-width"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let property of properties">
-                <td class="min-width center">
-                    <input type="checkbox" (change)="selectedProperty(property, $event)">
-                </td>
-                <td class="min-width center id">{{property.reference}}</td>
-                <td>
-                    <div class="avatar squared"
-                         [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span></div>
-                    <h2>
-                        <a [routerLink]="['/dashboard/properties/', property.reference]">{{property.title}}</a>
-                        <span *ngIf="property.location && property.location.fullAddress">{{property.location.fullAddress}}</span>
-                    </h2>
-                </td>
-                <td class="min-width no-wrap center">
-                    <span class="tag">{{property.propertyType}}</span>
-                </td>
-                <td class="min-width price">
-                    {{property.price}}
-                </td>
-                <td class="min-width center">
-                    <div class="status">
-                        <i class="fa fa-check" *ngIf="property.visible"></i>
-                        <i class="fa fa-times" *ngIf="!property.visible"></i>
-                    </div>
-                    <!-- /.status -->
-                </td>
-                <td class="min-width">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" (click)="showActions($event)">
-                            Actions
-                        </button>
-                        <div class="dropdown-menu">
-                            <!--<a class="dropdown-item" href="#">Workflow Action</a>-->
-                            <a class="dropdown-item" [routerLink]="['/dashboard/properties/', property.reference]">Change Values</a>
-                            <a class="dropdown-item" (click)="openDeleteModal(property)">Delete Item</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="box">
+        <div class="box-inner">
+            <div class="box-title clearfix">
+                <h2>Properties</h2>
+                <div class="btn-group" role="group" *ngIf="selectedProperties.length > 0">
+                    <button type="button" class="btn btn-danger" (click)="openDeleteModal()">Delete</button>
+                </div>
+            </div>
+            <!-- /.box-title -->
+            <div class="table-wrapper">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="min-width center">
+                            <!--<input type="checkbox" (change)="toggleSelected($event)">-->
+                        </th>
+                        <th class="min-width center">Reference</th>
+                        <th>Title</th>
+                        <th class="min-width center">Category</th>
+                        <th class="min-width center">Price</th>
+                        <th class="min-width center">Visible</th>
+                        <th class="min-width"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let property of properties">
+                        <td class="min-width center">
+                            <input type="checkbox" (change)="selectedProperty(property, $event)">
+                        </td>
+                        <td class="min-width center id">{{property.reference}}</td>
+                        <td>
+                            <div class="avatar squared"
+                                 [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span></div>
+                            <h2>
+                                <a [routerLink]="['/dashboard/properties/', property.reference]">{{property.title}}</a>
+                                <span *ngIf="property.location && property.location.fullAddress">{{property.location.fullAddress}}</span>
+                            </h2>
+                        </td>
+                        <td class="min-width no-wrap center">
+                            <span class="tag">{{property.propertyType}}</span>
+                        </td>
+                        <td class="min-width price">
+                            {{property.price}}
+                        </td>
+                        <td class="min-width center">
+                            <div class="status">
+                                <i class="fa fa-check" *ngIf="property.visible"></i>
+                                <i class="fa fa-times" *ngIf="!property.visible"></i>
+                            </div>
+                            <!-- /.status -->
+                        </td>
+                        <td class="min-width">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" (click)="showActions($event)">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu">
+                                    <!--<a class="dropdown-item" href="#">Workflow Action</a>-->
+                                    <a class="dropdown-item" [routerLink]="['/dashboard/properties/', property.reference]">Change Values</a>
+                                    <a class="dropdown-item" (click)="openDeleteModal(property)">Delete Item</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <!-- /.table-wrapper -->
     <ul class="pagination pull-right">

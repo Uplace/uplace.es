@@ -1,0 +1,34 @@
+
+<div *ngIf="realEstate">
+    <h2><span jhiTranslate="uplaceApp.realEstate.detail.title">Real Estate</span> {{realEstate.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.realEstate.name">Name</span></dt>
+        <dd>
+            <span>{{realEstate.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.realEstate.nif">Nif</span></dt>
+        <dd>
+            <span>{{realEstate.nif}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.realEstate.reference">Reference</span></dt>
+        <dd>
+            <span>{{realEstate.reference}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'real-estate/'+ realEstate.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

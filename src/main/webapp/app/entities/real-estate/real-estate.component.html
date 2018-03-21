@@ -1,0 +1,62 @@
+<div>
+    <h2>
+        <span jhiTranslate="uplaceApp.realEstate.home.title">Real Estates</span>
+        <button class="btn btn-primary float-right jh-create-entity create-real-estate" [routerLink]="['/', { outlets: { popup: ['real-estate-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="uplaceApp.realEstate.home.createLabel">
+            Create new Real Estate
+            </span>
+        </button>
+    </h2>
+    <up-alert></up-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="realEstates">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="uplaceApp.realEstate.name">Name</span></th>
+            <th><span jhiTranslate="uplaceApp.realEstate.nif">Nif</span></th>
+            <th><span jhiTranslate="uplaceApp.realEstate.reference">Reference</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let realEstate of realEstates ;trackBy: trackId">
+                <td><a [routerLink]="['../real-estate', realEstate.id ]">{{realEstate.id}}</a></td>
+                <td>{{realEstate.name}}</td>
+                <td>{{realEstate.nif}}</td>
+                <td>{{realEstate.reference}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../real-estate', realEstate.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'real-estate/'+ realEstate.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'real-estate/'+ realEstate.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -163,17 +163,22 @@ export class PropertiesComponent implements OnInit {
     }
 
     openDeleteModal(property: Property) {
-        const index: number = this.selectedProperties.indexOf(property);
 
-        if (this.selectedProperties[index] == null) {
-            this.selectedProperties.push(property);
+        if (property) {
+            const index: number = this.selectedProperties.indexOf(property);
+
+            if (this.selectedProperties[index] == null) {
+                this.selectedProperties.push(property);
+            }
         }
+
         const modalRef = this.modalService.open(PropertyModalComponent);
 
         modalRef.componentInstance.properties = this.selectedProperties;
 
         modalRef.result.then((result) => {
             if (result == 'delete') {
+
                 this.propertyService.delete(this.selectedProperties).subscribe((response) => {
                     this.eventManager.broadcast({
                         name: 'propertyListModification',
@@ -186,6 +191,7 @@ export class PropertiesComponent implements OnInit {
                 });
             }
         });
+
     }
 
 }

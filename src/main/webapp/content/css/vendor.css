@@ -1,3 +1,4 @@
 /* after changing this file run 'yarn run webpack:build' */
 @import '~font-awesome/css/font-awesome.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";

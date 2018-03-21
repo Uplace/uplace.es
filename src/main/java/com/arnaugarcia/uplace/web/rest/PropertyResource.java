@@ -99,7 +99,7 @@ public class PropertyResource<T extends Property> {
      */
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<List<T>> getAllProperties(PropertyCriteria propertyCriteria, Pageable pageable) {
+    public ResponseEntity<List<T>> getAllProperties(Pageable pageable) {
         log.debug("REST request to get all Properties");
         Page<T> page = propertyService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/properties");

@@ -49,6 +49,7 @@ export class PropertiesNewComponent implements OnInit {
 
     onSubmit() {
         this.save();
+        console.log(this.property);
     }
 
     save() {

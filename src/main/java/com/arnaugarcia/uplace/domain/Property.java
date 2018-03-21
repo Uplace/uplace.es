@@ -37,16 +37,21 @@ import java.util.Set;
     @JsonSubTypes.Type(value = Terrain.class, name = "Terrain")
 })
 @NamedEntityGraphs({
-    @NamedEntityGraph(name = "graph.PropertyLocation", attributeNodes = {
+    @NamedEntityGraph(name = "graph.PropertyAll", attributeNodes = {
         @NamedAttributeNode("location"),
         @NamedAttributeNode(value = "managers", subgraph = "graph.AgentUser"),
-        @NamedAttributeNode("photos")
+        @NamedAttributeNode("photos"),
+        @NamedAttributeNode("realEstate")
 
     },
     subgraphs = {
         @NamedSubgraph(name = "graph.AgentUser", attributeNodes = {
             @NamedAttributeNode("user")
         })
+    }),
+    @NamedEntityGraph(name = "graph.PropertyLocationPhotos", attributeNodes = {
+        @NamedAttributeNode("location"),
+        @NamedAttributeNode("photos")
     })
 })
 // TODO: Make Property abstract
@@ -108,12 +113,11 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(unique = true)
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(unique = true, nullable = false)
     private Location location;
 
-    @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
@@ -123,6 +127,9 @@ public class Property implements Serializable {
                joinColumns = @JoinColumn(name="properties_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    private RealEstate realEstate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -368,6 +375,20 @@ public class Property implements Serializable {
     public void setManagers(Set<Agent> agents) {
         this.managers = agents;
     }
+
+    public RealEstate getRealEstate() {
+        return realEstate;
+    }
+
+    public Property realEstate(RealEstate realEstate) {
+        this.realEstate = realEstate;
+        return this;
+    }
+
+    public void setRealEstate(RealEstate realEstate) {
+        this.realEstate = realEstate;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
