@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
 import { RealEstate } from './real-estate.model';
-import { RealEstateService } from './real-estate.service';
+import { RealEstateService } from '../../admin/dashboard/real-estate/real-estate.service';
 
 @Injectable()
 export class RealEstatePopupService {

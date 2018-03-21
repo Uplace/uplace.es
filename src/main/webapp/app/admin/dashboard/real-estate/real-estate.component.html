@@ -11,18 +11,25 @@
                 <div class="box-title clearfix">
                     <div class="form-group">
                         <label>Search Real Estate</label>
-                        <input type="text" class="form-control">
+                        <ng-select [items]="realEstatesFiltered"
+                                   bindLabel="name"
+                                   [typeahead]="searchTerm"
+                                   (close)="realEstatesFiltered = realEstates"
+                                   [(ngModel)]="realEstate"
+                                   (clear)="onClear()"
+                                   (change)="onChange($event)">>
+                        </ng-select>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2" *ngFor="let realEstate of realEstates">
+                    <div class="col-sm-2" *ngFor="let property of properties">
                         <div class="card card-dark" style="background-image: url();">
                             <div class="card-inner">
                                 <!-- /.card-close -->
-                                <div class="card-attribute">TODO Address</div>
+                                <div class="card-attribute">{{property.location.fullAddress}}</div>
                                 <div class="card-content">
-                                    <h2><a href="#">{{realEstate.name}}</a></h2>
-                                    <p>{{realEstate.nif}}</p>
+                                    <h2><a [routerLink]="['/dashboard/properties/', property.reference]">{{property.title}}</a></h2>
+                                    <p>{{property.propertyType}}</p>
                                 </div>
                                 <!-- /.card-content -->
                             </div>

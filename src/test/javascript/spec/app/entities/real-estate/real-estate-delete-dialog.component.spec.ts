@@ -6,7 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { UplaceTestModule } from '../../../test.module';
 import { RealEstateDeleteDialogComponent } from '../../../../../../main/webapp/app/entities/real-estate/real-estate-delete-dialog.component';
-import { RealEstateService } from '../../../../../../main/webapp/app/entities/real-estate/real-estate.service';
+import { RealEstateService } from '../../../../../../main/webapp/app/admin/dashboard/real-estate/real-estate.service';
 
 describe('Component Tests', () => {
 

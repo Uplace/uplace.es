@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { RealEstate } from './real-estate.model';
-import { RealEstateService } from './real-estate.service';
+import { RealEstateService } from '../../admin/dashboard/real-estate/real-estate.service';
 import { Principal } from '../../shared';
 
 @Component({

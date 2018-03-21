@@ -24,11 +24,10 @@ export class PropertyEstateComponent implements OnInit, AfterContentInit {
 
     searchTerm = new EventEmitter<string>();
 
-    constructor(
-        private realEstateService: RealEstateService,
-        private eventManager: JhiEventManager,
-        private jhiAlertService: JhiAlertService
-    ) { }
+    constructor(private realEstateService: RealEstateService,
+                private eventManager: JhiEventManager,
+                private jhiAlertService: JhiAlertService) {
+    }
 
     ngAfterContentInit() {
         if (this.realEstate == null) {
@@ -79,7 +78,7 @@ export class PropertyEstateComponent implements OnInit, AfterContentInit {
     private onSaveSuccess(result: RealEstate) {
         this.realEstates.push(result);
         this.realEstate = result;
-        this.eventManager.broadcast({ name: 'propertyListModification', content: 'OK'});
+        this.eventManager.broadcast({name: 'propertyListModification', content: 'OK'});
         this.loadAll();
     }
 

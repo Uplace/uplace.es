@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
+import { SERVER_API_URL } from '../../../app.constants';
 
-import { RealEstate } from './real-estate.model';
-import { createRequestOption } from '../../shared';
+import { RealEstate } from '../../../entities/real-estate/real-estate.model';
+import { createRequestOption } from '../../../shared/index';
+import {Property} from "../../../entities/property";
 
 export type EntityResponseType = HttpResponse<RealEstate>;
 
@@ -36,6 +37,10 @@ export class RealEstateService {
         const options = createRequestOption(req);
         return this.http.get<RealEstate[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<RealEstate[]>) => this.convertArrayResponse(res));
+    }
+
+    findProperties(reference: string): Observable<HttpResponse<Property[]>> {
+        return this.http.get<Property[]>(`${this.resourceUrl}/${reference}/properties`, { observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

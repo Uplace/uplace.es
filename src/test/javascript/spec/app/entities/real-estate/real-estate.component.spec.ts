@@ -5,7 +5,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { UplaceTestModule } from '../../../test.module';
 import { RealEstateComponent } from '../../../../../../main/webapp/app/entities/real-estate/real-estate.component';
-import { RealEstateService } from '../../../../../../main/webapp/app/entities/real-estate/real-estate.service';
+import { RealEstateService } from '../../../../../../main/webapp/app/admin/dashboard/real-estate/real-estate.service';
 import { RealEstate } from '../../../../../../main/webapp/app/entities/real-estate/real-estate.model';
 
 describe('Component Tests', () => {

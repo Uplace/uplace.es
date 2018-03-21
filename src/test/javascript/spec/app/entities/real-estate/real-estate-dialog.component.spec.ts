@@ -7,7 +7,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { UplaceTestModule } from '../../../test.module';
 import { RealEstateDialogComponent } from '../../../../../../main/webapp/app/entities/real-estate/real-estate-dialog.component';
-import { RealEstateService } from '../../../../../../main/webapp/app/entities/real-estate/real-estate.service';
+import { RealEstateService } from '../../../../../../main/webapp/app/admin/dashboard/real-estate/real-estate.service';
 import { RealEstate } from '../../../../../../main/webapp/app/entities/real-estate/real-estate.model';
 
 describe('Component Tests', () => {

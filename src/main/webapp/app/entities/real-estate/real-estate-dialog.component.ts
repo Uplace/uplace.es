@@ -8,7 +8,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { RealEstate } from './real-estate.model';
 import { RealEstatePopupService } from './real-estate-popup.service';
-import { RealEstateService } from './real-estate.service';
+import { RealEstateService } from '../../admin/dashboard/real-estate/real-estate.service';
 
 @Component({
     selector: 'up-real-estate-dialog',
