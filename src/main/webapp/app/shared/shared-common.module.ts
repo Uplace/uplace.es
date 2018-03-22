@@ -12,6 +12,7 @@ import {
 } from './';
 import {KeysPipe} from "./pipes/keys.pipe";
 import {TruncatePipe} from "./pipes/truncate.pipe";
+import {ProvideParentForm} from "./directives/parent-form.directive";
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import {TruncatePipe} from "./pipes/truncate.pipe";
     declarations: [
         FindLanguageFromKeyPipe,
         KeysPipe,
+        ProvideParentForm,
         TruncatePipe,
         UpAlertComponent,
         UpAlertErrorComponent

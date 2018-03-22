@@ -5,6 +5,8 @@ import {Observable} from "rxjs/Observable";
 import {JhiAlertService, JhiEventManager} from "ng-jhipster";
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '../../../../entities/location/location.model';
+import {Apartment} from "../../../../shared/model/apartment.model";
+import {Select} from "../../../../shared/model/select.enum";
 
 @Component({
     selector: 'up-properties-new',
@@ -16,8 +18,7 @@ export class PropertiesNewComponent implements OnInit {
     isSaving: boolean;
     property: Property = new Property();
     propertyTypes = ['Apartment', 'Building', 'Business', 'Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
-    transactionTypes = TransactionType;
-
+    Select: Select;
 
     constructor(
         private propertyService: PropertyService,

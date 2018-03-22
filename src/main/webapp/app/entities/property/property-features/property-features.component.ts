@@ -1,11 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Property} from "../property.model";
-
-export enum Select {
-    'YES',
-    'NO',
-    'UNDEFINED'
-}
+import {Select} from "../../../shared/model/select.enum";
 
 @Component({
     selector: 'up-property-features',

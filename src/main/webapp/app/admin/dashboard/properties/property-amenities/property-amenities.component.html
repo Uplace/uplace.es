@@ -1,6 +1,6 @@
 <div [ngSwitch]="property.propertyType">
     <legend>Amenities</legend>
-    <div *ngSwitchCase="'Apartment'">
+    <div *ngSwitchCase="'Apartment'" provide-parent-form>
         <div class="form-group">
             <label>{{'uplaceApp.apartment.numberBedrooms'| translate}}</label>
             <input type="number" class="form-control" [(ngModel)]="property.numberBedrooms" name="numberBedrooms"
@@ -107,7 +107,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label jhiTranslate="uplaceApp.apartment.nearTransport" for="field_sharedPool">nearTransport</label>
+            <label jhiTranslate="uplaceApp.apartment.nearTransport" for="field_nearTransport">nearTransport</label>
             <select class="form-control" name="field_nearTransport" [(ngModel)]="property.nearTransport"
                     id="field_nearTransport">
                 <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>

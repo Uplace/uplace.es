@@ -34,10 +34,17 @@
                 <input type="number" class="form-control" [(ngModel)]="property.surface" name="surface" required>
             </div>
             <div class="form-group">
-                <label>property Type</label>
-                <select [(ngModel)]="property.propertyType" class="form-control" name="propertyType" required>
+                <label>Property Type</label>
+                <!--<select [(ngModel)]="property.propertyType" class="form-control" name="propertyType" required>
                     <option *ngFor="let type of propertyTypes" [ngValue]="type" >{{type}}</option>
-                </select>
+                </select>-->
+                <ng-select
+                    [items]="propertyTypes"
+                    [ngModel]="property.propertyType"
+                    bindValue="type"
+                    bindLabel="type"
+                    name="propertyType">
+                </ng-select>
             </div>
             <div class="form-group">
                 <label>Year construction</label>
@@ -62,4 +69,5 @@
             <up-property-photos [(photos)]="property.photos"></up-property-photos>
         </fieldset>
     </form>
+    {{newPropertyForm.value | json}}
 </div>
