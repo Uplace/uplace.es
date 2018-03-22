@@ -1,12 +1,33 @@
 <legend>Payment Information</legend>
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label>Select type of transaction</label>
+            <ng-select
+                [items]="transactionTypes | keys"
+                bindLabel="value"
+                bindValue="key"
+                [(ngModel)]="property.transaction">
+            </ng-select>
+        </div>
+    </div>
+    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.TRANSFER">
         <div class="form-group">
             <label>Price transfer</label>
-            <input type="number" class="form-control" [(ngModel)]="property.priceSell" name="price" required>
+            <input type="number" class="form-control" [(ngModel)]="property.priceTransfer" name="priceTransfer" required>
         </div>
-        <!-- /.form-group -->
     </div>
-    <!-- /.col-* -->
+    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.RENT || property.transaction == transactionTypes.RENT_BUY">
+        <div class="form-group">
+            <label>Price Rent</label>
+            <input type="number" class="form-control" [(ngModel)]="property.priceRent" name="priceRent" required>
+        </div>
+    </div>
+    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.BUY || property.transaction == transactionTypes.RENT_BUY">
+        <div class="form-group">
+            <label>Price buy</label>
+            <input type="number" class="form-control" [(ngModel)]="property.priceSell" name="priceSell" required>
+        </div>
+    </div>
 </div>
 <!-- /.row -->

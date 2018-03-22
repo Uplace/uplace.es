@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Property, TransactionType} from "../../../../entities/property";
 
 @Component({
-  selector: 'up-property-price',
-  templateUrl: './property-price.component.html',
-  styles: []
+    selector: 'up-property-price',
+    templateUrl: './property-price.component.html',
+    styles: []
 })
 export class PropertyPriceComponent implements OnInit {
 
-  constructor() { }
+    @Input() property: Property;
 
-  ngOnInit() {
-  }
+    @Output() propertyChange: EventEmitter<Property> = new EventEmitter<Property>();
+
+    transactionTypes = TransactionType;
+
+    constructor() {
+    }
+
+    ngOnInit() {
+    }
 
 }
