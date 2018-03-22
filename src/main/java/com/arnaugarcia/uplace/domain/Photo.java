@@ -45,7 +45,7 @@ public class Photo implements Serializable {
     @Column(name = "thumbnail", nullable = false)
     private Boolean thumbnail;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Property property;
 

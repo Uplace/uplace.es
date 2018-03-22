@@ -1,10 +1,13 @@
 package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.Marker;
+import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.MarkerDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +41,15 @@ public class MarkerService {
         List<MarkerDTO> markerDTOS = markerList.parallelStream()
             .map(markerToMarkerDTO)
             .collect(Collectors.toList());
+
+        // This can be made with JPA 1.7 findTop or inner join query
+        Pageable limit = new PageRequest(0, 1);
+
+        markerDTOS.parallelStream().forEach((markerDTO -> {
+                List<Photo> photos = propertyRepository.findThumbnailByReference(markerDTO.getPropertyReference(), limit);
+                markerDTO.setPhoto(photos.get(0));
+            }
+        ));
         /*markerDTOList.parallelStream().forEach((markerDTO -> {
             if (markerDTO.getDate() != null) {
                 LocalDate localDate =  markerDTO.getDate().toLocalDate();

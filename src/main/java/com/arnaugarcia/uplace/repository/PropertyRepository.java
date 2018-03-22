@@ -55,7 +55,6 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      *
      * @return a List of markers
      */
-    // TODO : AND p.location.hide != null
     @Query("SELECT new com.arnaugarcia.uplace.domain.Marker(p.reference, p.priceSell, p.priceRent, p.priceTransfer, p.transaction, p.updated, p.location.latitude, p.location.longitude, p.propertyType) FROM Property p WHERE p.location is not null and p.visible = true and p.location.hide = false")
     List<Marker> findAllMarkers();
 
@@ -65,9 +64,8 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      *
      * @return a List of markers
      */
-    // TODO : AND p.location.hide != null
     @Query("SELECT photo from Photo photo where photo.property.reference = :reference and photo.thumbnail = true")
-    List<Photo> findThumbnailByReference(@Param("reference") String reference);
+    List<Photo> findThumbnailByReference(@Param("reference") String reference, Pageable pageables);
 
     /**
      * Query to get the prices of all Properties
