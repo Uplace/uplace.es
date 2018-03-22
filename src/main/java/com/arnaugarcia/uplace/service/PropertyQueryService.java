@@ -75,9 +75,6 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
             if (criteria.getTitle() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTitle(), Property_.title));
             }
-            if (criteria.getPrice() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPrice(), Property_.price));
-            }
             if (criteria.getCreated() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getCreated(), Property_.created));
             }

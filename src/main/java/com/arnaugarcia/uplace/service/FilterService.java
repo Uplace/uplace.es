@@ -4,6 +4,7 @@ import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.repository.LocationRepository;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.FilterDTO;
+import com.arnaugarcia.uplace.service.dto.PriceDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -29,17 +30,19 @@ public class FilterService {
 
         List<String> cities = locationRepository.findAllCities();
 
-        List<Integer> prices = propertyRepository.findAllPrices().parallelStream().map(number -> {
+        List<PriceDTO> priceDTOS = propertyRepository.findAllPrices();
+
+       /* List<Integer> prices = propertyRepository.findAllPrices().parallelStream().map(number -> {
             return (number.intValue() + 5000) / 10000 * 10000;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList());*/
 
-        Integer maxPrice = Collections.max(prices);
+        // Integer maxPrice = Collections.max(prices);
 
-        Integer minPrice = Collections.min(prices);
+        // Integer minPrice = Collections.min(prices);
 
         List<String> types = propertyRepository.findAllTypes();
 
-        FilterDTO filterDTO = new FilterDTO(cities, prices, maxPrice, minPrice, types);
+        FilterDTO filterDTO = new FilterDTO(cities, null, null, null, types);
         return filterDTO;
     }
 }

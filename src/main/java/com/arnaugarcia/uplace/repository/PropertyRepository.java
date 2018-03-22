@@ -1,8 +1,10 @@
 package com.arnaugarcia.uplace.repository;
 
+import com.arnaugarcia.uplace.domain.Marker;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.service.dto.MarkerDTO;
+import com.arnaugarcia.uplace.service.dto.PriceDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -54,8 +56,8 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      * @return a List of markers
      */
     // TODO : AND p.location.hide != null
-    @Query("SELECT new com.arnaugarcia.uplace.service.dto.MarkerDTO(p.reference, p.price, p.updated, p.location.latitude, p.location.longitude, p.propertyType) FROM Property p WHERE p.location is not null and p.visible = true and p.location.hide = false")
-    List<MarkerDTO> findAllMarkers();
+    @Query("SELECT new com.arnaugarcia.uplace.domain.Marker(p.reference, p.priceSell, p.priceRent, p.priceTransfer, p.transaction, p.updated, p.location.latitude, p.location.longitude, p.propertyType) FROM Property p WHERE p.location is not null and p.visible = true and p.location.hide = false")
+    List<Marker> findAllMarkers();
 
 
     /**
@@ -72,8 +74,8 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
      *
      * @return a List of integer
      */
-    @Query("select distinct property.price from Property property")
-    List<Double> findAllPrices();
+    @Query("select new com.arnaugarcia.uplace.service.dto.PriceDTO(property.priceSell, property.priceRent, property.priceTransfer, property.transaction) from Property property")
+    List<PriceDTO> findAllPrices();
 
     /**
      * Query to get the types of all Properties

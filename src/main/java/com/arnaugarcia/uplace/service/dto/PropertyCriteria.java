@@ -37,8 +37,6 @@ public class PropertyCriteria implements Serializable {
 
     private StringFilter title;
 
-    private DoubleFilter price;
-
     private ZonedDateTimeFilter created;
 
     private ZonedDateTimeFilter updated;
@@ -51,6 +49,8 @@ public class PropertyCriteria implements Serializable {
 
     private DoubleFilter priceRent;
 
+    private DoubleFilter priceTransfer;
+
     private IntegerFilter yearConstruction;
 
     private BooleanFilter newCreation;
@@ -58,6 +58,14 @@ public class PropertyCriteria implements Serializable {
     private BooleanFilter visible;
 
     private IntegerFilter surface;
+
+    private LongFilter locationId;
+
+    private LongFilter photoId;
+
+    private LongFilter managerId;
+
+    private LongFilter realEstateId;
 
     public PropertyCriteria() {
     }
@@ -76,14 +84,6 @@ public class PropertyCriteria implements Serializable {
 
     public void setTitle(StringFilter title) {
         this.title = title;
-    }
-
-    public DoubleFilter getPrice() {
-        return price;
-    }
-
-    public void setPrice(DoubleFilter price) {
-        this.price = price;
     }
 
     public ZonedDateTimeFilter getCreated() {
@@ -134,6 +134,14 @@ public class PropertyCriteria implements Serializable {
         this.priceRent = priceRent;
     }
 
+    public DoubleFilter getPriceTransfer() {
+        return priceTransfer;
+    }
+
+    public void setPriceTransfer(DoubleFilter priceTransfer) {
+        this.priceTransfer = priceTransfer;
+    }
+
     public IntegerFilter getYearConstruction() {
         return yearConstruction;
     }
@@ -166,22 +174,58 @@ public class PropertyCriteria implements Serializable {
         this.surface = surface;
     }
 
+    public LongFilter getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(LongFilter locationId) {
+        this.locationId = locationId;
+    }
+
+    public LongFilter getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(LongFilter photoId) {
+        this.photoId = photoId;
+    }
+
+    public LongFilter getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(LongFilter managerId) {
+        this.managerId = managerId;
+    }
+
+    public LongFilter getRealEstateId() {
+        return realEstateId;
+    }
+
+    public void setRealEstateId(LongFilter realEstateId) {
+        this.realEstateId = realEstateId;
+    }
+
     @Override
     public String toString() {
         return "PropertyCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (title != null ? "title=" + title + ", " : "") +
-                (price != null ? "price=" + price + ", " : "") +
                 (created != null ? "created=" + created + ", " : "") +
                 (updated != null ? "updated=" + updated + ", " : "") +
                 (transaction != null ? "transaction=" + transaction + ", " : "") +
                 (reference != null ? "reference=" + reference + ", " : "") +
                 (priceSell != null ? "priceSell=" + priceSell + ", " : "") +
                 (priceRent != null ? "priceRent=" + priceRent + ", " : "") +
+                (priceTransfer != null ? "priceTransfer=" + priceTransfer + ", " : "") +
                 (yearConstruction != null ? "yearConstruction=" + yearConstruction + ", " : "") +
                 (newCreation != null ? "newCreation=" + newCreation + ", " : "") +
                 (visible != null ? "visible=" + visible + ", " : "") +
                 (surface != null ? "surface=" + surface + ", " : "") +
+                (locationId != null ? "locationId=" + locationId + ", " : "") +
+                (photoId != null ? "photoId=" + photoId + ", " : "") +
+                (managerId != null ? "managerId=" + managerId + ", " : "") +
+                (realEstateId != null ? "realEstateId=" + realEstateId + ", " : "") +
             "}";
     }
 

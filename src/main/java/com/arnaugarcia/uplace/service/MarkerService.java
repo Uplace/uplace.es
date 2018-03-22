@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.service;
 
+import com.arnaugarcia.uplace.domain.Marker;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.MarkerDTO;
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.arnaugarcia.uplace.service.util.TransformMarkerToMarkerDTO.markerToMarkerDTO;
 
 /**
  * Service Implementation for managing Hotel.
@@ -30,8 +33,12 @@ public class MarkerService {
 
     @Transactional(readOnly = true)
     public List<MarkerDTO> getAllMarkers() {
-        List<MarkerDTO> markerDTOList = propertyRepository.findAllMarkers();
-        markerDTOList.parallelStream().forEach((markerDTO -> {
+        List<Marker> markerList = propertyRepository.findAllMarkers();
+
+        List<MarkerDTO> markerDTOS = markerList.parallelStream()
+            .map(markerToMarkerDTO)
+            .collect(Collectors.toList());
+        /*markerDTOList.parallelStream().forEach((markerDTO -> {
             if (markerDTO.getDate() != null) {
                 LocalDate localDate =  markerDTO.getDate().toLocalDate();
                 LocalDate today = LocalDate.now();
@@ -50,7 +57,7 @@ public class MarkerService {
             .filter(markerDTO -> markerDTO.getLatitude() > 0)
             .filter(markerDTO -> Objects.nonNull(markerDTO.getLongitude()))
             .filter(markerDTO -> markerDTO.getLongitude() > 0)
-            .collect(Collectors.toList());
-        return result;
+            .collect(Collectors.toList());*/
+        return markerDTOS;
     }
 }

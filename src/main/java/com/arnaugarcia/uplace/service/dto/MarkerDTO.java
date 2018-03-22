@@ -1,35 +1,41 @@
 package com.arnaugarcia.uplace.service.dto;
 
-import java.io.Serializable;
+import com.arnaugarcia.uplace.domain.Marker;
+import com.arnaugarcia.uplace.domain.Photo;
+
 import java.time.ZonedDateTime;
 
-public class MarkerDTO implements Serializable {
+public class MarkerDTO {
 
     private String propertyReference;
     private Double price;
+    private Photo photo;
     private Boolean isNew;
     private ZonedDateTime date;
     private Double latitude;
     private Double longitude;
     private String propertyType;
 
-    public MarkerDTO(String propertyReference, Double price, ZonedDateTime date, Double latitude, Double longitude, String propertyType) {
+    public MarkerDTO() {
+    }
+
+    public MarkerDTO(String propertyReference, Double price, Photo photo, Boolean isNew, ZonedDateTime date, Double latitude, Double longitude, String propertyType) {
         this.propertyReference = propertyReference;
         this.price = price;
+        this.photo = photo;
+        this.isNew = isNew;
         this.date = date;
         this.latitude = latitude;
         this.longitude = longitude;
         this.propertyType = propertyType;
     }
 
-    public MarkerDTO(String propertyReference, Double price, Boolean isNew, ZonedDateTime date, Double latitude, Double longitude, String propertyType) {
-        this.propertyReference = propertyReference;
-        this.price = price;
-        this.isNew = isNew;
-        this.date = date;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.propertyType = propertyType;
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
     }
 
     public String getPropertyReference() {

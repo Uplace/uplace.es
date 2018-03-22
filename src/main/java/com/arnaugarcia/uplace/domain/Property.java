@@ -68,10 +68,6 @@ public class Property implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @NotNull
-    @Column(name = "price", nullable = false)
-    private Double price;
-
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
@@ -93,6 +89,9 @@ public class Property implements Serializable {
 
     @Column(name = "reference", nullable = false)
     private String reference;
+
+    @Column(name = "price_transfer")
+    private Double priceTransfer;
 
     @Column(name = "price_sell")
     private Double priceSell;
@@ -153,17 +152,24 @@ public class Property implements Serializable {
         this.title = title;
     }
 
-    public Double getPrice() {
-        return price;
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
     }
 
-    public Property price(Double price) {
-        this.price = price;
-        return this;
+    public Double getPriceTransfer() {
+        return priceTransfer;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setPriceTransfer(Double priceTransfer) {
+        this.priceTransfer = priceTransfer;
+    }
+
+    public Boolean getNewCreation() {
+        return newCreation;
+    }
+
+    public Boolean getVisible() {
+        return visible;
     }
 
     public ZonedDateTime getCreated() {
@@ -414,20 +420,25 @@ public class Property implements Serializable {
     @Override
     public String toString() {
         return "Property{" +
-            "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", price=" + getPrice() +
-            ", created='" + getCreated() + "'" +
-            ", updated='" + getUpdated() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", transaction='" + getTransaction() + "'" +
-            ", reference='" + getReference() + "'" +
-            ", priceSell=" + getPriceSell() +
-            ", priceRent=" + getPriceRent() +
-            ", yearConstruction=" + getYearConstruction() +
-            ", newCreation='" + isNewCreation() + "'" +
-            ", visible='" + isVisible() + "'" +
-            ", surface=" + getSurface() +
-            "}";
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", created=" + created +
+            ", updated=" + updated +
+            ", propertyType='" + propertyType + '\'' +
+            ", description='" + description + '\'' +
+            ", transaction=" + transaction +
+            ", reference='" + reference + '\'' +
+            ", priceTransfer=" + priceTransfer +
+            ", priceSell=" + priceSell +
+            ", priceRent=" + priceRent +
+            ", yearConstruction=" + yearConstruction +
+            ", newCreation=" + newCreation +
+            ", visible=" + visible +
+            ", surface=" + surface +
+            ", location=" + location +
+            ", photos=" + photos +
+            ", managers=" + managers +
+            ", realEstate=" + realEstate +
+            '}';
     }
 }

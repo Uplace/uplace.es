@@ -15,7 +15,6 @@ export class Property implements BaseEntity {
     constructor(
         public id?: number,
         public title?: string,
-        public price?: number,
         public created?: any,
         public updated?: any,
         public propertyType?: string,
@@ -24,6 +23,7 @@ export class Property implements BaseEntity {
         public reference?: string,
         public priceSell?: number,
         public priceRent?: number,
+        public priceTransfer?: number,
         public yearConstruction?: number,
         public newCreation?: boolean,
         public visible?: boolean,

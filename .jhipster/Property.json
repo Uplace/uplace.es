@@ -40,13 +40,6 @@
             ]
         },
         {
-            "fieldName": "price",
-            "fieldType": "Double",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "created",
             "fieldType": "ZonedDateTime",
             "fieldValidateRules": [
@@ -83,6 +76,10 @@
         },
         {
             "fieldName": "priceRent",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "priceTransfer",
             "fieldType": "Double"
         },
         {

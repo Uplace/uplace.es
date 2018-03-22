@@ -5,7 +5,6 @@ import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.service.ContactService;
 import com.arnaugarcia.uplace.service.PropertyQueryService;
 import com.arnaugarcia.uplace.service.PropertyService;
-import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
