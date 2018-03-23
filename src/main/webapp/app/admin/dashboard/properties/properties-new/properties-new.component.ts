@@ -11,7 +11,7 @@ import {Select} from "../../../../shared/model/select.enum";
 @Component({
     selector: 'up-properties-new',
     templateUrl: './properties-new.component.html',
-    styles: []
+    styles: [`input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched { border: 1px solid red; }`]
 })
 export class PropertiesNewComponent implements OnInit {
 
