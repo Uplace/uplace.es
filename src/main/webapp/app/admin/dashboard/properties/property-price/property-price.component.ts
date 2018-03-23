@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Property, TransactionType} from "../../../../entities/property";
+import {NgForm} from "@angular/forms";
 
 @Component({
     selector: 'up-property-price',
@@ -7,6 +8,8 @@ import {Property, TransactionType} from "../../../../entities/property";
     styles: []
 })
 export class PropertyPriceComponent implements OnInit {
+
+    @Input('parentForm') newPropertyForm: NgForm;
 
     @Input() property: Property;
 

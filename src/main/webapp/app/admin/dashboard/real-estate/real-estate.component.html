@@ -11,13 +11,11 @@
                 <div class="box-title clearfix">
                     <div class="form-group">
                         <label>Search Real Estate</label>
-                        <ng-select [items]="realEstatesFiltered"
+                        <ng-select [items]="realEstates"
                                    bindLabel="name"
-                                   [typeahead]="searchTerm"
-                                   (close)="realEstatesFiltered = realEstates"
                                    [(ngModel)]="realEstate"
                                    (clear)="onClear()"
-                                   (change)="onChange($event)">>
+                                   (change)="onChange($event)">
                         </ng-select>
                     </div>
                 </div>

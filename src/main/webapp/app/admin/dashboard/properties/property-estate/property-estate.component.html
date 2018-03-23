@@ -5,10 +5,8 @@
     </div>
     <div class="col-sm-6">
         <label>Select a Real Estate</label>
-        <ng-select [items]="realEstatesFiltered"
+        <ng-select [items]="realEstates"
                    bindLabel="name"
-                   [typeahead]="searchTerm"
-                   (close)="realEstatesFiltered = realEstates"
                    [(ngModel)]="realEstate"
                    (clear)="onClear()"
                    (change)="onChange($event)">

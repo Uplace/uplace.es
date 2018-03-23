@@ -24,7 +24,9 @@ export class RealEstateComponent implements OnInit {
     ngOnInit() {
         this.realEstateService.query().subscribe((result) => {
             this.realEstates = result.body;
-        })
+            this.realEstates = [...this.realEstates];
+            console.log(this.realEstates);
+        });
     }
 
     onClear() {
@@ -32,11 +34,13 @@ export class RealEstateComponent implements OnInit {
     }
 
     onChange(event) {
-        console.log(event);
-        console.log(this.realEstate);
         this.realEstateService.findProperties(this.realEstate.reference).subscribe((response) => {
             this.properties = response.body;
         })
+    }
+
+    onAdd(event) {
+        console.log(event);
     }
 
 

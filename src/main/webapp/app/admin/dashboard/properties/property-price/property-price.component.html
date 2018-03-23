@@ -7,26 +7,55 @@
                 [items]="transactionTypes | keys"
                 bindLabel="value"
                 bindValue="key"
+                name="transaction"
                 [(ngModel)]="property.transaction">
             </ng-select>
+            <small class="form-text text-danger"
+                   [hidden]="!newPropertyForm.controls.transaction?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
         </div>
     </div>
     <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.TRANSFER">
         <div class="form-group">
-            <label>Price transfer</label>
+            <label class="form-control-label" jhiTranslate="uplaceApp.property.priceTransfer">Price</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceTransfer" name="priceTransfer" required>
+            <small class="form-text text-danger"
+                   [hidden]="!newPropertyForm.controls.priceTransfer?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+            <small class="form-text text-danger"
+                   [hidden]="!newPropertyForm.controls.priceTransfer?.errors?.number" jhiTranslate="entity.validation.number">
+                This field should be a number.
+            </small>
         </div>
     </div>
     <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.RENT || property.transaction == transactionTypes.RENT_BUY">
         <div class="form-group">
             <label>Price Rent</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceRent" name="priceRent" required>
+            <small class="form-text text-danger"
+                   [hidden]="!newPropertyForm.controls.priceRent?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+            <small class="form-text text-danger"
+                   [hidden]="!newPropertyForm.controls.priceRent?.errors?.number" jhiTranslate="entity.validation.number">
+                This field should be a number.
+            </small>
         </div>
     </div>
     <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.BUY || property.transaction == transactionTypes.RENT_BUY">
         <div class="form-group">
             <label>Price buy</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceSell" name="priceSell" required>
+            <small class="form-text text-danger"
+                   [hidden]="!newPropertyForm.controls.priceSell?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+            <small class="form-text text-danger"
+                   [hidden]="!newPropertyForm.controls.priceSell?.errors?.number" jhiTranslate="entity.validation.number">
+                This field should be a number.
+            </small>
         </div>
     </div>
 </div>

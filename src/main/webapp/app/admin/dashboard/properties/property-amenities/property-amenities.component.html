@@ -3,25 +3,23 @@
     <div *ngSwitchCase="'Apartment'">
         <div class="form-group">
             <label>{{'uplaceApp.apartment.numberBedrooms'| translate}}</label>
-            <input type="number" class="form-control" [(ngModel)]="property.numberBedrooms" name="numberBedrooms"
-                   required>
+            <input type="number" class="form-control" [(ngModel)]="property.numberBedrooms" name="numberBedrooms" required min="0">
         </div>
         <div class="form-group">
             <label>{{'uplaceApp.apartment.numberBathrooms'| translate}}</label>
-            <input type="number" class="form-control" [(ngModel)]="property.numberBathrooms" name="numberBathrooms"
-                   required>
+            <input type="number" class="form-control" [(ngModel)]="property.numberBathrooms" name="numberBathrooms" required min="0">
         </div>
         <div class="form-group">
             <label>{{'uplaceApp.apartment.m2Edified'| translate}}</label>
-            <input type="number" class="form-control" [(ngModel)]="property.m2Edified" name="m2Edified" required>
+            <input type="number" class="form-control" [(ngModel)]="property.m2Edified" name="m2Edified" required min="0">
         </div>
         <div class="form-group">
             <label>{{'uplaceApp.apartment.m2Usable'| translate}}</label>
-            <input type="number" class="form-control" [(ngModel)]="property.m2Usable" name="m2Usable" required>
+            <input type="number" class="form-control" [(ngModel)]="property.m2Usable" name="m2Usable" required min="0">
         </div>
         <div class="form-group">
             <label>{{'uplaceApp.apartment.height'| translate}}</label>
-            <input type="number" class="form-control" [(ngModel)]="property.height" name="height" required>
+            <input type="number" class="form-control" [(ngModel)]="property.height" name="height" required min="0">
         </div>
         <div class="form-group">
             <label>{{'uplaceApp.apartment.surfaceTerrace' | translate}}</label>
