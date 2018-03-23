@@ -7,6 +7,7 @@ import {Directive} from "@angular/core";
         {
             provide: ControlContainer,
             useFactory: function(form: NgForm) {
+                console.log(form);
                 return form;
             },
             deps: [NgForm]

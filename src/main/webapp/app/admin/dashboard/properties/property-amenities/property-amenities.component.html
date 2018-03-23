@@ -1,6 +1,6 @@
-<div [ngSwitch]="property.propertyType">
+<div [ngSwitch]="property.propertyType" provide-parent-form>
     <legend>Amenities</legend>
-    <div *ngSwitchCase="'Apartment'" provide-parent-form>
+    <div *ngSwitchCase="'Apartment'">
         <div class="form-group">
             <label>{{'uplaceApp.apartment.numberBedrooms'| translate}}</label>
             <input type="number" class="form-control" [(ngModel)]="property.numberBedrooms" name="numberBedrooms"

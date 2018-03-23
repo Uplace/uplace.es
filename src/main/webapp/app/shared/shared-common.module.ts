@@ -40,6 +40,7 @@ import {ProvideParentForm} from "./directives/parent-form.directive";
         UplaceSharedLibsModule,
         KeysPipe,
         TruncatePipe,
+        ProvideParentForm,
         FindLanguageFromKeyPipe,
         UpAlertComponent,
         UpAlertErrorComponent
