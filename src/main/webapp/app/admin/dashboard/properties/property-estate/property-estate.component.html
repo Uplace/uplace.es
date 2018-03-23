@@ -22,7 +22,7 @@
             <input type="text" class="form-control" name="realEstateName" [ngModel]="realEstate?.nif" (ngModelChange)="realEstate.nif=$event">
         </div>
         <button *ngIf="!realEstate?.id" type="button" class="btn btn-success" (click)="saveRealEstate()">Add real estate</button>
-        <button *ngIf="realEstate?.id" type="button" class="btn btn-success" (click)="saveRealEstate()">Update estate</button>
+        <button *ngIf="realEstate?.id" type="button" class="btn btn-warning" (click)="saveRealEstate()">Update estate</button>
         <!--<button *ngIf="realEstate.id" type="button" class="btn btn-danger" (click)="deleteRealEstate(realEstate)">Delete estate</button>-->
     </div>
 </div>

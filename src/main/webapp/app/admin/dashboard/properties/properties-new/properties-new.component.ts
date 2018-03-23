@@ -53,7 +53,6 @@ export class PropertiesNewComponent implements OnInit {
 
     onSubmit() {
         this.save();
-        console.log(this.property);
     }
 
     save() {
@@ -75,6 +74,7 @@ export class PropertiesNewComponent implements OnInit {
 
     private onSaveSuccess(result: Property) {
         this.eventManager.broadcast({name: 'propertyListModification', content: 'OK'});
+        this.alertService.success('uplaceApp.property.created');
         this.isSaving = true;
     }
 
