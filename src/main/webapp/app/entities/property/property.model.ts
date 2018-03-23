@@ -41,7 +41,5 @@ export class Property implements BaseEntity {
         this.newCreation = false;
         this.visible = false;
         this.location = new Location();
-        this.transaction = TransactionType.RENT_BUY;
-        console.log(TransactionType);
     }
 }

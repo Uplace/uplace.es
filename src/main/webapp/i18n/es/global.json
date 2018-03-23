@@ -120,7 +120,8 @@
         },
         "detail": {
             "field": "Campo",
-            "value": "Valor"
+            "value": "Valor",
+            "null": "Seleciona una opción"
         },
         "delete": {
             "title": "Confirmar operación de borrado"

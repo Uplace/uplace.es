@@ -6,8 +6,7 @@ import {Select} from "../../../../shared/model/select.enum";
 @Component({
     selector: 'up-property-amenities',
     templateUrl: './property-amenities.component.html',
-    styles: [],
-    providers: [EnumToArrayPipe]
+    styles: []
 })
 export class PropertyAmenitiesComponent implements OnInit {
 
@@ -17,11 +16,11 @@ export class PropertyAmenitiesComponent implements OnInit {
 
     Select = Select;
 
-    constructor(private enumToArrayPipe: EnumToArrayPipe) {
+    constructor() {
     }
 
     ngOnInit() {
-        console.log(this.enumToArrayPipe.transform(Select));
+
     }
 
 }

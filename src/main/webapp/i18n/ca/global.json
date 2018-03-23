@@ -24,7 +24,6 @@
                 "industrialPlant": "Industrial Plant",
                 "establishment": "Establishment",
                 "company": "Company",
-                "property": "Property",
                 "realEstate": "Real Estate",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
@@ -120,7 +119,8 @@
         },
         "detail": {
             "field": "Camp",
-            "value": "Valor"
+            "value": "Valor",
+            "null": "Seleciona una opció"
         },
         "delete": {
             "title": "Confirma eliminació"
