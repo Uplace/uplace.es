@@ -13,6 +13,7 @@ import {
 import {KeysPipe} from "./pipes/keys.pipe";
 import {TruncatePipe} from "./pipes/truncate.pipe";
 import {ProvideParentForm} from "./directives/parent-form.directive";
+import {EnumToArrayPipe} from "./pipes/enumToArray.pipe";
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import {ProvideParentForm} from "./directives/parent-form.directive";
     declarations: [
         FindLanguageFromKeyPipe,
         KeysPipe,
+        EnumToArrayPipe,
         ProvideParentForm,
         TruncatePipe,
         UpAlertComponent,
@@ -40,6 +42,7 @@ import {ProvideParentForm} from "./directives/parent-form.directive";
         UplaceSharedLibsModule,
         KeysPipe,
         TruncatePipe,
+        EnumToArrayPipe,
         ProvideParentForm,
         FindLanguageFromKeyPipe,
         UpAlertComponent,

@@ -64,7 +64,7 @@
             </div>
             <div class="form-group">
                 <label>Year construction</label>
-                <input type="number" class="form-control" [(ngModel)]="property.yearConstruction" name="yearConstruction" required>
+                <input type="number" class="form-control" [(ngModel)]="property.yearConstruction" name="yearConstruction" [min]="500" [max]="2018" required>
             </div>
             <button type="submit" class="btn btn-success" [disabled]="!newPropertyForm.valid">Submit</button>
             <!-- /.form-group -->
@@ -82,7 +82,7 @@
             <up-property-amenities [property]="property"></up-property-amenities>
         </fieldset>
         <fieldset>
-            <up-property-photos [(photos)]="property.photos"></up-property-photos>
+            <up-property-photos [parentForm]="newPropertyForm" [(photos)]="property.photos"></up-property-photos>
         </fieldset>
     </form>
     {{newPropertyForm.value | json}}

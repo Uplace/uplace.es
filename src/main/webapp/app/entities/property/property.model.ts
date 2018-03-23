@@ -33,8 +33,15 @@ export class Property implements BaseEntity {
         public managers?: Agent[],
         public realEstate?: RealEstate
     ) {
+        this.priceRent = 0;
+        this.priceSell = 0;
+        this.priceTransfer = 0;
+        this.surface = 0;
+        this.yearConstruction = 500;
         this.newCreation = false;
         this.visible = false;
         this.location = new Location();
+        this.transaction = TransactionType.RENT_BUY;
+        console.log(TransactionType);
     }
 }

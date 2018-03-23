@@ -35,7 +35,6 @@ export class PropertiesNewComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.form);
         this.route.params.subscribe((params: Params) => {
             if (params['reference']) {
                 this.propertyService.find(params['reference']).subscribe((result) => {

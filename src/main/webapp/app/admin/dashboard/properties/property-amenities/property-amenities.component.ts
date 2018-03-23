@@ -1,10 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Property} from "../../../../entities/property";
+import {EnumToArrayPipe} from "../../../../shared/pipes/enumToArray.pipe";
+import {Select} from "../../../../shared/model/select.enum";
 
 @Component({
     selector: 'up-property-amenities',
     templateUrl: './property-amenities.component.html',
-    styles: []
+    styles: [],
+    providers: [EnumToArrayPipe]
 })
 export class PropertyAmenitiesComponent implements OnInit {
 
@@ -12,10 +15,13 @@ export class PropertyAmenitiesComponent implements OnInit {
 
     @Output() propertyChanged: EventEmitter<Property> = new EventEmitter<Property>();
 
-    constructor() {
+    Select = Select;
+
+    constructor(private enumToArrayPipe: EnumToArrayPipe) {
     }
 
     ngOnInit() {
+        console.log(this.enumToArrayPipe.transform(Select));
     }
 
 }
