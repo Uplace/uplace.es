@@ -1,15 +1,12 @@
 <legend>Associate Real Estate</legend>
 <div class="row">
     <div class="col-lg-12">
-        {{realEstate | json}}
         <up-alert></up-alert>
     </div>
     <div class="col-sm-6">
         <label>Select a Real Estate</label>
-        <ng-select [items]="realEstatesFiltered"
+        <ng-select [items]="realEstates"
                    bindLabel="name"
-                   [typeahead]="searchTerm"
-                   (close)="realEstatesFiltered = realEstates"
                    [(ngModel)]="realEstate"
                    (clear)="onClear()"
                    (change)="onChange($event)">
@@ -25,7 +22,7 @@
             <input type="text" class="form-control" name="realEstateName" [ngModel]="realEstate?.nif" (ngModelChange)="realEstate.nif=$event">
         </div>
         <button *ngIf="!realEstate?.id" type="button" class="btn btn-success" (click)="saveRealEstate()">Add real estate</button>
-        <button *ngIf="realEstate?.id" type="button" class="btn btn-success" (click)="saveRealEstate()">Update estate</button>
+        <button *ngIf="realEstate?.id" type="button" class="btn btn-warning" (click)="saveRealEstate()">Update estate</button>
         <!--<button *ngIf="realEstate.id" type="button" class="btn btn-danger" (click)="deleteRealEstate(realEstate)">Delete estate</button>-->
     </div>
 </div>

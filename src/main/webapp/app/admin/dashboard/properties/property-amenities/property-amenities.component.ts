@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Property} from "../../../../entities/property";
+import {EnumToArrayPipe} from "../../../../shared/pipes/enumToArray.pipe";
+import {Select} from "../../../../shared/model/select.enum";
 
 @Component({
     selector: 'up-property-amenities',
@@ -12,10 +14,13 @@ export class PropertyAmenitiesComponent implements OnInit {
 
     @Output() propertyChanged: EventEmitter<Property> = new EventEmitter<Property>();
 
+    Select = Select;
+
     constructor() {
     }
 
     ngOnInit() {
+
     }
 
 }

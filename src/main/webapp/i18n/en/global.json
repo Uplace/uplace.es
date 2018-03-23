@@ -120,7 +120,8 @@
         },
         "detail": {
             "field": "Field",
-            "value": "Value"
+            "value": "Value",
+            "null": "Select an option"
         },
         "delete": {
             "title": "Confirm delete operation"

@@ -17,7 +17,6 @@
                 "title": "Property"
             },
             "title": "Title",
-            "price": "Price",
             "created": "Created",
             "updated": "Updated",
             "description": "Description",
@@ -25,6 +24,7 @@
             "reference": "Reference",
             "priceSell": "Price Sell",
             "priceRent": "Price Rent",
+            "priceTransfer": "Price Transfer",
             "yearConstruction": "Year Construction",
             "newCreation": "New Creation",
             "visible": "Visible",

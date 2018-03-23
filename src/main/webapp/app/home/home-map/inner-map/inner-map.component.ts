@@ -33,17 +33,23 @@ export class InnerMapComponent implements OnInit {
 
                         res.body.forEach((marker) => {
 
+                            console.log(marker);
+
                             const markerCenter = new google.maps.LatLng(marker['latitude'], marker['longitude']);
 
                             const markerVerified = marker['isNew'] ? '<div class="marker-verified"><i class="fa fa-check"></i></div>' : '';
 
+                            const markerImage = marker['photo'] != null ? 'data:' + marker['photo'].photoContentType + ';base64,' + marker['photo'].photo : '';
+
+                            const markerPrice = marker['price'] != null ? marker['price'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + '€' : 'N/D';
+
                             const markerContent =
                                 '<div class="marker">' +
-                                '<div class="marker-inner">'
-                                + '<span class="marker-' + marker['propertyType'].toLowerCase() + '"></span>' +
+                                '<div class="marker-inner">' +
+                                '<span class="marker-image" style="background-image: url(' + markerImage + ');"></span>' +
                                 '</div>'
                                 + markerVerified +
-                                '<div class="marker-price">' + marker['price'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + '€</div>' +
+                                '<div class="marker-price">' + markerPrice + '</div>' +
                                 '</div>';
 
                             let richMarker = new RichMarker({

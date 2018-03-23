@@ -13,6 +13,7 @@ import {RouterModule} from "@angular/router";
 import { PropertyModalComponent } from './property-modal/property-modal.component';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import { PropertyEstateComponent } from './property-estate/property-estate.component';
+import { PropertyPriceComponent } from './property-price/property-price.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { PropertyEstateComponent } from './property-estate/property-estate.compo
         PropertyAmenitiesComponent,
         PropertyPhotosComponent,
         PropertyModalComponent,
-        PropertyEstateComponent
+        PropertyEstateComponent,
+        PropertyPriceComponent
     ],
     entryComponents: [
         PropertyModalComponent

@@ -2,6 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angul
 import {Photo} from '../../../../entities/photo';
 import {JhiDataUtils} from 'ng-jhipster';
 import {FileUploader} from 'ng2-file-upload';
+import {NgForm} from "@angular/forms";
 
 @Component({
     selector: 'up-property-photos',
@@ -12,6 +13,8 @@ import {FileUploader} from 'ng2-file-upload';
 })
 
 export class PropertyPhotosComponent implements OnInit {
+
+    @Input('parentForm') newPropertyForm: NgForm;
 
     @Input() photos: Photo[];
 

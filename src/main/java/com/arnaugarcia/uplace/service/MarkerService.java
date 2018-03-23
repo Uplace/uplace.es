@@ -1,18 +1,20 @@
 package com.arnaugarcia.uplace.service;
 
+import com.arnaugarcia.uplace.domain.Marker;
+import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.MarkerDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.arnaugarcia.uplace.service.util.TransformMarkerToMarkerDTO.markerToMarkerDTO;
 
 /**
  * Service Implementation for managing Hotel.
@@ -30,8 +32,21 @@ public class MarkerService {
 
     @Transactional(readOnly = true)
     public List<MarkerDTO> getAllMarkers() {
-        List<MarkerDTO> markerDTOList = propertyRepository.findAllMarkers();
-        markerDTOList.parallelStream().forEach((markerDTO -> {
+        List<Marker> markerList = propertyRepository.findAllMarkers();
+
+        List<MarkerDTO> markerDTOS = markerList.parallelStream()
+            .map(markerToMarkerDTO)
+            .collect(Collectors.toList());
+
+        // This can be made with JPA 1.7 findTop or inner join query
+        Pageable limit = new PageRequest(0, 1);
+
+        markerDTOS.parallelStream().forEach((markerDTO -> {
+                List<Photo> photos = propertyRepository.findThumbnailByReference(markerDTO.getPropertyReference(), limit);
+                markerDTO.setPhoto(photos.get(0));
+            }
+        ));
+        /*markerDTOList.parallelStream().forEach((markerDTO -> {
             if (markerDTO.getDate() != null) {
                 LocalDate localDate =  markerDTO.getDate().toLocalDate();
                 LocalDate today = LocalDate.now();
@@ -50,7 +65,7 @@ public class MarkerService {
             .filter(markerDTO -> markerDTO.getLatitude() > 0)
             .filter(markerDTO -> Objects.nonNull(markerDTO.getLongitude()))
             .filter(markerDTO -> markerDTO.getLongitude() > 0)
-            .collect(Collectors.toList());
-        return result;
+            .collect(Collectors.toList());*/
+        return markerDTOS;
     }
 }

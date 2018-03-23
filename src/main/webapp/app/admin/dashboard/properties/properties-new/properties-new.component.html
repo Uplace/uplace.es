@@ -21,75 +21,57 @@
                 </div>
             </legend>
             <div class="form-group">
-                <label>Title</label>
+                <label class="form-control-label" jhiTranslate="uplaceApp.property.title">Title</label>
                 <input type="text" class="form-control" [(ngModel)]="property.title" name="title" required>
+                <div [hidden]="!(newPropertyForm.controls.title?.dirty && newPropertyForm.controls.title?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!newPropertyForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
             </div>
             <!-- /.form-group -->
             <div class="form-group">
                 <label>Description</label>
                 <textarea class="form-control" rows="6" [(ngModel)]="property.description" name="description"></textarea>
+                <div [hidden]="!(newPropertyForm.controls.description?.dirty && newPropertyForm.controls.description?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!newPropertyForm.controls.description?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
             </div>
             <div class="form-group">
-                <label>Surface</label>
+                <label class="form-control-label" jhiTranslate="uplaceApp.property.surface">Title</label>
                 <input type="number" class="form-control" [(ngModel)]="property.surface" name="surface" required>
+                <div [hidden]="!(newPropertyForm.controls.surface?.dirty && newPropertyForm.controls.surface?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!newPropertyForm.controls.surface?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
             </div>
             <div class="form-group">
-                <label>property Type</label>
-                <select [(ngModel)]="property.propertyType" class="form-control" name="propertyType" required>
+                <label>Property Type</label>
+                <!--<select [(ngModel)]="property.propertyType" class="form-control" name="propertyType" required>
                     <option *ngFor="let type of propertyTypes" [ngValue]="type" >{{type}}</option>
-                </select>
+                </select>-->
+                <ng-select
+                    [items]="propertyTypes"
+                    [ngModel]="property.propertyType"
+                    bindValue="type"
+                    bindLabel="type"
+                    [clearable]="false"
+                    name="propertyType">
+                </ng-select>
             </div>
             <div class="form-group">
                 <label>Year construction</label>
-                <input type="number" class="form-control" [(ngModel)]="property.yearConstruction" name="yearConstruction" required>
+                <input type="number" class="form-control" [(ngModel)]="property.yearConstruction" name="yearConstruction" [min]="500" [max]="2018" required>
             </div>
             <button type="submit" class="btn btn-success" [disabled]="!newPropertyForm.valid">Submit</button>
             <!-- /.form-group -->
         </fieldset>
         <fieldset>
-            <legend>Payment Information</legend>
-            <div class="row">
-<!--                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="uplaceApp.property.transaction" for="field_transaction">Transaction</label>
-                        <select class="form-control" [(ngModel)]="property.transaction" name="transaction" id="field_transaction" required>
-                            <option *ngFor="let transaction of transactionTypes | keys" [value]="transaction.key">{{'uplaceApp.TransactionType.' +  transaction.value | translate}}</option>
-                        </select>
-                    </div>
-                    &lt;!&ndash; /.form-group &ndash;&gt;
-                </div>
-                &lt;!&ndash; /.col-* &ndash;&gt;
-                <div class="col-sm-4" *ngIf="property.transaction && (property.transaction === transactionTypes.RENT_BUY || property.transaction === transactionTypes.RENT)">
-                    <div class="form-group">
-                        <label>Price rent</label>
-                        <input type="number" class="form-control" [(ngModel)]="property.priceRent" name="priceRent" required>
-                    </div>
-                    &lt;!&ndash; /.form-group &ndash;&gt;
-                </div>
-                &lt;!&ndash; /.col-* &ndash;&gt;
-                <div class="col-sm-4" *ngIf="property.transaction && (property.transaction === transactionTypes.RENT_BUY || property.transaction === transactionTypes.BUY)">
-                    <div class="form-group">
-                        <label>Price buy</label>
-                        <input type="number" class="form-control" [(ngModel)]="property.priceSell" name="priceSell" required>
-                    </div>
-                    &lt;!&ndash; /.form-group &ndash;&gt;
-                </div>-->
-                <!-- /.col-* -->
-
-                <!-- /.col-* -->
-                <!--<div class="col-sm-4" *ngIf="property.transaction == transactionTypes.TRANSFER">-->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Price transfer</label>
-                        <input type="number" class="form-control" [(ngModel)]="property.price" name="price" required>
-                    </div>
-                    <!-- /.form-group -->
-                </div>
-                <!-- /.col-* -->
-            </div>
-            <!-- /.row -->
+            <up-property-price [parentForm]="newPropertyForm" [(property)]="property"></up-property-price>
         </fieldset>
-        {{property.realEstate | json}}
         <fieldset>
             <up-property-estate [(realEstate)]="property.realEstate"></up-property-estate>
         </fieldset>
@@ -100,7 +82,7 @@
             <up-property-amenities [property]="property"></up-property-amenities>
         </fieldset>
         <fieldset>
-            <up-property-photos [(photos)]="property.photos"></up-property-photos>
+            <up-property-photos [parentForm]="newPropertyForm" [(photos)]="property.photos"></up-property-photos>
         </fieldset>
     </form>
 </div>

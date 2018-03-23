@@ -1,14 +1,13 @@
   entity Property {
       title String required
-      price Double required,
       created ZonedDateTime required,
       updated ZonedDateTime,
       description TextBlob,
       transaction TransactionType required,
       reference String required,
-      // PONGO DOS CAMPOS POR QUE PUEDE QUE SE PUEDA VENDER Y ALQUILAR A LA VEZ
       priceSell Double,
       priceRent Double,
+      priceTransfer Double,
       yearConstruction Integer min(500),
       newCreation Boolean,
       visible Boolean,

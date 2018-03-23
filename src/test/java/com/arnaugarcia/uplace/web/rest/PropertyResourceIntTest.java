@@ -177,7 +177,6 @@ public class PropertyResourceIntTest {
         assertThat(propertyList).hasSize(databaseSizeBeforeCreate + 1);
         Property testProperty = propertyList.get(propertyList.size() - 1);
         assertThat(testProperty.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testProperty.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testProperty.getCreated()).isEqualTo(DEFAULT_CREATED);
         assertThat(testProperty.getUpdated()).isEqualTo(DEFAULT_UPDATED);
         assertThat(testProperty.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
@@ -232,8 +231,6 @@ public class PropertyResourceIntTest {
     @Transactional
     public void checkPriceIsRequired() throws Exception {
         int databaseSizeBeforeTest = propertyRepository.findAll().size();
-        // set the field null
-        property.setPrice(null);
 
         // Create the Property, which fails.
 
@@ -1041,7 +1038,6 @@ public class PropertyResourceIntTest {
         em.detach(updatedProperty);
         updatedProperty
             .title(UPDATED_TITLE)
-            .price(UPDATED_PRICE)
             .created(UPDATED_CREATED)
             .updated(UPDATED_UPDATED)
             .description(UPDATED_DESCRIPTION)
@@ -1064,7 +1060,6 @@ public class PropertyResourceIntTest {
         assertThat(propertyList).hasSize(databaseSizeBeforeUpdate);
         Property testProperty = propertyList.get(propertyList.size() - 1);
         assertThat(testProperty.getTitle()).isEqualTo(UPDATED_TITLE);
-        assertThat(testProperty.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testProperty.getCreated()).isEqualTo(UPDATED_CREATED);
         assertThat(testProperty.getUpdated()).isEqualTo(UPDATED_UPDATED);
         assertThat(testProperty.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
