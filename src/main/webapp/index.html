@@ -17,7 +17,106 @@
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <uplace></uplace>
+    <uplace>
+        <style type="text/css">
+            /* Styles for progress on startup function */
+
+            .start,
+            body {
+                background: #2c2d2e;
+                color: #fff;
+                font-family: 'Lato', sans-serif;
+            }
+            .launchLog{
+                font-weight: 100;
+                font-size: 1.2em;
+            }
+            .title--bold{
+                font-weight: bold;
+            }
+            .splashScreen {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -96px;
+            }
+
+            .dots {
+                text-align: center;
+            }
+
+            .dot {
+                display: inline-block;
+                width: 25px;
+                height: 25px;
+                border-radius: 100%;
+                background: #12a5f4;
+            }
+
+            .dot-orange {
+                background-color: orange;
+            }
+
+            .dot-blue {
+                background-color: blue;
+            }
+
+            .dot-yellow {
+                background-color: gold;
+            }
+
+            .dot-green {
+                background-color: green;
+            }
+
+            .dot {
+                margin: 0 10px;
+                -webkit-animation: bounce-up-down 1.6s infinite ease-in-out;
+            }
+
+            .dot-2 {
+                -webkit-animation-delay: .3s
+            }
+
+            .dot-3 {
+                -webkit-animation-delay: .6s
+            }
+
+            .dot-4 {
+                -webkit-animation-delay: .9s
+            }
+
+            @-webkit-keyframes bounce-up-down {
+                0%, 100%, 20%, 55%, 80% {
+                    -webkit-transform: translate3d(0, 0, 0);
+                    transform: translate3d(0, 0, 0)
+                }
+                40%,
+                45% {
+                    -webkit-transform: translate3d(0, -30px, 0);
+                    transform: translate3d(0, -30px, 0)
+                }
+                70% {
+                    -webkit-transform: translate3d(0, -15px, 0);
+                    transform: translate3d(0, -15px, 0)
+                }
+                90% {
+                    -webkit-transform: translate3d(0, -4px, 0);
+                    transform: translate3d(0, -4px, 0)
+                }
+            }
+        </style>
+
+        <div class="splashScreen">
+            <div class="dots">
+                <div class="dot dot-1 dot-"></div>
+                <div class="dot dot-2 dot-"></div>
+                <div class="dot dot-3 dot-"></div>
+                <div class="dot dot-4 dot-"></div>
+            </div>
+            <h4 class="splashHeader launchLog"><span class="title--bold">Uplace</span> We are loading our awesome page ...</h4>
+        </div>
+    </uplace>
     <noscript>
         <h1>You must enable javascript to view this page.</h1>
     </noscript>
