@@ -43,7 +43,7 @@ public class MarkerService {
 
         markerDTOS.parallelStream().forEach((markerDTO -> {
                 List<Photo> photos = propertyRepository.findThumbnailByReference(markerDTO.getPropertyReference(), limit);
-                markerDTO.setPhoto(photos.get(0));
+                if (!photos.isEmpty()) markerDTO.setPhoto(photos.get(0));
             }
         ));
         /*markerDTOList.parallelStream().forEach((markerDTO -> {
