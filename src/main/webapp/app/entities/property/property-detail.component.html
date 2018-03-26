@@ -180,7 +180,9 @@
                         <div class="listing-detail-section" id="listing-detail-section-map-position" data-title="Map Position" *ngIf="property.location && property.location.latitude && property.location.longitude">
                             <h2>Map Position</h2>
                             <agm-map style="height: 400px" [latitude]="property.location.latitude" [longitude]="property.location.longitude" [zoom]="13">
-                                <agm-marker [latitude]="property.location.latitude" [longitude]="property.location.longitude"></agm-marker>
+                                <agm-marker *ngIf="!property.location.hide" [latitude]="property.location.latitude" [longitude]="property.location.longitude"></agm-marker>
+                                <agm-circle *ngIf="property.location.hide" [latitude]="property.location.latitude" [longitude]="property.location.longitude" [radius]="3000" [fillColor]="'blue'">
+                                </agm-circle>
                             </agm-map>
                         </div>
                         <!-- /.listing-detail-section -->
