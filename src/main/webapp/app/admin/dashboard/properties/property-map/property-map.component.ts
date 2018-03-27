@@ -70,8 +70,14 @@ export class PropertyMapComponent implements OnInit {
                 this.setMapCenter(this.location.latitude, this.location.longitude);
                 console.log('Location of user found!');
                 this.geocodeLatLng();
+            }, (error) => {
+                this.location.latitude = this.defaultLatitude;
+                this.location.longitude = this.defaultLongitude;
+                console.log('Has been an error getting the location :(');
             });
         } else {
+            this.location.latitude = this.defaultLatitude;
+            this.location.longitude = this.defaultLongitude;
             this.alertService.error('Cannot find user location :(');
         }
     }

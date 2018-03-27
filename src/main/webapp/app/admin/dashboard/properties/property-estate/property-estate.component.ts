@@ -22,8 +22,6 @@ export class PropertyEstateComponent implements OnInit, AfterViewChecked {
 
     realEstates: RealEstate[] = [];
 
-    searchTerm = new EventEmitter<string>();
-
     constructor(private realEstateService: RealEstateService,
                 private eventManager: JhiEventManager,
                 private jhiAlertService: JhiAlertService) {

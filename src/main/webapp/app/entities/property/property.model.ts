@@ -5,10 +5,10 @@ import {Location} from "../location/location.model";
 import {RealEstate} from "../real-estate";
 
 export enum TransactionType {
-    RENT,
-    BUY,
-    TRANSFER,
-    RENT_BUY
+    RENT = 0,
+    BUY = 1,
+    TRANSFER = 2,
+    RENT_BUY = 3
 }
 
 export class Property implements BaseEntity {

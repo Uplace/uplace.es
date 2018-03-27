@@ -3,22 +3,32 @@
     <div class="col-sm-6">
         <div class="form-group">
             <label>Select type of transaction</label>
-            <ng-select
+            <select class="form-control" name="transaction" [(ngModel)]="property.transaction" id="field_transaction"  required>
+                <option value="null" *ngIf="property.transaction == null" [selected]="!property.transaction">{{'uplaceApp.TransactionType.null' | translate}}</option>
+                <option value="RENT">{{'uplaceApp.TransactionType.RENT' | translate}}</option>
+                <option value="BUY">{{'uplaceApp.TransactionType.BUY' | translate}}</option>
+                <option value="TRANSFER">{{'uplaceApp.TransactionType.TRANSFER' | translate}}</option>
+                <option value="RENT_BUY">{{'uplaceApp.TransactionType.RENT_BUY' | translate}}</option>
+            </select>
+
+            <!--<select class="form-control" *ngIf="property.transaction" [(ngModel)]="property.transaction">
+                <option *ngFor="let option of transactionTypes | keys"  [ngValue]="option.key">{{transactionTypes[option.key]}}</option>
+            </select>-->
+            <!--<ng-select *ngIf="property.transaction"
                 [items]="transactionTypes | keys"
                 bindLabel="value"
                 bindValue="key"
                 [searchable]="false"
                 [clearable]="false"
                 name="transaction"
-                [(ngModel)]="property.transaction">
-            </ng-select>
-            <small class="form-text text-danger"
-                   [hidden]="!newPropertyForm.controls.transaction?.errors?.required" jhiTranslate="entity.validation.required">
+                >
+            </ng-select>-->
+            <small class="form-text text-danger" [hidden]="!newPropertyForm.controls.transaction?.errors?.required" jhiTranslate="entity.validation.required">
                 This field is required.
             </small>
         </div>
     </div>
-    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.TRANSFER">
+    <div class="col-sm-3" *ngIf="property.transaction == 'TRANSFER'">
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.property.priceTransfer">Price</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceTransfer" name="priceTransfer" required>
@@ -32,7 +42,7 @@
             </small>
         </div>
     </div>
-    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.RENT || property.transaction == transactionTypes.RENT_BUY">
+    <div class="col-sm-3" *ngIf="property.transaction == 'RENT' || property.transaction == 'RENT_BUY'">
         <div class="form-group">
             <label>Price Rent</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceRent" name="priceRent" required>
@@ -46,7 +56,7 @@
             </small>
         </div>
     </div>
-    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes.BUY || property.transaction == transactionTypes.RENT_BUY">
+    <div class="col-sm-3" *ngIf="property.transaction == 'BUY' || property.transaction == 'RENT_BUY'">
         <div class="form-group">
             <label>Price buy</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceSell" name="priceSell" required>
