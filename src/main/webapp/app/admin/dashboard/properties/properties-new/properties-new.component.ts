@@ -31,7 +31,6 @@ export class PropertiesNewComponent implements OnInit {
                 private alertService: JhiAlertService,
                 private router: Router) {
         this.property.propertyType = this.propertyTypes[0];
-        this.property.transaction = TransactionType.RENT_BUY;
     }
 
     ngOnInit() {

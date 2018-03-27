@@ -1,7 +1,7 @@
 {
     "uplaceApp": {
         "TransactionType" : {
-            "null": "",
+            "null": "Seleciona una opció",
             "RENT": "RENT",
             "BUY": "BUY",
             "TRANSFER": "TRANSFER",
