@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Request } from './request.model';
+import { Request } from '../../shared/request/request.model';
 import { RequestPopupService } from './request-popup.service';
-import { RequestService } from './request.service';
+import { RequestService } from '../../shared/request/request.service';
 
 @Component({
     selector: 'up-request-delete-dialog',

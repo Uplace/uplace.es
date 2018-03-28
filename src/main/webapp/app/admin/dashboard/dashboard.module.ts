@@ -9,6 +9,7 @@ import {RealEstateService} from "../../entities/real-estate";
 import {RealEstateModule} from "./real-estate/real-estate.module";
 import {NotificationService} from "./notification/notification.service";
 import {NotificationModule} from "./notification/notification.module";
+import {RequestModule} from "./request/request.module";
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import {NotificationModule} from "./notification/notification.module";
         CompanyModule,
         RealEstateModule,
         NotificationModule,
+        RequestModule,
         RouterModule
     ],
     declarations: [

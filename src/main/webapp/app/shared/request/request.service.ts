@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { JhiDateUtils } from 'ng-jhipster';
 
 import { Request } from './request.model';
-import { createRequestOption } from '../../shared';
+import { createRequestOption } from '../index';
 
 export type EntityResponseType = HttpResponse<Request>;
 

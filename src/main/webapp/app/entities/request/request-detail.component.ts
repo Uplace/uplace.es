@@ -4,8 +4,8 @@ import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 
-import { Request } from './request.model';
-import { RequestService } from './request.service';
+import { Request } from '../../shared/request/request.model';
+import { RequestService } from '../../shared/request/request.service';
 
 @Component({
     selector: 'up-request-detail',

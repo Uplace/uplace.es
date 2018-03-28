@@ -7,8 +7,8 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { UplaceTestModule } from '../../../test.module';
 import { RequestDialogComponent } from '../../../../../../main/webapp/app/entities/request/request-dialog.component';
-import { RequestService } from '../../../../../../main/webapp/app/entities/request/request.service';
-import { Request } from '../../../../../../main/webapp/app/entities/request/request.model';
+import { RequestService } from '../../../../../../main/webapp/app/shared/request/request.service';
+import { Request } from '../../../../../../main/webapp/app/shared/request/request.model';
 import { PropertyService } from '../../../../../../main/webapp/app/entities/property';
 
 describe('Component Tests', () => {

@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
-import { Request } from './request.model';
-import { RequestService } from './request.service';
+import { Request } from '../../shared/request/request.model';
+import { RequestService } from '../../shared/request/request.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
 @Component({

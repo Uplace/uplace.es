@@ -6,7 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { UplaceTestModule } from '../../../test.module';
 import { RequestDeleteDialogComponent } from '../../../../../../main/webapp/app/entities/request/request-delete-dialog.component';
-import { RequestService } from '../../../../../../main/webapp/app/entities/request/request.service';
+import { RequestService } from '../../../../../../main/webapp/app/shared/request/request.service';
 
 describe('Component Tests', () => {
 

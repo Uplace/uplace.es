@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { Request } from './request.model';
-import { RequestService } from './request.service';
+import { Request } from '../../shared/request/request.model';
+import { RequestService } from '../../shared/request/request.service';
 
 @Injectable()
 export class RequestPopupService {

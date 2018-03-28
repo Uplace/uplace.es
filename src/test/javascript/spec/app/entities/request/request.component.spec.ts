@@ -5,8 +5,8 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { UplaceTestModule } from '../../../test.module';
 import { RequestComponent } from '../../../../../../main/webapp/app/entities/request/request.component';
-import { RequestService } from '../../../../../../main/webapp/app/entities/request/request.service';
-import { Request } from '../../../../../../main/webapp/app/entities/request/request.model';
+import { RequestService } from '../../../../../../main/webapp/app/shared/request/request.service';
+import { Request } from '../../../../../../main/webapp/app/shared/request/request.model';
 
 describe('Component Tests', () => {
 

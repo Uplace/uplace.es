@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { UplaceTestModule } from '../../../test.module';
 import { RequestDetailComponent } from '../../../../../../main/webapp/app/entities/request/request-detail.component';
-import { RequestService } from '../../../../../../main/webapp/app/entities/request/request.service';
-import { Request } from '../../../../../../main/webapp/app/entities/request/request.model';
+import { RequestService } from '../../../../../../main/webapp/app/shared/request/request.service';
+import { Request } from '../../../../../../main/webapp/app/shared/request/request.model';
 
 describe('Component Tests', () => {
 

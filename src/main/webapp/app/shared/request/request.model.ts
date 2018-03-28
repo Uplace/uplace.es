@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity } from '../index';
 
 export const enum RequestOrigin {
     'WEB',

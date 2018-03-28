@@ -14,6 +14,7 @@ import {KeysPipe} from "./pipes/keys.pipe";
 import {TruncatePipe} from "./pipes/truncate.pipe";
 import {ProvideParentForm} from "./directives/parent-form.directive";
 import {EnumToArrayPipe} from "./pipes/enumToArray.pipe";
+import {RequestService} from "./request/request.service";
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {EnumToArrayPipe} from "./pipes/enumToArray.pipe";
             useValue: 'en'
         },
         AgmJsMarkerClustererModule,
-        ClusterManager
+        ClusterManager,
+        RequestService
     ],
     exports: [
         UplaceSharedLibsModule,
