@@ -46,6 +46,9 @@ public class Request implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "phone")
+    private String phone;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "request_status")
     private RequestStatus requestStatus;
@@ -144,6 +147,19 @@ public class Request implements Serializable {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public Request phone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public RequestStatus getRequestStatus() {
         return requestStatus;
     }
@@ -214,6 +230,7 @@ public class Request implements Serializable {
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", email='" + getEmail() + "'" +
+            ", phone='" + getPhone() + "'" +
             ", requestStatus='" + getRequestStatus() + "'" +
             ", message='" + getMessage() + "'" +
             "}";

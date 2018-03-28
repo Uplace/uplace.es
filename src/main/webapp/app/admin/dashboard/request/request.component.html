@@ -22,7 +22,7 @@
             <div class="box-title clearfix">
                 <h2>Requests</h2>
                 <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" disabled>
                         Actions
                     </button>
                     <div class="dropdown-menu">
@@ -52,7 +52,7 @@
                     <tbody>
                     <tr class="separator">
                         <td colspan="8">
-                            193 completed tasks from 829
+                            0 attended from 1
                         </td>
                     </tr>
                     <tr *ngFor="let request of requests">
@@ -79,12 +79,13 @@
                             <div class="avatar" style="background-image: url('')"></div>
                             <h2>
                                 <a href="#">{{request.property?.title}}</a>
-                                <span class="label label-success">Needs Review</span>
+                                <span>{{request.property?.location?.fullAddress}}</span>
+                                <!--<span class="label label-success">Needs Review</span>-->
                             </h2>
                         </td>
                         <td class="min-width">
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" disabled>
                                     Actions
                                 </button>
                                 <div class="dropdown-menu">

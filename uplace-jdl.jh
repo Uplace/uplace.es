@@ -195,6 +195,7 @@
       firstName String,
       lastName String,
       email String,
+      phone String,
       requestStatus RequestStatus,
       message TextBlob
   }

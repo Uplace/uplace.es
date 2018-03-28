@@ -23,6 +23,7 @@
             <th jhiSortBy="firstName"><span jhiTranslate="uplaceApp.request.firstName">First Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="lastName"><span jhiTranslate="uplaceApp.request.lastName">Last Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="email"><span jhiTranslate="uplaceApp.request.email">Email</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="phone"><span jhiTranslate="uplaceApp.request.phone">Phone</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="requestStatus"><span jhiTranslate="uplaceApp.request.requestStatus">Request Status</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="message"><span jhiTranslate="uplaceApp.request.message">Message</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="property.reference"><span jhiTranslate="uplaceApp.request.property">Property</span> <span class="fa fa-sort"></span></th>
@@ -38,6 +39,7 @@
                 <td>{{request.firstName}}</td>
                 <td>{{request.lastName}}</td>
                 <td>{{request.email}}</td>
+                <td>{{request.phone}}</td>
                 <td jhiTranslate="{{'uplaceApp.RequestStatus.' + request.requestStatus}}">{{request.requestStatus}}</td>
                 <td>{{request.message}}</td>
                 <td>

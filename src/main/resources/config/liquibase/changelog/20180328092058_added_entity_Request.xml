@@ -46,6 +46,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="phone" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="request_status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>

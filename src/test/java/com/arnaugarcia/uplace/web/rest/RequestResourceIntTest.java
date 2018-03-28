@@ -65,6 +65,9 @@ public class RequestResourceIntTest {
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
+    private static final String DEFAULT_PHONE = "AAAAAAAAAA";
+    private static final String UPDATED_PHONE = "BBBBBBBBBB";
+
     private static final RequestStatus DEFAULT_REQUEST_STATUS = RequestStatus.OPEN;
     private static final RequestStatus UPDATED_REQUEST_STATUS = RequestStatus.CLOSED;
 
@@ -118,6 +121,7 @@ public class RequestResourceIntTest {
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
             .email(DEFAULT_EMAIL)
+            .phone(DEFAULT_PHONE)
             .requestStatus(DEFAULT_REQUEST_STATUS)
             .message(DEFAULT_MESSAGE);
         return request;
@@ -149,6 +153,7 @@ public class RequestResourceIntTest {
         assertThat(testRequest.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testRequest.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testRequest.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testRequest.getPhone()).isEqualTo(DEFAULT_PHONE);
         assertThat(testRequest.getRequestStatus()).isEqualTo(DEFAULT_REQUEST_STATUS);
         assertThat(testRequest.getMessage()).isEqualTo(DEFAULT_MESSAGE);
     }
@@ -189,6 +194,7 @@ public class RequestResourceIntTest {
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())))
             .andExpect(jsonPath("$.[*].requestStatus").value(hasItem(DEFAULT_REQUEST_STATUS.toString())))
             .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE.toString())));
     }
@@ -210,6 +216,7 @@ public class RequestResourceIntTest {
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
+            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.toString()))
             .andExpect(jsonPath("$.requestStatus").value(DEFAULT_REQUEST_STATUS.toString()))
             .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE.toString()));
     }
@@ -241,6 +248,7 @@ public class RequestResourceIntTest {
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
             .email(UPDATED_EMAIL)
+            .phone(UPDATED_PHONE)
             .requestStatus(UPDATED_REQUEST_STATUS)
             .message(UPDATED_MESSAGE);
 
@@ -259,6 +267,7 @@ public class RequestResourceIntTest {
         assertThat(testRequest.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testRequest.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testRequest.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testRequest.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testRequest.getRequestStatus()).isEqualTo(UPDATED_REQUEST_STATUS);
         assertThat(testRequest.getMessage()).isEqualTo(UPDATED_MESSAGE);
     }

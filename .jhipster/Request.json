@@ -35,6 +35,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "requestStatus",
             "fieldType": "RequestStatus",
             "fieldValues": "OPEN,CLOSED,PENDING"
