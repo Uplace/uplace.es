@@ -188,6 +188,25 @@
       read Boolean required
   }
 
+  entity Request {
+      reference String,
+      date ZonedDateTime,
+      origin RequestOrigin,
+      firstName String,
+      lastName String,
+      email String,
+      requestStatus RequestStatus,
+      message TextBlob
+  }
+
+  enum RequestOrigin {
+    WEB, ANDROID, IOS, OTHER
+  }
+
+  enum RequestStatus {
+    OPEN, CLOSED, PENDING
+  }
+
   enum NotificationType{
       NOTIFICATION, REQUEST, ALERT
   }
@@ -219,7 +238,8 @@
   relationship OneToMany {
       // One Property can own many photos
       Property{photo(name)} to Photo{property(reference)},
-      RealEstate{property(reference)} to Property{realEstate(reference)}
+      RealEstate{property(reference)} to Property{realEstate(reference)},
+      Property{request(reference)} to Request{property(reference)}
   }
 
   relationship ManyToOne {
@@ -236,8 +256,8 @@
       Company{location(id)} to Location
   }
 
-  paginate Notification with pagination
+  paginate Notification, Request with pagination
 
-  service Agent, Notification, Property, Company, RealEstate with serviceClass
+  service Agent, Notification, Property, Company, RealEstate, Request with serviceClass
 
   filter Property

@@ -1,0 +1,11 @@
+{
+    "uplaceApp": {
+        "RequestOrigin" : {
+            "null": "",
+            "WEB": "WEB",
+            "ANDROID": "ANDROID",
+            "IOS": "IOS",
+            "OTHER": "OTHER"
+        }
+    }
+}

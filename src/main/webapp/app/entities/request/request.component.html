@@ -1,0 +1,86 @@
+<div>
+    <h2>
+        <span jhiTranslate="uplaceApp.request.home.title">Requests</span>
+        <button class="btn btn-primary float-right jh-create-entity create-request" [routerLink]="['/', { outlets: { popup: ['request-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="uplaceApp.request.home.createLabel">
+            Create new Request
+            </span>
+        </button>
+    </h2>
+    <up-alert></up-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="requests">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="reference"><span jhiTranslate="uplaceApp.request.reference">Reference</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="date"><span jhiTranslate="uplaceApp.request.date">Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="origin"><span jhiTranslate="uplaceApp.request.origin">Origin</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="firstName"><span jhiTranslate="uplaceApp.request.firstName">First Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lastName"><span jhiTranslate="uplaceApp.request.lastName">Last Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="email"><span jhiTranslate="uplaceApp.request.email">Email</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="requestStatus"><span jhiTranslate="uplaceApp.request.requestStatus">Request Status</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="message"><span jhiTranslate="uplaceApp.request.message">Message</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="property.reference"><span jhiTranslate="uplaceApp.request.property">Property</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let request of requests ;trackBy: trackId">
+                <td><a [routerLink]="['../request', request.id ]">{{request.id}}</a></td>
+                <td>{{request.reference}}</td>
+                <td>{{request.date | date:'medium'}}</td>
+                <td jhiTranslate="{{'uplaceApp.RequestOrigin.' + request.origin}}">{{request.origin}}</td>
+                <td>{{request.firstName}}</td>
+                <td>{{request.lastName}}</td>
+                <td>{{request.email}}</td>
+                <td jhiTranslate="{{'uplaceApp.RequestStatus.' + request.requestStatus}}">{{request.requestStatus}}</td>
+                <td>{{request.message}}</td>
+                <td>
+                    <div *ngIf="request.property">
+                        <a [routerLink]="['../property', request.property?.id ]" >{{request.property?.reference}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../request', request.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request/'+ request.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request/'+ request.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="requests && requests.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

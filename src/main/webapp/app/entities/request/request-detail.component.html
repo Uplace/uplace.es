@@ -1,0 +1,60 @@
+
+<div *ngIf="request">
+    <h2><span jhiTranslate="uplaceApp.request.detail.title">Request</span> {{request.id}}</h2>
+    <hr>
+    <up-alert-error></up-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="uplaceApp.request.reference">Reference</span></dt>
+        <dd>
+            <span>{{request.reference}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.request.date">Date</span></dt>
+        <dd>
+            <span>{{request.date | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.request.origin">Origin</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.RequestOrigin.' + request.origin}}">{{request.origin}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.request.firstName">First Name</span></dt>
+        <dd>
+            <span>{{request.firstName}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.request.lastName">Last Name</span></dt>
+        <dd>
+            <span>{{request.lastName}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.request.email">Email</span></dt>
+        <dd>
+            <span>{{request.email}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.request.requestStatus">Request Status</span></dt>
+        <dd>
+            <span jhiTranslate="{{'uplaceApp.RequestStatus.' + request.requestStatus}}">{{request.requestStatus}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.request.message">Message</span></dt>
+        <dd>
+            <span>{{request.message}}</span>
+        </dd>
+        <dt><span jhiTranslate="uplaceApp.request.property">Property</span></dt>
+        <dd>
+            <div *ngIf="request.property">
+                <a [routerLink]="['/property', request.property?.id]">{{request.property?.reference}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'request/'+ request.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

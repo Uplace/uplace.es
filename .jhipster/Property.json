@@ -17,6 +17,12 @@
             "otherEntityRelationshipName": "property"
         },
         {
+            "relationshipType": "one-to-many",
+            "relationshipName": "request",
+            "otherEntityName": "request",
+            "otherEntityRelationshipName": "property"
+        },
+        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "property",
             "relationshipName": "manager",

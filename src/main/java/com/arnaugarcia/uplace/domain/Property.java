@@ -127,6 +127,12 @@ public class Property implements Serializable {
                inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
 
+    @OneToMany(mappedBy = "property")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Request> requests = new HashSet<>();
+
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private RealEstate realEstate;
 

@@ -1,0 +1,81 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myRequestLabel" jhiTranslate="uplaceApp.request.home.createOrEditLabel">Create or edit a Request</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <up-alert-error></up-alert-error>
+        <div class="form-group" [hidden]="!request.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="request.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.reference" for="field_reference">Reference</label>
+            <input type="text" class="form-control" name="reference" id="field_reference"
+                [(ngModel)]="request.reference" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.date" for="field_date">Date</label>
+            <div class="d-flex">
+                <input id="field_date" type="datetime-local" class="form-control" name="date" [(ngModel)]="request.date"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.origin" for="field_origin">Origin</label>
+            <select class="form-control" name="origin" [(ngModel)]="request.origin" id="field_origin" >
+                <option value="WEB">{{'uplaceApp.RequestOrigin.WEB' | translate}}</option>
+                <option value="ANDROID">{{'uplaceApp.RequestOrigin.ANDROID' | translate}}</option>
+                <option value="IOS">{{'uplaceApp.RequestOrigin.IOS' | translate}}</option>
+                <option value="OTHER">{{'uplaceApp.RequestOrigin.OTHER' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.firstName" for="field_firstName">First Name</label>
+            <input type="text" class="form-control" name="firstName" id="field_firstName"
+                [(ngModel)]="request.firstName" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.lastName" for="field_lastName">Last Name</label>
+            <input type="text" class="form-control" name="lastName" id="field_lastName"
+                [(ngModel)]="request.lastName" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.email" for="field_email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email"
+                [(ngModel)]="request.email" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.requestStatus" for="field_requestStatus">Request Status</label>
+            <select class="form-control" name="requestStatus" [(ngModel)]="request.requestStatus" id="field_requestStatus" >
+                <option value="OPEN">{{'uplaceApp.RequestStatus.OPEN' | translate}}</option>
+                <option value="CLOSED">{{'uplaceApp.RequestStatus.CLOSED' | translate}}</option>
+                <option value="PENDING">{{'uplaceApp.RequestStatus.PENDING' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.message" for="field_message">Message</label>
+            <textarea class="form-control" name="message" id="field_message"
+                [(ngModel)]="request.message" ></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.request.property" for="field_property">Property</label>
+            <select class="form-control" id="field_property" name="property" [(ngModel)]="request.property" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="propertyOption.id === request.property?.id ? request.property : propertyOption" *ngFor="let propertyOption of properties; trackBy: trackPropertyById">{{propertyOption.reference}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
