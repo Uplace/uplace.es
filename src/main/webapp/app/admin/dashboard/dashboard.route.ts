@@ -9,6 +9,7 @@ import {CompanyComponent} from "./company/company.component";
 import {RealEstateComponent} from "./real-estate/real-estate.component";
 import {NotificationComponent} from "./notification/notification.component";
 import {RequestComponent} from "./request/request.component";
+import {RequestPopupComponent} from "./request/request-dialog.component";
 
 @Injectable()
 export class ResolvePagingParams implements Resolve<any> {
@@ -103,5 +104,15 @@ export const dashboardRoute: Routes = [
             'pagingParams': ResolvePagingParams
         },
         canActivate: [UserRouteAccessService]
-    }
+    },
+    {
+        path: 'dashboard/requests/:reference',
+        component: RequestPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'uplaceApp.request.home.title'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
 ];
