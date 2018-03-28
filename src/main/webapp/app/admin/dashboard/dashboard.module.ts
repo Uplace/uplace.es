@@ -10,6 +10,7 @@ import {RealEstateModule} from "./real-estate/real-estate.module";
 import {NotificationService} from "./notification/notification.service";
 import {NotificationModule} from "./notification/notification.module";
 import {RequestModule} from "./request/request.module";
+import {ResolvePagingParams} from "./dashboard.route";
 
 @NgModule({
     imports: [
@@ -25,7 +26,11 @@ import {RequestModule} from "./request/request.module";
     declarations: [
         DashboardComponent
     ],
-    providers: [RealEstateService, NotificationService]
+    providers: [
+        RealEstateService,
+        NotificationService,
+        ResolvePagingParams
+    ]
 })
 export class DashboardModule {
 }

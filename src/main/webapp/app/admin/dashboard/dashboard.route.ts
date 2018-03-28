@@ -11,7 +11,7 @@ import {NotificationComponent} from "./notification/notification.component";
 import {RequestComponent} from "./request/request.component";
 
 @Injectable()
-export class PropertyResolvePagingParams implements Resolve<any> {
+export class ResolvePagingParams implements Resolve<any> {
 
     constructor(private paginationUtil: JhiPaginationUtil) {}
 
@@ -43,7 +43,7 @@ export const dashboardRoute: Routes = [
             pageTitle: 'uplaceApp.property.home.title'
         },
         resolve: {
-            'pagingParams': PropertyResolvePagingParams
+            'pagingParams': ResolvePagingParams
         },
         canActivate: [UserRouteAccessService]
     },
@@ -98,6 +98,9 @@ export const dashboardRoute: Routes = [
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'uplaceApp.request.home.title'
+        },
+        resolve: {
+            'pagingParams': ResolvePagingParams
         },
         canActivate: [UserRouteAccessService]
     }

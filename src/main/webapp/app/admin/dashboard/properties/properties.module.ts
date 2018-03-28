@@ -4,7 +4,6 @@ import {PropertiesComponent} from './properties.component';
 import {PropertiesNewComponent} from "./properties-new/properties-new.component";
 import {UplaceSharedModule} from "../../../shared";
 import {PropertyService} from "../../../entities/property";
-import {PropertyResolvePagingParams} from "../dashboard.route";
 import { PropertyMapComponent } from './property-map/property-map.component';
 import { PropertyAmenitiesComponent } from './property-amenities/property-amenities.component';
 import { PropertyPhotosComponent } from './property-photos/property-photos.component';
@@ -37,7 +36,6 @@ import { PropertyPriceComponent } from './property-price/property-price.componen
     ],
     providers: [
         PropertyService,
-        PropertyResolvePagingParams,
         NgbActiveModal
     ]
 })
