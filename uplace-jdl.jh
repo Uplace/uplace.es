@@ -183,6 +183,7 @@
       content TextBlob,
       creation ZonedDateTime required,
       type NotificationType required,
+      reference String,
       token String,
       read Boolean required
   }

@@ -38,6 +38,10 @@
             ]
         },
         {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "token",
             "fieldType": "String"
         },

@@ -20,6 +20,7 @@
             "content": "Content",
             "creation": "Creation",
             "type": "Type",
+            "reference": "Reference",
             "token": "Token",
             "read": "Read",
             "user": "User"

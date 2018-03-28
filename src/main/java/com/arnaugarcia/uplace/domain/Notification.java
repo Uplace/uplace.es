@@ -1,6 +1,5 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -43,6 +42,9 @@ public class Notification implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "up_type", nullable = false)
     private NotificationType type;
+
+    @Column(name = "reference")
+    private String reference;
 
     @Column(name = "token")
     private String token;
@@ -116,6 +118,19 @@ public class Notification implements Serializable {
         this.type = type;
     }
 
+    public String getReference() {
+        return reference;
+    }
+
+    public Notification reference(String reference) {
+        this.reference = reference;
+        return this;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
     public String getToken() {
         return token;
     }
@@ -184,6 +199,7 @@ public class Notification implements Serializable {
             ", content='" + getContent() + "'" +
             ", creation='" + getCreation() + "'" +
             ", type='" + getType() + "'" +
+            ", reference='" + getReference() + "'" +
             ", token='" + getToken() + "'" +
             ", read='" + isRead() + "'" +
             "}";
