@@ -7,6 +7,7 @@ import {Injectable} from "@angular/core";
 import {JhiPaginationUtil} from "ng-jhipster";
 import {CompanyComponent} from "./company/company.component";
 import {RealEstateComponent} from "./real-estate/real-estate.component";
+import {NotificationComponent} from "./notification/notification.component";
 
 @Injectable()
 export class PropertyResolvePagingParams implements Resolve<any> {
@@ -75,6 +76,15 @@ export const dashboardRoute: Routes = [
     {
         path: 'dashboard/real-estates',
         component: RealEstateComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'uplaceApp.realEstate.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'dashboard/notifications',
+        component: NotificationComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'uplaceApp.realEstate.home.title'
