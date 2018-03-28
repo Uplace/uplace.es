@@ -18,7 +18,7 @@ export class PropertyPriceComponent implements OnInit, AfterViewInit, OnChanges 
 
     @Output() propertyChange: EventEmitter<Property> = new EventEmitter<Property>();
 
-    transactionTypes = TransactionType;
+    TransactionType = TransactionType;
 
     constructor() { }
 

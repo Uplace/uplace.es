@@ -15,12 +15,12 @@
     <style type="text/css">
         /* Styles for progress on startup function */
 
-        .start,
+        /*.start,
         body {
             background: #2c2d2e;
             color: #fff;
             font-family: 'Lato', sans-serif;
-        }
+        }*/
         .launch-log{
             font-weight: 100;
             font-size: 1.2em;
@@ -29,6 +29,7 @@
             font-weight: bold;
         }
         .splash-screen {
+            display: block;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -99,13 +100,43 @@
                 transform: translate3d(0, -4px, 0)
             }
         }
+        /* .loading screen is visible when app is not bootstrapped yet, my-app is empty */
+        /* default .loading styles, .loading should be invisible, opacity: 0, z-index: -1 */
+        .loading {
+            opacity: 0;
+            transition: opacity .8s ease-in-out;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: #2c2d2e;
+            color: #fff;
+            font-family: 'Lato', sans-serif;
+            z-index: -1;
+        }
+        uplace:empty + .loading {
+            opacity: 1;
+            z-index: 100;
+        }
+        uplace:empty + .loading h1 {
+            color: #EEE;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            transform: translate(0, -50%);
+        }
+
     </style>
 </head>
 <body class="page-homepage page-fade-in navigation-top-header">
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <uplace>
+
+    <uplace></uplace>
+    <div class="loading">
         <div class="splash-screen">
             <div class="dots">
                 <div class="dot dot-1 dot-"></div>
@@ -115,7 +146,7 @@
             </div>
             <h4 class="splash-header launch-log"><span class="title-bold">Uplace</span> Loading our awesome web ...</h4>
         </div>
-    </uplace>
+    </div>
     <noscript>
         <h1>You must enable javascript to view this page.</h1>
     </noscript>
