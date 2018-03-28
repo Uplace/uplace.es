@@ -28,7 +28,7 @@
             </small>
         </div>
     </div>
-    <div class="col-sm-3" *ngIf="property.transaction == 'TRANSFER'">
+    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes[transactionTypes.TRANSFER]">
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.property.priceTransfer">Price</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceTransfer" name="priceTransfer" required>
@@ -42,7 +42,7 @@
             </small>
         </div>
     </div>
-    <div class="col-sm-3" *ngIf="property.transaction == 'RENT' || property.transaction == 'RENT_BUY'">
+    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes[transactionTypes.RENT] || property.transaction == transactionTypes[transactionTypes.RENT_BUY]">
         <div class="form-group">
             <label>Price Rent</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceRent" name="priceRent" required>
@@ -56,7 +56,7 @@
             </small>
         </div>
     </div>
-    <div class="col-sm-3" *ngIf="property.transaction == 'BUY' || property.transaction == 'RENT_BUY'">
+    <div class="col-sm-3" *ngIf="property.transaction == transactionTypes[transactionTypes.BUY] || property.transaction == transactionTypes[transactionTypes.RENT_BUY]">
         <div class="form-group">
             <label>Price buy</label>
             <input type="number" class="form-control" [(ngModel)]="property.priceSell" name="priceSell" required>
