@@ -23,6 +23,7 @@ export class Request implements BaseEntity {
         public firstName?: string,
         public lastName?: string,
         public email?: string,
+        public phone?: string,
         public requestStatus?: RequestStatus,
         public message?: any,
         public property?: Property,
