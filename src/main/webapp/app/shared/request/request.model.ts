@@ -1,4 +1,5 @@
 import { BaseEntity } from '../index';
+import {Property} from "../../entities/property";
 
 export const enum RequestOrigin {
     'WEB',
@@ -24,7 +25,7 @@ export class Request implements BaseEntity {
         public email?: string,
         public requestStatus?: RequestStatus,
         public message?: any,
-        public property?: BaseEntity,
+        public property?: Property,
     ) {
     }
 }

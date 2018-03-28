@@ -55,30 +55,30 @@
                             193 completed tasks from 829
                         </td>
                     </tr>
-                    <tr>
+                    <tr *ngFor="let request of requests">
                         <td class="min-width center">
                             <input type="checkbox">
                         </td>
                         <td class="min-width center status"><i class="fa fa-check"></i></td>
                         <td class="center min-width">
-                            <span>WEB</span>
+                            <span>{{request.origin}}</span>
                         </td>
                         <td>
                             <h2>
-                                <a href="#">[#234] Create business plan for client</a>
-                                <span>Sed aliquam ut orci tristique rhoncus. Phasellus sollicitudin ex</span>
+                                <a href="#">[#{{request.reference}}] {{request.firstName}} {{request.lastName}}</a>
+                                <span>{{request.message | truncate:[20]}}</span>
                             </h2>
                         </td>
                         <td>
-                            <span>Email</span>
+                            <span>{{request.email}}</span>
                         </td>
                         <td>
-                            <span>Phone</span>
+                            <span>{{request.phone}}</span>
                         </td>
                         <td class="title">
                             <div class="avatar" style="background-image: url('')"></div>
                             <h2>
-                                <a href="#">Tyler D. Kyles</a>
+                                <a href="#">{{request.property?.title}}</a>
                                 <span class="label label-success">Needs Review</span>
                             </h2>
                         </td>
