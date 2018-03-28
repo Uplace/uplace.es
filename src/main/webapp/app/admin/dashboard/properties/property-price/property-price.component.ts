@@ -25,10 +25,8 @@ export class PropertyPriceComponent implements OnInit, AfterViewInit, OnChanges 
     ngOnChanges(changes: SimpleChanges) {
 
         if (changes['property'].currentValue.transaction) {
-            console.log('defined');
-            console.log(changes['property'])
+
         } else {
-            console.log('undefined');
             this.property.transaction = null
         }
 
@@ -48,10 +46,6 @@ export class PropertyPriceComponent implements OnInit, AfterViewInit, OnChanges 
     }
 
 
-    ngOnInit() {
-        this.propertyChange.subscribe((property) => {
-            console.log(property);
-        })
-    }
+    ngOnInit() { }
 
 }
