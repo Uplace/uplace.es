@@ -1,0 +1,31 @@
+
+{
+    "uplaceApp": {
+        "request" : {
+            "home": {
+                "title": "Requests",
+                "createLabel": "Create a new Request",
+                "createOrEditLabel": "Create or edit a Request"
+            },
+            "created": "A new Request is created with identifier {{ param }}",
+            "updated": "A Request is updated with identifier {{ param }}",
+            "deleted": "A Request is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Request {{ id }}?"
+            },
+            "detail": {
+                "title": "Request"
+            },
+            "reference": "Reference",
+            "date": "Date",
+            "origin": "Origin",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email",
+            "phone": "Phone",
+            "requestStatus": "Request Status",
+            "message": "Message",
+            "property": "Property"
+        }
+    }
+}

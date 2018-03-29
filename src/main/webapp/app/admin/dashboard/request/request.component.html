@@ -1,0 +1,113 @@
+<div class="container-fluid">
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="#">Home</a>
+        <a class="breadcrumb-item" href="#">Library</a>
+        <a class="breadcrumb-item" href="#">Data</a>
+        <span class="breadcrumb-item active">Bootstrap</span>
+    </nav>
+    <div class="table-header clearfix">
+        <!--<div class="table-header-count">
+            <strong>2082</strong> results matching query
+        </div>-->
+        <!-- /.table-header-count -->
+        <!--<div class="table-header-actions">
+            <a href="#" class="btn btn-primary"><i class="fa fa-filter"></i> Apply filters</a>
+            <a href="#" class="btn"><i class="fa fa-download"></i> Export All</a>
+        </div>-->
+        <!-- /.table-header-actions -->
+    </div>
+    <!-- /.table-header -->
+    <div class="box">
+        <div class="box-inner">
+            <div class="box-title clearfix">
+                <h2>Requests</h2>
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" disabled>
+                        Actions
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Workflow Action</a>
+                        <a class="dropdown-item" href="#">Change Values</a>
+                        <a class="dropdown-item" href="#">Delete Item</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-title -->
+            <div class="table-wrapper">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="min-width center">
+                            <input type="checkbox">
+                        </th>
+                        <th class="min-width">Status</th>
+                        <th class="min-width">Origin</th>
+                        <th>Title</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Property</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="separator">
+                        <td colspan="8">
+                            0 attended from 1
+                        </td>
+                    </tr>
+                    <tr *ngFor="let request of requests">
+                        <td class="min-width center">
+                            <input type="checkbox">
+                        </td>
+                        <td class="min-width center status"><i class="fa fa-check"></i></td>
+                        <td class="center min-width">
+                            <span>{{request.origin}}</span>
+                        </td>
+                        <td>
+                            <h2>
+                                <a href="javascript:void(0)" (click)="open(request)">[#{{request.reference}}] {{request.firstName}} {{request.lastName}}</a>
+                                <span>{{request.message | truncate:[100]}}</span>
+                            </h2>
+                        </td>
+                        <td>
+                            <span>{{request.email}}</span>
+                        </td>
+                        <td>
+                            <span>{{request.phone}}</span>
+                        </td>
+                        <td class="title">
+                            <div class="avatar" style="background-image: url('')"></div>
+                            <h2>
+                                <a [routerLink]="['/property/', request.property.reference]">{{request.property?.title}}</a>
+                                <span>{{request.property?.location?.fullAddress | truncate:[20]}}</span>
+                                <!--<span class="label label-success">Needs Review</span>-->
+                            </h2>
+                        </td>
+                        <td class="min-width">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" disabled>
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Workflow Action</a>
+                                    <a class="dropdown-item" href="#">Change Values</a>
+                                    <a class="dropdown-item" href="#">Delete Item</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-wrapper -->
+        </div>
+        <!-- /.box-inner -->
+    </div>
+    <!-- /.box -->
+    <ul class="pagination pull-right">
+        <ngb-pagination class="pagination pull-right" [collectionSize]="totalItems"
+                        [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+                        [rotate]="true" [boundaryLinks]="true"
+                        (pageChange)="loadPage(page)">
+    </ul>
+</div>

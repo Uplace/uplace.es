@@ -1,0 +1,58 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "property",
+            "otherEntityName": "property",
+            "otherEntityField": "reference"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "origin",
+            "fieldType": "RequestOrigin",
+            "fieldValues": "WEB,ANDROID,IOS,OTHER"
+        },
+        {
+            "fieldName": "firstName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "requestStatus",
+            "fieldType": "RequestStatus",
+            "fieldValues": "OPEN,CLOSED,PENDING"
+        },
+        {
+            "fieldName": "message",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        }
+    ],
+    "changelogDate": "20180328092058",
+    "entityTableName": "request",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

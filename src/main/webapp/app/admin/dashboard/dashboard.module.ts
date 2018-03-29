@@ -7,6 +7,10 @@ import {RouterModule} from "@angular/router";
 import {CompanyModule} from "./company/company.module";
 import {RealEstateService} from "../../entities/real-estate";
 import {RealEstateModule} from "./real-estate/real-estate.module";
+import {NotificationService} from "./notification/notification.service";
+import {NotificationModule} from "./notification/notification.module";
+import {RequestModule} from "./request/request.module";
+import {ResolvePagingParams} from "./dashboard.route";
 
 @NgModule({
     imports: [
@@ -15,12 +19,18 @@ import {RealEstateModule} from "./real-estate/real-estate.module";
         PropertiesModule,
         CompanyModule,
         RealEstateModule,
+        NotificationModule,
+        RequestModule,
         RouterModule
     ],
     declarations: [
         DashboardComponent
     ],
-    providers: [RealEstateService]
+    providers: [
+        RealEstateService,
+        NotificationService,
+        ResolvePagingParams
+    ]
 })
 export class DashboardModule {
 }

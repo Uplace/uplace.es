@@ -1,6 +1,5 @@
 package com.arnaugarcia.uplace.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -44,6 +43,9 @@ public class Notification implements Serializable {
     @Column(name = "up_type", nullable = false)
     private NotificationType type;
 
+    @Column(name = "reference")
+    private String reference;
+
     @Column(name = "token")
     private String token;
 
@@ -54,6 +56,17 @@ public class Notification implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private User user;
+
+    public Notification(String title, String content, ZonedDateTime creation, NotificationType type, String reference, String token, Boolean read, User user) {
+        this.title = title;
+        this.content = content;
+        this.creation = creation;
+        this.type = type;
+        this.reference = reference;
+        this.token = token;
+        this.read = read;
+        this.user = user;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -114,6 +127,19 @@ public class Notification implements Serializable {
 
     public void setType(NotificationType type) {
         this.type = type;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public Notification reference(String reference) {
+        this.reference = reference;
+        return this;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public String getToken() {
@@ -184,6 +210,7 @@ public class Notification implements Serializable {
             ", content='" + getContent() + "'" +
             ", creation='" + getCreation() + "'" +
             ", type='" + getType() + "'" +
+            ", reference='" + getReference() + "'" +
             ", token='" + getToken() + "'" +
             ", read='" + isRead() + "'" +
             "}";

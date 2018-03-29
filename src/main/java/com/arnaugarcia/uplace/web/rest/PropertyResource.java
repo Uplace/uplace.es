@@ -1,8 +1,8 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.domain.Mail;
 import com.arnaugarcia.uplace.domain.Property;
-import com.arnaugarcia.uplace.service.ContactService;
+import com.arnaugarcia.uplace.domain.Request;
+import com.arnaugarcia.uplace.service.InquireService;
 import com.arnaugarcia.uplace.service.PropertyQueryService;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
@@ -35,14 +35,14 @@ public class PropertyResource<T extends Property> {
 
     private final PropertyQueryService<T> propertyQueryService;
 
-    private final ContactService contactService;
+    private final InquireService inquireService;
 
     private final PropertyService<T> propertyService;
 
-    public PropertyResource(PropertyQueryService<T> propertyQueryService, PropertyService<T> propertyService, ContactService contactService) {
+    public PropertyResource(PropertyQueryService<T> propertyQueryService, PropertyService<T> propertyService, InquireService inquireService) {
         this.propertyQueryService = propertyQueryService;
         this.propertyService = propertyService;
-        this.contactService = contactService;
+        this.inquireService = inquireService;
     }
 
     /**
@@ -136,9 +136,9 @@ public class PropertyResource<T extends Property> {
      */
     @PostMapping("/properties/{reference}/inquire")
     @Timed
-    public void removeProperty(@PathVariable String reference, @RequestBody Mail mail) {
+    public void removeProperty(@PathVariable String reference, @RequestBody Request request) {
         log.debug("REST request to create inquire by reference " + reference);
-        contactService.sendInquire(reference, mail);
+        inquireService.sendInquire(reference, request);
     }
 
 

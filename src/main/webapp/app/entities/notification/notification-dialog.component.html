@@ -60,6 +60,11 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="uplaceApp.notification.reference" for="field_reference">Reference</label>
+            <input type="text" class="form-control" name="reference" id="field_reference"
+                [(ngModel)]="notification.reference" />
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.notification.token" for="field_token">Token</label>
             <input type="text" class="form-control" name="token" id="field_token"
                 [(ngModel)]="notification.token" />

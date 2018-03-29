@@ -7,9 +7,11 @@ import {Injectable} from "@angular/core";
 import {JhiPaginationUtil} from "ng-jhipster";
 import {CompanyComponent} from "./company/company.component";
 import {RealEstateComponent} from "./real-estate/real-estate.component";
+import {NotificationComponent} from "./notification/notification.component";
+import {RequestComponent} from "./request/request.component";
 
 @Injectable()
-export class PropertyResolvePagingParams implements Resolve<any> {
+export class ResolvePagingParams implements Resolve<any> {
 
     constructor(private paginationUtil: JhiPaginationUtil) {}
 
@@ -41,7 +43,7 @@ export const dashboardRoute: Routes = [
             pageTitle: 'uplaceApp.property.home.title'
         },
         resolve: {
-            'pagingParams': PropertyResolvePagingParams
+            'pagingParams': ResolvePagingParams
         },
         canActivate: [UserRouteAccessService]
     },
@@ -78,6 +80,27 @@ export const dashboardRoute: Routes = [
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'uplaceApp.realEstate.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'dashboard/notifications',
+        component: NotificationComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'uplaceApp.realEstate.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'dashboard/requests',
+        component: RequestComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'uplaceApp.request.home.title'
+        },
+        resolve: {
+            'pagingParams': ResolvePagingParams
         },
         canActivate: [UserRouteAccessService]
     }

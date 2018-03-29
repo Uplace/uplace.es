@@ -25,6 +25,7 @@
                 "establishment": "Establishment",
                 "company": "Company",
                 "realEstate": "Real Estate",
+                "request": "Request",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

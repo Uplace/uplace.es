@@ -13,6 +13,7 @@ export class Notification implements BaseEntity {
         public content?: any,
         public creation?: any,
         public type?: NotificationType,
+        public reference?: string,
         public token?: string,
         public read?: boolean,
         public user?: User,

@@ -21,11 +21,13 @@
     <include file="config/liquibase/changelog/20180129130241_added_entity_Hotel.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180129130242_added_entity_IndustrialPlant.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180129130243_added_entity_Establishment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180328092058_added_entity_Request.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180117115516_added_entity_constraints_Property.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180117115519_added_entity_constraints_Agent.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180117115525_added_entity_constraints_Photo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180123092114_added_entity_constraints_Notification.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180328092058_added_entity_constraints_Request.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <include file="config/liquibase/changelog/20180118114109_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180118171757_changelog.xml" relativeToChangelogFile="false"/>
@@ -43,5 +45,6 @@
     <include file="config/liquibase/changelog/20180320105205_added_entity_RealEstate.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180320113553_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180322074041_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180328083915_changelog.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

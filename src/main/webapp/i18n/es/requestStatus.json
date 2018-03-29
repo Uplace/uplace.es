@@ -1,0 +1,10 @@
+{
+    "uplaceApp": {
+        "RequestStatus" : {
+            "null": "",
+            "OPEN": "OPEN",
+            "CLOSED": "CLOSED",
+            "PENDING": "PENDING"
+        }
+    }
+}

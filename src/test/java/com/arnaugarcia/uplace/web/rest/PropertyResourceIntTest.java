@@ -7,10 +7,9 @@ import com.arnaugarcia.uplace.domain.Location;
 import com.arnaugarcia.uplace.domain.Photo;
 import com.arnaugarcia.uplace.domain.Agent;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
-import com.arnaugarcia.uplace.service.ContactService;
+import com.arnaugarcia.uplace.service.InquireService;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.service.PropertyQueryService;
 
 import org.junit.Before;
@@ -27,7 +26,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
@@ -100,7 +98,7 @@ public class PropertyResourceIntTest {
     private PropertyService propertyService;
 
     @Autowired
-    private ContactService contactService;
+    private InquireService inquireService;
 
     @Autowired
     private PropertyQueryService propertyQueryService;
@@ -124,7 +122,7 @@ public class PropertyResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService, contactService);
+        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService, inquireService);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
