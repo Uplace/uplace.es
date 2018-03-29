@@ -1,5 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,12 +26,15 @@ public class Request implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "reference")
     private String reference;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "up_date")
     private ZonedDateTime date;
 
@@ -49,6 +54,7 @@ public class Request implements Serializable {
     @Column(name = "phone")
     private String phone;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     @Column(name = "request_status")
     private RequestStatus requestStatus;

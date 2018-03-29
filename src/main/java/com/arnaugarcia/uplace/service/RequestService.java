@@ -3,6 +3,7 @@ package com.arnaugarcia.uplace.service;
 import com.arnaugarcia.uplace.domain.Request;
 import com.arnaugarcia.uplace.domain.enumeration.RequestStatus;
 import com.arnaugarcia.uplace.repository.RequestRepository;
+import com.arnaugarcia.uplace.service.util.RandomUtil;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import org.hibernate.loader.plan.exec.process.internal.EntityReturnReader;
@@ -104,5 +105,19 @@ public class RequestService {
         } else {
             throw new BadRequestAlertException("Reference not found", "REQUEST", ErrorConstants.ERR_BAD_REFERENCE);
         }
+    }
+
+    /**
+     * Create unique reference randomly.
+     *
+     * @return reference created
+     */
+    public String createReference() {
+        String reference;
+        do {
+            reference = RandomUtil.generateReference().toUpperCase();
+            log.debug("Generating reference: " + reference);
+        } while (requestRepository.findOne(reference) != null);
+        return reference;
     }
 }

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Property} from "../../property.model";
 import {Mail} from "../../../../shared/model/mail.model";
 import {PropertyService} from "../../property.service";
-import {Request} from "../../../../shared/request/request.model";
+import {Request, RequestOrigin} from "../../../../shared/request/request.model";
 
 @Component({
     selector: 'up-widget-inquire',
@@ -24,7 +24,8 @@ export class WidgetInquireComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.request);
+        this.request.property = this.property;
+        this.request.origin = RequestOrigin.WEB;
         this.propertyService.inquire(this.property.reference, this.request).subscribe((response) => {
             console.log(response);
         });
