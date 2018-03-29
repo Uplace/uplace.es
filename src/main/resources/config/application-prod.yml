@@ -51,7 +51,7 @@ spring:
         port: 587
         username: no-reply@uplace.es
         password: v|1nI8|I
-        test-connection: true
+        test-connection: false
         properties.mail.smtp.auth: true
         properties.mail.smtp.starttls.enable: true
         properties.mail.smtp.starttls.required: true
