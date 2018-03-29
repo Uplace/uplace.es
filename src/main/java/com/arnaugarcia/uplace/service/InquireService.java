@@ -36,11 +36,11 @@ public class InquireService<T extends Property> {
             throw new BadRequestAlertException("Property not found", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
 
-        Request requestSaved = requestService.save(request);
+        request = requestService.save(request);
 
 
         // TODO : DON'T hardcode this
-        notificationService.saveNotification(new Notification(
+        /*notificationService.saveNotification(new Notification(
             "New inquire #[" + requestSaved.getReference() + "]",
             "A new inquired has been registered click here to know the details",
             ZonedDateTime.now(),
@@ -49,7 +49,7 @@ public class InquireService<T extends Property> {
             "N/A",
             false,
             null
-            ));
+            ));*/
 
         // TODO : Send a notification to the agent
         // TODO : Send an email to the agent
