@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Request} from "../../../shared/request/request.model";
 
 @Component({
     selector: 'request-popup',
@@ -9,5 +10,5 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 export class RequestPopupComponent {
     @Input() request: Request;
 
-    constructor(private activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) { }
 }

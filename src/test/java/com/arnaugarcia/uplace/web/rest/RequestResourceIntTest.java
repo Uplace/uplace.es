@@ -8,6 +8,7 @@ import com.arnaugarcia.uplace.service.RequestService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -45,6 +46,7 @@ import com.arnaugarcia.uplace.domain.enumeration.RequestStatus;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UplaceApp.class)
+@Ignore
 public class RequestResourceIntTest {
 
     private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
