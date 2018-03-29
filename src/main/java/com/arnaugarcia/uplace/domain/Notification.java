@@ -57,6 +57,17 @@ public class Notification implements Serializable {
     @NotNull
     private User user;
 
+    public Notification(String title, String content, ZonedDateTime creation, NotificationType type, String reference, String token, Boolean read, User user) {
+        this.title = title;
+        this.content = content;
+        this.creation = creation;
+        this.type = type;
+        this.reference = reference;
+        this.token = token;
+        this.read = read;
+        this.user = user;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
