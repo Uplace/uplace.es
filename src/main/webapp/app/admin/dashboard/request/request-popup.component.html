@@ -1,0 +1,83 @@
+<div class="modal-header">
+    <h4 class="modal-title">Contact form of Property[#{{request.reference}}] - [{{request.requestStatus}}]</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="page-title-small mb30">Contact info</h5>
+                    <div class="card-text row">
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    {{request.lastName}}, {{request.firstName}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Phone</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    {{request.phone}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Property</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    {{request.property?.reference}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    {{request.email}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Origin</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    {{request.origin}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label>Date</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    {{request.date}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="page-title-small mb30">Message</h5>
+                    <p class="card-text">{{request.message}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="activeModal.close()">Close request</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Dismiss</button>
+</div>

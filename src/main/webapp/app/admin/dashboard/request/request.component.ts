@@ -6,6 +6,8 @@ import { Request } from '../../../shared/request/request.model';
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import {RequestService} from "../../../shared/request/request.service";
 import {ITEMS_PER_PAGE, Principal} from "../../../shared";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RequestPopupComponent} from "./request-popup.component";
 
 
 @Component({
@@ -37,7 +39,8 @@ export class RequestComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private dataUtils: JhiDataUtils,
         private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private modalService: NgbModal
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -46,6 +49,11 @@ export class RequestComponent implements OnInit, OnDestroy {
             this.reverse = data.pagingParams.ascending;
             this.predicate = data.pagingParams.predicate;
         });
+    }
+
+    open(request: Request) {
+        const modalRef = this.modalService.open(RequestPopupComponent);
+        modalRef.componentInstance.request = request;
     }
 
     loadAll() {

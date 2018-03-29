@@ -65,7 +65,7 @@
                         </td>
                         <td>
                             <h2>
-                                <a [routerLink]="['/dashboard', { outlets: { popup: 'requests'+ request.reference } }]">[#{{request.reference}}] {{request.firstName}} {{request.lastName}}</a>
+                                <a href="javascript:void(0)" (click)="open(request)">[#{{request.reference}}] {{request.firstName}} {{request.lastName}}</a>
                                 <span>{{request.message | truncate:[100]}}</span>
                             </h2>
                         </td>
@@ -78,7 +78,7 @@
                         <td class="title">
                             <div class="avatar" style="background-image: url('')"></div>
                             <h2>
-                                <a href="#">{{request.property?.title}}</a>
+                                <a [routerLink]="['/property/', request.property.reference]">{{request.property?.title}}</a>
                                 <span>{{request.property?.location?.fullAddress | truncate:[20]}}</span>
                                 <!--<span class="label label-success">Needs Review</span>-->
                             </h2>

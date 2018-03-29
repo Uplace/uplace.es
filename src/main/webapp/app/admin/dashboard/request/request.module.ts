@@ -3,8 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RequestComponent} from './request.component';
 import {UplaceSharedModule} from "../../../shared";
 import {RouterModule} from "@angular/router";
-import {RequestDialogComponent, RequestPopupComponent} from "./request-dialog.component";
-import {RequestPopupService} from "./request-popup.service";
+import {RequestPopupComponent} from "./request-popup.component";
 
 @NgModule({
     imports: [
@@ -13,15 +12,13 @@ import {RequestPopupService} from "./request-popup.service";
         RouterModule
     ],
     entryComponents: [
-        RequestDialogComponent,
         RequestPopupComponent
     ],
     declarations: [
         RequestComponent,
-        RequestPopupComponent,
-        RequestDialogComponent
+        RequestPopupComponent
     ],
-    providers: [RequestPopupService]
+    providers: []
 })
 export class RequestModule {
 }
