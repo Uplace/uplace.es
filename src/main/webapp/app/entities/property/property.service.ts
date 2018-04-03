@@ -61,9 +61,8 @@ export class PropertyService {
         properties.forEach((property) => {
             references.push(property.reference);
         });
-        const result = references.join(',');
-        console.log(result);
-        return result;
+
+        return references.join(',');
     }
 
     private convertArrayResponse(res: HttpResponse<Property[]>): HttpResponse<Property[]> {

@@ -21,6 +21,20 @@ import com.arnaugarcia.uplace.domain.enumeration.RequestStatus;
 @Entity
 @Table(name = "request")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@NamedEntityGraphs({
+    @NamedEntityGraph(name = "graph.requestPropertyAll", attributeNodes = {
+        @NamedAttributeNode(value = "property", subgraph = "graph.PropertyAll")
+
+    }),
+    @NamedEntityGraph(name = "graph.requestPropertyLocation", attributeNodes = {
+        @NamedAttributeNode(value = "property", subgraph = "graph.PropertyLocation")
+    }, subgraphs = {
+        @NamedSubgraph(name = "graph.PropertyLocation", attributeNodes = {
+            @NamedAttributeNode(value = "location")
+        })
+    }),
+
+})
 public class Request implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,7 +77,7 @@ public class Request implements Serializable {
     @Column(name = "message")
     private String message;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Property property;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

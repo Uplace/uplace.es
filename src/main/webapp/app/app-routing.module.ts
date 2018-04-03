@@ -6,7 +6,7 @@ import {adminNavbarRoute} from "./layouts/admin-navbar/admin-navbar.route";
 import {UpAdminMainComponent} from "./layouts/admin-main/admin-main.component";
 import {HOME_ROUTE} from "./home";
 import {UplaceAdminModule} from "./admin/admin.module";
-import {propertyPopupRoute, propertyRoute} from "./entities/property";
+import {propertyRoute} from "./entities/property";
 import {auditsRoute, configurationRoute, docsRoute, healthRoute, logsRoute, metricsRoute, userMgmtRoute} from "./admin";
 import {UserRouteAccessService} from "./shared";
 import {accountState} from "./account";
@@ -33,7 +33,6 @@ const appRoutes: Routes = [
             HOME_ROUTE,
             navbarRoute,
             ...propertyRoute,
-            ...propertyPopupRoute,
             ...errorRoute
         ],
     },
