@@ -34,20 +34,18 @@ export const propertyRoute: Routes = [
         data: {
             authorities: [],
             pageTitle: 'uplaceApp.property.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+        }
     }, {
         path: 'property/:reference',
         component: PropertyDetailComponent,
         data: {
             authorities: [],
             pageTitle: 'uplaceApp.property.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+        }
     }
 ];
 
-export const propertyPopupRoute: Routes = [
+/*export const propertyPopupRoute: Routes = [
     {
         path: 'property-new',
         component: PropertyPopupComponent,
@@ -78,4 +76,4 @@ export const propertyPopupRoute: Routes = [
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
     }
-];
+];*/

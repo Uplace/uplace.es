@@ -12,7 +12,6 @@ import {
     PropertyDeletePopupComponent,
     PropertyDeleteDialogComponent,
     propertyRoute,
-    propertyPopupRoute,
 } from './';
 import {PropertyResolvePagingParams} from "./property.route";
 import { WidgetActionComponent } from './widgets/widget-action/widget-action.component';
@@ -25,8 +24,7 @@ import { PropertyFilterComponent } from './property-filter/property-filter.compo
 import { PropertyContactComponent } from './property-contact/property-contact.component';
 
 const ENTITY_STATES = [
-    ...propertyRoute,
-    ...propertyPopupRoute,
+    ...propertyRoute
 ];
 
 @NgModule({

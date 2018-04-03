@@ -20,7 +20,6 @@ export class PropertyContactComponent implements OnInit {
 
     ngOnInit() {
         this.companyService.query().subscribe((result) => {
-            console.log(result);
             this.company = result.body;
         })
     }

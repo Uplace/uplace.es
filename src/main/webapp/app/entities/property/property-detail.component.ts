@@ -36,7 +36,6 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
         this.propertyService.find(reference)
             .subscribe((propertyResponse: HttpResponse<Property>) => {
                 this.property = propertyResponse.body;
-                console.log(this.property);
             });
     }
     byteSize(field) {
@@ -46,6 +45,7 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
     }
+
     previousState() {
         window.history.back();
     }
@@ -58,7 +58,7 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
     registerChangeInProperties() {
         this.eventSubscriber = this.eventManager.subscribe(
             'propertyListModification',
-            (response) => this.load(this.property.id)
+            (response) => this.load(this.property.reference)
         );
     }
 }
