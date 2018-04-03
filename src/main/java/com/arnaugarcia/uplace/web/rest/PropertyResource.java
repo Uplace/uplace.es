@@ -3,7 +3,7 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.Request;
 import com.arnaugarcia.uplace.service.InquireService;
-import com.arnaugarcia.uplace.service.PropertyQueryService;
+import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;

@@ -10,7 +10,7 @@ import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.InquireService;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.ExceptionTranslator;
-import com.arnaugarcia.uplace.service.PropertyQueryService;
+import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 
 import org.junit.Before;
 import org.junit.Ignore;

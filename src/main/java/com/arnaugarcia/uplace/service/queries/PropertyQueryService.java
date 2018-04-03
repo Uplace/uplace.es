@@ -1,4 +1,4 @@
-package com.arnaugarcia.uplace.service;
+package com.arnaugarcia.uplace.service.queries;
 
 
 import java.util.List;
@@ -69,9 +69,6 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
     private Specifications<T> createSpecification(PropertyCriteria criteria) {
         Specifications<T> specification = Specifications.where(null);
         if (criteria != null) {
-            if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Property_.id));
-            }
             if (criteria.getTitle() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTitle(), Property_.title));
             }
