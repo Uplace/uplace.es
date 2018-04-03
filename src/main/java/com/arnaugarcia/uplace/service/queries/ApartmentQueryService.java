@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
+import io.github.jhipster.service.filter.StringFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -45,6 +46,7 @@ public class ApartmentQueryService extends QueryService<Apartment> {
     @Transactional(readOnly = true)
     public Page<Apartment> findByCriteria(ApartmentCriteria criteria, Pageable pageable) {
         log.debug("find by criteria : {}", criteria);
+        criteria.setPropertyType(new StringFilter().setContains("Apartment"));
         final Specifications<Apartment> specification = createSpecification(criteria);
         return propertyRepository.findAll(specification, pageable);
     }
