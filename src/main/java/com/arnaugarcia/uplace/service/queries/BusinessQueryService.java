@@ -65,8 +65,8 @@ public class BusinessQueryService extends QueryService<Business> {
             if (criteria.getUpdated() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
             }
-            if (criteria.getPropertyTypeFilter() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getPropertyTypeFilter(), Property_.propertyType));
+            if (criteria.getPropertyType() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getPropertyType(), Property_.propertyType));
             }
             if (criteria.getReference() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));

@@ -41,7 +41,9 @@ public class PropertyCriteria implements Serializable {
 
     private TransactionTypeFilter transaction;
 
-    private StringFilter propertyTypeFilter;
+    private StringFilter propertyType;
+
+    private StringFilter description;
 
     private StringFilter reference;
 
@@ -62,12 +64,20 @@ public class PropertyCriteria implements Serializable {
     public PropertyCriteria() {
     }
 
-    public StringFilter getPropertyTypeFilter() {
-        return propertyTypeFilter;
+    public StringFilter getDescription() {
+        return description;
     }
 
-    public void setPropertyTypeFilter(StringFilter propertyTypeFilter) {
-        this.propertyTypeFilter = propertyTypeFilter;
+    public void setDescription(StringFilter description) {
+        this.description = description;
+    }
+
+    public StringFilter getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(StringFilter propertyType) {
+        this.propertyType = propertyType;
     }
 
     public StringFilter getTitle() {

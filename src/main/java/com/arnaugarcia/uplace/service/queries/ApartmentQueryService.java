@@ -1,4 +1,4 @@
-package com.arnaugarcia.uplace.service;
+package com.arnaugarcia.uplace.service.queries;
 
 
 import java.util.List;
@@ -26,7 +26,7 @@ import com.arnaugarcia.uplace.domain.*; // for static metamodels
  */
 @Service
 @Transactional(readOnly = true)
-public class ApartmentQueryService<T extends Property> extends QueryService<Apartment> {
+public class ApartmentQueryService extends QueryService<Apartment> {
 
     private final Logger log = LoggerFactory.getLogger(ApartmentQueryService.class);
 
