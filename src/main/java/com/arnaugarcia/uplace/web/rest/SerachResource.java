@@ -1,9 +1,12 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.domain.Apartment;
+import com.arnaugarcia.uplace.domain.Building;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.service.ApartmentQueryService;
+import com.arnaugarcia.uplace.service.BuildingQueryService;
 import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
+import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
 import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import org.slf4j.Logger;
@@ -22,11 +25,14 @@ public class SerachResource<T extends Property> {
 
     private final PropertyQueryService<T> propertyQueryService;
 
-    private final ApartmentQueryService<Apartment> apartmentQueryService;
+    private final ApartmentQueryService apartmentQueryService;
 
-    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService<Apartment> apartmentQueryService) {
+    private final BuildingQueryService buildingQueryService;
+
+    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentQueryService = apartmentQueryService;
+        this.buildingQueryService = buildingQueryService;
     }
 
     @GetMapping("/search/properties")
@@ -37,5 +43,10 @@ public class SerachResource<T extends Property> {
     @GetMapping("/search/apartments")
     public Page<Apartment> searchApartments(ApartmentCriteria apartmentCriteria, Pageable pageable){
         return apartmentQueryService.findByCriteria(apartmentCriteria, pageable);
+    }
+
+    @GetMapping("/search/buildings")
+    public Page<Building> searchApartments(BuildingCriteria buildingCriteria, Pageable pageable){
+        return buildingQueryService.findByCriteria(buildingCriteria, pageable);
     }
 }
