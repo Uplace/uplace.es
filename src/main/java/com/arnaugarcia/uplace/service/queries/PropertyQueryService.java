@@ -90,6 +90,9 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
             if (criteria.getReference() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
             }
+            if (criteria.getPriceTransfer() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPriceTransfer(), Property_.priceTransfer));
+            }
             if (criteria.getPriceSell() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPriceSell(), Property_.priceSell));
             }

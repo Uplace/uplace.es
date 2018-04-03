@@ -30,7 +30,6 @@ public class BusinessQueryService extends QueryService<Business> {
 
     private final Logger log = LoggerFactory.getLogger(BusinessQueryService.class);
 
-
     private final PropertyRepository<Business> propertyRepository;
 
     public BusinessQueryService(PropertyRepository propertyRepository) {
