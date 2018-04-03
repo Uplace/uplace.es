@@ -65,8 +65,17 @@ public class ApartmentQueryService extends QueryService<Apartment> {
             if (criteria.getUpdated() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
             }
+            if (criteria.getDescription() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getDescription(), Property_.description));
+            }
+            if (criteria.getTransaction() != null) {
+                specification = specification.and(buildSpecification(criteria.getTransaction(), Property_.transaction));
+            }
             if (criteria.getReference() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
+            }
+            if (criteria.getPriceTransfer() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPriceTransfer(), Property_.priceTransfer));
             }
             if (criteria.getPriceSell() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPriceSell(), Property_.priceSell));
