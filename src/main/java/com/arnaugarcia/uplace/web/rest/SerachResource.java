@@ -2,13 +2,17 @@ package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.domain.Building;
+import com.arnaugarcia.uplace.domain.Business;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.service.ApartmentQueryService;
 import com.arnaugarcia.uplace.service.BuildingQueryService;
 import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
 import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
+import com.arnaugarcia.uplace.service.dto.BusinessCriteria;
+import com.arnaugarcia.uplace.service.queries.BusinessQueryService;
 import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
+import io.github.jhipster.service.filter.StringFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -29,10 +33,13 @@ public class SerachResource<T extends Property> {
 
     private final BuildingQueryService buildingQueryService;
 
-    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService) {
+    private final BusinessQueryService businessQueryService;
+
+    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentQueryService = apartmentQueryService;
         this.buildingQueryService = buildingQueryService;
+        this.businessQueryService = businessQueryService;
     }
 
     @GetMapping("/search/properties")
@@ -48,5 +55,11 @@ public class SerachResource<T extends Property> {
     @GetMapping("/search/buildings")
     public Page<Building> searchApartments(BuildingCriteria buildingCriteria, Pageable pageable){
         return buildingQueryService.findByCriteria(buildingCriteria, pageable);
+    }
+
+    @GetMapping("/search/business")
+    public Page<Business> searchBusiness(BusinessCriteria businessCriteria, Pageable pageable){
+        businessCriteria.setPropertyTypeFilter(new StringFilter().setContains("Building"));
+        return businessQueryService.findByCriteria(businessCriteria, pageable);
     }
 }

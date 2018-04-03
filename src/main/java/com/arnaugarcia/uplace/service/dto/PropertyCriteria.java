@@ -13,6 +13,7 @@ import io.github.jhipster.service.filter.StringFilter;
 
 
 import io.github.jhipster.service.filter.ZonedDateTimeFilter;
+import org.hibernate.validator.internal.xml.PropertyType;
 
 
 /**
@@ -40,6 +41,8 @@ public class PropertyCriteria implements Serializable {
 
     private TransactionTypeFilter transaction;
 
+    private StringFilter propertyTypeFilter;
+
     private StringFilter reference;
 
     private DoubleFilter priceSell;
@@ -57,6 +60,14 @@ public class PropertyCriteria implements Serializable {
     private IntegerFilter surface;
 
     public PropertyCriteria() {
+    }
+
+    public StringFilter getPropertyTypeFilter() {
+        return propertyTypeFilter;
+    }
+
+    public void setPropertyTypeFilter(StringFilter propertyTypeFilter) {
+        this.propertyTypeFilter = propertyTypeFilter;
     }
 
     public StringFilter getTitle() {
