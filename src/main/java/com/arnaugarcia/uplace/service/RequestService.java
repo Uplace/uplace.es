@@ -47,7 +47,6 @@ public class RequestService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    @Transactional(readOnly = true)
     public Page<Request> findAll(Pageable pageable) {
         log.debug("Request to get all Requests");
         return requestRepository.findAll(pageable);
