@@ -4,11 +4,11 @@ import com.arnaugarcia.uplace.domain.Apartment;
 import com.arnaugarcia.uplace.domain.Building;
 import com.arnaugarcia.uplace.domain.Business;
 import com.arnaugarcia.uplace.domain.Property;
-import com.arnaugarcia.uplace.service.BuildingQueryService;
 import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
 import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
 import com.arnaugarcia.uplace.service.dto.BusinessCriteria;
 import com.arnaugarcia.uplace.service.queries.ApartmentQueryService;
+import com.arnaugarcia.uplace.service.queries.BuildingQueryService;
 import com.arnaugarcia.uplace.service.queries.BusinessQueryService;
 import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
@@ -59,7 +59,6 @@ public class SerachResource<T extends Property> {
 
     @GetMapping("/search/business")
     public Page<Business> searchBusiness(BusinessCriteria businessCriteria, Pageable pageable){
-        businessCriteria.setPropertyType(new StringFilter().setContains("Building"));
         return businessQueryService.findByCriteria(businessCriteria, pageable);
     }
 }

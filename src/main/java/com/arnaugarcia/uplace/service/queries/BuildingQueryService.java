@@ -1,9 +1,10 @@
-package com.arnaugarcia.uplace.service;
+package com.arnaugarcia.uplace.service.queries;
 
 
 import java.util.List;
 
 import com.arnaugarcia.uplace.repository.PropertyRepository;
+import io.github.jhipster.service.filter.StringFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -38,18 +39,6 @@ public class BuildingQueryService extends QueryService<Building> {
     }
 
     /**
-     * Return a {@link List} of {@link Building} which matches the criteria from the database
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @return the matching entities.
-     */
-    @Transactional(readOnly = true)
-    public List<Building> findByCriteria(BuildingCriteria criteria) {
-        log.debug("find by criteria : {}", criteria);
-        final Specifications<Building> specification = createSpecification(criteria);
-        return buildingRepository.findAll(specification);
-    }
-
-    /**
      * Return a {@link Page} of {@link Building} which matches the criteria from the database
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
@@ -58,6 +47,7 @@ public class BuildingQueryService extends QueryService<Building> {
     @Transactional(readOnly = true)
     public Page<Building> findByCriteria(BuildingCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
+        criteria.setPropertyType(new StringFilter().setContains(Building.class.getSimpleName()));
         final Specifications<Building> specification = createSpecification(criteria);
         return buildingRepository.findAll(specification, page);
     }
@@ -77,8 +67,20 @@ public class BuildingQueryService extends QueryService<Building> {
             if (criteria.getUpdated() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
             }
+            if (criteria.getPropertyType() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getPropertyType(), Property_.propertyType));
+            }
+            if (criteria.getDescription() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getDescription(), Property_.description));
+            }
+            if (criteria.getTransaction() != null) {
+                specification = specification.and(buildSpecification(criteria.getTransaction(), Property_.transaction));
+            }
             if (criteria.getReference() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
+            }
+            if (criteria.getPriceTransfer() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPriceTransfer(), Property_.priceTransfer));
             }
             if (criteria.getPriceSell() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPriceSell(), Property_.priceSell));
