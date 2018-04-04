@@ -33,7 +33,9 @@ public class SerachResource<T extends Property> {
 
     private final OfficeQueryService officeQueryService;
 
-    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService, OfficeQueryService officeQueryService) {
+    private final ParkingQueryService parkingQueryService;
+
+    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService, OfficeQueryService officeQueryService, ParkingQueryService parkingQueryService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentQueryService = apartmentQueryService;
         this.buildingQueryService = buildingQueryService;
@@ -42,6 +44,7 @@ public class SerachResource<T extends Property> {
         this.hotelQueryService = hotelQueryService;
         this.industrialPlantQueryService = industrialPlantQueryService;
         this.officeQueryService = officeQueryService;
+        this.parkingQueryService = parkingQueryService;
     }
 
     @GetMapping("/search/properties")
@@ -82,5 +85,10 @@ public class SerachResource<T extends Property> {
     @GetMapping("/search/offices")
     public Page<Office> searchOffices(OfficeCriteria officeCriteria, Pageable pageable){
         return officeQueryService.findByCriteria(officeCriteria, pageable);
+    }
+
+    @GetMapping("/search/parkings")
+    public Page<Parking> searchParkings(ParkingCriteria parkingCriteria, Pageable pageable){
+        return parkingQueryService.findByCriteria(parkingCriteria, pageable);
     }
 }
