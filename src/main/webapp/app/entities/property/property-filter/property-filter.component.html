@@ -10,13 +10,9 @@
         <div class="form-group">
             <label>City</label>
             <select class="form-control" [(ngModel)]="searchUserData.location" name="location">
-                <option *ngFor="let city of filters.cities" [ngValue]="city">{{city}}</option>
+                <option>Select city</option>
+                <option *ngFor="let city of filters.cities">{{city}}</option>
             </select>
-        </div>
-        <!-- /.form-group -->
-        <div class="form-group">
-            <label>Price Slider</label>
-            <div id="slider" class="price-slider"></div>
         </div>
         <!-- /.form-group -->
         <div class="form-group">

@@ -26,9 +26,6 @@ export class PropertyFilterComponent implements OnInit {
            this.filters = res.body;
            this.searchUserData = this.searchService.getSearch();
         });
-        this.searchUserData = this.searchService.getSearch();
-        console.log('property-filter');
-        console.log(this.searchService);
     }
 
     onSubmit() {
