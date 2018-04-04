@@ -7,6 +7,7 @@ import com.arnaugarcia.uplace.service.dto.MarkerDTO;
 import com.arnaugarcia.uplace.service.dto.PriceDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -34,6 +35,10 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
     @EntityGraph(value = "graph.PropertyAll", type = EntityGraph.EntityGraphType.LOAD)
     @Override
     Page<T> findAll(Pageable pageable);
+
+    @EntityGraph(value = "graph.PropertyAll", type = EntityGraph.EntityGraphType.LOAD)
+    @Override
+    Page<T> findAll(Specification<T> specification, Pageable pageable);
 
     /**
      * Query to get a property by reference

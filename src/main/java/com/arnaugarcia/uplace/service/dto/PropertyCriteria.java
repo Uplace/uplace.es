@@ -13,6 +13,7 @@ import io.github.jhipster.service.filter.StringFilter;
 
 
 import io.github.jhipster.service.filter.ZonedDateTimeFilter;
+import org.hibernate.validator.internal.xml.PropertyType;
 
 
 /**
@@ -32,9 +33,6 @@ public class PropertyCriteria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
-    private LongFilter id;
-
     private StringFilter title;
 
     private ZonedDateTimeFilter created;
@@ -42,6 +40,10 @@ public class PropertyCriteria implements Serializable {
     private ZonedDateTimeFilter updated;
 
     private TransactionTypeFilter transaction;
+
+    private StringFilter propertyType;
+
+    private StringFilter description;
 
     private StringFilter reference;
 
@@ -59,23 +61,23 @@ public class PropertyCriteria implements Serializable {
 
     private IntegerFilter surface;
 
-    private LongFilter locationId;
-
-    private LongFilter photoId;
-
-    private LongFilter managerId;
-
-    private LongFilter realEstateId;
-
     public PropertyCriteria() {
     }
 
-    public LongFilter getId() {
-        return id;
+    public StringFilter getDescription() {
+        return description;
     }
 
-    public void setId(LongFilter id) {
-        this.id = id;
+    public void setDescription(StringFilter description) {
+        this.description = description;
+    }
+
+    public StringFilter getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(StringFilter propertyType) {
+        this.propertyType = propertyType;
     }
 
     public StringFilter getTitle() {
@@ -174,42 +176,10 @@ public class PropertyCriteria implements Serializable {
         this.surface = surface;
     }
 
-    public LongFilter getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(LongFilter locationId) {
-        this.locationId = locationId;
-    }
-
-    public LongFilter getPhotoId() {
-        return photoId;
-    }
-
-    public void setPhotoId(LongFilter photoId) {
-        this.photoId = photoId;
-    }
-
-    public LongFilter getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(LongFilter managerId) {
-        this.managerId = managerId;
-    }
-
-    public LongFilter getRealEstateId() {
-        return realEstateId;
-    }
-
-    public void setRealEstateId(LongFilter realEstateId) {
-        this.realEstateId = realEstateId;
-    }
 
     @Override
     public String toString() {
         return "PropertyCriteria{" +
-                (id != null ? "id=" + id + ", " : "") +
                 (title != null ? "title=" + title + ", " : "") +
                 (created != null ? "created=" + created + ", " : "") +
                 (updated != null ? "updated=" + updated + ", " : "") +
@@ -222,10 +192,6 @@ public class PropertyCriteria implements Serializable {
                 (newCreation != null ? "newCreation=" + newCreation + ", " : "") +
                 (visible != null ? "visible=" + visible + ", " : "") +
                 (surface != null ? "surface=" + surface + ", " : "") +
-                (locationId != null ? "locationId=" + locationId + ", " : "") +
-                (photoId != null ? "photoId=" + photoId + ", " : "") +
-                (managerId != null ? "managerId=" + managerId + ", " : "") +
-                (realEstateId != null ? "realEstateId=" + realEstateId + ", " : "") +
             "}";
     }
 
