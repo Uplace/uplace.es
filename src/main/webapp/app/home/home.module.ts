@@ -12,6 +12,7 @@ import {HomePricingComponent} from "./sections/home-pricing/home-pricing.compone
 import {HomePartnersComponent} from "./sections/home-partners/home-partners.component";
 import { InnerMapComponent } from './home-map/inner-map/inner-map.component';
 import {GoogleMapsAPIWrapper} from "@agm/core";
+import { HomeFilterComponent } from './home-filter/home-filter.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import {GoogleMapsAPIWrapper} from "@agm/core";
         HomeCarouselComponent,
         HomePricingComponent,
         HomePartnersComponent,
-        InnerMapComponent
+        InnerMapComponent,
+        HomeFilterComponent
     ],
     entryComponents: [
     ],

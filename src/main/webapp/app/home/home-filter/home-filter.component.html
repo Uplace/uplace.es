@@ -1,0 +1,51 @@
+<div class="map-filter-horizontal-wrapper">
+    <div class="container">
+        <div class="map-filter-horizontal">
+            <form action="?" method="post">
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <input type="text" class="form-control form-control-no-border" placeholder="Search by keyword ...">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="col-sm-3 form-group">
+                        <select class="form-control form-control-no-border">
+                            <option>Location</option>
+                            <option *ngFor="let city of filters.cities">{{city}}</option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="col-sm-3 form-group">
+                        <select class="form-control form-control-no-border">
+                            <option>Category</option>
+                            <option *ngFor="let type of filters.typeProperties">{{type}}</option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="col-sm-3 form-group">
+                        <input type="number" class="form-control form-control-no-border" placeholder="Bedrooms">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="col-sm-3 form-group">
+                        <input type="number" class="form-control form-control-no-border" placeholder="Bathrooms">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="col-sm-3 form-group">
+                        <input type="text" class="form-control form-control-no-border" placeholder="Price from">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="col-sm-3 form-group">
+                        <input type="text" class="form-control form-control-no-border" placeholder="Price to">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-block">Filter Listings</button>
+                    </div>
+                    <!-- /.col-->
+                </div>
+                <!-- /.row -->
+            </form>
+        </div>
+        <!-- /.map-filter -->
+    </div>
+    <!-- /.container -->
+</div>

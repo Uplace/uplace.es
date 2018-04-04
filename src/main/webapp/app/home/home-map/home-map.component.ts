@@ -16,7 +16,6 @@ export class HomeMapComponent implements OnInit {
 
     latitude = 41.390205;
     longitude = 2.154007;
-    filters: Filter = {};
     mapType: 'roadmap' | 'hybrid' | 'satellite' | 'terrain' = 'roadmap';
     mapZoom: number = 14;
     mapFullScreen: boolean = false;
@@ -60,17 +59,11 @@ export class HomeMapComponent implements OnInit {
 
     constructor(
         private markersService: MarkerService,
-        private alertService: JhiAlertService,
-        private filterService: FilterService
+        private alertService: JhiAlertService
     ) { }
 
     ngOnInit() {
         this.getUserLocation();
-        this.filterService.query().subscribe(
-            (res: HttpResponse<Filter>) => {
-                this.filters = res.body;
-            }
-        );
 
         /**
          * Update for Angular 4.3
