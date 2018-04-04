@@ -3,6 +3,17 @@ import {Filter} from "../../entities/filter/filter.model";
 import {HttpResponse} from "@angular/common/http";
 import {FilterService} from "../../entities/filter/filter.service";
 
+interface HomeFilter {
+    keyword?: string;
+    location?: string;
+    category?: string;
+    surface?: number;
+    bedrooms?: number;
+    bathrooms?: number;
+    priceFrom?: number;
+    priceTo?: number;
+}
+
 @Component({
     selector: 'up-home-filter',
     templateUrl: './home-filter.component.html',
@@ -11,7 +22,7 @@ import {FilterService} from "../../entities/filter/filter.service";
 export class HomeFilterComponent implements OnInit {
 
     filters: Filter = {};
-
+    filter: HomeFilter = {};
 
     constructor(
         private filterService: FilterService
@@ -28,6 +39,10 @@ export class HomeFilterComponent implements OnInit {
 
     ngOnInit() {
         this.loadAll();
+    }
+
+    onSubmit() {
+        console.log(this.filter);
     }
 
 }

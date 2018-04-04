@@ -1,40 +1,41 @@
 <div class="map-filter-horizontal-wrapper">
     <div class="container">
         <div class="map-filter-horizontal">
-            <form action="?" method="post">
+            <form (ngSubmit)="onSubmit()">
                 <div class="row">
                     <div class="col-sm-3 form-group">
-                        <input type="text" class="form-control form-control-no-border" placeholder="Search by keyword ...">
+                        <input type="text" class="form-control form-control-no-border"
+                               placeholder="Search by keyword ..." [(ngModel)]="filter.keyword" name="keyword">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <select class="form-control form-control-no-border">
+                        <select class="form-control form-control-no-border" [(ngModel)]="filter.location" name="location">
                             <option>Location</option>
                             <option *ngFor="let city of filters.cities">{{city}}</option>
                         </select>
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <select class="form-control form-control-no-border">
+                        <select class="form-control form-control-no-border" [(ngModel)]="filter.category" name="category">
                             <option>Category</option>
                             <option *ngFor="let type of filters.typeProperties">{{type}}</option>
                         </select>
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <input type="number" class="form-control form-control-no-border" placeholder="Bedrooms">
+                        <input type="number" class="form-control form-control-no-border" placeholder="Bedrooms" [(ngModel)]="filter.bedrooms" name="bedrooms">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <input type="number" class="form-control form-control-no-border" placeholder="Bathrooms">
+                        <input type="number" class="form-control form-control-no-border" placeholder="Bathrooms" [(ngModel)]="filter.bathrooms" name="bathrooms">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <input type="text" class="form-control form-control-no-border" placeholder="Price from">
+                        <input type="number" class="form-control form-control-no-border" min="1" step="any" placeholder="Price from" [(ngModel)]="filter.priceFrom" name="priceFrom">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <input type="text" class="form-control form-control-no-border" placeholder="Price to">
+                        <input type="number" class="form-control form-control-no-border" min="1" step="any" placeholder="Price to" [(ngModel)]="filter.priceTo" name="priceTo">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3">

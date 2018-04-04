@@ -33,8 +33,6 @@ export class InnerMapComponent implements OnInit {
 
                         res.body.forEach((marker) => {
 
-                            console.log(marker);
-
                             const markerCenter = new google.maps.LatLng(marker['latitude'], marker['longitude']);
 
                             const markerVerified = marker['isNew'] ? '<div class="marker-verified"><i class="fa fa-check"></i></div>' : '';
