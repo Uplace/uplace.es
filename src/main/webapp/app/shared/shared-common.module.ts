@@ -15,6 +15,8 @@ import {TruncatePipe} from "./pipes/truncate.pipe";
 import {ProvideParentForm} from "./directives/parent-form.directive";
 import {EnumToArrayPipe} from "./pipes/enumToArray.pipe";
 import {RequestService} from "./request/request.service";
+import {FilterService} from "./filter/filter.service";
+import {SearchService} from "./search/search.service";
 
 @NgModule({
     imports: [
@@ -38,7 +40,9 @@ import {RequestService} from "./request/request.service";
         },
         AgmJsMarkerClustererModule,
         ClusterManager,
-        RequestService
+        RequestService,
+        FilterService,
+        SearchService
     ],
     exports: [
         UplaceSharedLibsModule,

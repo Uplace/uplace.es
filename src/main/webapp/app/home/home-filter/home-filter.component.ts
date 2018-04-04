@@ -2,17 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {HttpResponse} from "@angular/common/http";
 import {FilterService} from "../../shared/filter/filter.service";
 import {Filter} from "../../shared/filter/filter.model";
-
-interface HomeFilter {
-    keyword?: string;
-    location?: string;
-    category?: string;
-    surface?: number;
-    bedrooms?: number;
-    bathrooms?: number;
-    priceFrom?: number;
-    priceTo?: number;
-}
+import {SearchService} from "../../shared/search/search.service";
+import {UserSearch} from "../../shared/search/search.model";
+import {Route, Router} from "@angular/router";
 
 @Component({
     selector: 'up-home-filter',
@@ -22,17 +14,19 @@ interface HomeFilter {
 export class HomeFilterComponent implements OnInit {
 
     filters: Filter = {};
-    filter: HomeFilter = {};
+    search: UserSearch = {};
 
     constructor(
-        private filterService: FilterService
-    ) {
-    }
+        private filterService: FilterService,
+        private searchService: SearchService,
+        private router: Router
+    ) { }
 
     loadAll() {
-        this.filterService.query().subscribe(
+        this.filterService.find().subscribe(
             (res: HttpResponse<Filter>) => {
                 this.filters = res.body;
+                this.search = this.searchService.getSearch();
             }
         );
     }
@@ -42,7 +36,9 @@ export class HomeFilterComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.filter);
+        this.router.navigate(['/properties']);
+        this.searchService.setSearch(this.search);
+        console.log(this.search);
     }
 
 }

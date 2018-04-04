@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {SearchService} from "../../../shared/search/search.service";
+import {UserSearch} from "../../../shared/search/search.model";
 
 @Component({
-  selector: 'up-property-filter',
-  templateUrl: './property-filter.component.html',
-  styles: []
+    selector: 'up-property-filter',
+    templateUrl: './property-filter.component.html',
+    styles: []
 })
 export class PropertyFilterComponent implements OnInit {
 
-  constructor() { }
+    searchUserData: UserSearch;
 
-  ngOnInit() {
-  }
+    constructor(
+        private searchService: SearchService
+    ) {
+    }
+
+    ngOnInit() {
+        this.searchUserData = this.searchService.getSearch();
+        console.log('property-filter');
+        console.log(this.searchService);
+    }
 
 }
