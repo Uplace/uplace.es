@@ -6,6 +6,7 @@ import com.arnaugarcia.uplace.domain.Property_;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.OfficeCriteria;
 import io.github.jhipster.service.QueryService;
+import io.github.jhipster.service.filter.StringFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -44,6 +45,7 @@ public class OfficeQueryService extends QueryService<Office> {
     @Transactional(readOnly = true)
     public Page<Office> findByCriteria(OfficeCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
+        criteria.setPropertyType(new StringFilter().setContains(Office.class.getSimpleName()));
         final Specifications<Office> specification = createSpecification(criteria);
         return propertyRepository.findAll(specification, page);
     }
