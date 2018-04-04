@@ -10,14 +10,14 @@
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
                         <select class="form-control form-control-no-border" [(ngModel)]="search.location" name="location">
-                            <option>Location</option>
+                            <option value="null">Location</option>
                             <option *ngFor="let city of filters.cities">{{city}}</option>
                         </select>
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
                         <select class="form-control form-control-no-border" [(ngModel)]="search.category" name="category">
-                            <option>Category</option>
+                            <option value="null">Category</option>
                             <option *ngFor="let type of filters.typeProperties">{{type}}</option>
                         </select>
                     </div>

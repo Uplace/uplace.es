@@ -6,11 +6,18 @@
             <label>Keyword</label>
             <input type="text" class="form-control" placeholder="Search by keyword ...">
         </div>
+        <div class="form-group">
+            <label>Property type</label>
+            <select class="form-control" [(ngModel)]="searchUserData.category" name="category">
+                <option value="null">Select type</option>
+                <option *ngFor="let category of filters.typeProperties">{{category}}</option>
+            </select>
+        </div>
         <!-- /.form-group -->
         <div class="form-group">
             <label>City</label>
             <select class="form-control" [(ngModel)]="searchUserData.location" name="location">
-                <option>Select city</option>
+                <option value="null">Select city</option>
                 <option *ngFor="let city of filters.cities">{{city}}</option>
             </select>
         </div>
