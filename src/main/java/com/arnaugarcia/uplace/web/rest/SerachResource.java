@@ -31,7 +31,9 @@ public class SerachResource<T extends Property> {
 
     private final IndustrialPlantQueryService industrialPlantQueryService;
 
-    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService) {
+    private final OfficeQueryService officeQueryService;
+
+    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService, OfficeQueryService officeQueryService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentQueryService = apartmentQueryService;
         this.buildingQueryService = buildingQueryService;
@@ -39,6 +41,7 @@ public class SerachResource<T extends Property> {
         this.establishmentQueryService = establishmentQueryService;
         this.hotelQueryService = hotelQueryService;
         this.industrialPlantQueryService = industrialPlantQueryService;
+        this.officeQueryService = officeQueryService;
     }
 
     @GetMapping("/search/properties")
@@ -67,12 +70,17 @@ public class SerachResource<T extends Property> {
     }
 
     @GetMapping("/search/hotels")
-    public Page<Hotel> searchBEstablishments(HotelCriteria hotelCriteria, Pageable pageable){
+    public Page<Hotel> searchHotels(HotelCriteria hotelCriteria, Pageable pageable){
         return hotelQueryService.findByCriteria(hotelCriteria, pageable);
     }
 
     @GetMapping("/search/industrial-plants")
-    public Page<IndustrialPlant> searchBEstablishments(IndustrialPlantCriteria industrialPlantCriteria, Pageable pageable){
+    public Page<IndustrialPlant> searchIndustrialPlants(IndustrialPlantCriteria industrialPlantCriteria, Pageable pageable){
         return industrialPlantQueryService.findByCriteria(industrialPlantCriteria, pageable);
+    }
+
+    @GetMapping("/search/offices")
+    public Page<Office> searchOffices(OfficeCriteria officeCriteria, Pageable pageable){
+        return officeQueryService.findByCriteria(officeCriteria, pageable);
     }
 }
