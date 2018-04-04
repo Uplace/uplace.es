@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Filter} from "../../entities/filter/filter.model";
 import {HttpResponse} from "@angular/common/http";
-import {FilterService} from "../../entities/filter/filter.service";
+import {FilterService} from "../../shared/filter/filter.service";
+import {Filter} from "../../shared/filter/filter.model";
 
 interface HomeFilter {
     keyword?: string;
