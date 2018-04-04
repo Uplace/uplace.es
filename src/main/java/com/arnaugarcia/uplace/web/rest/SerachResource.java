@@ -1,18 +1,8 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.domain.Apartment;
-import com.arnaugarcia.uplace.domain.Building;
-import com.arnaugarcia.uplace.domain.Business;
-import com.arnaugarcia.uplace.domain.Property;
-import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
-import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
-import com.arnaugarcia.uplace.service.dto.BusinessCriteria;
-import com.arnaugarcia.uplace.service.queries.ApartmentQueryService;
-import com.arnaugarcia.uplace.service.queries.BuildingQueryService;
-import com.arnaugarcia.uplace.service.queries.BusinessQueryService;
-import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
-import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
-import io.github.jhipster.service.filter.StringFilter;
+import com.arnaugarcia.uplace.domain.*;
+import com.arnaugarcia.uplace.service.dto.*;
+import com.arnaugarcia.uplace.service.queries.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -35,11 +25,14 @@ public class SerachResource<T extends Property> {
 
     private final BusinessQueryService businessQueryService;
 
-    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService) {
+    private final EstablishmentQueryService establishmentQueryService;
+
+    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentQueryService = apartmentQueryService;
         this.buildingQueryService = buildingQueryService;
         this.businessQueryService = businessQueryService;
+        this.establishmentQueryService = establishmentQueryService;
     }
 
     @GetMapping("/search/properties")
@@ -60,5 +53,10 @@ public class SerachResource<T extends Property> {
     @GetMapping("/search/business")
     public Page<Business> searchBusiness(BusinessCriteria businessCriteria, Pageable pageable){
         return businessQueryService.findByCriteria(businessCriteria, pageable);
+    }
+
+    @GetMapping("/search/establishments")
+    public Page<Establishment> searchBEstablishments(EstablishmentCriteria establishmentCriteria, Pageable pageable){
+        return establishmentQueryService.findByCriteria(establishmentCriteria, pageable);
     }
 }
