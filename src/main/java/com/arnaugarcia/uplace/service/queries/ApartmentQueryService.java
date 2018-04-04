@@ -46,7 +46,7 @@ public class ApartmentQueryService extends QueryService<Apartment> {
     @Transactional(readOnly = true)
     public Page<Apartment> findByCriteria(ApartmentCriteria criteria, Pageable pageable) {
         log.debug("find by criteria : {}", criteria);
-        criteria.setPropertyType(new StringFilter().setContains("Apartment"));
+        criteria.setPropertyType(new StringFilter().setContains(Apartment.class.getSimpleName()));
         final Specifications<Apartment> specification = createSpecification(criteria);
         return propertyRepository.findAll(specification, pageable);
     }
