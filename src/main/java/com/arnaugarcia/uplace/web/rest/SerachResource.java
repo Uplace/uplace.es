@@ -35,7 +35,9 @@ public class SerachResource<T extends Property> {
 
     private final ParkingQueryService parkingQueryService;
 
-    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService, OfficeQueryService officeQueryService, ParkingQueryService parkingQueryService) {
+    private final TerrainQueryService terrainQueryService;
+
+    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService, OfficeQueryService officeQueryService, ParkingQueryService parkingQueryService, TerrainQueryService terrainQueryService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentQueryService = apartmentQueryService;
         this.buildingQueryService = buildingQueryService;
@@ -45,6 +47,7 @@ public class SerachResource<T extends Property> {
         this.industrialPlantQueryService = industrialPlantQueryService;
         this.officeQueryService = officeQueryService;
         this.parkingQueryService = parkingQueryService;
+        this.terrainQueryService = terrainQueryService;
     }
 
     @GetMapping("/search/properties")
@@ -90,5 +93,10 @@ public class SerachResource<T extends Property> {
     @GetMapping("/search/parkings")
     public Page<Parking> searchParkings(ParkingCriteria parkingCriteria, Pageable pageable){
         return parkingQueryService.findByCriteria(parkingCriteria, pageable);
+    }
+
+    @GetMapping("/search/terrains")
+    public Page<Terrain> searchTerrains(TerrainCriteria terrainCriteria, Pageable pageable){
+        return terrainQueryService.findByCriteria(terrainCriteria, pageable);
     }
 }
