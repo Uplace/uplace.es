@@ -29,13 +29,16 @@ public class SerachResource<T extends Property> {
 
     private final HotelQueryService hotelQueryService;
 
-    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService) {
+    private final IndustrialPlantQueryService industrialPlantQueryService;
+
+    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentQueryService = apartmentQueryService;
         this.buildingQueryService = buildingQueryService;
         this.businessQueryService = businessQueryService;
         this.establishmentQueryService = establishmentQueryService;
         this.hotelQueryService = hotelQueryService;
+        this.industrialPlantQueryService = industrialPlantQueryService;
     }
 
     @GetMapping("/search/properties")
@@ -66,5 +69,10 @@ public class SerachResource<T extends Property> {
     @GetMapping("/search/hotels")
     public Page<Hotel> searchBEstablishments(HotelCriteria hotelCriteria, Pageable pageable){
         return hotelQueryService.findByCriteria(hotelCriteria, pageable);
+    }
+
+    @GetMapping("/search/industrial-plants")
+    public Page<IndustrialPlant> searchBEstablishments(IndustrialPlantCriteria industrialPlantCriteria, Pageable pageable){
+        return industrialPlantQueryService.findByCriteria(industrialPlantCriteria, pageable);
     }
 }
