@@ -10,6 +10,8 @@ import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,7 @@ import java.util.List;
 /**
  * REST controller for managing Property.
  */
+@Api(description = "Endpoint to interact with all the properties")
 @RestController
 @RequestMapping("/api")
 public class PropertyResource<T extends Property> {
@@ -96,6 +99,7 @@ public class PropertyResource<T extends Property> {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of properties in body
      */
+    @ApiOperation(value = "This endpoint wil get a page of properties", notes = "You can filter using search endpoint")
     @GetMapping("/properties")
     @Timed
     public ResponseEntity<List<T>> getAllProperties(Pageable pageable) {
