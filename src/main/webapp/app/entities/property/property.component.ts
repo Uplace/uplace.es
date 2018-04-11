@@ -50,7 +50,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        /* When loading properties we pass search object
+        /*
+         * When loading properties we pass search object
          * with the query in order to know
          * if the user has searched something
          */
