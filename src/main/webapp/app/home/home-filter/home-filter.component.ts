@@ -11,10 +11,10 @@ import {Route, Router} from "@angular/router";
     templateUrl: './home-filter.component.html',
     styles: []
 })
-export class HomeFilterComponent implements OnInit, OnDestroy {
+export class HomeFilterComponent implements OnInit {
 
     filters: Filter = {};
-    search: UserSearch;
+    search: UserSearch = {};
 
     constructor(
         private filterService: FilterService,
@@ -26,21 +26,15 @@ export class HomeFilterComponent implements OnInit, OnDestroy {
         this.filterService.find().subscribe(
             (res: HttpResponse<Filter>) => {
                 this.filters = res.body;
+                this.searchService.userSearch.subscribe(search => {
+                    this.search = search;
+                });
             }
         );
-        this.searchService.userSearch.subscribe(search => {
-            this.search = search;
-            console.log('home-filter: changed');
-            console.log(this.search);
-        });
     }
 
     ngOnInit() {
         this.loadAll();
-    }
-
-    ngOnDestroy(): void {
-        console.log('Destroyed property-filter');
     }
 
     onSubmit() {

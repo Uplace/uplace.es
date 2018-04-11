@@ -11,8 +11,6 @@ export class SearchService {
     constructor() { }
 
     changeUserSearch(userSearch: UserSearch) {
-        console.log('changed user search');
-        console.log(this.userSearch);
         this.userSearchSource.next(userSearch);
     }
 

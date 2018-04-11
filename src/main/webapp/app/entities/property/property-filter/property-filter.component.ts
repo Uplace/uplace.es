@@ -10,10 +10,10 @@ import {HttpResponse} from "@angular/common/http";
     templateUrl: './property-filter.component.html',
     styles: []
 })
-export class PropertyFilterComponent implements OnInit, OnDestroy {
+export class PropertyFilterComponent implements OnInit {
 
     filters: Filter = {};
-    searchUserData: UserSearch;
+    searchUserData: UserSearch = {};
 
     constructor(
         private searchService: SearchService,
@@ -25,16 +25,10 @@ export class PropertyFilterComponent implements OnInit, OnDestroy {
 
         this.filterService.find().subscribe((res: HttpResponse<Filter>) => {
            this.filters = res.body;
+            this.searchService.userSearch.subscribe((search: UserSearch) => {
+                this.searchUserData = search;
+            });
         });
-        this.searchService.userSearch.subscribe((search: UserSearch) => {
-            this.searchUserData = search;
-            console.log('property-filter: changed');
-            console.log(this.searchUserData);
-        })
-    }
-
-    ngOnDestroy(): void {
-        console.log('Destroyed property-filter');
     }
 
     onSubmit() {
