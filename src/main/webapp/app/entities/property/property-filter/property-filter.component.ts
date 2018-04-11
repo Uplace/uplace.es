@@ -24,7 +24,7 @@ export class PropertyFilterComponent implements OnInit {
     ngOnInit() {
 
         this.filterService.find().subscribe((res: HttpResponse<Filter>) => {
-           this.filters = res.body;
+            this.filters = res.body;
             this.searchService.userSearch.subscribe((search: UserSearch) => {
                 this.searchUserData = search;
             });

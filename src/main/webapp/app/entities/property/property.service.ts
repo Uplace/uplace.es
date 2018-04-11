@@ -8,6 +8,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 import { Property } from './property.model';
 import { createRequestOption } from '../../shared';
 import {Mail} from "../../shared/model/mail.model";
+import {UserSearch} from "../../shared/search/search.model";
 
 export type EntityResponseType = HttpResponse<Property>;
 
@@ -40,15 +41,31 @@ export class PropertyService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<Property[]>> {
+    query(req?: any, search?: UserSearch): Observable<HttpResponse<Property[]>> {
         const options = createRequestOption(req);
-        return this.http.get<Property[]>(this.resourceUrl, { params: options, observe: 'response' })
+        if (search && Object.keys(search).length === 0) {
+            search.category = 'properties'
+        }
+        return this.http.get<Property[]>(SERVER_API_URL + 'api/search/' + this.transformCategory(search.category), { params: options, observe: 'response' })
             .map((res: HttpResponse<Property[]>) => this.convertArrayResponse(res));
     }
 
     delete(properties: Property[]): Observable<HttpResponse<any>> {
         const references = this.convertPropertyToReferences(properties);
         return this.http.delete<any>(`${this.resourceUrl}/${references}`, { observe: 'response' });
+    }
+
+    private transformCategory(category: string): string {
+        switch (category) {
+            case 'Apartment':
+                return 'apartments';
+            case 'Building':
+                return 'buildings';
+            case 'Establishment':
+                return 'establishments';
+            default:
+                return 'properties';
+        }
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

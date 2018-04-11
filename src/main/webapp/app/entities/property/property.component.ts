@@ -8,6 +8,8 @@ import { PropertyService } from './property.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
 import {Notification} from '../notification';
 import {ActivatedRoute, Router} from "@angular/router";
+import {SearchService} from "../../shared/search/search.service";
+import {UserSearch} from "../../shared/search/search.model";
 
 @Component({
     selector: 'up-property',
@@ -35,7 +37,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager,
         private principal: Principal,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private searchService: SearchService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -47,22 +50,19 @@ export class PropertyComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        /*this.propertyService.query().subscribe(
-            (res: HttpResponse<Property[]>) => {
-                if (this.properties.length === 0) {
-                    this.jhiAlertService.info('error.noData');
-                }
-                console.log(this.properties);
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );*/
-        this.propertyService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
-            (res: HttpResponse<Notification[]>) => this.onSuccess(res.body, res.headers),
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        /* When loading properties we pass search object
+         * with the query in order to know
+         * if the user has searched something
+         */
+        this.searchService.userSearch.subscribe((search: UserSearch) => {
+            this.propertyService.query({
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort()}, search).subscribe(
+                (res: HttpResponse<Notification[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+        });
     }
     ngOnInit() {
         this.loadAll();
