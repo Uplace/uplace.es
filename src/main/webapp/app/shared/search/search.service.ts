@@ -1,23 +1,19 @@
-import {Subject} from "rxjs/Subject";
 import {UserSearch} from "./search.model";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class SearchService {
 
-    private userSearch: UserSearch = {};
-    userSearchChanged = new Subject<UserSearch>();
+    private userSearchSource = new BehaviorSubject<UserSearch>({});
+    userSearch = this.userSearchSource.asObservable();
 
-    getSearch(): UserSearch {
-        return this.userSearch;
-    }
+    constructor() { }
 
-    setSearch(userSearch: UserSearch) {
-        this.userSearch = userSearch;
-        this.userSearchChanged.next(this.userSearch);
-    }
-
-    clearSearch() {
-        this.userSearch = {};
-        this.userSearchChanged.next(this.userSearch);
+    changeUserSearch(userSearch: UserSearch) {
+        console.log('changed user search');
+        console.log(this.userSearch);
+        this.userSearchSource.next(userSearch);
     }
 
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchService} from "../../../shared/search/search.service";
 import {UserSearch} from "../../../shared/search/search.model";
 import {FilterService} from "../../../shared/filter/filter.service";
@@ -10,10 +10,10 @@ import {HttpResponse} from "@angular/common/http";
     templateUrl: './property-filter.component.html',
     styles: []
 })
-export class PropertyFilterComponent implements OnInit {
+export class PropertyFilterComponent implements OnInit, OnDestroy {
 
     filters: Filter = {};
-    searchUserData: UserSearch = {};
+    searchUserData: UserSearch;
 
     constructor(
         private searchService: SearchService,
@@ -22,15 +22,23 @@ export class PropertyFilterComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.filterService.find().subscribe((res: HttpResponse<Filter>) => {
            this.filters = res.body;
-           this.searchUserData = this.searchService.getSearch();
         });
+        this.searchService.userSearch.subscribe((search: UserSearch) => {
+            this.searchUserData = search;
+            console.log('property-filter: changed');
+            console.log(this.searchUserData);
+        })
+    }
+
+    ngOnDestroy(): void {
+        console.log('Destroyed property-filter');
     }
 
     onSubmit() {
-        this.searchService.setSearch(this.searchUserData);
-
+        this.searchService.changeUserSearch(this.searchUserData);
     }
 
 }
