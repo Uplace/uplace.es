@@ -9,6 +9,9 @@ import { Property } from './property.model';
 import { createRequestOption } from '../../shared';
 import {Mail} from "../../shared/model/mail.model";
 import {UserSearch} from "../../shared/search/search.model";
+import {Apartment} from "../../shared/model/apartment.model";
+import {Building} from "../../shared/model/building.model";
+import {Establishment} from "../../shared/model/establishment.model";
 
 export type EntityResponseType = HttpResponse<Property>;
 
@@ -46,7 +49,7 @@ export class PropertyService {
         if (search && Object.keys(search).length === 0) {
             search.category = 'properties'
         }
-        return this.http.get<Property[]>(SERVER_API_URL + 'api/search/' + this.transformCategory(search.category), { params: options, observe: 'response' })
+        return this.http.get<Property[]>(SERVER_API_URL + 'api/search/' + this.transformSearch(search), { params: options, observe: 'response' })
             .map((res: HttpResponse<Property[]>) => this.convertArrayResponse(res));
     }
 
@@ -55,8 +58,8 @@ export class PropertyService {
         return this.http.delete<any>(`${this.resourceUrl}/${references}`, { observe: 'response' });
     }
 
-    private transformCategory(category: string): string {
-        switch (category) {
+    private transformSearch(userSearch: UserSearch): string {
+        switch (userSearch.category) {
             case 'Apartment':
                 return 'apartments';
             case 'Building':

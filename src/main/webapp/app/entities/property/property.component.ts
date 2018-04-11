@@ -10,6 +10,8 @@ import {Notification} from '../notification';
 import {ActivatedRoute, Router} from "@angular/router";
 import {SearchService} from "../../shared/search/search.service";
 import {UserSearch} from "../../shared/search/search.model";
+import {Apartment} from "../../shared/model/apartment.model";
+import {Building} from "../../shared/model/building.model";
 
 @Component({
     selector: 'up-property',
@@ -80,6 +82,24 @@ export class PropertyComponent implements OnInit, OnDestroy {
         // this.page = pagingParams.page;
         this.properties = data;
         console.log(this.properties);
+        this.properties.forEach((property) => {
+            // returns an array of all attributes of the object
+            // console.log(Object.keys(property));
+            // console.log((<Apartment>property));
+
+            /**
+             * Wrap this and add it to the service
+             * Try to populate on property detail using the Object.keys(foo)
+             */
+            if (property.propertyType === 'Apartment') {
+                console.log(Object.assign(new Apartment(), property));
+            } else if (property.propertyType === 'Building') {
+                console.log(Object.assign(new Building(), property));
+            } else {
+                console.log(property)
+            }
+            // console.log(new Apartment())
+        })
     }
 
     ngOnDestroy() {
