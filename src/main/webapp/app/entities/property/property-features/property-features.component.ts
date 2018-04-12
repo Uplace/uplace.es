@@ -21,11 +21,18 @@ export class PropertyFeaturesComponent implements OnInit {
     }
 
     getKeys(property): string[] {
-        return Object.keys(property).map((key) => {
-            if (key != this.excludedAttributes[0]){
-                return key;
-            }
-        });
+        return Object.keys(property);
+        /**
+         * Implement this on a method and filter by the excluded arrays
+         * */
+        /*return Object.keys(property).filter(key => {
+            this.excludedAttributes.forEach((attribute) => {
+                if (key === attribute) {
+                    console.log('key ' + key + ' excluded');
+                    return key;
+                }
+            })
+        })*/
     }
 
 }
