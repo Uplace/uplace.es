@@ -46,29 +46,14 @@ export class PropertyService {
 
     query(req?: any, search?: UserSearch): Observable<HttpResponse<Property[]>> {
         const options = createRequestOption(req);
-        if (search && Object.keys(search).length === 0) {
-            search.category = 'properties'
-        }
-        return this.http.get<Property[]>(SERVER_API_URL + 'api/search/' + this.transformSearch(search), { params: options, observe: 'response' })
+
+        return this.http.get<Property[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<Property[]>) => this.convertArrayResponse(res));
     }
 
     delete(properties: Property[]): Observable<HttpResponse<any>> {
         const references = this.convertPropertyToReferences(properties);
         return this.http.delete<any>(`${this.resourceUrl}/${references}`, { observe: 'response' });
-    }
-
-    private transformSearch(userSearch: UserSearch): string {
-        switch (userSearch.category) {
-            case 'Apartment':
-                return 'apartments';
-            case 'Building':
-                return 'buildings';
-            case 'Establishment':
-                return 'establishments';
-            default:
-                return 'properties';
-        }
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
@@ -98,7 +83,14 @@ export class PropertyService {
      * Convert a returned JSON object to Property.
      */
     private convertItemFromServer(property: Property): Property {
-        const copy: Property = Object.assign({}, property);
+        let copy: Property = Object.assign({}, property);
+        if (property.propertyType === 'Apartment') {
+            copy = Object.assign(new Apartment(), property);
+        } else if (property.propertyType === 'Building') {
+            copy = Object.assign(new Building(), property);
+        } else if (property.propertyType === 'Establishment') {
+            copy = Object.assign(new Property(), property);
+        }
         copy.created = this.dateUtils
             .convertDateTimeFromServer(property.created);
         copy.updated = this.dateUtils

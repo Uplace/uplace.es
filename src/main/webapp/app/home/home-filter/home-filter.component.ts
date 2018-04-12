@@ -1,10 +1,10 @@
-import {Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpResponse} from "@angular/common/http";
 import {FilterService} from "../../shared/filter/filter.service";
 import {Filter} from "../../shared/filter/filter.model";
 import {SearchService} from "../../shared/search/search.service";
 import {UserSearch} from "../../shared/search/search.model";
-import {Route, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'up-home-filter',
@@ -20,7 +20,8 @@ export class HomeFilterComponent implements OnInit {
         private filterService: FilterService,
         private searchService: SearchService,
         private router: Router
-    ) { }
+    ) {
+    }
 
     loadAll() {
         this.filterService.find().subscribe(

@@ -3,6 +3,8 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.domain.Property;
 import com.arnaugarcia.uplace.domain.Request;
 import com.arnaugarcia.uplace.service.InquireService;
+import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
+import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
@@ -32,7 +34,7 @@ import java.util.List;
 @Api(description = "Endpoint to interact with all the properties")
 @RestController
 @RequestMapping("/api")
-public class PropertyResource<T extends Property> {
+public class PropertyResource<T extends Property, C extends PropertyCriteria> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyResource.class);
 
@@ -59,7 +61,7 @@ public class PropertyResource<T extends Property> {
     @Timed
     public ResponseEntity<T> createProperty(@Valid @RequestBody T property) throws URISyntaxException {
         log.debug("REST request to save Property : {}", property);
-
+        System.out.println(property.getClass());
         if (property.getReference() != null) {
             throw new BadRequestAlertException("A new property cannot already have a Reference", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
@@ -102,8 +104,9 @@ public class PropertyResource<T extends Property> {
     @ApiOperation(value = "This endpoint wil get a page of properties", notes = "You can filter using search endpoint")
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<List<T>> getAllProperties(Pageable pageable) {
+    public ResponseEntity<List<T>> getAllProperties(C criteria, Pageable pageable) {
         log.debug("REST request to get all Properties");
+        System.out.println(criteria.getClass());
         Page<T> page = propertyService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/properties");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);

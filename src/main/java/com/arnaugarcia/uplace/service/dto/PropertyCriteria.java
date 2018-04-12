@@ -2,6 +2,9 @@ package com.arnaugarcia.uplace.service.dto;
 
 import java.io.Serializable;
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
@@ -24,6 +27,14 @@ import org.hibernate.validator.internal.xml.PropertyType;
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.CLASS,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "criteriaType")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = ApartmentCriteria.class, name = "apartment"),
+    @JsonSubTypes.Type(value = BuildingCriteria.class, name = "building")
+})
 public class PropertyCriteria implements Serializable {
     /**
      * Class for filtering TransactionType
@@ -32,6 +43,8 @@ public class PropertyCriteria implements Serializable {
     }
 
     private static final long serialVersionUID = 1L;
+
+    private String criteriaType;
 
     private StringFilter title;
 
@@ -74,6 +87,14 @@ public class PropertyCriteria implements Serializable {
 
     public StringFilter getPropertyType() {
         return propertyType;
+    }
+
+    public String getCriteriaType() {
+        return criteriaType;
+    }
+
+    public void setCriteriaType(String criteriaType) {
+        this.criteriaType = criteriaType;
     }
 
     public void setPropertyType(StringFilter propertyType) {
@@ -175,7 +196,6 @@ public class PropertyCriteria implements Serializable {
     public void setSurface(IntegerFilter surface) {
         this.surface = surface;
     }
-
 
     @Override
     public String toString() {

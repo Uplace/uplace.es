@@ -1,7 +1,8 @@
 <div class="listing-detail-section" id="listing-detail-section-amenities" data-title="Amenities" [ngSwitch]="property.propertyType">
     <h2>Features</h2>
     <ul class="amenities" *ngSwitchCase="'Apartment'">
-        <up-property-feature [fieldValue]="property.elevator" [fieldName]="'uplaceApp.apartment.elevator' | translate"></up-property-feature>
+        <up-property-feature *ngFor="let key of getKeys(property)" [fieldName]="'uplaceApp.' + property.propertyType.toLowerCase() + '.' + key | translate" [fieldValue]="property[key]"></up-property-feature>
+        <!--<up-property-feature [fieldValue]="property.elevator" [fieldName]="'uplaceApp.apartment.elevator' | translate"></up-property-feature>
         <up-property-feature [fieldValue]="property.ac" [fieldName]="'uplaceApp.apartment.ac' | translate"></up-property-feature>
         <up-property-feature [fieldValue]="property.heat" [fieldName]="'uplaceApp.apartment.heat' | translate"></up-property-feature>
         <up-property-feature [fieldValue]="property.parking" [fieldName]="'uplaceApp.apartment.parking' | translate"></up-property-feature>
@@ -14,7 +15,7 @@
         <up-property-feature [fieldValue]="property.nearTransport" [fieldName]="'uplaceApp.apartment.nearTransport' | translate"></up-property-feature>
         <up-property-feature [fieldValue]="property.reformed" [fieldName]="'uplaceApp.apartment.reformed' | translate"></up-property-feature>
         <up-property-feature [fieldValue]="property.certificateHabitability" [fieldName]="'uplaceApp.apartment.certificateHabitability' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.kitchenOffice" [fieldName]="'uplaceApp.apartment.kitchenOffice' | translate"></up-property-feature>
+        <up-property-feature [fieldValue]="property.kitchenOffice" [fieldName]="'uplaceApp.apartment.kitchenOffice' | translate"></up-property-feature>-->
     </ul>
     <ul class="amenities" *ngSwitchCase="'Hotel'">
         <up-property-feature [fieldValue]="property.operator" [fieldName]="'uplaceApp.hotel.operator' | translate"></up-property-feature>

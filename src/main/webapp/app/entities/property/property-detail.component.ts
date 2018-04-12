@@ -38,6 +38,7 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
                 this.property = propertyResponse.body;
             });
     }
+
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }
