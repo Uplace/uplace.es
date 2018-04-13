@@ -11,17 +11,18 @@ export class PropertyFeaturesComponent implements OnInit {
 
     @Input() property: Property;
     Select = Select;
-    excludedAttributes = ['requests', 'photos', 'priceTransfer', 'priceSell', 'surface', 'id', 'reference'];
+    excludedAttributesProperty = ['id', 'title', 'created', 'updated', 'description', 'transaction', 'reference', 'priceSell', 'priceRent', 'priceTransfer', 'yearConstruction', 'visible', 'surface', 'requests', 'photos', 'propertyType', 'realEstate'];
+    excludedAttributes = [];
 
     constructor() {
+        this.excludedAttributes.push(...this.excludedAttributesProperty);
     }
 
     ngOnInit() {
-
     }
 
     getKeys(property): string[] {
-        return Object.keys(property).filter(x => !this.excludedAttributes.includes(x));
+        return Object.keys(property).filter(attribute => !this.excludedAttributes.includes(attribute));
     }
 
 }
