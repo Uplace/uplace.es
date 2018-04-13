@@ -117,7 +117,7 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true, nullable = false)
     private Location location;
 
@@ -132,7 +132,7 @@ public class Property implements Serializable {
                inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Request> requests = new HashSet<>();
@@ -387,6 +387,14 @@ public class Property implements Serializable {
         this.managers.remove(agent);
         agent.getProperties().remove(this);
         return this;
+    }
+
+    public Set<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(Set<Request> requests) {
+        this.requests = requests;
     }
 
     public void setManagers(Set<Agent> agents) {

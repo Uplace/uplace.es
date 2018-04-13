@@ -12,6 +12,12 @@ import {UserSearch} from "../../shared/search/search.model";
 import {Apartment} from "../../shared/model/apartment.model";
 import {Building} from "../../shared/model/building.model";
 import {Establishment} from "../../shared/model/establishment.model";
+import {Business} from "../../shared/model/business.model";
+import {Hotel} from "../../shared/model/hotel.model";
+import {IndustrialPlant} from "../../shared/model/industrial-plant.model";
+import {Office} from "../../shared/model/office.model";
+import {Parking} from "../../shared/model/parking.model";
+import {Terrain} from "../../shared/model/terrain.model";
 
 export type EntityResponseType = HttpResponse<Property>;
 
@@ -84,13 +90,35 @@ export class PropertyService {
      */
     private convertItemFromServer(property: Property): Property {
         let copy: Property = Object.assign({}, property);
-        if (property.propertyType === 'Apartment') {
-            copy = Object.assign(new Apartment(), property);
-        } else if (property.propertyType === 'Building') {
-            copy = Object.assign(new Building(), property);
-        } else if (property.propertyType === 'Establishment') {
-            copy = Object.assign(new Property(), property);
+        switch (property.propertyType) {
+            case 'Apartment':
+                copy = Object.assign(new Apartment(), property);
+                break;
+            case 'Building':
+                copy = Object.assign(new Building(), property);
+                break;
+            case 'Establishment':
+                copy = Object.assign(new Establishment(), property);
+                break;
+            case 'Business':
+                copy = Object.assign(new Business(), property);
+                break;
+            case 'Hotel':
+                copy = Object.assign(new Hotel(), property);
+                break;
+            case 'IndustrialPlant':
+                copy = Object.assign(new IndustrialPlant(), property);
+                break;
+            case 'Office':
+                copy = Object.assign(new Office(), property);
+                break;
+            case 'Parking':
+                copy = Object.assign(new Parking(), property);
+                break;
+            case 'Terrain':
+                copy = Object.assign(new Terrain(), property);
         }
+
         copy.created = this.dateUtils
             .convertDateTimeFromServer(property.created);
         copy.updated = this.dateUtils
