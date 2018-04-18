@@ -1,14 +1,14 @@
 package com.arnaugarcia.uplace.web.rest;
 
-import com.arnaugarcia.uplace.domain.Property;
-import com.arnaugarcia.uplace.domain.Request;
+import com.arnaugarcia.uplace.domain.*;
+import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.InquireService;
-import com.arnaugarcia.uplace.service.dto.BuildingCriteria;
+import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
-import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
+import com.arnaugarcia.uplace.web.rest.util.CriteriaUtil;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
@@ -18,15 +18,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
+
+import static org.springframework.data.jpa.domain.Specifications.where;
 
 /**
  * REST controller for managing Property.
@@ -38,17 +43,21 @@ public class PropertyResource<T extends Property, C extends PropertyCriteria> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyResource.class);
 
-    private final PropertyQueryService<T> propertyQueryService;
+    private final PropertyRepository<T> propertyRepository;
 
     private final InquireService inquireService;
 
     private final PropertyService<T> propertyService;
 
-    public PropertyResource(PropertyQueryService<T> propertyQueryService, PropertyService<T> propertyService, InquireService inquireService) {
-        this.propertyQueryService = propertyQueryService;
-        this.propertyService = propertyService;
+    private final CriteriaUtil<T> criteriaUtil;
+
+    public PropertyResource(PropertyRepository<T> propertyRepository, InquireService inquireService, PropertyService<T> propertyService, CriteriaUtil<T> criteriaUtil) {
+        this.propertyRepository = propertyRepository;
         this.inquireService = inquireService;
+        this.propertyService = propertyService;
+        this.criteriaUtil = criteriaUtil;
     }
+
 
     /**
      * POST  /properties : Create a new property.
@@ -101,16 +110,18 @@ public class PropertyResource<T extends Property, C extends PropertyCriteria> {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of properties in body
      */
-    @ApiOperation(value = "This endpoint wil get a page of properties", notes = "You can filter using search endpoint")
+    @ApiOperation(value = "This endpoint wil get a page of properties", notes = "You can filter using search endpoints")
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<List<T>> getAllProperties(C criteria, Pageable pageable) {
+    public ResponseEntity<Page<T>> getAllProperties(@ApiIgnore @RequestParam Map<String,String> allRequestParams, ApartmentCriteria apartmentCriteria, Pageable pageable) {
         log.debug("REST request to get all Properties");
-        System.out.println(criteria.getClass());
-        Page<T> page = propertyService.findAll(pageable);
+        Specification<T> specification = criteriaUtil.createSpecification(allRequestParams);
+        Page<T> page = propertyRepository.findAll(specification, pageable);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/properties");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
+
 
     /**
      * GET  /properties/{reference} : get the property by reference

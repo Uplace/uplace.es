@@ -119,16 +119,6 @@ public class PropertyResourceIntTest {
 
     private Property property;
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final PropertyResource propertyResource = new PropertyResource(propertyQueryService, propertyService, inquireService);
-        this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-    }
 
     /**
      * Create an entity for this test.
