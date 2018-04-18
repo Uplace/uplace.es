@@ -5,12 +5,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.*;
+
+
+// TODO : Implement ENUM on OPERATION and EnumConverter
+enum OperationType {
+    EQUAL, MORE_THAN, LESS_THAN, SPECIFIED
+}
 
 class Param {
     private String attribute;
@@ -60,14 +61,11 @@ class Param {
 @Component
 public class CriteriaUtil<T extends Property> {
 
-    private List<Param> paramList = new ArrayList<>();
-
     public Specification<T> createSpecification(Map<String, String> criteria) {
-        paramList = new ArrayList<>();
-        paramList = convertCriteria(criteria);
+        List<Param> params = convertCriteria(criteria);
         Specifications<T> specification = Specifications.where(null);
 
-        for (Param param : paramList) {
+        for (Param param : params) {
             specification = specification.and(buildSpecification(param));
         }
 
@@ -75,10 +73,19 @@ public class CriteriaUtil<T extends Property> {
     }
 
     private Specification<T> buildSpecification(Param param) {
-        return (root, query, builder) -> builder.equal(root.get(param.getAttribute()), param.getValues().get(0));
+        switch (param.getOperation()) {
+            case "equals":
+                return (root, query, builder) -> builder.equal(root.get(param.getAttribute()), param.getValues().get(0));
+            case "greaterThan":
+                return (root, criteriaQuery, builder) -> builder.greaterThan(root.get(param.getAttribute()), Integer.parseInt(param.getValues().get(0)));
+                default:
+                    return null;
+        }
+
     }
 
     private List<Param> convertCriteria(Map<String, String> criteriaMap) {
+        List<Param> paramList = new ArrayList<>();
         criteriaMap.forEach((k, v) -> {
             Param param = createParam(k, v);
             if (param != null) paramList.add(param);
