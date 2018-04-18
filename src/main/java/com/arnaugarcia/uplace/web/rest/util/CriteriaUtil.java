@@ -60,13 +60,10 @@ class Param {
 @Component
 public class CriteriaUtil<T extends Property> {
 
-    private List<Param> paramList;
+    private List<Param> paramList = new ArrayList<>();
 
     public Specification<T> createSpecification(Map<String, String> criteria) {
-        paramList = new ArrayList<>();
-        ArrayList<String> values = new ArrayList<>();
-        values.add("2233");
-        paramList.add(new Param("surface", "equal", values));
+        convertCriteria(criteria);
         Specifications<T> specification = Specifications.where(null);
         /*for (Param param : paramList) {
             specification.and(buildSpecification(param));
@@ -74,6 +71,7 @@ public class CriteriaUtil<T extends Property> {
         for (Param param : paramList) {
             System.out.println(param);
         }
+
         specification = specification.and(buildSpecification(paramList.get(0)));
         return specification;
     }
