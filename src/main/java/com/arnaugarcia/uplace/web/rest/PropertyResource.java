@@ -113,7 +113,7 @@ public class PropertyResource<T extends Property, C extends PropertyCriteria> {
     @ApiOperation(value = "This endpoint wil get a page of properties", notes = "You can filter using search endpoints")
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<Page<T>> getAllProperties(@ApiIgnore @RequestParam Map<String,String> allRequestParams, ApartmentCriteria apartmentCriteria, Pageable pageable) {
+    public ResponseEntity<Page<T>> getAllProperties(@ApiIgnore @RequestParam Map<String,String> allRequestParams, Pageable pageable) {
         log.debug("REST request to get all Properties");
         Specification<T> specification = criteriaUtil.createSpecification(allRequestParams);
         Page<T> page = propertyRepository.findAll(specification, pageable);

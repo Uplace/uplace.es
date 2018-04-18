@@ -63,16 +63,14 @@ public class CriteriaUtil<T extends Property> {
     private List<Param> paramList = new ArrayList<>();
 
     public Specification<T> createSpecification(Map<String, String> criteria) {
-        convertCriteria(criteria);
+        paramList = new ArrayList<>();
+        paramList = convertCriteria(criteria);
         Specifications<T> specification = Specifications.where(null);
-        /*for (Param param : paramList) {
-            specification.and(buildSpecification(param));
-        }*/
+
         for (Param param : paramList) {
-            System.out.println(param);
+            specification = specification.and(buildSpecification(param));
         }
 
-        specification = specification.and(buildSpecification(paramList.get(0)));
         return specification;
     }
 
@@ -80,12 +78,13 @@ public class CriteriaUtil<T extends Property> {
         return (root, query, builder) -> builder.equal(root.get(param.getAttribute()), param.getValues().get(0));
     }
 
-    private void convertCriteria(Map<String, String> criteriaMap) {
+    private List<Param> convertCriteria(Map<String, String> criteriaMap) {
         criteriaMap.forEach((k, v) -> {
             Param param = createParam(k, v);
             if (param != null) paramList.add(param);
         });
         paramList.forEach(System.out::println);
+        return paramList;
     }
 
     private Param createParam(String key, String value) {
