@@ -1,10 +1,13 @@
 package com.arnaugarcia.uplace.web.rest.util;
 
+import com.arnaugarcia.uplace.domain.Apartment;
+import com.arnaugarcia.uplace.domain.Office;
 import com.arnaugarcia.uplace.domain.Property;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.Root;
 import java.util.*;
 
 
@@ -59,11 +62,12 @@ class Param {
 }
 
 @Component
-public class CriteriaUtil<T extends Property> {
+public class CriteriaUtil {
 
-    public Specification<T> createSpecification(Map<String, String> criteria) {
+    public Specification createSpecification(Map<String, String> criteria) {
+
         List<Param> params = convertCriteria(criteria);
-        Specifications<T> specification = Specifications.where(null);
+        Specifications specification = Specifications.where(null);
 
         for (Param param : params) {
             specification = specification.and(buildSpecification(param));
@@ -72,16 +76,26 @@ public class CriteriaUtil<T extends Property> {
         return specification;
     }
 
-    private Specification<T> buildSpecification(Param param) {
-        switch (param.getOperation()) {
-            case "equals":
-                return (root, query, builder) -> builder.equal(root.get(param.getAttribute()), param.getValues().get(0));
-            case "greaterThan":
-                return (root, criteriaQuery, builder) -> builder.greaterThan(root.get(param.getAttribute()), Integer.parseInt(param.getValues().get(0)));
+    private Specification buildSpecification(Param param) {
+        return (root, criteriaQuery, builder) -> {
+            root = criteriaQuery.from(Property.class);
+            Root<Apartment> apartmentRoot = builder.treat(root, Apartment.class);
+            Root<Office> officeRoot = builder.treat(root, Office.class);
+            switch (param.getOperation()) {
+                case "equals":
+                    return builder.equal(root.get(param.getAttribute()), param.getValues().get(0));
+                case "greaterThan":
+                    return builder.greaterThan(root.get(param.getAttribute()), Integer.parseInt(param.getValues().get(0)));
+                case "greaterOrEqualThan":
+                    return builder.greaterThanOrEqualTo(root.get(param.getAttribute()), Integer.parseInt(param.getValues().get(0)));
+                case "lessThan":
+                    return builder.lessThan(root.get(param.getAttribute()), Integer.parseInt(param.getValues().get(0)));
+                case "lessOrEqualThan":
+                    return builder.lessThanOrEqualTo(root.get(param.getAttribute()), Integer.parseInt(param.getValues().get(0)));
                 default:
                     return null;
-        }
-
+            }
+        };
     }
 
     private List<Param> convertCriteria(Map<String, String> criteriaMap) {

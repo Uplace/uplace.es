@@ -6,6 +6,7 @@ import com.arnaugarcia.uplace.service.InquireService;
 import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.service.PropertyService;
+import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.arnaugarcia.uplace.web.rest.util.CriteriaUtil;
@@ -39,25 +40,24 @@ import static org.springframework.data.jpa.domain.Specifications.where;
 @Api(description = "Endpoint to interact with all the properties")
 @RestController
 @RequestMapping("/api")
-public class PropertyResource<T extends Property, C extends PropertyCriteria> {
+public class PropertyResource<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(PropertyResource.class);
 
-    private final PropertyRepository<T> propertyRepository;
+    private final PropertyQueryService<T> propertyQueryService;
 
     private final InquireService inquireService;
 
     private final PropertyService<T> propertyService;
 
-    private final CriteriaUtil<T> criteriaUtil;
+    private final CriteriaUtil criteriaUtil;
 
-    public PropertyResource(PropertyRepository<T> propertyRepository, InquireService inquireService, PropertyService<T> propertyService, CriteriaUtil<T> criteriaUtil) {
-        this.propertyRepository = propertyRepository;
+    public PropertyResource(PropertyQueryService<T> propertyQueryService, InquireService inquireService, PropertyService<T> propertyService, CriteriaUtil criteriaUtil) {
+        this.propertyQueryService = propertyQueryService;
         this.inquireService = inquireService;
         this.propertyService = propertyService;
         this.criteriaUtil = criteriaUtil;
     }
-
 
     /**
      * POST  /properties : Create a new property.
@@ -70,7 +70,7 @@ public class PropertyResource<T extends Property, C extends PropertyCriteria> {
     @Timed
     public ResponseEntity<T> createProperty(@Valid @RequestBody T property) throws URISyntaxException {
         log.debug("REST request to save Property : {}", property);
-        System.out.println(property.getClass());
+
         if (property.getReference() != null) {
             throw new BadRequestAlertException("A new property cannot already have a Reference", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
@@ -95,9 +95,11 @@ public class PropertyResource<T extends Property, C extends PropertyCriteria> {
     @Timed
     public ResponseEntity<T> updateProperty(@Valid @RequestBody T property) throws URISyntaxException {
         log.debug("REST request to update Property : {}", property);
+
         if (property.getId() == null) {
             return createProperty(property);
         }
+
         T result = propertyService.save(property);
 
         return ResponseEntity.ok()
@@ -113,11 +115,9 @@ public class PropertyResource<T extends Property, C extends PropertyCriteria> {
     @ApiOperation(value = "This endpoint wil get a page of properties", notes = "You can filter using search endpoints")
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<Page<T>> getAllProperties(@ApiIgnore @RequestParam Map<String,String> allRequestParams, ApartmentCriteria apartmentCriteria, Pageable pageable) {
+    public ResponseEntity<Page<T>> getAllProperties(PropertyCriteria propertyCriteria, Pageable pageable) {
         log.debug("REST request to get all Properties");
-        Specification<T> specification = criteriaUtil.createSpecification(allRequestParams);
-        Page<T> page = propertyRepository.findAll(specification, pageable);
-
+        Page<T> page = propertyQueryService.findByCriteria(propertyCriteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/properties");
         return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
