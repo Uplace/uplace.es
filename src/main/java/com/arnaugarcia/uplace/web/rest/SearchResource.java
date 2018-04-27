@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class SerachResource<T extends Property> {
+public class SearchResource<T extends Property> {
 
     private final Logger log = LoggerFactory.getLogger(RequestResource.class);
 
@@ -41,7 +41,7 @@ public class SerachResource<T extends Property> {
 
     private final TerrainQueryService terrainQueryService;
 
-    public SerachResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService, OfficeQueryService officeQueryService, ParkingQueryService parkingQueryService, TerrainQueryService terrainQueryService) {
+    public SearchResource(PropertyQueryService<T> propertyQueryService, ApartmentQueryService apartmentQueryService, BuildingQueryService buildingQueryService, BusinessQueryService businessQueryService, EstablishmentQueryService establishmentQueryService, HotelQueryService hotelQueryService, IndustrialPlantQueryService industrialPlantQueryService, OfficeQueryService officeQueryService, ParkingQueryService parkingQueryService, TerrainQueryService terrainQueryService) {
         this.propertyQueryService = propertyQueryService;
         this.apartmentQueryService = apartmentQueryService;
         this.buildingQueryService = buildingQueryService;
