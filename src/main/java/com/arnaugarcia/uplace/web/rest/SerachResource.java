@@ -69,42 +69,58 @@ public class SerachResource<T extends Property> {
     }
 
     @GetMapping("/search/buildings")
-    public Page<Building> searchApartments(BuildingCriteria buildingCriteria, Pageable pageable){
-        return buildingQueryService.findByCriteria(buildingCriteria, pageable);
+    public ResponseEntity<Page<Building>> searchApartments(BuildingCriteria buildingCriteria, Pageable pageable){
+        Page<Building> page = buildingQueryService.findByCriteria(buildingCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/buildings");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/business")
-    public Page<Business> searchBusiness(BusinessCriteria businessCriteria, Pageable pageable){
-        return businessQueryService.findByCriteria(businessCriteria, pageable);
+    public ResponseEntity<Page<Business>> searchBusiness(BusinessCriteria businessCriteria, Pageable pageable){
+        Page<Business> page = businessQueryService.findByCriteria(businessCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/business");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/establishments")
-    public Page<Establishment> searchBEstablishments(EstablishmentCriteria establishmentCriteria, Pageable pageable){
-        return establishmentQueryService.findByCriteria(establishmentCriteria, pageable);
+    public ResponseEntity<Page<Establishment>> searchBEstablishments(EstablishmentCriteria establishmentCriteria, Pageable pageable){
+        Page<Establishment> page = establishmentQueryService.findByCriteria(establishmentCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/establishments");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/hotels")
-    public Page<Hotel> searchHotels(HotelCriteria hotelCriteria, Pageable pageable){
-        return hotelQueryService.findByCriteria(hotelCriteria, pageable);
+    public ResponseEntity<Page<Hotel>> searchHotels(HotelCriteria hotelCriteria, Pageable pageable){
+        Page<Hotel> page = hotelQueryService.findByCriteria(hotelCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/hotels");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/industrial-plants")
-    public Page<IndustrialPlant> searchIndustrialPlants(IndustrialPlantCriteria industrialPlantCriteria, Pageable pageable){
-        return industrialPlantQueryService.findByCriteria(industrialPlantCriteria, pageable);
+    public ResponseEntity<Page<IndustrialPlant>> searchIndustrialPlants(IndustrialPlantCriteria industrialPlantCriteria, Pageable pageable){
+        Page<IndustrialPlant> page = industrialPlantQueryService.findByCriteria(industrialPlantCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/industrial-plants");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/offices")
-    public Page<Office> searchOffices(OfficeCriteria officeCriteria, Pageable pageable){
-        return officeQueryService.findByCriteria(officeCriteria, pageable);
+    public ResponseEntity<Page<Office>> searchOffices(OfficeCriteria officeCriteria, Pageable pageable){
+        Page<Office> page = officeQueryService.findByCriteria(officeCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/offices");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/parkings")
-    public Page<Parking> searchParkings(ParkingCriteria parkingCriteria, Pageable pageable){
-        return parkingQueryService.findByCriteria(parkingCriteria, pageable);
+    public ResponseEntity<Page<Parking>> searchParkings(ParkingCriteria parkingCriteria, Pageable pageable){
+        Page<Parking> page = parkingQueryService.findByCriteria(parkingCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/parkings");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/terrains")
-    public Page<Terrain> searchTerrains(TerrainCriteria terrainCriteria, Pageable pageable){
-        return terrainQueryService.findByCriteria(terrainCriteria, pageable);
+    public ResponseEntity<Page<Terrain>> searchTerrains(TerrainCriteria terrainCriteria, Pageable pageable){
+        Page<Terrain> page = terrainQueryService.findByCriteria(terrainCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/terrains");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 }
