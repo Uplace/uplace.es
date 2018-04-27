@@ -3,10 +3,14 @@ package com.arnaugarcia.uplace.web.rest;
 import com.arnaugarcia.uplace.domain.*;
 import com.arnaugarcia.uplace.service.dto.*;
 import com.arnaugarcia.uplace.service.queries.*;
+import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,13 +55,17 @@ public class SerachResource<T extends Property> {
     }
 
     @GetMapping("/search/properties")
-    public Page<T> searchProperties(PropertyCriteria propertyCriteria, Pageable pageable){
-        return propertyQueryService.findByCriteria(propertyCriteria, pageable);
+    public ResponseEntity<Page<T>> searchProperties(PropertyCriteria propertyCriteria, Pageable pageable){
+        Page<T> page = propertyQueryService.findByCriteria(propertyCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/properties");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/apartments")
-    public Page<Apartment> searchApartments(ApartmentCriteria apartmentCriteria, Pageable pageable){
-        return apartmentQueryService.findByCriteria(apartmentCriteria, pageable);
+    public ResponseEntity<Page<Apartment>> searchApartments(ApartmentCriteria apartmentCriteria, Pageable pageable){
+        Page<Apartment> page = apartmentQueryService.findByCriteria(apartmentCriteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/search/apartments");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/search/buildings")
