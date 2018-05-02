@@ -1,8 +1,6 @@
 package com.arnaugarcia.uplace.web.rest.util;
 
-import com.arnaugarcia.uplace.domain.Apartment;
-import com.arnaugarcia.uplace.domain.Office;
-import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
@@ -81,6 +79,11 @@ public class CriteriaUtil {
             root = criteriaQuery.from(Property.class);
             Root<Apartment> apartmentRoot = builder.treat(root, Apartment.class);
             Root<Office> officeRoot = builder.treat(root, Office.class);
+            criteriaQuery.select(root).where(builder.and(
+                builder.greaterThan(root.get(param.getAttribute()), param.getValues().get(0)),
+                builder.equal(officeRoot.get(Office_.surface), "foo"),
+                builder.equal(apartmentRoot.get(Apartment_.storage), "bar")
+            ));
             switch (param.getOperation()) {
                 case "equals":
                     return builder.equal(root.get(param.getAttribute()), param.getValues().get(0));
