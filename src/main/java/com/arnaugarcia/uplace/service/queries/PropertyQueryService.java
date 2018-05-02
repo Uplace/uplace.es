@@ -49,7 +49,7 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
     public Page<T> findByCriteria(SearchDTO filter, Pageable page) {
         log.debug("find by criteria : {}, page: {}", filter, page);
 
-        Page<T> properties = propertyRepository.findAll((root, query, cb) -> {
+        return propertyRepository.findAll((root, query, cb) -> {
 
             List<Predicate> predicates = new ArrayList<>();
 
@@ -66,7 +66,6 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
             return cb.and(predicates.toArray(new Predicate[0]));
         }, page);
 
-        return properties;
     }
 
 }
