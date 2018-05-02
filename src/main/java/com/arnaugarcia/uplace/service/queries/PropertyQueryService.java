@@ -56,11 +56,16 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
             // If designation is specified in filter, add equal where clause
             if (filter.getCity() != null) {
                 Join<Property, Location> propertyLocationJoin = root.join("location");
-                predicates.add(cb.equal(propertyLocationJoin.get("city"), filter.getCity()));
+                predicates.add(cb.like(propertyLocationJoin.get(Location_.city), "%" + filter.getCity() + "%"));
             }
 
             if (filter.getCategory() != null) {
                 predicates.add(cb.equal(root.get(Property_.propertyType), filter.getCategory()));
+            }
+
+            if (filter.getKeywords() != null) {
+                predicates.add(cb.like(root.get(Property_.title), "%" + filter.getKeywords() + "%"));
+                predicates.add(cb.like(root.get(Property_.description), "%" + filter.getKeywords() + "%"));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

@@ -6,6 +6,8 @@ public class SearchDTO {
 
     private String category;
 
+    private String keywords;
+
     public SearchDTO() { }
 
     public String getCity() {
@@ -22,6 +24,14 @@ public class SearchDTO {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     @Override
