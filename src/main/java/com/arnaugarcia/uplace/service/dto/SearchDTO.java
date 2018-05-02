@@ -12,6 +12,10 @@ public class SearchDTO {
 
     private Double priceMax;
 
+    private Integer minBedrooms;
+
+    private Integer maxBedrooms;
+
     public SearchDTO() { }
 
     public String getCity() {
@@ -52,6 +56,22 @@ public class SearchDTO {
 
     public void setPriceMax(Double priceMax) {
         this.priceMax = priceMax;
+    }
+
+    public Integer getMinBedrooms() {
+        return minBedrooms;
+    }
+
+    public void setMinBedrooms(Integer minBedrooms) {
+        this.minBedrooms = minBedrooms;
+    }
+
+    public Integer getMaxBedrooms() {
+        return maxBedrooms;
+    }
+
+    public void setMaxBedrooms(Integer maxBedrooms) {
+        this.maxBedrooms = maxBedrooms;
     }
 
     @Override
