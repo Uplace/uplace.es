@@ -3,6 +3,7 @@ package com.arnaugarcia.uplace.service.queries;
 import com.arnaugarcia.uplace.domain.Location;
 import com.arnaugarcia.uplace.domain.Location_;
 import com.arnaugarcia.uplace.domain.Property;
+import com.arnaugarcia.uplace.domain.Property_;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.dto.SearchDTO;
 import io.github.jhipster.service.QueryService;
@@ -53,13 +54,13 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
             List<Predicate> predicates = new ArrayList<>();
 
             // If designation is specified in filter, add equal where clause
-            /*if (filter.getCity() != null) {
-                Root<Location> locationRoot = query.from(Location.class);
-                predicates.add(cb.equal(locationRoot.get("city"), filter.getCity()));
-            }*/
+            if (filter.getCity() != null) {
+                Join<Property, Location> propertyLocationJoin = root.join("location");
+                predicates.add(cb.equal(propertyLocationJoin.get("city"), filter.getCity()));
+            }
 
             if (filter.getCategory() != null) {
-                predicates.add(cb.equal(root.get("propertyType"), filter.getCategory()));
+                predicates.add(cb.equal(root.get(Property_.propertyType), filter.getCategory()));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));
