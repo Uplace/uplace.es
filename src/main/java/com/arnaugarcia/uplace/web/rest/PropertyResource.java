@@ -6,6 +6,7 @@ import com.arnaugarcia.uplace.service.InquireService;
 import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
 import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.service.PropertyService;
+import com.arnaugarcia.uplace.service.dto.SearchDTO;
 import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
@@ -13,6 +14,7 @@ import com.arnaugarcia.uplace.web.rest.util.CriteriaUtil;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
+import com.google.common.collect.ImmutableMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -29,6 +31,8 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -115,9 +119,9 @@ public class PropertyResource<T extends Property> {
     @ApiOperation(value = "This endpoint wil get a page of properties", notes = "You can filter using search endpoints")
     @GetMapping("/properties")
     @Timed
-    public ResponseEntity<Page<T>> getAllProperties(PropertyCriteria propertyCriteria, Pageable pageable) {
+    public ResponseEntity<Page<T>> getAllProperties(SearchDTO searchDTO, Pageable pageable) {
         log.debug("REST request to get all Properties");
-        Page<T> page = propertyQueryService.findByCriteria(propertyCriteria, pageable);
+        Page<T> page = propertyQueryService.findByCriteria(searchDTO, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/properties");
         return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }

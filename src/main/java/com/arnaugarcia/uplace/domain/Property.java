@@ -1,11 +1,13 @@
 package com.arnaugarcia.uplace.domain;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -58,6 +60,17 @@ import java.util.Set;
     @NamedEntityGraph(name = "graph.PropertyLocation", attributeNodes = {
         @NamedAttributeNode("location")
     })
+})
+@ApiModel(value="Property", discriminator = "propertyType", subTypes = {
+    Apartment.class,
+    Building.class,
+    Business.class,
+    Establishment.class,
+    Hotel.class,
+    IndustrialPlant.class,
+    Office.class,
+    Parking.class,
+    Terrain.class
 })
 // TODO: Make Property abstract
 public class Property implements Serializable {

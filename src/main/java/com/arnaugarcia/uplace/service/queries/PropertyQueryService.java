@@ -1,8 +1,11 @@
 package com.arnaugarcia.uplace.service.queries;
 
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import com.arnaugarcia.uplace.service.dto.SearchDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -39,81 +42,16 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
     }
 
     /**
-     * Return a {@link List} of {@link PropertyDTO} which matches the criteria from the database
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @return the matching entities.
-     */
-    @Transactional(readOnly = true)
-    public List<T> findByCriteria(PropertyCriteria criteria) {
-        log.debug("find by criteria : {}", criteria);
-        final Specifications<T> specification = createSpecification(criteria);
-        return propertyRepository.findAll(specification);
-    }
-
-    /**
      * Return a {@link Page} of {@link PropertyDTO} which matches the criteria from the database
-     * @param criteria The object which holds all the filters, which the entities should match.
+     * @param searchDTO The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<T> findByCriteria(PropertyCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
-        final Specifications<T> specification = createSpecification(criteria);
-        return propertyRepository.findAll(specification, page);
-    }
-
-    /**
-     * Function to convert PropertyCriteria to a {@link Specifications}
-     */
-    private Specifications<T> createSpecification(PropertyCriteria criteria) {
-        Specifications<T> specification = Specifications.where(null);
-        if (criteria != null) {
-            if (criteria.getTitle() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getTitle(), Property_.title));
-            }
-            if (criteria.getCreated() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreated(), Property_.created));
-            }
-            if (criteria.getUpdated() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getUpdated(), Property_.updated));
-            }
-            if (criteria.getPropertyType() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getPropertyType(), Property_.propertyType));
-            }
-            if (criteria.getDescription() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getDescription(), Property_.description));
-            }
-            if (criteria.getTransaction() != null) {
-                specification = specification.and(buildSpecification(criteria.getTransaction(), Property_.transaction));
-            }
-            if (criteria.getReference() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getReference(), Property_.reference));
-            }
-            if (criteria.getPriceTransfer() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPriceTransfer(), Property_.priceTransfer));
-            }
-            if (criteria.getPriceSell() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPriceSell(), Property_.priceSell));
-            }
-            if (criteria.getPriceRent() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPriceRent(), Property_.priceRent));
-            }
-            if (criteria.getYearConstruction() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getYearConstruction(), Property_.yearConstruction));
-            }
-            if (criteria.getNewCreation() != null) {
-                specification = specification.and(buildSpecification(criteria.getNewCreation(), Property_.newCreation));
-            }
-            if (criteria.getVisible() != null) {
-                specification = specification.and(buildSpecification(criteria.getVisible(), Property_.visible));
-            }
-            if (criteria.getSurface() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getSurface(), Property_.surface));
-            }
-
-        }
-        return specification;
+    public Page<T> findByCriteria(SearchDTO searchDTO, Pageable page) {
+        log.debug("find by criteria : {}, page: {}", searchDTO, page);
+        Arrays.stream(searchDTO.getClass().getFields()).forEach(System.out::println);
+        return propertyRepository.findAll(page);
     }
 
 }
