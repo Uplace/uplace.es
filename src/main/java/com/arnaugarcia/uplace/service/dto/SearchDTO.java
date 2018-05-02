@@ -8,6 +8,10 @@ public class SearchDTO {
 
     private String keywords;
 
+    private Double priceMin;
+
+    private Double priceMax;
+
     public SearchDTO() { }
 
     public String getCity() {
@@ -32,6 +36,22 @@ public class SearchDTO {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public Double getPriceMin() {
+        return priceMin;
+    }
+
+    public void setPriceMin(Double priceMin) {
+        this.priceMin = priceMin;
+    }
+
+    public Double getPriceMax() {
+        return priceMax;
+    }
+
+    public void setPriceMax(Double priceMax) {
+        this.priceMax = priceMax;
     }
 
     @Override

@@ -68,6 +68,43 @@ public class PropertyQueryService<T extends Property> extends QueryService<T> {
                 predicates.add(cb.like(root.get(Property_.description), "%" + filter.getKeywords() + "%"));
             }
 
+            if (filter.getPriceMin() != null && filter.getPriceMax() != null) {
+
+                log.debug("Between price ({} - {})", filter.getPriceMin(), filter.getPriceMax());
+
+                Predicate predicateRent = cb.between(root.get(Property_.priceRent), filter.getPriceMin(), filter.getPriceMax());
+                Predicate predicateSell = cb.between(root.get(Property_.priceSell), filter.getPriceMin(), filter.getPriceMax());
+                Predicate predicateTransfer = cb.between(root.get(Property_.priceTransfer), filter.getPriceMin(), filter.getPriceMax());
+
+                // Create an OR for all the prices
+                predicates.add(cb.or(predicateRent, predicateSell, predicateTransfer));
+
+            } else {
+
+                if (filter.getPriceMax() != null) {
+
+                    log.debug("Max price ({})", filter.getPriceMax());
+
+                    Predicate predicateRent = cb.lessThanOrEqualTo(root.get(Property_.priceRent), filter.getPriceMax());
+                    Predicate predicateSell = cb.lessThanOrEqualTo(root.get(Property_.priceSell), filter.getPriceMax());
+                    Predicate predicateTransfer = cb.lessThanOrEqualTo(root.get(Property_.priceTransfer), filter.getPriceMax());
+
+                    predicates.add(cb.or(predicateRent, predicateSell, predicateTransfer));
+                }
+
+                if (filter.getPriceMin() != null) {
+
+                    log.debug("Min price ({})", filter.getPriceMin());
+
+                    Predicate predicateRent = cb.greaterThanOrEqualTo(root.get(Property_.priceRent), filter.getPriceMin());
+                    Predicate predicateSell = cb.greaterThanOrEqualTo(root.get(Property_.priceSell), filter.getPriceMin());
+                    Predicate predicateTransfer = cb.greaterThanOrEqualTo(root.get(Property_.priceTransfer), filter.getPriceMin());
+
+                    predicates.add(cb.or(predicateRent, predicateSell, predicateTransfer));
+
+                }
+
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         }, page);
 
