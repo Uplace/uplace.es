@@ -1,36 +1,35 @@
 package com.arnaugarcia.uplace.service.dto;
 
+import io.github.jhipster.service.filter.IntegerFilter;
+import io.github.jhipster.service.filter.StringFilter;
+
 public class SearchDTO {
 
-    private String city;
+    private StringFilter city;
 
-    private String category;
+    private StringFilter category;
 
     private String keywords;
 
-    private Double priceMin;
+    private IntegerFilter bathrooms;
 
-    private Double priceMax;
-
-    private Integer minBedrooms;
-
-    private Integer maxBedrooms;
+    private IntegerFilter bedrooms;
 
     public SearchDTO() { }
 
-    public String getCity() {
+    public StringFilter getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(StringFilter city) {
         this.city = city;
     }
 
-    public String getCategory() {
+    public StringFilter getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(StringFilter category) {
         this.category = category;
     }
 
@@ -42,43 +41,20 @@ public class SearchDTO {
         this.keywords = keywords;
     }
 
-    public Double getPriceMin() {
-        return priceMin;
+    public IntegerFilter getBathrooms() {
+        return bathrooms;
     }
 
-    public void setPriceMin(Double priceMin) {
-        this.priceMin = priceMin;
+    public void setBathrooms(IntegerFilter bathrooms) {
+        this.bathrooms = bathrooms;
     }
 
-    public Double getPriceMax() {
-        return priceMax;
+    public IntegerFilter getBedrooms() {
+        return bedrooms;
     }
 
-    public void setPriceMax(Double priceMax) {
-        this.priceMax = priceMax;
+    public void setBedrooms(IntegerFilter bedrooms) {
+        this.bedrooms = bedrooms;
     }
 
-    public Integer getMinBedrooms() {
-        return minBedrooms;
-    }
-
-    public void setMinBedrooms(Integer minBedrooms) {
-        this.minBedrooms = minBedrooms;
-    }
-
-    public Integer getMaxBedrooms() {
-        return maxBedrooms;
-    }
-
-    public void setMaxBedrooms(Integer maxBedrooms) {
-        this.maxBedrooms = maxBedrooms;
-    }
-
-    @Override
-    public String toString() {
-        return "SearchDTO{" +
-            "city='" + city + '\'' +
-            ", category='" + category + '\'' +
-            '}';
-    }
 }
