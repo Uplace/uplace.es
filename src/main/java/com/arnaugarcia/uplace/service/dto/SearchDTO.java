@@ -9,7 +9,7 @@ public class SearchDTO {
 
     private StringFilter category;
 
-    private String keywords;
+    private StringFilter keywords;
 
     private IntegerFilter bathrooms;
 
@@ -33,11 +33,11 @@ public class SearchDTO {
         this.category = category;
     }
 
-    public String getKeywords() {
+    public StringFilter getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(String keywords) {
+    public void setKeywords(StringFilter keywords) {
         this.keywords = keywords;
     }
 

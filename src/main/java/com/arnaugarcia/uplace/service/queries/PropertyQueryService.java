@@ -136,6 +136,10 @@ public class PropertyQueryService<T extends Property> extends QueryService {
             if (criteria.getCity() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getCity(), Property_.location, Location_.city));
             }
+            if (criteria.getKeywords() != null) {
+                specification = specification.or(buildStringSpecification(criteria.getKeywords(), Property_.title));
+                specification = specification.or(buildStringSpecification(criteria.getKeywords(), Property_.description));
+            }
             if (criteria.getBedrooms() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getBedrooms(), Apartment_.numberBedrooms));
             }
