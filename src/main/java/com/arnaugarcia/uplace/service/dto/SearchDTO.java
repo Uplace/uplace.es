@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.service.dto;
 
+import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
@@ -14,6 +15,8 @@ public class SearchDTO {
     private IntegerFilter bathrooms;
 
     private IntegerFilter bedrooms;
+
+    private DoubleFilter price;
 
     public SearchDTO() { }
 
@@ -57,4 +60,11 @@ public class SearchDTO {
         this.bedrooms = bedrooms;
     }
 
+    public DoubleFilter getPrice() {
+        return price;
+    }
+
+    public void setPrice(DoubleFilter price) {
+        this.price = price;
+    }
 }

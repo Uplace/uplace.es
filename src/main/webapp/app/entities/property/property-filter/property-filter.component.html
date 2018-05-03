@@ -40,12 +40,12 @@
         <div class="row">
             <div class="form-group col-xl-6">
                 <label>Price From</label>
-                <input type="text" class="form-control" placeholder="Min. price">
+                <input type="text" class="form-control" [(ngModel)]="searchUserData.priceFrom" name="priceFrom" placeholder="Min. price">
             </div>
             <!-- /.form-group -->
             <div class="form-group col-xl-6">
                 <label>Price To</label>
-                <input type="text" class="form-control" placeholder="Max. price">
+                <input type="text" class="form-control" [(ngModel)]="searchUserData.priceTo" name="priceTo" placeholder="Max. price">
             </div>
             <!-- /.form-group -->
         </div>

@@ -146,6 +146,11 @@ public class PropertyQueryService<T extends Property> extends QueryService {
             if (criteria.getBathrooms() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getBathrooms(), Apartment_.numberBathrooms));
             }
+            if (criteria.getPrice() != null) {
+                specification = specification.or(buildRangeSpecification(criteria.getPrice(), Property_.priceTransfer));
+                specification = specification.or(buildRangeSpecification(criteria.getPrice(), Property_.priceRent));
+                specification = specification.or(buildRangeSpecification(criteria.getPrice(), Property_.priceSell));
+            }
 
         }
 

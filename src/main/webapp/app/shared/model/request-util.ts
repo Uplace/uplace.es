@@ -33,6 +33,14 @@ export const createRequestOption = (req?: any, criteria?: UserSearch): HttpParam
             options = options.append("keywords.contains", criteria.keywords);
         }
 
+        if (criteria.priceFrom) {
+            options = options.append("price.greaterOrEqualThan", String(criteria.priceFrom));
+        }
+
+        if (criteria.priceTo) {
+            options = options.append("price.lessOrEqualThan", String(criteria.priceTo));
+        }
+
         console.log(options);
         return options;
     }
