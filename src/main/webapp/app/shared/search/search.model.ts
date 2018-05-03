@@ -1,6 +1,6 @@
 export interface UserSearch {
-    keyword?: string;
-    location?: string;
+    keywords?: string;
+    city?: string;
     category?: string;
     surface?: number;
     bedrooms?: number;

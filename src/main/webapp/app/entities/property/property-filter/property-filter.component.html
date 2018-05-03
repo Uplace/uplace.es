@@ -3,8 +3,8 @@
         Search user data: {{searchUserData | json}}
         <h2>Search criteria</h2>
         <div class="form-group">
-            <label>Keyword</label>
-            <input type="text" class="form-control" placeholder="Search by keyword ...">
+            <label>Keywords</label>
+            <input type="text" class="form-control" placeholder="Search by keyword ..." [(ngModel)]="searchUserData.keywords" name="keywords">
         </div>
         <div class="form-group">
             <label>Property type</label>
@@ -16,7 +16,7 @@
         <!-- /.form-group -->
         <div class="form-group">
             <label>City</label>
-            <select class="form-control" [(ngModel)]="searchUserData.location" name="location">
+            <select class="form-control" [(ngModel)]="searchUserData.city" name="location">
                 <option value="null">Select city</option>
                 <option *ngFor="let city of filters.cities">{{city}}</option>
             </select>

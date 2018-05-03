@@ -1,7 +1,7 @@
 import {HttpParams} from '@angular/common/http';
 import {UserSearch} from "../search/search.model";
 
-export const createRequestOption = (req?: any, userSearch?: UserSearch): HttpParams => {
+export const createRequestOption = (req?: any, criteria?: UserSearch): HttpParams => {
     let options: HttpParams = new HttpParams();
     if (req) {
         Object.keys(req).forEach((key) => {
@@ -15,16 +15,25 @@ export const createRequestOption = (req?: any, userSearch?: UserSearch): HttpPar
             });
         }
     }
-    if (userSearch) {
-        Object.keys(userSearch).forEach((key) => {
-            console.log(key);
+
+    if (criteria) {
+        Object.keys(criteria).forEach((key) => {
+            console.log("Criteria selected " + key);
         });
-        if (req.sort) {
-            req.sort.forEach((val) => {
-                options = options.append('sort', val);
-            });
+
+        if (criteria.category) {
+            options = options.append("category.equals", criteria.category);
         }
 
+        if (criteria.city) {
+            options = options.append("city.equals", criteria.city);
+        }
+
+        if (criteria.keywords) {
+            options = options.append("keywords.contains", criteria.keywords);
+        }
+
+        console.log(options);
         return options;
     }
 };
