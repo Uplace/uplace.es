@@ -1,17 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
-import {JhiEventManager, JhiAlertService, JhiDataUtils, JhiParseLinks} from 'ng-jhipster';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {Subscription} from 'rxjs/Subscription';
+import {JhiAlertService, JhiDataUtils, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
 
-import { Property } from './property.model';
-import { PropertyService } from './property.service';
+import {Property} from './property.model';
+import {PropertyService} from './property.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
-import {Notification} from '../notification';
 import {ActivatedRoute, Router} from "@angular/router";
 import {SearchService} from "../../shared/search/search.service";
 import {UserSearch} from "../../shared/search/search.model";
-import {Apartment} from "../../shared/model/apartment.model";
-import {Building} from "../../shared/model/building.model";
 
 @Component({
     selector: 'up-property',
@@ -61,12 +58,14 @@ export class PropertyComponent implements OnInit, OnDestroy {
             this.propertyService.query({
                 page: this.page - 1,
                 size: this.itemsPerPage,
-                sort: this.sort()}, search).subscribe(
-                (res: HttpResponse<Notification[]>) => this.onSuccess(res.body, res.headers),
+                sort: this.sort()
+            }, search).subscribe(
+                (res: HttpResponse<Property[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
         });
     }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then((account) => {
@@ -81,25 +80,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.properties = data;
+        console.log(data);
         console.log(this.properties);
-        /*this.properties.forEach((property) => {
-            // returns an array of all attributes of the object
-            // console.log(Object.keys(property));
-            // console.log((<Apartment>property));
-
-            /!**
-             * Wrap this and add it to the service
-             * Try to populate on property detail using the Object.keys(foo)
-             *!/
-            if (property.propertyType === 'Apartment') {
-                console.log(Object.assign(new Apartment(), property));
-            } else if (property.propertyType === 'Building') {
-                console.log(Object.assign(new Building(), property));
-            } else {
-                console.log(property);
-            }
-            // console.log(new Apartment())
-        })*/
     }
 
     ngOnDestroy() {
@@ -117,6 +99,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
     }
+
     registerChangeInProperties() {
         this.eventSubscriber = this.eventManager.subscribe('propertyListModification', (response) => this.loadAll());
     }
@@ -133,7 +116,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
     }
 
     transition() {
-        this.router.navigate(['/properties'], {queryParams:
+        this.router.navigate(['/properties'], {
+            queryParams:
                 {
                     page: this.page,
                     size: this.itemsPerPage,
