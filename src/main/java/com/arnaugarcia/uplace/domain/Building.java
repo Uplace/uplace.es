@@ -8,12 +8,14 @@ import java.util.Objects;
 import com.arnaugarcia.uplace.domain.enumeration.BuildingType;
 
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
+import io.swagger.annotations.ApiModel;
 
 /**
  * A Building.
  */
 @Entity
 @DiscriminatorValue("Building")
+@ApiModel(value="Building")
 public class Building extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;

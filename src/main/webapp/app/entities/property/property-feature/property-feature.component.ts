@@ -10,7 +10,6 @@ export class PropertyFeatureComponent implements OnInit {
 
     @Input() fieldValue: any;
     @Input() fieldName: string;
-    @Input() fieldType: | 'select' | 'energycertificate';
 
     constructor() {
     }

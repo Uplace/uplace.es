@@ -1,96 +1,91 @@
 <div class="filter">
-    <h2>Search criteria</h2>
-    <div class="form-group">
-        <label>Keyword</label>
-        <input type="text" class="form-control" placeholder="Search by keyword ...">
-    </div>
-    <!-- /.form-group -->
-    <div class="form-group">
-        <label>City</label>
-        <select class="form-control">
-            <option>Location</option>
-            <option>Chicago</option>
-            <option>San Francisco</option>
-            <option>Seattle</option>
-            <option>New York</option>
-            <option>Washington</option>
-        </select>
-    </div>
-    <!-- /.form-group -->
-    <div class="form-group">
-        <label>Price Slider</label>
-        <div id="slider" class="price-slider"></div>
-    </div>
-    <!-- /.form-group -->
-    <div class="form-group">
-        <label>Amenities</label>
-        <select class="form-control">
-            <option>Air conditioning</option>
-            <option>Balcony</option>
-            <option>Bedding</option>
-            <option>Cable TV</option>
-            <option>Cleaning after exit</option>
-            <option>Cofee pot</option>
-            <option>Computer</option>
-            <option>Cot</option>
-            <option>Dishwasher</option>
-        </select>
-    </div>
-    <!-- /.form-group -->
-    <div class="row">
-        <div class="form-group col-xl-6">
-            <label>Price From</label>
-            <input type="text" class="form-control" placeholder="Min. price">
+    <form (ngSubmit)="onSubmit()" #filterForm="ngForm">
+        <h2>Filters</h2>
+        <div class="form-group">
+            <label>Keywords</label>
+            <input type="text" class="form-control" placeholder="Search by keyword ..." [(ngModel)]="criteria.keywords" name="keywords">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select class="form-control" [(ngModel)]="criteria.category" name="category" (change)="onSubmit()">
+                <option [ngValue]="null">Select a type</option>
+                <option *ngFor="let category of filters.typeProperties">{{category}}</option>
+            </select>
         </div>
         <!-- /.form-group -->
-        <div class="form-group col-xl-6">
-            <label>Price To</label>
-            <input type="text" class="form-control" placeholder="Max. price">
+        <div class="form-group">
+            <label>City</label>
+            <select class="form-control" [(ngModel)]="criteria.city" name="city" (change)="onSubmit()">
+                <option [ngValue]="null">Select a city</option>
+                <option *ngFor="let city of filters.cities">{{city}}</option>
+            </select>
         </div>
         <!-- /.form-group -->
-    </div>
-    <!-- /.row -->
-    <h2>Category</h2>
-    <div class="checkbox">
-        <label><input type="radio" name="form-property-type" value="rent"> Property <span
-            class="label">78</span></label>
-    </div>
-    <!-- /.checkbox -->
-    <div class="checkbox">
-        <label><input type="radio" name="form-property-type" value="sale"> Restaurant <span
-            class="label">54</span></label>
-    </div>
-    <!-- /.checkbox -->
-    <div class="checkbox">
-        <label><input type="radio" name="form-property-type" value="sale"> Travel <span
-            class="label">50</span></label>
-    </div>
-    <!-- /.checkbox -->
-    <div class="checkbox">
-        <label><input type="radio" name="form-property-type" value="lease"> Food &amp; Drink
-            <span class="label">32</span></label>
-    </div>
-    <!-- /.checkbox -->
-    <div class="checkbox">
-        <label><input type="radio" name="form-property-type" value="lease"> Events <span
-            class="label">53</span></label>
-    </div>
-    <!-- /.checkbox -->
-    <h2>Attributes</h2>
-    <div class="checkbox">
-        <label><input type="checkbox"> Reduced <span class="label">93</span></label>
-    </div>
-    <!-- /.checkbox -->
-    <div class="checkbox">
-        <label><input type="checkbox"> Featured <span class="label">54</span></label>
-    </div>
-    <!-- /.checkbox -->
-    <div class="checkbox">
-        <label><input type="checkbox"> Verified <span class="label">22</span></label>
-    </div>
-    <!-- /.checkbox -->
-    <div class="form-group-btn form-group-btn-placeholder-gap">
-        <button type="submit" class="btn btn-primary btn-block">Search</button>
-    </div>
-    <!-- /.form-group -->
+        <!--<div class="form-group">
+            <label>Amenities</label>
+            <select class="form-control">
+                <option>Air conditioning</option>
+                <option>Balcony</option>
+                <option>Bedding</option>
+                <option>Cable TV</option>
+                <option>Cleaning after exit</option>
+                <option>Coffee pot</option>
+                <option>Computer</option>
+                <option>Cot</option>
+                <option>Dishwasher</option>
+            </select>
+        </div>-->
+        <!-- /.form-group -->
+        <div class="row">
+            <div class="form-group col-xl-6">
+                <label>Price From</label>
+                <input type="text" class="form-control" [(ngModel)]="criteria.priceFrom" name="priceFrom" placeholder="Min. price">
+            </div>
+            <!-- /.form-group -->
+            <div class="form-group col-xl-6">
+                <label>Price To</label>
+                <input type="text" class="form-control" [(ngModel)]="criteria.priceTo" name="priceTo" placeholder="Max. price">
+            </div>
+            <!-- /.form-group -->
+        </div>
+        <!-- /.row -->
+        <!--<h2>Category</h2>
+        <div class="checkbox">
+            <label><input type="radio" name="form-property-type" value="rent"> Property <span
+                class="label">78</span></label>
+        </div>-->
+        <!-- /.checkbox -->
+        <!--<div class="checkbox">
+            <label><input type="radio" name="form-property-type" value="sale"> Restaurant <span
+                class="label">54</span></label>
+        </div>-->
+
+        <!--<div class="checkbox">
+            <label><input type="radio" name="form-property-type" value="sale"> Travel <span
+                class="label">50</span></label>
+        </div>
+
+        <div class="checkbox">
+            <label><input type="radio" name="form-property-type" value="lease"> Food &amp; Drink
+                <span class="label">32</span></label>
+        </div>
+        <div class="checkbox">
+            <label><input type="radio" name="form-property-type" value="lease"> Events <span
+                class="label">53</span></label>
+        </div>
+        <h2>Attributes</h2>
+        <div class="checkbox">
+            <label><input type="checkbox"> Reduced <span class="label">93</span></label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox"> Featured <span class="label">54</span></label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox"> Verified <span class="label">22</span></label>
+        </div>-->
+        <div class="form-group-btn form-group-btn-placeholder-gap">
+            <button type="submit" class="btn btn-primary btn-block">Search</button>
+        </div>
+        <!-- /.form-group -->
+    </form>
 </div>

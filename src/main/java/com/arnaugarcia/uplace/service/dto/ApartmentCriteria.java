@@ -309,14 +309,6 @@ public class ApartmentCriteria extends PropertyCriteria implements Serializable 
         this.terrace = terrace;
     }
 
-    public SelectFilter getBalcony() {
-        return balcony;
-    }
-
-    public void setBalcony(SelectFilter balcony) {
-        this.balcony = balcony;
-    }
-
     public IntegerFilter getSurfaceTerrace() {
         return surfaceTerrace;
     }

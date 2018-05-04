@@ -2,6 +2,7 @@ package com.arnaugarcia.uplace.domain;
 
 import com.arnaugarcia.uplace.domain.enumeration.ParkingType;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.Objects;
  */
 @Entity
 @DiscriminatorValue("Parking")
+@ApiModel(value = "Parking")
 public class Parking extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;

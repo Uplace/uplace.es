@@ -8,12 +8,14 @@ import java.util.Objects;
 import com.arnaugarcia.uplace.domain.enumeration.Select;
 
 import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
+import io.swagger.annotations.ApiModel;
 
 /**
  * A Office.
  */
 @Entity
 @DiscriminatorValue("Office")
+@ApiModel(value = "Office")
 public class Office extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,6 +1,7 @@
 package com.arnaugarcia.uplace.domain;
 
 import com.arnaugarcia.uplace.domain.enumeration.TerrainType;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Objects;
  */
 @Entity
 @DiscriminatorValue("Terrain")
+@ApiModel(value = "Terrain")
 public class Terrain extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;

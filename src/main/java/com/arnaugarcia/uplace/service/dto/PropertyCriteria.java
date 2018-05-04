@@ -1,7 +1,12 @@
 package com.arnaugarcia.uplace.service.dto;
 
 import java.io.Serializable;
+
+import com.arnaugarcia.uplace.domain.enumeration.Select;
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
@@ -25,6 +30,10 @@ import org.hibernate.validator.internal.xml.PropertyType;
  * fix type specific filters.
  */
 public class PropertyCriteria implements Serializable {
+
+    public static class SelectFilter extends Filter<Select> {
+    }
+
     /**
      * Class for filtering TransactionType
      */
@@ -60,6 +69,8 @@ public class PropertyCriteria implements Serializable {
     private BooleanFilter visible;
 
     private IntegerFilter surface;
+
+    private SelectFilter balcony;
 
     public PropertyCriteria() {
     }
@@ -176,6 +187,13 @@ public class PropertyCriteria implements Serializable {
         this.surface = surface;
     }
 
+    public SelectFilter getBalcony() {
+        return balcony;
+    }
+
+    public void setBalcony(SelectFilter balcony) {
+        this.balcony = balcony;
+    }
 
     @Override
     public String toString() {

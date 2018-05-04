@@ -1,45 +1,6 @@
-<div class="listing-detail-section" id="listing-detail-section-amenities" data-title="Amenities" [ngSwitch]="property.propertyType">
+<div class="listing-detail-section" id="listing-detail-section-amenities" data-title="Amenities">
     <h2>Features</h2>
-    <ul class="amenities" *ngSwitchCase="'Apartment'">
-        <up-property-feature [fieldValue]="property.elevator" [fieldName]="'uplaceApp.apartment.elevator' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.ac" [fieldName]="'uplaceApp.apartment.ac' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.heat" [fieldName]="'uplaceApp.apartment.heat' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.parking" [fieldName]="'uplaceApp.apartment.parking' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.terrace" [fieldName]="'uplaceApp.apartment.terrace' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.balcony" [fieldName]="'uplaceApp.apartment.balcony' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.office" [fieldName]="'uplaceApp.apartment.office' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.kitchenOffice" [fieldName]="'uplaceApp.apartment.kitchenOffice' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.storage" [fieldName]="'uplaceApp.apartment.storage' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.sharedPool" [fieldName]="'uplaceApp.apartment.sharedPool' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.nearTransport" [fieldName]="'uplaceApp.apartment.nearTransport' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.reformed" [fieldName]="'uplaceApp.apartment.reformed' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.certificateHabitability" [fieldName]="'uplaceApp.apartment.certificateHabitability' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.kitchenOffice" [fieldName]="'uplaceApp.apartment.kitchenOffice' | translate"></up-property-feature>
-    </ul>
-    <ul class="amenities" *ngSwitchCase="'Hotel'">
-        <up-property-feature [fieldValue]="property.operator" [fieldName]="'uplaceApp.hotel.operator' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.pool" [fieldName]="'uplaceApp.hotel.pool' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.spa" [fieldName]="'uplaceApp.hotel.spa' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.conferenceRoom" [fieldName]="'uplaceApp.hotel.conferenceRoom' | translate"></up-property-feature>
-    </ul>
-    <ul class="amenities" *ngSwitchCase="'Business'">
-        <up-property-feature [fieldValue]="property.elevator" [fieldName]="'uplaceApp.business.elevator' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.ac" [fieldName]="'uplaceApp.business.ac' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.heat" [fieldName]="'uplaceApp.business.heat' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.pool" [fieldName]="'uplaceApp.business.pool' | translate"></up-property-feature>
-    </ul>
-    <ul class="amenities" *ngSwitchCase="'Business'">
-        <up-property-feature [fieldValue]="property.bathroom" [fieldName]="'uplaceApp.establishment.bathroom' | translate"></up-property-feature>
-    </ul>
-    <ul class="amenities" *ngSwitchCase="'Office'">
-        <up-property-feature [fieldValue]="property.terrace" [fieldName]="'uplaceApp.office.terrace' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.office" [fieldName]="'uplaceApp.office.office' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.storage" [fieldName]="'uplaceApp.office.storage' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.ac" [fieldName]="'uplaceApp.office.terrace' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.heat" [fieldName]="'uplaceApp.office.terrace' | translate"></up-property-feature>
-    </ul>
-    <ul class="amenities" *ngSwitchCase="'Parking'">
-        <up-property-feature [fieldValue]="property.nearTransport" [fieldName]="'uplaceApp.parking.nearTransport' | translate"></up-property-feature>
-        <up-property-feature [fieldValue]="property.surveillance" [fieldName]="'uplaceApp.parking.surveillance' | translate"></up-property-feature>
+    <ul class="amenities">
+        <up-property-feature *ngFor="let key of getKeys(property)" [fieldName]="'uplaceApp.' + property.propertyType.toLowerCase() + '.' + key | translate" [fieldValue]="property[key]"></up-property-feature>
     </ul>
 </div>

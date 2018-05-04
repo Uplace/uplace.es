@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {FilterService} from './filter.service';
+import {FilterService} from "./filter.service";
 
 @NgModule({
     imports: [],

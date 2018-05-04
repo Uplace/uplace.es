@@ -5,7 +5,6 @@ import { UplaceAgentModule } from './agent/agent.module';
 import { UplaceLocationModule } from './location/location.module';
 import { UplacePhotoModule } from './photo/photo.module';
 import { UplaceNotificationModule } from './notification/notification.module';
-import {UplaceFilterModule} from './filter/filter.module';
 import {UplaceMarkerModule} from './marker/marker.module';
 import { UplaceCompanyModule } from './company/company.module';
 import { UplaceRealEstateModule } from './real-estate/real-estate.module';
@@ -18,7 +17,6 @@ import { UplaceRealEstateModule } from './real-estate/real-estate.module';
         UplaceLocationModule,
         UplacePhotoModule,
         UplaceNotificationModule,
-        UplaceFilterModule,
         UplaceMarkerModule,
         UplaceCompanyModule,
         UplaceRealEstateModule,

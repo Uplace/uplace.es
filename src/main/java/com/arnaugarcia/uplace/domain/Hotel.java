@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.domain;
 
+import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -17,6 +18,7 @@ import com.arnaugarcia.uplace.domain.enumeration.EnergyCertificate;
  */
 @Entity
 @DiscriminatorValue("Hotel")
+@ApiModel(value = "Hotel")
 public class Hotel extends Property implements Serializable {
 
     private static final long serialVersionUID = 1L;

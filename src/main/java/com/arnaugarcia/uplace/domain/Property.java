@@ -1,10 +1,14 @@
 package com.arnaugarcia.uplace.domain;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -56,6 +60,17 @@ import java.util.Set;
     @NamedEntityGraph(name = "graph.PropertyLocation", attributeNodes = {
         @NamedAttributeNode("location")
     })
+})
+@ApiModel(value="Property", discriminator = "propertyType", subTypes = {
+    Apartment.class,
+    Building.class,
+    Business.class,
+    Establishment.class,
+    Hotel.class,
+    IndustrialPlant.class,
+    Office.class,
+    Parking.class,
+    Terrain.class
 })
 // TODO: Make Property abstract
 public class Property implements Serializable {
@@ -115,7 +130,7 @@ public class Property implements Serializable {
     @Column(name = "surface")
     private Integer surface;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true, nullable = false)
     private Location location;
 
@@ -130,7 +145,7 @@ public class Property implements Serializable {
                inverseJoinColumns = @JoinColumn(name="managers_id", referencedColumnName="id"))
     private Set<Agent> managers = new HashSet<>();
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Request> requests = new HashSet<>();
@@ -385,6 +400,14 @@ public class Property implements Serializable {
         this.managers.remove(agent);
         agent.getProperties().remove(this);
         return this;
+    }
+
+    public Set<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(Set<Request> requests) {
+        this.requests = requests;
     }
 
     public void setManagers(Set<Agent> agents) {
