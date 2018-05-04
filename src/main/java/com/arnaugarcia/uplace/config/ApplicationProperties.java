@@ -11,4 +11,34 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
 
+    private final Cloudinary cloudinary = new Cloudinary();
+
+    public static class Cloudinary {
+        private String name;
+        private String key;
+        private String secret;
+
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String getKey() {
+            return key;
+        }
+        public void setKey(String key) {
+            this.key = key;
+        }
+        public String getSecret() {
+            return secret;
+        }
+        public void setSecret(String secret) {
+            this.secret = secret;
+        }
+    }
+
+    public Cloudinary getCloudinary() {
+        return cloudinary;
+    }
 }

@@ -1,27 +1,18 @@
-package com.arnaugarcia.uplace.service.queries;
+package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.*;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
-import com.arnaugarcia.uplace.service.dto.LocationDTO;
-import com.arnaugarcia.uplace.service.dto.ParkingCriteria;
 import com.arnaugarcia.uplace.service.dto.SearchDTO;
 import io.github.jhipster.service.QueryService;
-import io.github.jhipster.service.filter.StringFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

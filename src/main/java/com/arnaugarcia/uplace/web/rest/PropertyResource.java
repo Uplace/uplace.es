@@ -1,42 +1,30 @@
 package com.arnaugarcia.uplace.web.rest;
 
 import com.arnaugarcia.uplace.domain.*;
-import com.arnaugarcia.uplace.repository.PropertyRepository;
 import com.arnaugarcia.uplace.service.InquireService;
-import com.arnaugarcia.uplace.service.dto.ApartmentCriteria;
-import com.arnaugarcia.uplace.service.dto.PropertyCriteria;
 import com.arnaugarcia.uplace.service.PropertyService;
 import com.arnaugarcia.uplace.service.dto.SearchDTO;
-import com.arnaugarcia.uplace.service.queries.PropertyQueryService;
+import com.arnaugarcia.uplace.service.PropertyQueryService;
 import com.arnaugarcia.uplace.web.rest.errors.BadRequestAlertException;
 import com.arnaugarcia.uplace.web.rest.errors.ErrorConstants;
 import com.arnaugarcia.uplace.web.rest.util.CriteriaUtil;
 import com.arnaugarcia.uplace.web.rest.util.HeaderUtil;
 import com.arnaugarcia.uplace.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
-import com.google.common.collect.ImmutableMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import static org.springframework.data.jpa.domain.Specifications.where;
 
 /**
  * REST controller for managing Property.
