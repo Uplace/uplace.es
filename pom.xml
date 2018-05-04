@@ -318,6 +318,10 @@
             <artifactId>spring-security-data</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
