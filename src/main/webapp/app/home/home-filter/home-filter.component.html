@@ -5,37 +5,37 @@
                 <div class="row">
                     <div class="col-sm-3 form-group">
                         <input type="text" class="form-control form-control-no-border"
-                               placeholder="Search by keyword ..." [(ngModel)]="search.keyword" name="keyword">
+                               placeholder="Search by keyword ..." [(ngModel)]="criteria.keywords" name="keyword">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <select class="form-control form-control-no-border" [(ngModel)]="search.location" name="location">
+                        <select class="form-control form-control-no-border" [(ngModel)]="criteria.city" name="location">
                             <option value="null">Location</option>
                             <option *ngFor="let city of filters.cities">{{city}}</option>
                         </select>
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <select class="form-control form-control-no-border" [(ngModel)]="search.category" name="category">
+                        <select class="form-control form-control-no-border" [(ngModel)]="criteria.category" name="category">
                             <option value="null">Category</option>
                             <option *ngFor="let type of filters.typeProperties">{{type}}</option>
                         </select>
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <input type="number" class="form-control form-control-no-border" min="1" placeholder="Bedrooms" [(ngModel)]="search.bedrooms" name="bedrooms">
+                        <input type="number" class="form-control form-control-no-border" min="1" placeholder="Bedrooms" [(ngModel)]="criteria.bedrooms" name="bedrooms">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <input type="number" class="form-control form-control-no-border" min="1" placeholder="Bathrooms" [(ngModel)]="search.bathrooms" name="bathrooms">
+                        <input type="number" class="form-control form-control-no-border" min="1" placeholder="Bathrooms" [(ngModel)]="criteria.bathrooms" name="bathrooms">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <input type="number" class="form-control form-control-no-border" min="1" step="any" placeholder="Price from" [(ngModel)]="search.priceFrom" name="priceFrom">
+                        <input type="number" class="form-control form-control-no-border" min="1" step="any" placeholder="Price from" [(ngModel)]="criteria.priceFrom" name="priceFrom">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3 form-group">
-                        <input type="number" class="form-control form-control-no-border" min="1" step="any" placeholder="Price to" [(ngModel)]="search.priceTo" name="priceTo">
+                        <input type="number" class="form-control form-control-no-border" min="1" step="any" placeholder="Price to" [(ngModel)]="criteria.priceTo" name="priceTo">
                     </div>
                     <!-- /.form-group -->
                     <div class="col-sm-3">

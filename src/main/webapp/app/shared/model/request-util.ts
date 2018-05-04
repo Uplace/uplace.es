@@ -1,7 +1,7 @@
 import {HttpParams} from '@angular/common/http';
-import {UserSearch} from "../search/search.model";
+import {UserCriteria} from "../search/user-criteria.model";
 
-export const createRequestOption = (req?: any, criteria?: UserSearch): HttpParams => {
+export const createRequestOption = (req?: any, criteria?: UserCriteria): HttpParams => {
     let options: HttpParams = new HttpParams();
     if (req) {
         Object.keys(req).forEach((key) => {

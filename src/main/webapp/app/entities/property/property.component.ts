@@ -8,7 +8,7 @@ import {PropertyService} from './property.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
 import {ActivatedRoute, Router} from "@angular/router";
 import {SearchService} from "../../shared/search/search.service";
-import {UserSearch} from "../../shared/search/search.model";
+import {UserCriteria} from "../../shared/search/user-criteria.model";
 
 @Component({
     selector: 'up-property',
@@ -54,12 +54,12 @@ export class PropertyComponent implements OnInit, OnDestroy {
          * with the query in order to know
          * if the user has searched something
          */
-        this.searchService.userSearch.subscribe((search: UserSearch) => {
+        this.searchService.userCriteria.subscribe((criteria: UserCriteria) => {
             this.propertyService.query({
                 page: this.page - 1,
                 size: this.itemsPerPage,
                 sort: this.sort()
-            }, search).subscribe(
+            }, criteria).subscribe(
                 (res: HttpResponse<Property[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
             );

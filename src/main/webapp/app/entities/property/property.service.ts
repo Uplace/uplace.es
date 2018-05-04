@@ -8,7 +8,7 @@ import {JhiDateUtils} from 'ng-jhipster';
 import {Property} from './property.model';
 import {createRequestOption} from '../../shared';
 import {Mail} from "../../shared/model/mail.model";
-import {UserSearch} from "../../shared/search/search.model";
+import {UserCriteria} from "../../shared/search/user-criteria.model";
 import {Apartment} from "../../shared/model/apartment.model";
 import {Building} from "../../shared/model/building.model";
 import {Establishment} from "../../shared/model/establishment.model";
@@ -51,8 +51,8 @@ export class PropertyService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any, search?: UserSearch): Observable<HttpResponse<Property[]>> {
-        const searchParams = createRequestOption(req, search);
+    query(req?: any, criteria?: UserCriteria): Observable<HttpResponse<Property[]>> {
+        const searchParams = createRequestOption(req, criteria);
         return this.http.get<Property[]>(this.resourceUrl, {params: searchParams, observe: 'response'})
             .map((res: HttpResponse<Property[]>) => this.convertArrayResponse(res));
     }

@@ -1,4 +1,4 @@
-export interface UserSearch {
+export interface UserCriteria {
     keywords?: string;
     city?: string;
     category?: string;

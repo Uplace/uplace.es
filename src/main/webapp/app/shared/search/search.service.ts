@@ -1,4 +1,4 @@
-import {UserSearch} from "./search.model";
+import {UserCriteria} from "./user-criteria.model";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
@@ -7,13 +7,13 @@ import {User} from "..";
 @Injectable()
 export class SearchService {
 
-    private userSearchSource = new BehaviorSubject<UserSearch>({});
-    userSearch: Observable<UserSearch> = this.userSearchSource.asObservable();
+    private userCriteriaSource = new BehaviorSubject<UserCriteria>({});
+    userCriteria: Observable<UserCriteria> = this.userCriteriaSource.asObservable();
 
     constructor() { }
 
-    changeUserSearch(userSearch: UserSearch) {
-        this.userSearchSource.next(userSearch);
+    changeUserCriteria(userCriteria: UserCriteria) {
+        this.userCriteriaSource.next(userCriteria);
     }
 
 }

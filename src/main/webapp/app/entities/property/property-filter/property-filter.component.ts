@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchService} from "../../../shared/search/search.service";
-import {UserSearch} from "../../../shared/search/search.model";
+import {UserCriteria} from "../../../shared/search/user-criteria.model";
 import {FilterService} from "../../../shared/filter/filter.service";
 import {Filter} from "../../../shared/filter/filter.model";
 import {HttpResponse} from "@angular/common/http";
@@ -13,7 +13,7 @@ import {HttpResponse} from "@angular/common/http";
 export class PropertyFilterComponent implements OnInit {
 
     filters: Filter = {};
-    searchUserData: UserSearch = {};
+    criteria: UserCriteria = {};
 
     constructor(
         private searchService: SearchService,
@@ -25,14 +25,14 @@ export class PropertyFilterComponent implements OnInit {
 
         this.filterService.find().subscribe((res: HttpResponse<Filter>) => {
             this.filters = res.body;
-            this.searchService.userSearch.subscribe((search: UserSearch) => {
-                this.searchUserData = search;
+            this.searchService.userCriteria.subscribe((criteria: UserCriteria) => {
+                this.criteria = criteria;
             });
         });
     }
 
     onSubmit() {
-        this.searchService.changeUserSearch(this.searchUserData);
+        this.searchService.changeUserCriteria(this.criteria);
     }
 
 }
