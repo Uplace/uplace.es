@@ -7,7 +7,7 @@
         </div>
         <div class="form-group">
             <label>Category</label>
-            <select class="form-control" [(ngModel)]="criteria.category" name="category">
+            <select class="form-control" [(ngModel)]="criteria.category" name="category" (change)="onSubmit()">
                 <option [ngValue]="null">Select a type</option>
                 <option *ngFor="let category of filters.typeProperties">{{category}}</option>
             </select>
@@ -15,7 +15,7 @@
         <!-- /.form-group -->
         <div class="form-group">
             <label>City</label>
-            <select class="form-control" [(ngModel)]="criteria.city" name="location">
+            <select class="form-control" [(ngModel)]="criteria.city" name="city" (change)="onSubmit()">
                 <option [ngValue]="null">Select a city</option>
                 <option *ngFor="let city of filters.cities">{{city}}</option>
             </select>
