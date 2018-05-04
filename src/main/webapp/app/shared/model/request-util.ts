@@ -1,5 +1,6 @@
 import {HttpParams} from '@angular/common/http';
 import {UserCriteria} from "../search/user-criteria.model";
+import {catchError} from "rxjs/operators";
 
 export const createRequestOption = (req?: any, criteria?: UserCriteria): HttpParams => {
     let options: HttpParams = new HttpParams();
@@ -41,7 +42,6 @@ export const createRequestOption = (req?: any, criteria?: UserCriteria): HttpPar
             options = options.append("price.lessOrEqualThan", String(criteria.priceTo));
         }
 
-        console.log(options);
         return options;
     }
 };

@@ -80,7 +80,6 @@ export class PropertyComponent implements OnInit, OnDestroy {
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.properties = data;
-        console.log(data);
         console.log(this.properties);
     }
 

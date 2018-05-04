@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, OnChanges, SimpleChanges} from '@angular/core';
 import {SearchService} from "../../../shared/search/search.service";
 import {UserCriteria} from "../../../shared/search/user-criteria.model";
 import {FilterService} from "../../../shared/filter/filter.service";
 import {Filter} from "../../../shared/filter/filter.model";
 import {HttpResponse} from "@angular/common/http";
+import {ViewChild} from "@angular/core";
 
 @Component({
     selector: 'up-property-filter',
@@ -12,6 +13,8 @@ import {HttpResponse} from "@angular/common/http";
 })
 export class PropertyFilterComponent implements OnInit {
 
+
+    @ViewChild('filterForm') filterForm;
     filters: Filter = {};
     criteria: UserCriteria = {};
 
@@ -20,6 +23,7 @@ export class PropertyFilterComponent implements OnInit {
         private filterService: FilterService
     ) {
     }
+
 
     ngOnInit() {
 

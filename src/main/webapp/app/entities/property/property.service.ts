@@ -76,8 +76,9 @@ export class PropertyService {
         return references.join(',');
     }
 
-    private convertArrayResponse(res: HttpResponse<Property[]>): HttpResponse<Property[]> {
-        const jsonResponse: Property[] = res.body;
+    private convertArrayResponse(res): HttpResponse<Property[]> {
+
+        const jsonResponse = res.body.content;
         const body: Property[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
