@@ -321,6 +321,7 @@
         <dependency>
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http44</artifactId>
+            <version>1.18.0</version>
         </dependency>
     </dependencies>
 

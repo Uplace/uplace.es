@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -34,12 +35,9 @@ public class Photo implements Serializable {
     private String description;
 
     @NotNull
-    @Lob
     @Column(name = "photo", nullable = false)
-    private byte[] photo;
-
-    @Column(name = "photo_content_type", nullable = false)
-    private String photoContentType;
+    @URL(regexp = "^(http|https)")
+    private String photo;
 
     @NotNull
     @Column(name = "thumbnail", nullable = false)
@@ -84,30 +82,17 @@ public class Photo implements Serializable {
         this.description = description;
     }
 
-    public byte[] getPhoto() {
+
+    public String getPhoto() {
         return photo;
     }
 
-    public Photo photo(byte[] photo) {
-        this.photo = photo;
-        return this;
-    }
-
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    public String getPhotoContentType() {
-        return photoContentType;
-    }
-
-    public Photo photoContentType(String photoContentType) {
-        this.photoContentType = photoContentType;
-        return this;
-    }
-
-    public void setPhotoContentType(String photoContentType) {
-        this.photoContentType = photoContentType;
+    public Boolean getThumbnail() {
+        return thumbnail;
     }
 
     public Boolean isThumbnail() {
@@ -160,12 +145,12 @@ public class Photo implements Serializable {
     @Override
     public String toString() {
         return "Photo{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", photo='" + getPhoto() + "'" +
-            ", photoContentType='" + getPhotoContentType() + "'" +
-            ", thumbnail='" + isThumbnail() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", photo='" + photo + '\'' +
+            ", thumbnail=" + thumbnail +
+            ", property=" + property +
+            '}';
     }
 }
