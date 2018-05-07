@@ -28,8 +28,12 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="photo" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="photo" type="longblob">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="photo_url" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
             <column name="thumbnail" type="bit">

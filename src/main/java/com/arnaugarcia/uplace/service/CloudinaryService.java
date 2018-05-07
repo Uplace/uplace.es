@@ -27,13 +27,14 @@ public class CloudinaryService implements CDNService {
         File file = new File("uplace_" + imageId);
         try {
             FileUtils.writeByteArrayToFile(file, imageData);
-            Map<String, String> imgUpload = cloudinary.uploader().upload(file, params);
-            return imgUpload.get("secure_url");
+            Map imgUpload = cloudinary.uploader().upload(file, params);
+            log.debug("Photo uploaded to cloudinary, folder {}, url {}", folder,  imgUpload.get("secure_url"));
+            return imgUpload.get("secure_url").toString();
         } catch (IOException e) {
             log.error("Image could not be uploaded to CDN", e);
             throw new CDNException(e);
         } finally {
-            if (file != null) file.delete();
+            if (file.exists()) file.delete();
         }
     }
 

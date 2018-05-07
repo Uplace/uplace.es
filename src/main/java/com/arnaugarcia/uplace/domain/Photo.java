@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
@@ -34,10 +35,14 @@ public class Photo implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @NotNull
-    @Column(name = "photo", nullable = false)
-    @URL(regexp = "^(http|https)")
-    private String photo;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Column(name = "photo_url")
+    @URL(protocol = "https")
+    private String photoUrl;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Transient
+    private byte[] photo;
 
     @NotNull
     @Column(name = "thumbnail", nullable = false)
@@ -83,11 +88,19 @@ public class Photo implements Serializable {
     }
 
 
-    public String getPhoto() {
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 

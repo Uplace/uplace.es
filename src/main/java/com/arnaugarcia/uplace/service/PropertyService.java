@@ -34,9 +34,12 @@ public class PropertyService<T extends Property> {
 
     private final PhotoRepository photoRepository;
 
-    public PropertyService(PropertyRepository<T> propertyRepository, PhotoRepository photoRepository) {
+    private final CDNService cdnService;
+
+    public PropertyService(PropertyRepository<T> propertyRepository, PhotoRepository photoRepository, CDNService cdnService) {
         this.propertyRepository = propertyRepository;
         this.photoRepository = photoRepository;
+        this.cdnService = cdnService;
     }
 
     /**
@@ -56,9 +59,14 @@ public class PropertyService<T extends Property> {
             property.setUpdated(ZonedDateTime.now());
         }
 
-        Set<Photo> photos = property.getPhotos();
         T result = propertyRepository.save(property);
-        photos.forEach((photo -> photo.setProperty(result)));
+
+        Set<Photo> photos = property.getPhotos();
+
+        photos.forEach((photo -> {
+            photo.setPhotoUrl(cdnService.uploadImage(createReference(), photo.getPhoto(), property.getReference()));
+            photo.setProperty(result);
+        }));
 
         photoRepository.save(photos);
 
