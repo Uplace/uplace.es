@@ -51,6 +51,8 @@ public class PropertyService<T extends Property> {
     public T save(T property) {
         log.debug("Request to save Property : {}", property);
 
+
+        // TODO : Implement this with @Updated and @Created see issue[#159]
         if (property.getId() == null) {
             property.setCreated(ZonedDateTime.now());
             property.setReference(this.createReference());
@@ -59,20 +61,16 @@ public class PropertyService<T extends Property> {
             property.setUpdated(ZonedDateTime.now());
         }
 
-        T result = propertyRepository.save(property);
+        if (!property.getPhotos().isEmpty()) {
+            property.getPhotos().forEach((photo -> {
+                photo.setProperty(property);
+                if (photo.getId() == null) {
+                    photo.setPhotoUrl(cdnService.uploadImage(photo));
+                }
+            }));
+        }
 
-        Set<Photo> photos = property.getPhotos();
-
-        photos.forEach((photo -> {
-            photo.setProperty(result);
-            if (photo.getId() == null) {
-                photo.setPhotoUrl(cdnService.uploadImage(photo));
-            }
-        }));
-
-        photoRepository.save(photos);
-
-        return result;
+        return propertyRepository.save(property);
     }
 
     /**

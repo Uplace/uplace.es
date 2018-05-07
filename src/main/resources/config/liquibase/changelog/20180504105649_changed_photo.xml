@@ -36,6 +36,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="photo_public_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="thumbnail" type="bit">
                 <constraints nullable="false" />
             </column>

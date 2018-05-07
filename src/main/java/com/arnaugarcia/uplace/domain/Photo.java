@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
@@ -39,6 +40,10 @@ public class Photo implements Serializable {
     @Column(name = "photo_url")
     @URL(protocol = "https")
     private String photoUrl;
+
+    @JsonIgnore
+    @Column(name = "photo_public_id")
+    private String publicId;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Transient
@@ -94,6 +99,14 @@ public class Photo implements Serializable {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
     }
 
     public byte[] getPhoto() {
