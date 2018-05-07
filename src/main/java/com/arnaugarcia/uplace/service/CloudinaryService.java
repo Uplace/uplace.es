@@ -42,7 +42,8 @@ public class CloudinaryService implements CDNService {
         }
     }
 
-    public String uploadImage(Photo photo) {
+    @Override
+    public Map uploadImage(Photo photo) {
         String photoId = cloudinary.randomPublicId();
         if (photo.getProperty() == null) {
             throw new CDNException("The image doesn't have a property");
@@ -54,7 +55,7 @@ public class CloudinaryService implements CDNService {
             FileUtils.writeByteArrayToFile(file, photo.getPhoto());
             Map imgUpload = cloudinary.uploader().upload(file, params);
             log.debug("Photo uploaded to cloudinary, folder {}, url {}", folder,  imgUpload.get("secure_url"));
-            return imgUpload.get("secure_url").toString();
+            return imgUpload;
         } catch (IOException e) {
             log.error("Image could not be uploaded to CDN", e);
             throw new CDNException(e);
@@ -77,9 +78,8 @@ public class CloudinaryService implements CDNService {
     @Override
     public void deleteImage(Photo photo) throws CDNException {
         try {
-            throw new CDNException("Not implemented yet");
-            //cloudinary.uploader().destroy(photo.getProperty().getReference() + "/", ObjectUtils.emptyMap());
-        } catch (CDNException e) {
+            cloudinary.uploader().destroy(photo.getPublicId(), ObjectUtils.emptyMap());
+        } catch (IOException e) {
             log.error("Image could not be deleted from CDN", e);
             throw new CDNException(e);
         }

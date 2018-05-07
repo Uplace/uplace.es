@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -52,7 +49,7 @@ public class PropertyService<T extends Property> {
         log.debug("Request to save Property : {}", property);
 
 
-        // TODO : Implement this with @Updated and @Created see issue[#159]
+        // TODO : Implement this with @Updated and @Created see issue [#159]
         if (property.getId() == null) {
             property.setCreated(ZonedDateTime.now());
             property.setReference(this.createReference());
@@ -62,10 +59,15 @@ public class PropertyService<T extends Property> {
         }
 
         if (!property.getPhotos().isEmpty()) {
+            // For each photo assigns the public_id and the URL
             property.getPhotos().forEach((photo -> {
+                // Sets the photo in order to attach correctly the property
                 photo.setProperty(property);
                 if (photo.getId() == null) {
-                    photo.setPhotoUrl(cdnService.uploadImage(photo));
+                    Map cdnResult = cdnService.uploadImage(photo);
+                    photo.setPhotoUrl(cdnResult.get("secure_url").toString());
+                    photo.setPublicId(cdnResult.get("public_id").toString());
+                    //photo.setPhotoUrl(cdnService.uploadImage(photo));
                 }
             }));
         }
