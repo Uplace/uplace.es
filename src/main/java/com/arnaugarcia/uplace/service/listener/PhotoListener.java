@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.PostRemove;
+import javax.persistence.PrePersist;
 
 @Component
 public class PhotoListener {
@@ -17,6 +18,11 @@ public class PhotoListener {
 
     @Autowired
     private CDNService cdnService;
+
+    @PrePersist
+    public void onPrePersist(Photo photo) {
+        // Implement and check if the property has already a thumbnail
+    }
 
     @PostRemove
     public void onOrphanRemoval(Photo photo) {
