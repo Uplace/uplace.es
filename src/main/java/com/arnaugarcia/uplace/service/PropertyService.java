@@ -64,8 +64,8 @@ public class PropertyService<T extends Property> {
         Set<Photo> photos = property.getPhotos();
 
         photos.forEach((photo -> {
-            photo.setPhotoUrl(cdnService.uploadImage(createReference(), photo.getPhoto(), property.getReference()));
             photo.setProperty(result);
+            photo.setPhotoUrl(cdnService.uploadImage(photo));
         }));
 
         photoRepository.save(photos);
