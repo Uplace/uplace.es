@@ -8,4 +8,5 @@ public interface CDNService {
     String uploadImage(String imageId, byte[] imageData, String folder) throws CDNException;
     String uploadImage(Photo photo) throws CDNException;
     void deleteImage(String imageId, String folder) throws CDNException;
+    void deleteImage(Photo photo) throws CDNException;
 }

@@ -74,4 +74,16 @@ public class CloudinaryService implements CDNService {
 
     }
 
+    @Override
+    public void deleteImage(Photo photo) throws CDNException {
+        try {
+            throw new CDNException("Not implemented yet");
+            //cloudinary.uploader().destroy(photo.getProperty().getReference() + "/", ObjectUtils.emptyMap());
+        } catch (CDNException e) {
+            log.error("Image could not be deleted from CDN", e);
+            throw new CDNException(e);
+        }
+
+    }
+
 }
