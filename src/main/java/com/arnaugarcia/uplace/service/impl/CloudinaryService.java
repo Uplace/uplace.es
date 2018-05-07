@@ -22,11 +22,12 @@ public class CloudinaryService implements CDNService {
 
     private final Logger log = LoggerFactory.getLogger(CloudinaryService.class);
 
-    @Autowired Cloudinary cloudinary;
+    private final Cloudinary cloudinary;
 
     private final PhotoRepository photoRepository;
 
-    public CloudinaryService(PhotoRepository photoRepository) {
+    public CloudinaryService(Cloudinary cloudinary, PhotoRepository photoRepository) {
+        this.cloudinary = cloudinary;
         this.photoRepository = photoRepository;
     }
 
@@ -83,12 +84,7 @@ public class CloudinaryService implements CDNService {
     @Override
     public void deleteImage(Photo photo) throws CDNException {
         try {
-            /*Photo result = photoRepository.findOne(photo.getId());
-            if (result != null) {*/
-                cloudinary.uploader().destroy(photo.getPublicId(), ObjectUtils.emptyMap());
-            /*} else {
-                throw new CDNException("Image not found");
-            }*/
+            cloudinary.uploader().destroy(photo.getPublicId(), ObjectUtils.emptyMap());
         } catch (IOException e) {
             log.error("Image could not be deleted from CDN", e);
             throw new CDNException(e);
