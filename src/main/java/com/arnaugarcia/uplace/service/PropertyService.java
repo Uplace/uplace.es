@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.PostRemove;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -67,7 +68,6 @@ public class PropertyService<T extends Property> {
                     Map cdnResult = cdnService.uploadImage(photo);
                     photo.setPhotoUrl(cdnResult.get("secure_url").toString());
                     photo.setPublicId(cdnResult.get("public_id").toString());
-                    //photo.setPhotoUrl(cdnService.uploadImage(photo));
                 }
             }));
         }

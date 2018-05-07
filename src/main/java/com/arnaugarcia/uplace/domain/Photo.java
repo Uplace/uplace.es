@@ -1,5 +1,6 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.arnaugarcia.uplace.service.listener.PhotoListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "photo")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@EntityListeners(PhotoListener.class)
 public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;

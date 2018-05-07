@@ -1,22 +1,21 @@
-package com.arnaugarcia.uplace.service;
+package com.arnaugarcia.uplace.service.impl;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
 import com.arnaugarcia.uplace.domain.Photo;
+import com.arnaugarcia.uplace.repository.PhotoRepository;
 import com.arnaugarcia.uplace.security.exceptions.CDNException;
+import com.arnaugarcia.uplace.service.CDNService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-
-import javax.validation.Valid;
 
 @Service
 public class CloudinaryService implements CDNService {
@@ -24,6 +23,12 @@ public class CloudinaryService implements CDNService {
     private final Logger log = LoggerFactory.getLogger(CloudinaryService.class);
 
     @Autowired Cloudinary cloudinary;
+
+    private final PhotoRepository photoRepository;
+
+    public CloudinaryService(PhotoRepository photoRepository) {
+        this.photoRepository = photoRepository;
+    }
 
     @Override
     public String uploadImage(String imageId, byte[] imageData, String folder) throws CDNException {
@@ -78,7 +83,12 @@ public class CloudinaryService implements CDNService {
     @Override
     public void deleteImage(Photo photo) throws CDNException {
         try {
-            cloudinary.uploader().destroy(photo.getPublicId(), ObjectUtils.emptyMap());
+            /*Photo result = photoRepository.findOne(photo.getId());
+            if (result != null) {*/
+                cloudinary.uploader().destroy(photo.getPublicId(), ObjectUtils.emptyMap());
+            /*} else {
+                throw new CDNException("Image not found");
+            }*/
         } catch (IOException e) {
             log.error("Image could not be deleted from CDN", e);
             throw new CDNException(e);
