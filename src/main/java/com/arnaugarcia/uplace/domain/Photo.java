@@ -43,7 +43,6 @@ public class Photo implements Serializable {
     @URL(protocol = "https")
     private String photoUrl;
 
-    @JsonIgnore
     @Column(name = "photo_public_id")
     private String publicId;
 
