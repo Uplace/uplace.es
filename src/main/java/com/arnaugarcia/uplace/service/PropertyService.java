@@ -14,11 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.PostRemove;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -34,9 +32,12 @@ public class PropertyService<T extends Property> {
 
     private final PhotoRepository photoRepository;
 
-    public PropertyService(PropertyRepository<T> propertyRepository, PhotoRepository photoRepository) {
+    private final CDNService cdnService;
+
+    public PropertyService(PropertyRepository<T> propertyRepository, PhotoRepository photoRepository, CDNService cdnService) {
         this.propertyRepository = propertyRepository;
         this.photoRepository = photoRepository;
+        this.cdnService = cdnService;
     }
 
     /**
@@ -48,6 +49,8 @@ public class PropertyService<T extends Property> {
     public T save(T property) {
         log.debug("Request to save Property : {}", property);
 
+
+        // TODO : Implement this with @Updated and @Created see issue [#159]
         if (property.getId() == null) {
             property.setCreated(ZonedDateTime.now());
             property.setReference(this.createReference());
@@ -56,13 +59,20 @@ public class PropertyService<T extends Property> {
             property.setUpdated(ZonedDateTime.now());
         }
 
-        Set<Photo> photos = property.getPhotos();
-        T result = propertyRepository.save(property);
-        photos.forEach((photo -> photo.setProperty(result)));
+        if (!property.getPhotos().isEmpty()) {
+            // For each photo assigns the public_id and the URL
+            property.getPhotos().forEach((photo -> {
+                // Sets the photo in order to attach correctly the property
+                photo.setProperty(property);
+                if (photo.getId() == null) {
+                    Map cdnResult = cdnService.uploadImage(photo);
+                    photo.setPhotoUrl(cdnResult.get("secure_url").toString());
+                    photo.setPublicId(cdnResult.get("public_id").toString());
+                }
+            }));
+        }
 
-        photoRepository.save(photos);
-
-        return result;
+        return propertyRepository.save(property);
     }
 
     /**

@@ -46,7 +46,7 @@
                                             <a [routerLink]="'/property/' + property.reference"
                                                class="listing-box-image">
                                                 <span class="listing-box-image-content"
-                                                      [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}"></span>
+                                                      [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(' + property.photos[0].photoUrl + ')' : 'url()'}"></span>
                                                 <!-- /.listing-box-image-content -->
                                                 <span class="listing-box-category tag">{{property.propertyType}}</span>
                                                 <span class="listing-box-type tag" style="margin-bottom: 0px">

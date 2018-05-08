@@ -1,11 +1,15 @@
 package com.arnaugarcia.uplace.domain;
 
+import com.arnaugarcia.uplace.service.listener.PhotoListener;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
@@ -18,6 +22,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "photo")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@EntityListeners(PhotoListener.class)
 public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,13 +38,16 @@ public class Photo implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @NotNull
-    @Lob
-    @Column(name = "photo", nullable = false)
-    private byte[] photo;
+    @Column(name = "photo_url")
+    @URL(protocol = "https")
+    private String photoUrl;
 
-    @Column(name = "photo_content_type", nullable = false)
-    private String photoContentType;
+    @Column(name = "photo_public_id")
+    private String publicId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Transient
+    private byte[] photo;
 
     @NotNull
     @Column(name = "thumbnail", nullable = false)
@@ -84,30 +92,33 @@ public class Photo implements Serializable {
         this.description = description;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public Photo photo(byte[] photo) {
-        this.photo = photo;
-        return this;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
     }
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
-    public String getPhotoContentType() {
-        return photoContentType;
-    }
-
-    public Photo photoContentType(String photoContentType) {
-        this.photoContentType = photoContentType;
-        return this;
-    }
-
-    public void setPhotoContentType(String photoContentType) {
-        this.photoContentType = photoContentType;
+    public Boolean getThumbnail() {
+        return thumbnail;
     }
 
     public Boolean isThumbnail() {
@@ -160,12 +171,12 @@ public class Photo implements Serializable {
     @Override
     public String toString() {
         return "Photo{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", photo='" + getPhoto() + "'" +
-            ", photoContentType='" + getPhotoContentType() + "'" +
-            ", thumbnail='" + isThumbnail() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", photo='" + photo + '\'' +
+            ", thumbnail=" + thumbnail +
+            ", property=" + property +
+            '}';
     }
 }
