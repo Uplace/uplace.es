@@ -56,7 +56,7 @@ public class CloudinaryService implements CDNService {
         }
         String folder = photo.getProperty().getReference();
         Map params = ObjectUtils.asMap("public_id", photo.getProperty().getReference() + "/" + photoId);
-        File file = new File("uplace_" + photoId);
+        File file = new File("/tmp/uplace_" + photoId);
         try {
             FileUtils.writeByteArrayToFile(file, photo.getPhoto());
             Map imgUpload = cloudinary.uploader().upload(file, params);
