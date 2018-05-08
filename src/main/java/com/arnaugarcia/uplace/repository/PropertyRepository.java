@@ -40,6 +40,14 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
     @Override
     Page<T> findAll(Specification<T> specification, Pageable pageable);
 
+    @EntityGraph(value = "graph.PropertyAll", type = EntityGraph.EntityGraphType.LOAD)
+    @Override
+    void delete(T t);
+
+    @EntityGraph(value = "graph.PropertyAll", type = EntityGraph.EntityGraphType.LOAD)
+    @Override
+    void delete(Iterable<? extends T> iterable);
+
     /**
      * Query to get a property by reference
      *
@@ -50,6 +58,7 @@ public interface PropertyRepository<T extends Property> extends JpaRepository<T,
     @Query("SELECT p FROM Property p left join fetch p.managers where p.reference = :reference")
     T findByReference(@Param("reference") String reference);
 
+    @EntityGraph(value = "graph.PropertyAll", type = EntityGraph.EntityGraphType.LOAD)
     List<T> findByReferenceIn(Collection<String> references);
 
     @Query("SELECT p FROM Property p ORDER BY p.created DESC")

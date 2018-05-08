@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -148,19 +149,20 @@ public class Photo implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Photo photo = (Photo) o;
-        if (photo.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), photo.getId());
+        if (this == o) return true;
+        if (!(o instanceof Photo)) return false;
+        Photo photo1 = (Photo) o;
+        return Objects.equals(id, photo1.id) &&
+            Objects.equals(name, photo1.name) &&
+            Objects.equals(description, photo1.description) &&
+            Objects.equals(photoUrl, photo1.photoUrl) &&
+            Objects.equals(publicId, photo1.publicId) &&
+            Arrays.equals(photo, photo1.photo) &&
+            Objects.equals(thumbnail, photo1.thumbnail) &&
+            Objects.equals(property, photo1.property);
     }
 
     @Override
@@ -174,7 +176,9 @@ public class Photo implements Serializable {
             "id=" + id +
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
-            ", photo='" + photo + '\'' +
+            ", photoUrl='" + photoUrl + '\'' +
+            ", publicId='" + publicId + '\'' +
+            ", photo=" + Arrays.toString(photo) +
             ", thumbnail=" + thumbnail +
             ", property=" + property +
             '}';

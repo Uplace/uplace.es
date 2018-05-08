@@ -134,7 +134,7 @@ public class Property implements Serializable {
     @JoinColumn(unique = true, nullable = false)
     private Location location;
 
-    @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
@@ -429,19 +429,32 @@ public class Property implements Serializable {
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Property)) return false;
         Property property = (Property) o;
-        if (property.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), property.getId());
+        return Objects.equals(id, property.id) &&
+            Objects.equals(title, property.title) &&
+            Objects.equals(created, property.created) &&
+            Objects.equals(updated, property.updated) &&
+            Objects.equals(propertyType, property.propertyType) &&
+            Objects.equals(description, property.description) &&
+            transaction == property.transaction &&
+            Objects.equals(reference, property.reference) &&
+            Objects.equals(priceTransfer, property.priceTransfer) &&
+            Objects.equals(priceSell, property.priceSell) &&
+            Objects.equals(priceRent, property.priceRent) &&
+            Objects.equals(yearConstruction, property.yearConstruction) &&
+            Objects.equals(newCreation, property.newCreation) &&
+            Objects.equals(visible, property.visible) &&
+            Objects.equals(surface, property.surface) &&
+            Objects.equals(location, property.location) &&
+            Objects.equals(photos, property.photos) &&
+            Objects.equals(managers, property.managers) &&
+            Objects.equals(requests, property.requests) &&
+            Objects.equals(realEstate, property.realEstate);
     }
 
     @Override
@@ -470,6 +483,7 @@ public class Property implements Serializable {
             ", location=" + location +
             ", photos=" + photos +
             ", managers=" + managers +
+            ", requests=" + requests +
             ", realEstate=" + realEstate +
             '}';
     }

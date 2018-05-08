@@ -123,7 +123,7 @@ public class PropertyService<T extends Property> {
         log.debug("Request to delete Property : {}", references);
         String[] referencesList = references.split(",");
         List<T> properties = propertyRepository.findByReferenceIn(Arrays.asList(referencesList));
-        if (properties.size() <= 0) {
+        if (properties.size() != referencesList.length) {
             throw new BadRequestAlertException("Reference not found", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
         propertyRepository.delete(properties);
