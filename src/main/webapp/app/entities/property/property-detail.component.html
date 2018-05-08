@@ -114,7 +114,7 @@
                             <div class="gallery" *ngIf="property.photos && property.photos[0]">
                                 <ngb-carousel>
                                     <ng-template *ngFor="let photo of property.photos" ngbSlide>
-                                        <img class="gallery-item" [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo"/>
+                                        <img class="gallery-item" [src]="photo.photoUrl"/>
                                     </ng-template>
                                 </ngb-carousel>
                                 <!-- /.gallery-item -->

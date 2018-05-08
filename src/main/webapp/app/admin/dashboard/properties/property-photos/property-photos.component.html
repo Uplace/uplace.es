@@ -28,7 +28,12 @@
             <tr *ngFor="let photo of photos">
                 <td>
                     <div class="avatar squared">
-                        <img [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo" alt="">
+                        <ng-container *ngIf="photo.photo">
+                            <img [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo" [alt]="photo.description">
+                        </ng-container>
+                        <ng-container *ngIf="photo.photoUrl">
+                            <img [src]="photo.photoUrl" [alt]="photo.description">
+                        </ng-container>
                     </div>
                 </td>
                 <td>{{photo.name}}</td>

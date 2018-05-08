@@ -38,12 +38,10 @@ public class Photo implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "photo_url")
     @URL(protocol = "https")
     private String photoUrl;
 
-    @JsonIgnore
     @Column(name = "photo_public_id")
     private String publicId;
 
