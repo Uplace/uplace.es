@@ -6,9 +6,9 @@
                 <a [routerLink]="'/property/' + property.reference" class="listing-row-medium-image" [ngStyle]="{'background-image' : property.photos[0] ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}">
                 </a>
                 <div class="listing-row-medium-content">
-                    <a class="listing-row-medium-price" [routerLink]="'/property' + property.reference">{{property.price}}</a>
-                    <a class="listing-row-medium-category tag" [routerLink]="'/property' + property.reference">{{property.propertyType}}</a>
-                    <h4 class="listing-row-medium-title"><a [routerLink]="'/property' + property.reference">{{property.title}}</a></h4>
+                    <a class="listing-row-medium-price" [routerLink]="'/property/' + property.reference" property-price [property]="property" [currency]="'€'">{{property.price}}</a>
+                    <a class="listing-row-medium-category tag" [routerLink]="'/property/' + property.reference">{{property.propertyType}}</a>
+                    <h4 class="listing-row-medium-title"><a [routerLink]="'/property/' + property.reference">{{property.title}}</a></h4>
                     <div class="listing-row-medium-address" *ngIf="property.location && !property.location.hide">
                         {{property.location.fullAdress}}, {{property.location.postalCode}} - {{property.location.city}}
                     </div>

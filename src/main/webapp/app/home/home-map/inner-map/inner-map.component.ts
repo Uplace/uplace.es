@@ -39,8 +39,6 @@ export class InnerMapComponent implements OnInit {
 
                             const markerImage = marker['photo'] != null ? marker['photo'].photoUrl : '';
 
-                            console.log(markerImage);
-
                             const markerPrice = marker['price'] != null ? marker['price'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + '€' : 'N/D';
 
                             const markerContent =

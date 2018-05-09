@@ -27,6 +27,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
     queryCount: any;
     previousPage: any;
     routeData: any;
+    ITEMS_PER_PAGE = ITEMS_PER_PAGE;
 
     constructor(
         private propertyService: PropertyService,

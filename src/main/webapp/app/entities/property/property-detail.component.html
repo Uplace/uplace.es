@@ -131,7 +131,7 @@
                                             public floorsSR?: number,
                                             public floorsBR?: number,
                                             public constructionCoefficient?: number,-->
-                                            <li><strong>Price</strong><span>{{property.price}} €</span></li>
+                                            <li><strong>Price</strong><span property-price [property]="property"></span></li>
                                             <li *ngIf="property.location && property.location.hide && property.location.city"><strong>Location</strong><span>{{property.location.city}}</span></li>
                                             <li><strong>Status</strong><span>{{property.transaction}}</span></li>
                                             <li><strong>Area</strong><span>{{property.surface}} m2</span></li>

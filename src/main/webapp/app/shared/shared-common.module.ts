@@ -17,6 +17,7 @@ import {EnumToArrayPipe} from "./pipes/enumToArray.pipe";
 import {RequestService} from "./request/request.service";
 import {FilterService} from "./filter/filter.service";
 import {SearchService} from "./search/search.service";
+import {PropertyPriceDirective} from "./directives/property-price.directive";
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {SearchService} from "./search/search.service";
         KeysPipe,
         EnumToArrayPipe,
         ProvideParentForm,
+        PropertyPriceDirective,
         TruncatePipe,
         UpAlertComponent,
         UpAlertErrorComponent
@@ -50,6 +52,7 @@ import {SearchService} from "./search/search.service";
         TruncatePipe,
         EnumToArrayPipe,
         ProvideParentForm,
+        PropertyPriceDirective,
         FindLanguageFromKeyPipe,
         UpAlertComponent,
         UpAlertErrorComponent

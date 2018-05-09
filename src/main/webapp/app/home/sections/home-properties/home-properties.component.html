@@ -13,37 +13,27 @@
                             </div>-->
                             <!-- /.listing-box-info -->
                             <a [routerLink]="['property' , property.reference]" class="listing-box-image">
-                                    <span class="listing-box-image-content">
-                                        <img *ngIf="property.photos.length > 0"
-                                             [src]="'data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo"
-                                             [alt]="property.description">
-                                    </span><!-- /.listing-box-image-content -->
+                                <span class="listing-box-image-content" [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(' + property.photos[0].photoUrl + ')' : 'url()'}"></span>
                                 <span class="listing-box-category tag">{{property.propertyType}}</span>
-                                <!--                                 <span class="listing-box-rating">
-                                                                     <i class="fa fa-star"></i>
-                                                                     <i class="fa fa-star"></i>
-                                                                     <i class="fa fa-star"></i>
-                                                                     <i class="fa fa-star-o"></i>
-                                                                     <i class="fa fa-star-o"></i>
-                                                                 </span>-->
+                                <span class="listing-box-type tag" style="margin-bottom: 0px" property-price [property]="property" emptyValue="N/D"></span>
                             </a><!-- /.listing-box-image -->
                             <div class="listing-box-content">
                                 <h2><a [routerLink]="['property' , property.reference]">{{property.title}}</a></h2>
                                 <h3 *ngIf="property.location">{{property.location.fullAddress}}</h3>
-                                <div class="actions">
+                                <!--<div class="actions">
                                     <div class="actions-button">
                                         <span></span>
                                         <span></span>
                                         <span></span>
                                     </div>
-                                    <!-- /.actions-button -->
+                                    &lt;!&ndash; /.actions-button &ndash;&gt;
                                     <ul class="actions-list">
                                         <li><a href="#">Add to compare</a></li>
                                         <li><a href="#">Add to favorites</a></li>
                                         <li><a href="#">Report listing</a></li>
                                     </ul>
-                                    <!-- /.actions-list -->
-                                </div>
+                                    &lt;!&ndash; /.actions-list &ndash;&gt;
+                                </div>-->
                                 <!-- /.actions -->
                             </div>
                             <!-- /.listing-box-content -->

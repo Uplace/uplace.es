@@ -42,8 +42,8 @@ export const createRequestOption = (req?: any, criteria?: UserCriteria): HttpPar
             options = options.append("price.lessOrEqualThan", String(criteria.priceTo));
         }
 
-        return options;
     }
+    return options;
 };
 
 /*

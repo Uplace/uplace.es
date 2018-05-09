@@ -32,6 +32,7 @@ export class PropertiesComponent implements OnInit {
     previousPage: any;
     routeData: any;
     allSelected: boolean = false;
+    ITEMS_PER_PAGE = ITEMS_PER_PAGE;
 
     constructor(private propertyService: PropertyService,
                 private jhiAlertService: JhiAlertService,
@@ -162,7 +163,7 @@ export class PropertiesComponent implements OnInit {
         }
     }
 
-    openDeleteModal(property: Property) {
+    openDeleteModal(property?: Property) {
 
         if (property) {
             const index: number = this.selectedProperties.indexOf(property);
