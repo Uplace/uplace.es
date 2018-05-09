@@ -162,7 +162,7 @@ export class PropertiesComponent implements OnInit {
         }
     }
 
-    openDeleteModal(property: Property) {
+    openDeleteModal(property?: Property) {
 
         if (property) {
             const index: number = this.selectedProperties.indexOf(property);
