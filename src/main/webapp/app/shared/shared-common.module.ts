@@ -38,7 +38,7 @@ import {PropertyPriceDirective} from "./directives/property-price.directive";
         Title,
         {
             provide: LOCALE_ID,
-            useValue: 'en'
+            useValue: 'es'
         },
         AgmJsMarkerClustererModule,
         ClusterManager,
