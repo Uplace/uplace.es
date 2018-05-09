@@ -9,11 +9,15 @@ import {el} from "@angular/platform-browser/testing/src/browser_util";
 export class PropertyPriceDirective implements OnInit {
 
     @Input() property: Property;
+    @Input() currency: string;
 
     constructor(private _elemRef: ElementRef, private _renderer: Renderer2) {
     }
 
     ngOnInit(): void {
+        if (!this.currency) {
+            this.currency = '€';
+        }
         this.setPrice(this.property);
         /*switch (this.property.transaction) {
             case 'RENT':
@@ -35,10 +39,22 @@ export class PropertyPriceDirective implements OnInit {
         console.log(property.title + ' - ' + property.transaction);
         // this._renderer.setStyle(this._elemRef.nativeElement, 'display', 'none');
         if (this.isPriceValid(property)) {
-            if (property.transaction === 'RENT_BUY') {
-                this._renderer.setProperty(this._elemRef.nativeElement, 'innerHTML', property.priceRent + ' - ' + property.priceSell);
-            } else {
-                this._renderer.setProperty(this._elemRef.nativeElement, 'innerHTML', property.priceTransfer);
+            switch (property.transaction) {
+                case 'TRANSFER':
+                    this._renderer.setProperty(this._elemRef.nativeElement, 'innerHTML', String(property.priceTransfer + this.currency));
+                    break;
+                case 'RENT_BUY':
+                    this._renderer.setProperty(this._elemRef.nativeElement, 'innerHTML', String(property.priceRent + ' - ' + property.priceSell));
+                    break;
+                case 'BUY':
+                    this._renderer.setProperty(this._elemRef.nativeElement, 'innerHTML', String(property.priceSell + this.currency));
+                    break;
+                case 'RENT':
+                    this._renderer.setProperty(this._elemRef.nativeElement, 'innerHTML', String(property.priceRent + this.currency));
+                    break;
+                default:
+                    this._renderer.setStyle(this._elemRef.nativeElement, 'display', 'none');
+                    break;
             }
         } else {
             this._renderer.setStyle(this._elemRef.nativeElement, 'display', 'none');
@@ -48,12 +64,23 @@ export class PropertyPriceDirective implements OnInit {
     private isPriceValid(property: Property): boolean {
         switch (property.transaction) {
             case 'TRANSFER':
+                console.log(property.transaction + ' is ' + property.priceTransfer);
                 if (property.priceTransfer) return true;
                 break;
             case 'RENT_BUY':
-                if (property.priceSell || property.priceRent) return true;
+                console.log(property.transaction + ' is ' + property.priceRent + ' - ' + property.priceSell);
+                if (property.priceSell && property.priceRent) return true;
                 break;
-            default: return false;
+            case 'BUY':
+                console.log(property.transaction + ' is ' + property.priceSell);
+                if (property.priceSell) return true;
+                break;
+            case 'RENT':
+                console.log(property.transaction + ' is ' + property.priceRent);
+                if (property.priceRent) return true;
+                break;
+            default:
+                return false;
         }
     }
 
