@@ -57,8 +57,8 @@
                         <td class="min-width no-wrap center">
                             <span class="tag">{{property.propertyType}}</span>
                         </td>
-                        <td class="min-width price">
-                            {{property.price}}
+                        <td class="min-width price" property-price [property]="property" [emptyValue]="'N/D'">
+
                         </td>
                         <td class="min-width center">
                             <div class="status">

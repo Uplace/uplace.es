@@ -43,23 +43,22 @@
                                             <div class="listing-box-info" *ngIf="property.newCreation">
                                                 New!
                                             </div>
-                                            <a [routerLink]="'/property/' + property.reference"
-                                               class="listing-box-image">
-                                                <span class="listing-box-image-content"
-                                                      [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(' + property.photos[0].photoUrl + ')' : 'url()'}"></span>
+                                            <a [routerLink]="'/property/' + property.reference" class="listing-box-image">
+                                                <span class="listing-box-image-content" [ngStyle]="{'background-image' : property.photos.length > 0 ? 'url(' + property.photos[0].photoUrl + ')' : 'url()'}"></span>
                                                 <!-- /.listing-box-image-content -->
                                                 <span class="listing-box-category tag">{{property.propertyType}}</span>
-                                                <span class="listing-box-type tag" style="margin-bottom: 0px">
-                                                    {{'uplaceApp.TransactionType.' + property.transaction | translate}}
-                                                </span>
+                                                <span class="listing-box-type tag" style="margin-bottom: 0px" property-price [property]="property" emptyValue="N/D"></span>
                                             </a><!-- /.listing-box-image -->
                                             <div class="listing-box-content">
-                                                <h2><a [routerLink]="'/property/' + property.reference">{{property.title}}</a>
+                                                <h2>
+                                                    <a [routerLink]="'/property/' + property.reference">{{property.title}}</a>
                                                 </h2>
                                                 <h3 *ngIf="property.location && !property.location.hide && property.location.fullAddress && property.location.city">
-                                                    {{property.location.fullAddress}}</h3>
+                                                    {{property.location.fullAddress}}
+                                                </h3>
                                                 <h3 *ngIf="property.location && property.location.hide">
-                                                    {{property.location.city}}, {{property.location.postalCode}}</h3>
+                                                    {{property.location.city}}, {{property.location.postalCode}}
+                                                </h3>
                                                 <div class="actions">
                                                     <div class="actions-button">
                                                         <span></span>

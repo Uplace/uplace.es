@@ -8,6 +8,7 @@ export class PropertyPriceDirective implements OnChanges {
 
     @Input() property: Property;
     @Input() currency: string;
+    @Input() emptyValue: string;
 
     constructor(private _elemRef: ElementRef, private _renderer: Renderer2) {  }
 
@@ -47,12 +48,13 @@ export class PropertyPriceDirective implements OnChanges {
                 case 'RENT':
                     this._renderer.setProperty(this._elemRef.nativeElement, 'innerHTML', String(property.priceRent + ' ' + this.currency));
                     break;
-                default:
-                    this._renderer.setStyle(this._elemRef.nativeElement, 'display', 'none');
-                    break;
             }
         } else {
-            this._renderer.setStyle(this._elemRef.nativeElement, 'display', 'none');
+            if (this.emptyValue) {
+                this._renderer.setProperty(this._elemRef.nativeElement, 'innerHTML', this.emptyValue);
+            } else {
+                this._renderer.setStyle(this._elemRef.nativeElement, 'display', 'none');
+            }
         }
     }
 
