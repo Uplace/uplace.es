@@ -86,7 +86,7 @@
         </div>
     </div>
     <!-- /.table-wrapper -->
-    <ul class="pagination pull-right" *ngIf="properties.length >=! ITEMS_PER_PAGE">
+    <ul class="pagination pull-right" *ngIf="totalItems >= ITEMS_PER_PAGE">
         <ngb-pagination class="pagination pull-right"
                         [collectionSize]="totalItems"
                         [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"

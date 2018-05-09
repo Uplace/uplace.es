@@ -32,6 +32,7 @@ export class PropertiesComponent implements OnInit {
     previousPage: any;
     routeData: any;
     allSelected: boolean = false;
+    ITEMS_PER_PAGE = ITEMS_PER_PAGE;
 
     constructor(private propertyService: PropertyService,
                 private jhiAlertService: JhiAlertService,
