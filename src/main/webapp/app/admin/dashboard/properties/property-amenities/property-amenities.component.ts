@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Property} from "../../../../entities/property";
-import {EnumToArrayPipe} from "../../../../shared/pipes/enumToArray.pipe";
-import {Select} from "../../../../shared/model/select.enum";
+import {Select} from "../../../../shared/model/enum/select.enum";
+import 'reflect-metadata'
+import {Apartment} from "../../../../shared/model/apartment.model";
 
 @Component({
     selector: 'up-property-amenities',
@@ -22,5 +23,6 @@ export class PropertyAmenitiesComponent implements OnInit {
     ngOnInit() {
 
     }
+
 
 }
