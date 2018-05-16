@@ -89,10 +89,10 @@
                                                     <ng-container *ngSwitchCase="'Apartment'">
                                                         <dt>Surface</dt>
                                                         <dd>{{property.surface}}</dd>
-                                                        <dt>Shared pool</dt>
-                                                        <dd>{{property.sharedPool}}</dd>
-                                                        <dt>Balcony</dt>
-                                                        <dd>{{property.balcony}}</dd>
+                                                        <dt>Parking</dt>
+                                                        <dd>{{'uplaceApp.Select.' + property.parking | translate}}</dd>
+                                                        <dt>Elevator</dt>
+                                                        <dd>{{'uplaceApp.Select.' + property.elevator | translate}}</dd>
                                                     </ng-container>
                                                     <ng-container *ngSwitchCase="'Terrain'">
                                                         <dt>Buildable</dt>
@@ -138,9 +138,9 @@
                                                         <dt>Bathrooms</dt>
                                                         <dd>{{property.bathrooms}}</dd>
                                                         <dt>Storage</dt>
-                                                        <dd>{{'uplaceApp.Select.' + property.storage}}</dd>
+                                                        <dd>{{'uplaceApp.Select.' + property.storage | translate}}</dd>
                                                         <dt>Ac</dt>
-                                                        <dd>{{'uplaceApp.Select.' + property.ac}}</dd>
+                                                        <dd>{{'uplaceApp.Select.' + property.ac | translate}}</dd>
                                                     </ng-container>
                                                     <ng-container *ngSwitchCase="'Parking'">
                                                         <dt>Type</dt>
