@@ -1,25 +1,10 @@
 import {Property} from "../../entities/property/index";
-
-export const enum Select {
-    'YES',
-    'NO',
-    'UNDEFINED'
-}
-
-export const enum EnergyCertificate {
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'UNDEFINED'
-}
+import {Select} from "./enum/select.enum";
+import {EnergyCertificate} from "./enum/energy-certificate.enum";
 
 export class Office extends Property {
     constructor(
-        public bathrooms?: string,
+        public bathrooms?: number,
         public floors?: number,
         public terrace?: Select,
         public office?: Select,
@@ -31,5 +16,15 @@ export class Office extends Property {
         public energyCertificate?: EnergyCertificate,
     ) {
         super();
+        this.bathrooms = 0;
+        this.floors = 0;
+        this.terrace = Select.UNDEFINED;
+        this.office = Select.UNDEFINED;
+        this.storage = Select.UNDEFINED;
+        this.storageSurface = 0;
+        this.officesSurface = 0;
+        this.ac = Select.UNDEFINED;
+        this.heat = Select.UNDEFINED;
+        this.energyCertificate = EnergyCertificate.UNDEFINED;
     }
 }

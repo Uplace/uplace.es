@@ -200,14 +200,14 @@
     </div>
 
     <div *ngSwitchCase="'Business'">
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.business.type" for="field_type">Type</label>
             <select class="form-control" name="type" [(ngModel)]="property.type" id="field_type" >
                 <option value="PUB">{{'uplaceApp.BusinessType.PUB' | translate}}</option>
                 <option value="HOTEL">{{'uplaceApp.BusinessType.HOTEL' | translate}}</option>
                 <option value="OTHERS">{{'uplaceApp.BusinessType.OTHERS' | translate}}</option>
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.business.numberBathrooms" for="field_numberBathrooms">Number Bathrooms</label>
             <input type="number" class="form-control" name="numberBathrooms" id="field_numberBathrooms"
@@ -286,7 +286,7 @@
                 <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.establishment.use" for="field_use">Use</label>
             <select class="form-control" name="use" [(ngModel)]="property.use" id="field_use" >
                 <option value="RESTAURANT">{{'uplaceApp.UseEstablishment.RESTAURANT' | translate}}</option>
@@ -294,7 +294,7 @@
                 <option value="SHOP">{{'uplaceApp.UseEstablishment.SHOP' | translate}}</option>
                 <option value="OTHER">{{'uplaceApp.UseEstablishment.OTHER' | translate}}</option>
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.establishment.energyCertificate" for="field_energyCertificate">Energy Certificate</label>
             <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate" id="field_energyCertificate" >
