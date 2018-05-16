@@ -3,7 +3,7 @@
     <div>
         <div class="listing-row-medium" *ngFor="let property of properties">
             <div class="listing-row-medium-inner">
-                <a [routerLink]="'/property/' + property.reference" class="listing-row-medium-image" [ngStyle]="{'background-image' : property.photos[0] ? 'url(data:' + property.photos[0].photoContentType + ';base64,' + property.photos[0].photo + ')' : 'url()'}">
+                <a [routerLink]="'/property/' + property.reference" class="listing-row-medium-image" [ngStyle]="{'background-image' : property.photos[0] ? 'url(' + property.photos[0].photoUrl + ')' : 'url()'}">
                 </a>
                 <div class="listing-row-medium-content">
                     <a class="listing-row-medium-price" [routerLink]="'/property/' + property.reference" property-price [property]="property" [currency]="'€'">{{property.price}}</a>
