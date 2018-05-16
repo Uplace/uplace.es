@@ -1,6 +1,5 @@
 import {HttpParams} from '@angular/common/http';
 import {UserCriteria} from "../search/user-criteria.model";
-import {catchError} from "rxjs/operators";
 
 export const createRequestOption = (req?: any, criteria?: UserCriteria): HttpParams => {
     let options: HttpParams = new HttpParams();

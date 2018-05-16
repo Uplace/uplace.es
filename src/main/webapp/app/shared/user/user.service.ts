@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { SERVER_API_URL } from '../../app.constants';
 import { User } from './user.model';
-import { createRequestOption } from '../model/request-util';
+import { createRequestOption } from '../utils/request-util';
 
 @Injectable()
 export class UserService {

@@ -1,9 +1,9 @@
 import {Property} from "../../entities/property/index";
 
 export const enum Select {
-    'YES',
-    'NO',
-    'UNDEFINED'
+    YES = 'YES',
+    NO = 'No',
+    UNDEFINED = 'UNDEFINED'
 }
 
 export const enum ApartmentType {
@@ -52,5 +52,20 @@ export class Apartment extends Property {
         public certificateHabitability?: Select,
     ) {
         super();
+        this.numberBedrooms = 0;
+        this.numberBathrooms = 0;
+        this.m2Edified = 0;
+        this.m2Usable = 0;
+        this.height = 0;
+        this.elevator = Select.UNDEFINED;
+        this.heat = Select.UNDEFINED;
+        this.parking = Select.UNDEFINED;
+        this.terrace = Select.UNDEFINED;
+        this.balcony = Select.UNDEFINED;
+        this.surfaceTerrace = 0;
+        this.surfaceSaloon = 0;
+        this.type = ApartmentType.APARTMENTS;
+        this.office = Select.UNDEFINED;
+        this.ac = Select.UNDEFINED;
     }
 }
