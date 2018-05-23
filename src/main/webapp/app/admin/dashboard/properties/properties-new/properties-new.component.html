@@ -58,6 +58,7 @@
                     [(ngModel)]="property.propertyType"
                     bindValue="type"
                     bindLabel="type"
+                    (change)="onChangeType($event)"
                     [clearable]="false"
                     name="propertyType">
                 </ng-select>

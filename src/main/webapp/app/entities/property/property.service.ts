@@ -18,6 +18,7 @@ import {IndustrialPlant} from "../../shared/model/industrial-plant.model";
 import {Office} from "../../shared/model/office.model";
 import {Parking} from "../../shared/model/parking.model";
 import {Terrain} from "../../shared/model/terrain.model";
+import {transformProperty} from "../../shared/utils/property-transform-util";
 
 export type EntityResponseType = HttpResponse<Property>;
 
@@ -90,35 +91,7 @@ export class PropertyService {
      * Convert a returned JSON object to Property.
      */
     private convertItemFromServer(property: Property): Property {
-        let copy: Property = Object.assign({}, property);
-        switch (property.propertyType) {
-            case 'Apartment':
-                copy = Object.assign(new Apartment(), property);
-                break;
-            case 'Building':
-                copy = Object.assign(new Building(), property);
-                break;
-            case 'Establishment':
-                copy = Object.assign(new Establishment(), property);
-                break;
-            case 'Business':
-                copy = Object.assign(new Business(), property);
-                break;
-            case 'Hotel':
-                copy = Object.assign(new Hotel(), property);
-                break;
-            case 'IndustrialPlant':
-                copy = Object.assign(new IndustrialPlant(), property);
-                break;
-            case 'Office':
-                copy = Object.assign(new Office(), property);
-                break;
-            case 'Parking':
-                copy = Object.assign(new Parking(), property);
-                break;
-            case 'Terrain':
-                copy = Object.assign(new Terrain(), property);
-        }
+        let copy = transformProperty(property);
 
         copy.created = this.dateUtils
             .convertDateTimeFromServer(property.created);

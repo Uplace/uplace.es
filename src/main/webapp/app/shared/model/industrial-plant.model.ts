@@ -1,15 +1,5 @@
 import {Property} from "../../entities/property/index";
-
-export const enum EnergyCertificate {
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'UNDEFINED'
-}
+import {EnergyCertificate} from "./enum/energy-certificate.enum";
 
 export class IndustrialPlant extends Property {
     constructor(
@@ -22,5 +12,12 @@ export class IndustrialPlant extends Property {
         public energyCertificate?: EnergyCertificate,
     ) {
         super();
+        this.solarSurface = 0;
+        this.numberRooms = 0;
+        this.m2Offices = 0;
+        this.m2Storage = 0;
+        this.heightFree = 0;
+        this.numberDocks = 0;
+        this.energyCertificate = EnergyCertificate.UNDEFINED;
     }
 }

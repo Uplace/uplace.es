@@ -19,5 +19,10 @@ export class Terrain extends Property {
     ) {
         super();
         this.buildable = false;
+        this.m2Buildable = 0;
+        this.buildableDepth = 0;
+        this.floorsBR = 0;
+        this.floorsSR = 0;
+        this.constructionCoefficient = 0;
     }
 }

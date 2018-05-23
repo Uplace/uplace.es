@@ -12,7 +12,7 @@
         "suppressImplicitAnyIndexErrors": true,
         "outDir": "target/www/app",
         "allowJs": true,
-        "lib": ["es7", "dom"],
+        "lib": ["es7", "dom", "es2017"],
         "typeRoots": [
             "node_modules/@types"
         ],

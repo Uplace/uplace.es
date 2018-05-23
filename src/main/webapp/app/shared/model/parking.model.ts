@@ -1,15 +1,10 @@
 import {Property} from "../../entities/property/index";
+import {Select} from "./enum/select.enum";
 
 export const enum ParkingType {
     'CAR',
     'MOTO',
     'OTHER'
-}
-
-export const enum Select {
-    'YES',
-    'NO',
-    'UNDEFINED'
 }
 
 export class Parking extends Property {
@@ -19,5 +14,7 @@ export class Parking extends Property {
         public surveillance?: Select,
     ) {
         super();
+        this.nearTransport = Select.UNDEFINED;
+        this.surveillance = Select.UNDEFINED;
     }
 }

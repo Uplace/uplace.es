@@ -33,92 +33,92 @@
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.elevator" for="field_elevator">Elevator</label>
-            <select class="form-control" name="elevator" [(ngModel)]="property.elevator" id="field_elevator">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            <select class="form-control" name="elevator" [(ngModel)]="property.elevator" id="field_elevator" required>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.ac" for="field_ac">Ac</label>
-            <select class="form-control" name="ac" [(ngModel)]="property.ac" id="field_ac">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+            <select class="form-control" name="ac" [(ngModel)]="property.ac" id="field_ac" required>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.heat" for="field_heat">Heat</label>
             <select class="form-control" name="heat" [(ngModel)]="property.heat" id="field_heat">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.parking" for="field_parking">Elevator</label>
             <select class="form-control" name="parking" [(ngModel)]="property.parking" id="field_parking">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.terrace" for="field_terrace">Terrace</label>
             <select class="form-control" name="terrace" [(ngModel)]="property.terrace" id="field_terrace">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.balcony" for="field_balcony">Elevator</label>
             <select class="form-control" name="balcony" [(ngModel)]="property.balcony" id="field_balcony">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.office" for="field_office">Office</label>
             <select class="form-control" name="office" [(ngModel)]="property.office" id="field_office">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.kitchenOffice" for="field_kitchenOffice">kitchenOffice</label>
             <select class="form-control" name="kitchenOffice" [(ngModel)]="property.kitchenOffice"
                     id="field_kitchenOffice">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.balcony" for="field_storage">Storage</label>
             <select class="form-control" name="storage" [(ngModel)]="property.storage" id="field_storage">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.nearTransport" for="field_nearTransport">nearTransport</label>
             <select class="form-control" name="field_nearTransport" [(ngModel)]="property.nearTransport"
                     id="field_nearTransport">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="uplaceApp.apartment.reformed" for="field_reformed">reformed</label>
             <select class="form-control" name="reformed" [(ngModel)]="property.reformed" id="field_reformed">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -126,14 +126,14 @@
                    for="field_energyCertificate">Energy Certificate</label>
             <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate"
                     id="field_energyCertificate">
-                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
-                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
-                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
-                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
-                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
-                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
-                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'A'">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option [ngValue]="'B'">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option [ngValue]="'C'">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option [ngValue]="'D'">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option [ngValue]="'E'">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option [ngValue]="'F'">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option [ngValue]="'G'">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -141,9 +141,9 @@
                    for="field_certificateHabitability">Certificate Habitability</label>
             <select class="form-control" name="certificateHabitability" [(ngModel)]="property.certificateHabitability"
                     id="field_certificateHabitability">
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
     </div>
@@ -186,27 +186,27 @@
                    for="field_energyCertificate">Energy Certificate</label>
             <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate"
                     id="field_energyCertificate">
-                <option value="A">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
-                <option value="B">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
-                <option value="C">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
-                <option value="D">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
-                <option value="E">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
-                <option value="F">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
-                <option value="G">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'A'">{{'uplaceApp.EnergyCertificate.A' | translate}}</option>
+                <option [ngValue]="'B'">{{'uplaceApp.EnergyCertificate.B' | translate}}</option>
+                <option [ngValue]="'C'">{{'uplaceApp.EnergyCertificate.C' | translate}}</option>
+                <option [ngValue]="'D'">{{'uplaceApp.EnergyCertificate.D' | translate}}</option>
+                <option [ngValue]="'E'">{{'uplaceApp.EnergyCertificate.E' | translate}}</option>
+                <option [ngValue]="'F'">{{'uplaceApp.EnergyCertificate.F' | translate}}</option>
+                <option [ngValue]="'G'">{{'uplaceApp.EnergyCertificate.G' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.EnergyCertificate.UNDEFINED' | translate}}</option>
             </select>
         </div>
     </div>
 
     <div *ngSwitchCase="'Business'">
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.business.type" for="field_type">Type</label>
             <select class="form-control" name="type" [(ngModel)]="property.type" id="field_type" >
                 <option value="PUB">{{'uplaceApp.BusinessType.PUB' | translate}}</option>
                 <option value="HOTEL">{{'uplaceApp.BusinessType.HOTEL' | translate}}</option>
                 <option value="OTHERS">{{'uplaceApp.BusinessType.OTHERS' | translate}}</option>
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.business.numberBathrooms" for="field_numberBathrooms">Number Bathrooms</label>
             <input type="number" class="form-control" name="numberBathrooms" id="field_numberBathrooms"
@@ -215,25 +215,25 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.business.elevator" for="field_elevator">Elevator</label>
             <select class="form-control" name="elevator" [(ngModel)]="property.elevator" id="field_elevator" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.business.ac" for="field_ac">Ac</label>
             <select class="form-control" name="ac" [(ngModel)]="property.ac" id="field_ac" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.business.heat" for="field_heat">Heat</label>
             <select class="form-control" name="heat" [(ngModel)]="property.heat" id="field_heat" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -264,9 +264,9 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.business.pool" for="field_pool">Pool</label>
             <select class="form-control" name="pool" [(ngModel)]="property.pool" id="field_pool" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
     </div>
@@ -280,12 +280,12 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.establishment.bathroom" for="field_bathroom">Bathroom</label>
             <select class="form-control" name="bathroom" [(ngModel)]="property.bathroom" id="field_bathroom" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.establishment.use" for="field_use">Use</label>
             <select class="form-control" name="use" [(ngModel)]="property.use" id="field_use" >
                 <option value="RESTAURANT">{{'uplaceApp.UseEstablishment.RESTAURANT' | translate}}</option>
@@ -293,7 +293,7 @@
                 <option value="SHOP">{{'uplaceApp.UseEstablishment.SHOP' | translate}}</option>
                 <option value="OTHER">{{'uplaceApp.UseEstablishment.OTHER' | translate}}</option>
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.establishment.energyCertificate" for="field_energyCertificate">Energy Certificate</label>
             <select class="form-control" name="energyCertificate" [(ngModel)]="property.energyCertificate" id="field_energyCertificate" >
@@ -318,9 +318,9 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.establishment.bathroom" for="field_bathroom">Bathroom</label>
             <select class="form-control" name="bathroom" [(ngModel)]="property.bathroom" id="field_bathroom" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -407,25 +407,25 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.office.terrace" for="field_terrace">Terrace</label>
             <select class="form-control" name="terrace" [(ngModel)]="property.terrace" id="field_terrace" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.office.office" for="field_office">Office</label>
             <select class="form-control" name="office" [(ngModel)]="property.office" id="field_office" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.office.storage" for="field_storage">Storage</label>
             <select class="form-control" name="storage" [(ngModel)]="property.storage" id="field_storage" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -441,17 +441,17 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.office.ac" for="field_ac">Ac</label>
             <select class="form-control" name="ac" [(ngModel)]="property.ac" id="field_ac" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.office.heat" for="field_heat">Heat</label>
             <select class="form-control" name="heat" [(ngModel)]="property.heat" id="field_heat" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -473,17 +473,17 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.parking.nearTransport" for="field_nearTransport">Near Transport</label>
             <select class="form-control" name="nearTransport" [(ngModel)]="property.nearTransport" id="field_nearTransport" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="uplaceApp.parking.surveillance" for="field_surveillance">Surveillance</label>
             <select class="form-control" name="surveillance" [(ngModel)]="property.surveillance" id="field_surveillance" >
-                <option value="YES">{{'uplaceApp.Select.YES' | translate}}</option>
-                <option value="NO">{{'uplaceApp.Select.NO' | translate}}</option>
-                <option value="UNDEFINED">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
+                <option [ngValue]="'YES'">{{'uplaceApp.Select.YES' | translate}}</option>
+                <option [ngValue]="'NO'">{{'uplaceApp.Select.NO' | translate}}</option>
+                <option [ngValue]="'UNDEFINED'">{{'uplaceApp.Select.UNDEFINED' | translate}}</option>
             </select>
         </div>
     </div>

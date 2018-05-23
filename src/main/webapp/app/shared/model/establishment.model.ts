@@ -1,27 +1,13 @@
 import {Property} from "../../entities/property/index";
+import {EnergyCertificate} from "./enum/energy-certificate.enum";
+import {Select} from "./enum/select.enum";
 
-export const enum Select {
-    'YES',
-    'NO',
-    'UNDEFINED'
-}
 
 export const enum UseEstablishment {
     'RESTAURANT',
     'PUB',
     'SHOP',
     'OTHER'
-}
-
-export const enum EnergyCertificate {
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'UNDEFINED'
 }
 
 export class Establishment extends Property {
@@ -32,5 +18,8 @@ export class Establishment extends Property {
         public energyCertificate?: EnergyCertificate,
     ) {
         super();
+        this.m2Facade = 0;
+        this.bathroom = Select.UNDEFINED;
+        this.energyCertificate = EnergyCertificate.UNDEFINED;
     }
 }

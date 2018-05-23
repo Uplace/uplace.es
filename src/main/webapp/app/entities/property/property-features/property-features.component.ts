@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Property} from "../property.model";
-import {Select} from "../../../shared/model/select.enum";
+import {Select} from "../../../shared/model/enum/select.enum";
 
 @Component({
     selector: 'up-property-features',

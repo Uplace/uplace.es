@@ -1,10 +1,5 @@
 import {Property} from "../../entities/property/index";
-
-export const enum Select {
-    'YES',
-    'NO',
-    'UNDEFINED'
-}
+import {Select} from "./enum/select.enum";
 
 export const enum BusinessType {
     'PUB',
@@ -27,5 +22,14 @@ export class Business extends Property {
         public pool?: Select
     ) {
         super();
+        this.numberBathrooms = 0;
+        this.elevator = Select.UNDEFINED;
+        this.heat = Select.UNDEFINED;
+        this.surfaceTerrace = 0;
+        this.surfaceGarden = 0;
+        this.numberOffice = 0;
+        this.surfaceSaloon = 0;
+        this.height = 0;
+        this.pool = Select.UNDEFINED;
     }
 }

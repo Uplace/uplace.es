@@ -6,8 +6,9 @@ import {JhiAlertService, JhiEventManager} from "ng-jhipster";
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '../../../../entities/location/location.model';
 import {Apartment} from "../../../../shared/model/apartment.model";
-import {Select} from "../../../../shared/model/select.enum";
+import {Select} from "../../../../shared/model/enum/select.enum";
 import {NgForm} from "@angular/forms";
+import {transformProperty} from "../../../../shared/utils/property-transform-util";
 
 @Component({
     selector: 'up-properties-new',
@@ -20,7 +21,7 @@ import {NgForm} from "@angular/forms";
 export class PropertiesNewComponent implements OnInit {
 
     isSaving: boolean;
-    property: Property = new Property();
+    property: Property = new Apartment();
     propertyTypes = ['Apartment', 'Building', 'Business', 'Establishment', 'Hotel', 'IndustrialPlant', 'Office', 'Parking', 'Terrain'];
     Select: Select;
     @ViewChild('newPropertyForm') form: NgForm;
@@ -48,6 +49,10 @@ export class PropertiesNewComponent implements OnInit {
             }
         });
 
+    }
+
+    onChangeType($event) {
+        this.property = transformProperty(this.property, $event);
     }
 
     onSubmit() {
