@@ -78,6 +78,20 @@
                                             <!-- /.listing-box-content -->
                                             <div class="listing-box-attributes">
                                                 <dl [ngSwitch]="property.propertyType">
+                                                    <!--
+
+                                                    MAKE THIS A COMPONENT
+
+                                                    <ng-container *ngSwitchCase="'IndustrialPlant'">
+                                                        <dt>Surface</dt>
+                                                        <dd>{{propert,y.surface}}</dd>
+                                                        <dt>M2 Offices</dt>
+                                                        <dd>{{property.m2Offices}}</dd>
+                                                        <dt>Number docks</dt>
+                                                        <dd>{{property.numberDocks}}</dd>
+                                                    </ng-container>
+
+                                                     -->
                                                     <ng-container *ngSwitchCase="'IndustrialPlant'">
                                                         <dt>Surface</dt>
                                                         <dd>{{property.surface}}</dd>
