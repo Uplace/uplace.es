@@ -2,6 +2,7 @@ package com.arnaugarcia.uplace.domain;
 
 import afu.org.checkerframework.checker.oigj.qual.O;
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
+import com.arnaugarcia.uplace.domain.validators.PropertyPriceConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -72,6 +73,7 @@ import java.util.Set;
     Parking.class,
     Terrain.class
 })
+@PropertyPriceConstraint
 // TODO: Make Property abstract
 public class Property implements Serializable {
 
