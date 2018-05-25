@@ -30,7 +30,7 @@ public class PropertyPriceValidator implements ConstraintValidator<PropertyPrice
             case RENT_BUY:
                 return ((isValidPrice(property.getPriceRent()) && isValidPrice(property.getPriceSell())) && property.getPriceTransfer() == null);
             case TRANSFER:
-                return (isValidPrice(property.getPriceTransfer()) && (property.getPriceSell() == null && property.getPriceRent() == null && property.getPriceTransfer() == null));
+                return (isValidPrice(property.getPriceTransfer()) && (property.getPriceSell() == null && property.getPriceRent() == null));
                 default:
                     return false;
         }

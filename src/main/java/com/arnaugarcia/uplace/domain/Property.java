@@ -2,6 +2,8 @@ package com.arnaugarcia.uplace.domain;
 
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.arnaugarcia.uplace.domain.validators.PropertyPriceConstraint;
+import com.arnaugarcia.uplace.service.listener.PhotoListener;
+import com.arnaugarcia.uplace.service.listener.PropertyListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -73,6 +75,7 @@ import java.util.Set;
     Terrain.class
 })
 @PropertyPriceConstraint
+@EntityListeners(PropertyListener.class)
 // TODO: Make Property abstract
 public class Property implements Serializable {
 
