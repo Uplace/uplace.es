@@ -127,7 +127,7 @@ public class PropertyQueryService<T extends Property> extends QueryService {
 
         if (criteria != null) {
             if (!userLogged) {
-                // If the user isn't logged only will show visible porperties
+                // If the user isn't logged only will show visible properties
                 specification = specification.and(buildSpecification(new BooleanFilter().setEquals(true), Property_.visible));
             }
             if (criteria.getCategory() != null) {
