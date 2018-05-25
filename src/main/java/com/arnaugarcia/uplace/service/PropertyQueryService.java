@@ -2,8 +2,10 @@ package com.arnaugarcia.uplace.service;
 
 import com.arnaugarcia.uplace.domain.*;
 import com.arnaugarcia.uplace.repository.PropertyRepository;
+import com.arnaugarcia.uplace.security.SecurityUtils;
 import com.arnaugarcia.uplace.service.dto.SearchDTO;
 import io.github.jhipster.service.QueryService;
+import io.github.jhipster.service.filter.BooleanFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service for executing complex queries for Property entities in the database.
@@ -51,8 +55,9 @@ public class PropertyQueryService<T extends Property> extends QueryService {
     @Transactional(readOnly = true)
     public Page<T> findByCriteria(SearchDTO criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
+        boolean userLogged = SecurityUtils.isAuthenticated();
 
-        final Specifications<T> specifications = createSpecification(criteria);
+        final Specifications<T> specifications = createSpecification(criteria, userLogged);
 
         return propertyRepository.findAll(specifications, page);
 
@@ -116,11 +121,15 @@ public class PropertyQueryService<T extends Property> extends QueryService {
 
     }
 
-    private Specifications<T> createSpecification(SearchDTO criteria) {
+    private Specifications<T> createSpecification(SearchDTO criteria, boolean userLogged) {
 
         Specifications<T> specification = Specifications.where(null);
 
         if (criteria != null) {
+            if (!userLogged) {
+                // If the user isn't logged only will show visible porperties
+                specification = specification.and(buildSpecification(new BooleanFilter().setEquals(true), Property_.visible));
+            }
             if (criteria.getCategory() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCategory(), Property_.propertyType));
             }
