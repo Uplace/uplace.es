@@ -1,17 +1,18 @@
 package com.arnaugarcia.uplace.domain;
 
-import afu.org.checkerframework.checker.oigj.qual.O;
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.arnaugarcia.uplace.domain.validators.PropertyPriceConstraint;
+import com.arnaugarcia.uplace.service.listener.PhotoListener;
+import com.arnaugarcia.uplace.service.listener.PropertyListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -74,6 +75,7 @@ import java.util.Set;
     Terrain.class
 })
 @PropertyPriceConstraint
+@EntityListeners(PropertyListener.class)
 // TODO: Make Property abstract
 public class Property implements Serializable {
 
@@ -88,10 +90,12 @@ public class Property implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @CreationTimestamp
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
+    @UpdateTimestamp
     @Column(name = "updated")
     private ZonedDateTime updated;
 
