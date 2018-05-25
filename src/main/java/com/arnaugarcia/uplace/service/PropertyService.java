@@ -49,6 +49,12 @@ public class PropertyService<T extends Property> {
     public T save(T property) {
         log.debug("Request to save Property : {}", property);
 
+
+        // TODO : Implement generate reference with an Listener
+        if (property.getId() == null) {
+            property.setReference(this.createReference());
+        }
+
         if (!property.getPhotos().isEmpty()) {
             // For each photo assigns the public_id and the URL
             property.getPhotos().forEach((photo -> {

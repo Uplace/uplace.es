@@ -1,15 +1,12 @@
 package com.arnaugarcia.uplace.domain;
 
-import afu.org.checkerframework.checker.oigj.qual.O;
 import com.arnaugarcia.uplace.domain.enumeration.TransactionType;
 import com.arnaugarcia.uplace.domain.validators.PropertyPriceConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
