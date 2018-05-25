@@ -34,9 +34,6 @@ export class Property implements BaseEntity {
         public requests?: Request[],
         public realEstate?: RealEstate
     ) {
-        this.priceRent = 0;
-        this.priceSell = 0;
-        this.priceTransfer = 0;
         this.surface = 0;
         this.yearConstruction = 500;
         this.newCreation = false;
