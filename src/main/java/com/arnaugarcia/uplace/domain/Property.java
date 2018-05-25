@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -88,10 +90,12 @@ public class Property implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @CreationTimestamp
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
+    @UpdateTimestamp
     @Column(name = "updated")
     private ZonedDateTime updated;
 

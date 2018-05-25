@@ -49,16 +49,6 @@ public class PropertyService<T extends Property> {
     public T save(T property) {
         log.debug("Request to save Property : {}", property);
 
-
-        // TODO : Implement this with @Updated and @Created see issue [#159]
-        if (property.getId() == null) {
-            property.setCreated(ZonedDateTime.now());
-            property.setReference(this.createReference());
-            property.setUpdated(ZonedDateTime.now());
-        } else {
-            property.setUpdated(ZonedDateTime.now());
-        }
-
         if (!property.getPhotos().isEmpty()) {
             // For each photo assigns the public_id and the URL
             property.getPhotos().forEach((photo -> {
