@@ -38,6 +38,8 @@ public class InquireService<T extends Property> {
             throw new BadRequestAlertException("Property not found", "PROPERTY", ErrorConstants.ERR_BAD_REFERENCE);
         }
 
+        request.setProperty(property);
+
         request.setRequestStatus(RequestStatus.OPEN);
 
         request.setDate(ZonedDateTime.now());
@@ -61,14 +63,14 @@ public class InquireService<T extends Property> {
         // TODO : Send a notification to the agent
         // TODO : Send an email to the agent
         // TODO : Make the template of contact
-        Mail mail = new Mail(
+        /*Mail mail = new Mail(
             request.getEmail(),
             request.getFirstName() + ", " + request.getLastName(),
             ZonedDateTime.now(),
             "Uplace - Muchas gracias por su interés",
             "Estimad@ " + request.getFirstName() + " hemos recibido su solicitud con éxito en breves nos pondremos en contacto con usted"
         );
-        mailService.sendPropertyInfo(mail, property,"infoProperty","email.inquire.title");
+        mailService.sendPropertyInfo(mail, property,"infoProperty","email.inquire.title");*/
         return new ResponseEntity<>(request, HttpStatus.OK);
     }
 }

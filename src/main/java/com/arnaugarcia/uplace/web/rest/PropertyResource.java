@@ -146,7 +146,7 @@ public class PropertyResource<T extends Property> {
      */
     @PostMapping("/properties/{reference}/inquire")
     @Timed
-    public void removeProperty(@PathVariable String reference, @RequestBody Request request) {
+    public void sendInquire(@PathVariable String reference, @RequestBody Request request) {
         log.debug("REST request to create inquire by reference " + reference);
         inquireService.sendInquire(reference, request);
     }
