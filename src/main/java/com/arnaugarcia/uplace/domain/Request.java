@@ -78,6 +78,7 @@ public class Request implements Serializable {
     private String message;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Property property;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
