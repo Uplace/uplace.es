@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -134,11 +135,29 @@ public class PropertyQueryService<T extends Property> extends QueryService {
                 specification = specification.and(buildStringSpecification(criteria.getCategory(), Property_.propertyType));
             }
             if (criteria.getCity() != null) {
-                specification = specification.and(buildReferringEntitySpecification(criteria.getCity(), Property_.location, Location_.city));
+                specification = specification.and((root, query, builder) -> {
+                    Join<Property, Location> propertyLocationJoin = root.join("location");
+                    if (criteria.getCity().getContains() != null) {
+                        return builder.or(
+                            builder.like(propertyLocationJoin.get(Location_.city), "%" + criteria.getCity().getContains() + "%"),
+                            builder.like(propertyLocationJoin.get(Location_.fullAddress), "%" + criteria.getCity().getContains() + "%")
+                        );
+                    }
+                    if (criteria.getCity().getEquals() != null) {
+                        return builder.or(
+                            builder.equal(propertyLocationJoin.get(Location_.city), criteria.getCity().getEquals())
+                        );
+                    }
+                    return null;
+                });
             }
             if (criteria.getKeywords() != null) {
-                specification = specification.or(buildStringSpecification(criteria.getKeywords(), Property_.title));
-                specification = specification.or(buildStringSpecification(criteria.getKeywords(), Property_.description));
+                specification = specification.and((root, query, builder) ->
+                    builder.or(
+                        builder.like(root.get(Property_.title), "%" + criteria.getKeywords() + "%"),
+                        builder.like(root.get(Property_.description), "%" + criteria.getKeywords() + "%")
+                    )
+                );
             }
             if (criteria.getBedrooms() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getBedrooms(), Apartment_.numberBedrooms));

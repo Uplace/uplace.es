@@ -1,12 +1,13 @@
 package com.arnaugarcia.uplace.service.dto;
 
+import com.arnaugarcia.uplace.service.filter.CityFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 public class SearchDTO {
 
-    private StringFilter city;
+    private CityFilter city;
 
     private StringFilter category;
 
@@ -20,11 +21,11 @@ public class SearchDTO {
 
     public SearchDTO() { }
 
-    public StringFilter getCity() {
+    public CityFilter getCity() {
         return city;
     }
 
-    public void setCity(StringFilter city) {
+    public void setCity(CityFilter city) {
         this.city = city;
     }
 
