@@ -104,7 +104,7 @@ public class PropertyResource<T extends Property> {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of properties in body
      */
-    @ApiOperation(value = "This endpoint wil get a page of properties", notes = "You can filter using search endpoints")
+    @ApiOperation(value = "This endpoint will get a page of properties")
     @GetMapping("/properties")
     @Timed
     public ResponseEntity<Page<T>> getAllProperties(SearchDTO searchDTO, Pageable pageable) {
