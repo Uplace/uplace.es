@@ -11,8 +11,6 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface BuildingMapper extends EntityMapper<BuildingDTO, Building> {
 
-
-
     default Building fromId(Long id) {
         if (id == null) {
             return null;
