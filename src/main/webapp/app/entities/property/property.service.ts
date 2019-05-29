@@ -7,18 +7,9 @@ import {JhiDateUtils} from 'ng-jhipster';
 
 import {Property} from './property.model';
 import {createRequestOption} from '../../shared';
-import {Mail} from "../../shared/model/mail.model";
-import {UserCriteria} from "../../shared/search/user-criteria.model";
-import {Apartment} from "../../shared/model/apartment.model";
-import {Building} from "../../shared/model/building.model";
-import {Establishment} from "../../shared/model/establishment.model";
-import {Business} from "../../shared/model/business.model";
-import {Hotel} from "../../shared/model/hotel.model";
-import {IndustrialPlant} from "../../shared/model/industrial-plant.model";
-import {Office} from "../../shared/model/office.model";
-import {Parking} from "../../shared/model/parking.model";
-import {Terrain} from "../../shared/model/terrain.model";
-import {transformProperty} from "../../shared/utils/property-transform-util";
+import {Mail} from '../../shared/model/mail.model';
+import {UserCriteria} from '../../shared/search/user-criteria.model';
+import {transformProperty} from '../../shared/utils/property-transform-util';
 
 export type EntityResponseType = HttpResponse<Property>;
 
@@ -69,7 +60,7 @@ export class PropertyService {
     }
 
     private convertPropertyToReferences(properties: Property[]): string {
-        let references = [];
+        const references = [];
         properties.forEach((property) => {
             references.push(property.reference);
         });
@@ -91,7 +82,7 @@ export class PropertyService {
      * Convert a returned JSON object to Property.
      */
     private convertItemFromServer(property: Property): Property {
-        let copy = transformProperty(property);
+        const copy = transformProperty(property);
 
         copy.created = this.dateUtils
             .convertDateTimeFromServer(property.created);
