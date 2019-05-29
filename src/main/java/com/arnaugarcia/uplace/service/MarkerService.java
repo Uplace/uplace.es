@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static com.arnaugarcia.uplace.service.util.TransformMarkerToMarkerDTO.markerToMarkerDTO;
 
 /**
- * Service Implementation for managing Hotel.
+ * Service Implementation for managing Markers.
  */
 @Service
 public class MarkerService {
